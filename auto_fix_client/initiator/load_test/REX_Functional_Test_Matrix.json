@@ -1,0 +1,21 @@
+{
+  "testCase": [
+    {
+      "Id": "1",
+      "ScenarioName": "New Order->Fill",
+      "Account": "RUAT_ACCOUNT_3",
+      "Market": "REX",
+      "ActionType": "NewAck",
+      "Comment": "REX_Market_NewAck",
+      "OrderQty": 5,
+      "OrdType": "1",
+      "Side": "1",
+      "Symbol": "4689",
+      "TimeInForce": "0",
+      "CrossingPriceType": "REX",
+      "Rule80A": "P",
+      "CashMargin": "1",
+      "MarginTransactionType": "0"
+    }
+  ]
+}
