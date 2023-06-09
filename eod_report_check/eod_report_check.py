@@ -74,6 +74,7 @@ def compare_json_files(file_a, file_b):
             data_a)) + ',' + 'eod_order_list:' + str(len(data_b)))
     logsCheck()
 
+# 对保存对log文件进行检查
 def logsCheck():
     with open('logs/eod_check_report.log', 'r') as f:
         content = f.read()

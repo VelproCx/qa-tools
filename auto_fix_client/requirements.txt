@@ -1,1 +1,8 @@
-quickfix==1.14.1
+# 安装quickfix库1.14.1
+pip install quickfix==1.14.1
+
+# 安装openpyxl
+pip install openpyxl
+
+# 安装pandas
+pip install pandas
