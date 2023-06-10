@@ -106,7 +106,7 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account("RUAT_ACCOUNT_10"))
+        msg.setField(fix.Account("RUAT_ACCOUNT_1"))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(row["OrderQty"]))
         msg.setField(fix.OrdType(row["OrdType"]))
@@ -151,7 +151,7 @@ class Application(fix.Application):
 
     def load_test_case(self):
         """Run"""
-        with open('../case/Rol_Allday_Test_Matrix.json', 'r') as f_json:
+        with open('../case/Rol_Trading_Hours_Test_Matrix.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(0.04)
             start_Time = datetime.now()

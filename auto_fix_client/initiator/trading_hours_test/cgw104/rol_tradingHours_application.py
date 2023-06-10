@@ -151,7 +151,7 @@ class Application(fix.Application):
 
     def load_test_case(self):
         """Run"""
-        with open('../case/Rol_Allday_Test_Matrix.json', 'r') as f_json:
+        with open('../case/Rol_Trading_Hours_Test_Matrix.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(0.04)
             start_Time = datetime.now()
