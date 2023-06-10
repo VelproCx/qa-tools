@@ -3,8 +3,8 @@ import subprocess
 from concurrent.futures import ThreadPoolExecutor
 
 # 定义要遍历的文件夹列表
-folders = ['cgw101', 'cgw102', 'cgw103']
-#
+folders = ['cgw101', 'cgw102', 'cgw103', 'cgw104', 'cgw105', 'cgw106', 'cgw107', 'cgw108', 'cgw109', 'cgw110']
+#在本地调试是使用cgw101、cgw1022、cgw103
 
 # 创建新的Shell文件
 with open('run_all.sh', 'w') as f:
@@ -34,4 +34,4 @@ os.chmod('run_all.sh', 0o755)
 
 # 同时运行所有脚本
 with ThreadPoolExecutor() as executor:
-    executor.map(subprocess.call,shell_commands)
+    executor.map(subprocess.call, shell_commands)
