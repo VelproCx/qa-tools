@@ -149,28 +149,43 @@ class Application(fix.Application):
         elif action == 'CancelAck':
             self.order_cancel_request(row)
 
+    # def load_test_case(self):
+    #     """Run"""
+    #     with open('../case/Rol_Trading_Hours_Test_Matrix.json', 'r') as f_json:
+    #         case_data_list = json.load(f_json)
+    #         time.sleep(0.04)
+    #         start_Time = datetime.now()
+    #         while start_Time.hour < 15:
+    #             runningTime = datetime.now()
+    #             # 在某一时间段内大量发单
+    #             # if runningTime.hour == 13:
+    #             #     for row in case_data_list["testCase"]:
+    #             #         time.sleep(0.05)
+    #             #         self.runTestCase(row)
+    #             # elif runningTime.hour < 15:
+    #             #     for row in case_data_list["testCase"]:
+    #             #         time.sleep(1)
+    #             #         self.runTestCase(row)
+    #             if runningTime.hour < 15:
+    #                 for row in case_data_list["testCase"]:
+    #                     time.sleep(1)
+    #                     self.runTestCase(row)
+    #             else:
+    #                 time.sleep(2)
+    #                 break
+
     def load_test_case(self):
         """Run"""
         with open('../case/Rol_Trading_Hours_Test_Matrix.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(0.04)
             start_Time = datetime.now()
-            while start_Time.hour < 15:
-                runningTime = datetime.now()
-                # 在某一时间段内大量发单
-                # if runningTime.hour == 13:
-                #     for row in case_data_list["testCase"]:
-                #         time.sleep(0.05)
-                #         self.runTestCase(row)
-                # elif runningTime.hour < 15:
-                #     for row in case_data_list["testCase"]:
-                #         time.sleep(1)
-                #         self.runTestCase(row)
-                if runningTime.hour < 15:
+            if start_Time.hour < 15:
+                while start_Time.hour < 15:
                     for row in case_data_list["testCase"]:
                         time.sleep(1)
-                        self.runTestCase(row)
-                else:
-                    time.sleep(2)
-                    break
-
+                        endTime = datetime.now()
+                        if endTime.hour == 11 and endTime.minute == 30:
+                            return
+                        else:
+                            self.runTestCase(row)

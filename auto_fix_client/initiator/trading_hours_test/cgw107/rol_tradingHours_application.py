@@ -155,13 +155,13 @@ class Application(fix.Application):
             case_data_list = json.load(f_json)
             time.sleep(0.04)
             start_Time = datetime.now()
-            while start_Time.hour < 15:
-                runningTime = datetime.now()
-                if runningTime.hour < 15:
+            if start_Time.hour < 15:
+                while start_Time.hour < 15:
                     for row in case_data_list["testCase"]:
                         time.sleep(1)
-                        self.runTestCase(row)
-                else:
-                    time.sleep(2)
-                    break
+                        endTime = datetime.now()
+                        if endTime.hour == 11 and endTime.minute == 30:
+                            return
+                        else:
+                            self.runTestCase(row)
 

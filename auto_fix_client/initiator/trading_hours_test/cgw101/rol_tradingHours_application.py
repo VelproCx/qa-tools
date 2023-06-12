@@ -45,7 +45,7 @@ class Application(fix.Application):
         if self.Total != self.Success + self.Fail:
             Miss_Num = self.Total - (self.Success + self.Fail)
             logfix.info("Order Miss, Result : Total = %d,Success = %d,Fail = %d,MissOrderNum = %d" % (
-            self.Total, self.Success, self.Fail, Miss_Num))
+                self.Total, self.Success, self.Fail, Miss_Num))
         else:
             logfix.info(
                 "Order Not Miss, Result : Total = %d,Success = %d,Fail = %d" % (self.Total, self.Success, self.Fail))
@@ -77,7 +77,7 @@ class Application(fix.Application):
         ordStatus = message.getField(39)
         msg = message.toString().replace(__SOH__, "|")
         if ordStatus == "2":
-            logfix.info("(recvMsg)R < < %s"%msg)
+            logfix.info("(recvMsg)R < < %s" % msg)
             self.Success = self.Success + 1
             logfix.info("Result : Success," + "OrdStasus = " + ordStatus)
         elif ordStatus == "8":
@@ -140,7 +140,6 @@ class Application(fix.Application):
         self.Total = self.Total + 1
         return msg
 
-
     def runTestCase(self, row):
 
         action = row["ActionType"]
@@ -155,13 +154,25 @@ class Application(fix.Application):
             case_data_list = json.load(f_json)
             time.sleep(0.04)
             start_Time = datetime.now()
-            while start_Time.hour < 15:
-                runningTime = datetime.now()
-                if runningTime.hour < 15:
+            if start_Time.hour < 22:
+                while start_Time.hour < 22:
                     for row in case_data_list["testCase"]:
                         time.sleep(1)
-                        self.runTestCase(row)
-                else:
-                    time.sleep(2)
-                    break
+                        endTime = datetime.now()
+                        if endTime.hour == 21 and endTime.minute == 5:
+                            return
+                        else:
+                            self.runTestCase(row)
+            # while start_Time.hour < 15:
+            #     runningTime = datetime.now()
+            #     if runningTime.hour < 15:
+            #         for row in case_data_list["testCase"]:
+            #             time.sleep(1)
+            #             self.runTestCase(row)
+            #     else:
+            #         time.sleep(2)
+            #         break
+
+
+
 
