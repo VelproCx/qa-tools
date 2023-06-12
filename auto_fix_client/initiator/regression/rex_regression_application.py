@@ -348,6 +348,10 @@ class Application(fix.Application):
             logfix.info("execType is NG")
             response = ['execType is NG']
             self.writeResExcel('report/rex_report.xlsx', response, 7, "Q")
+        else:
+            logfix.info("execType is OK")
+            response = ['execType is OK']
+            self.writeResExcel('report/rex_report.xlsx', response, 8, "Q")
     def writeResExcel(self,filename,data,row,column):
         #打开现有的Excel文件或者创建新的Workbook
         workbook = load_workbook(filename)
