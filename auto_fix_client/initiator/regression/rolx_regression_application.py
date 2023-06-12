@@ -165,6 +165,9 @@ class Application(fix.Application):
                     logfix.info("Result : Order Accepted ," + "ordStatus =" + ordStatus)
                 else:
                     logfix.info("(recvMsg) Order Accepted << %s" % msg + 'Order Accepted FixMsg Error!')
+                if execType != ordStatus:
+                    logfix.info(
+                        "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
             # 7.3 Execution Report – Order Rejected
             elif ordStatus == "8":
                 text = message.getField(58)
@@ -179,6 +182,9 @@ class Application(fix.Application):
                     logfix.info("(recvMsg) Order Rej << %s" % msg + "RejRes = " + str(text))
                 else:
                     logfix.info("(recvMsg) Order Rejected << %s" % msg + 'Order Rejected FixMsg Error!')
+                if execType != ordStatus:
+                    logfix.info(
+                        "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
             # 7.6 Execution Report – Order Canceled
             elif ordStatus == "4":
                 origClOrdID = message.getField(41)
@@ -191,6 +197,9 @@ class Application(fix.Application):
                     logfix.info("(recvMsg) Order Canceled << %s" % msg + "ordStatus = " + str(ordStatus))
                 else:
                     logfix.info("(recvMsg) Order Canceled << %s" % msg + 'Order Canceled FixMsg Error!')
+                if execType != ordStatus:
+                    logfix.info(
+                        "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
             # 7.7 Execution Report – Trade
             elif ordStatus == "1" or ordStatus == "2":
                 lastPx = float(message.getField(31))
@@ -218,6 +227,8 @@ class Application(fix.Application):
                     logfix.info("Result : Order Filled ," + "ordStatus =" + ordStatus)
                 else:
                     logfix.info("(recvMsg) Order Filled << %s" % msg + "Order Trade FixMsg Error!")
+                if execType != ordStatus:
+                    logfix.info("(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
                     # Fill Price Check
                 if ordType == '1':
                     if side == "1":
@@ -249,6 +260,9 @@ class Application(fix.Application):
                     logfix.info("Result : Order Expired ," + "ordStatus =" + ordStatus)
                 else:
                     logfix.info("(recvMsg) Order Expired << %s" % msg + "Order Expired FixMsg Error!")
+                if execType != ordStatus:
+                    logfix.info(
+                        "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
         else:
             origClOrdID = message.getField(41)
             text = message.getField(58)

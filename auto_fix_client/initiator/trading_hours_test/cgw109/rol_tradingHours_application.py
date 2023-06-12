@@ -157,6 +157,15 @@ class Application(fix.Application):
             start_Time = datetime.now()
             while start_Time.hour < 15:
                 runningTime = datetime.now()
+                # 在某一时间段内大量发单
+                # if runningTime.hour == 13:
+                #     for row in case_data_list["testCase"]:
+                #         time.sleep(0.05)
+                #         self.runTestCase(row)
+                # elif runningTime.hour < 15:
+                #     for row in case_data_list["testCase"]:
+                #         time.sleep(1)
+                #         self.runTestCase(row)
                 if runningTime.hour < 15:
                     for row in case_data_list["testCase"]:
                         time.sleep(1)

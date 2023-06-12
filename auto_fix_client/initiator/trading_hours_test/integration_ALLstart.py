@@ -1,10 +1,11 @@
 import os
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
-
-# 定义要遍历的文件夹列表
-folders = ['cgw101', 'cgw102', 'cgw103', 'cgw104', 'cgw105', 'cgw106', 'cgw107', 'cgw108', 'cgw109', 'cgw110']
-#在本地调试是使用cgw101、cgw1022、cgw103
+'''
+定义要遍历的文件夹列表
+在本地调试是使用cgw101、cgw1022、cgw103，注意放到UAT环境要先确保clientGateway的状态是正常的，且无人使用       , 'cgw110'
+'''
+folders = ['cgw101', 'cgw102', 'cgw103', 'cgw104', 'cgw105', 'cgw106', 'cgw107', 'cgw108', 'cgw109']
 
 # 创建新的Shell文件
 with open('run_all.sh', 'w') as f:
