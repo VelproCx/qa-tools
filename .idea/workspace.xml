@@ -4,7 +4,235 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bccaebb-8226-4346-b537-2df88f68e408" name="Changes" comment="update config file" />
+    <list default="true" id="6bccaebb-8226-4346-b537-2df88f68e408" name="Changes" comment="Add comment">
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/case/AUTO_MM_LIST.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/case/Rol_Allday_Test_Matrix.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/case/full_stock_List.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/case/topix400_case.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw101/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw101/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw101/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw101/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw101/report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw101/rex_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw101/rex_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw101/rex_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw101/rex_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw102/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw102/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw102/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw102/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw102/report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw102/rex_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw102/rex_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw102/rex_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw102/rex_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw103/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw103/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw103/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw103/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw103/report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw103/rex_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw103/rex_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw103/rex_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw103/rex_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw104/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw104/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw104/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw104/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw104/report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw104/rex_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw104/rex_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw104/rex_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw104/rex_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw105/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw105/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw105/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw105/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw105/report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw105/rex_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw105/rex_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw105/rex_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw105/rex_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw106/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw106/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw106/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw106/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw106/rex_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw106/rex_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw106/rex_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw106/rex_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw107/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw107/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw107/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw107/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw107/rex_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw107/rex_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw107/rex_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw107/rex_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw108/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw108/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw108/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw108/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw108/rex_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw108/rex_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw108/rex_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw108/rex_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw109/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw109/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw109/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw109/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw109/report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw109/rex_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw109/rex_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw109/rex_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/cgw109/rex_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/logs/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/logs/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/logs/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/logs/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/logs/GLOBAL.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/logs/GLOBAL.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/logs/report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/logs/rex_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/logs/rolx_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/mail/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/mail/run_email.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/rex_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/rex_market_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/rex_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/rolx_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/rolx_market_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rex_full_stock_test/rolx_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/case/AUTO_MM_LIST.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/case/Rol_Allday_Test_Matrix.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/case/full_stock_List.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/case/topix400_case.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw101/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw101/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw101/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw101/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw101/report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw101/rol_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw101/rol_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw101/rol_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw101/rol_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw102/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw102/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw102/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw102/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw102/report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw102/rol_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw102/rol_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw102/rol_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw102/rol_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw103/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw103/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw103/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw103/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw103/report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw103/rol_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw103/rol_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw103/rol_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw103/rol_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw104/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw104/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw104/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw104/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw104/report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw104/rol_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw104/rol_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw104/rol_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw104/rol_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw105/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw105/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw105/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw105/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw105/report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw105/rol_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw105/rol_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw105/rol_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw105/rol_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw106/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw106/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw106/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw106/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw106/rol_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw106/rol_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw106/rol_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw106/rol_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw107/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw107/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw107/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw107/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw107/rol_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw107/rol_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw107/rol_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw107/rol_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw108/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw108/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw108/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw108/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw108/rol_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw108/rol_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw108/rol_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw108/rol_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw109/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw109/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw109/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw109/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw109/report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw109/rol_load_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw109/rol_load_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw109/rol_load_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/cgw109/rol_load_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/logs/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/logs/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/logs/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/logs/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/logs/GLOBAL.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/logs/GLOBAL.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/logs/report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/logs/rex_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/logs/rolx_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/mail/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/mail/run_email.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/rex_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/rex_market_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/rex_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/rolx_client.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/rolx_market_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auto_fix_client/initiator/rolx_full_stock_test/rolx_start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -12,6 +240,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/auto_fix_client/requirements.txt" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -25,7 +256,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/elevenchen/Desktop/qa-tools",
+    "last_opened_file_path": "/Users/elevenchen/Desktop/qa-tools/auto_fix_client/initiator",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -50,6 +281,8 @@
       <workItem from="1686312981666" duration="272000" />
       <workItem from="1686313287678" duration="655000" />
       <workItem from="1686313947248" duration="873000" />
+      <workItem from="1686493141480" duration="610000" />
+      <workItem from="1686540036001" duration="1144000" />
     </task>
     <task id="LOCAL-00001" summary="AutoFixClient first commit">
       <created>1686313466031</created>
@@ -65,7 +298,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686314461768</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add comment">
+      <created>1686316136083</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1686316136083</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -97,6 +337,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="AutoFixClient first commit" />
     <MESSAGE value="update config file" />
-    <option name="LAST_COMMIT_MESSAGE" value="update config file" />
+    <MESSAGE value="Add comment" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add comment" />
   </component>
 </project>
