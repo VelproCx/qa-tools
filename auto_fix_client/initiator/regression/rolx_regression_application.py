@@ -329,6 +329,14 @@ class Application(fix.Application):
             logfix.info('FixMsg is OK')
             response = ['FixMsg is OK']
             self.writeResExcel('report/rolx_report.xlsx', response, 4, 'Q')
+        if 'Order execType error' in content:
+            logfix.info('ExecType is NG')
+            response = ['ExecType is NG']
+            self.writeResExcel('report/rolx_report.xlsx', response, 7, 'Q')
+        else:
+            logfix.info('ExecType is OK')
+            response = ['ExecType is OK']
+            self.writeResExcel('report/rolx_report.xlsx', response, 8, 'Q')
 
     def writeResExcel(self, filename, data, row, column):
         # 打开现有的 Excel 文件或创建新的 Workbook
