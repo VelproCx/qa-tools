@@ -20,7 +20,7 @@ setup_logger('logfix', 'logs/rex_report.log')
 logfix = logging.getLogger('logfix')
 
 
-class Application(fix.Application):
+class Application(fix.Application):       # 定义一个类并继承‘fix.Application’类，主要用于处理收到的消息和事件
     orderID = 0
     execID = 0
     ORDERS_DICT = []
@@ -36,13 +36,15 @@ class Application(fix.Application):
     ReceveRes = []
 
     def __init__(self):
+        # 初始化sessionID = None
         super().__init__()
         self.sessionID = None
 
     def onCreate(self, sessionID):
-        # "服务器启动时候调用此方法创建"
+        # 服务器启动时候调用此方法创建
+        # 服务器启动时，读取配置文件中的【SESSION】部份，将读取到的sessionID传给self.sessionID,并打印出来
         self.sessionID = sessionID
-        print("onCreate : Session (%s)" % sessionID.toString())
+        print("onCreate : Session ({})".format(sessionID.toString()))
         return
 
     def onLogon(self, sessionID):
