@@ -2,6 +2,8 @@
 # -*- coding: utf8 -*-
 """FIX Application"""
 import difflib
+import random
+
 import quickfix as fix
 import time
 import logging
@@ -112,7 +114,6 @@ class Application(fix.Application):       # 定义一个类并继承‘fix.Appli
 
     def fromApp(self, message, sessionID):
         logfix.info("-------------------------------------------------------------------------------------------------")
-
         # "接收业务消息时调用此方法"
         msgType = message.getHeader().getField(35)
         clOrdID = message.getField(11)
@@ -137,15 +138,18 @@ class Application(fix.Application):       # 定义一个类并继承‘fix.Appli
         # 如果有匹配结果
         if matches:
             matched_clordId = matches[0]
+            # 拿到clordId去数组里循环比对
             for item in self.ReceveRes:
+                # 判断当前收到的消息体clordid是否在数组里
                 if item['clordId'] == matched_clordId:
                     # 更新该组数据的ordstatus
                     item['ordstatus'] = str(ordStatus)
         else:
             # 添加新的数据到数组中
             self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': str(ordStatus)})
-
+        # 因CancelRej消息体与其他消息体共用字段少，为减少代码量，将msgType == '9'的消息体做单独处理
         if msgType != '9':
+            # 消息体共用tag
             avgPx = message.getField(6)
             CumQty = message.getField(14)
             execID = message.getField(17)
@@ -173,6 +177,7 @@ class Application(fix.Application):       # 定义一个类并继承‘fix.Appli
                 lastShares = message.getField(32)
                 lastPx = message.getField(31)
                 clOrdID = message.getField(11)
+                # 判断tag是否存在
                 if (
                         avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty, ordType,
                         rule80A,
@@ -191,6 +196,7 @@ class Application(fix.Application):       # 定义一个类并继承‘fix.Appli
                 lastShares = message.getField(32)
                 lastPx = message.getField(31)
                 clOrdID = message.getField(11)
+                # 判断tag是否存在
                 if (
                         avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty, ordType,
                         rule80A,
@@ -207,6 +213,7 @@ class Application(fix.Application):       # 定义一个类并继承‘fix.Appli
                 origClOrdID = message.getField(41)
                 execBroker = message.getField(76)
                 clOrdID = message.getField(11)
+                # 判断tag是否存在
                 if (avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
                     side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
                     crossingPriceType,
@@ -227,8 +234,10 @@ class Application(fix.Application):       # 定义一个类并继承‘fix.Appli
                 propExecPrice = message.getField(8165)
                 PropExecID = message.getField(8166)
                 clOrdID = message.getField(11)
+                # 公式计算期望值 FillPrice
                 adjustLastPxBuy = math.ceil(primaryLastPx * (1 + self.REX_PROP_BPS_BUY))
                 adjustLastPxSell = math.floor(primaryLastPx * (1 - self.REX_PROP_BPS_SELL))
+                # 判断tag是否存在
                 if (
                         avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty, ordType,
                         rule80A,
@@ -249,6 +258,7 @@ class Application(fix.Application):       # 定义一个类并继承‘fix.Appli
                 if ordType == '1':
                     if side == "1":
                         adjustLastPx = math.ceil(primaryLastPx * (1 + self.REX_PROP_BPS_BUY))
+                        # 期望值与获取的fillPrice进行比对
                         if adjustLastPx == lastPx:
                             return True
                         else:
@@ -257,6 +267,7 @@ class Application(fix.Application):       # 定义一个类并继承‘fix.Appli
                                     adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
                     elif side == "2":
                         adjustLastPx = math.floor(primaryLastPx * (1 - self.REX_PROP_BPS_SELL))
+                        # 期望值与获取的fillPrice进行比对
                         if adjustLastPx == lastPx:
                             return True
                         else:
@@ -269,6 +280,7 @@ class Application(fix.Application):       # 定义一个类并继承‘fix.Appli
                 execBroker = message.getField(76)
                 origClOrdID = message.getField(41)
                 clOrdID = message.getField(11)
+                # 判断tag是否存在
                 if (avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
                     side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
                     crossingPriceType, fsxTransactTime, marginTransactionType, execBroker, origClOrdID, text) != "":
@@ -285,6 +297,7 @@ class Application(fix.Application):       # 定义一个类并继承‘fix.Appli
             cxlRejResponseTo = message.getField(434)
             clOrdID = message.getField(11)
             msg = message.toString().replace(__SOH__, "|")
+            # 判断tag是否存在
             if (clOrdID, orderID, transactTime, fsxTransactTime, origClOrdID, text,
                 cxlRejReason, cxlRejResponseTo) != "":
                 logfix.info("(recvMsg) Order Canceled << %s" % msg + "ordStatus = " + str(ordStatus))
@@ -324,7 +337,7 @@ class Application(fix.Application):       # 定义一个类并继承‘fix.Appli
                 logfix.info("Except:" + str(record1[field_name]) + " ，" + "ordStatus: " + str(record2[field_name]))
         return resList
 
-    # 判断log文件中是否存在 Market Price is not matching
+    # 在掉出登陆时调用logscheck方法，判断是否有这些错误打印，
     def logsCheck(self):
         response = ['ps:若列表存在failed数据，请查看report.log文件']
         self.writeResExcel('report/rex_report.xlsx', response, 2, 'Q')
@@ -373,7 +386,9 @@ class Application(fix.Application):       # 定义一个类并继承‘fix.Appli
         self.execID += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
-        return '9002023' + str(t) + str(self.execID).zfill(8)
+        # 随机生成六位随机数
+        str1 = ''.join([str(i) for i in random.sample(range(0, 9), 6)])
+        return '9002023' + str1 + str(t) + str(self.execID).zfill(8)
 
     def insert_order_request(self, row):
         msg = fix.Message()
@@ -411,23 +426,22 @@ class Application(fix.Application):       # 定义一个类并继承‘fix.Appli
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
         msg.setField(trstime)
 
-        # 判断订单类型
+        # 判断订单类型,限价单读取case中的price并且设置，市价单则不设置价格
         if row["OrdType"] == "2":
             msg.setField(fix.Price(row["Price"]))
-        # elif row["OrdType"] == fix.OrdType_STOP or row["OrdType"] == fix.OrdType_STOP_LIMIT:
-        #     msg.setField(fix.Price(row["Price" + 5]))
         elif row["OrdType"] == "1":
             print("")
 
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
-        time.sleep(1)
 
     def order_cancel_request(self, row):
-
+        # 判断caseID是否为57、58，因为case57、58为new - > partially fill - > cancel ,故只能在部分成交后进行cancel，
         if row["Id"] == '57':
+            # case 57的clordid为PTF_CANCEL_LIST[0]
             clOrdId = self.PTF_CANCEL_LIST[0]
         elif row["Id"] == '58':
+            # case 58的clordid为PTF_CANCEL_LIST[1]
             clOrdId = self.PTF_CANCEL_LIST[1]
         else:
             clOrdId = self.ORDERS_DICT
@@ -450,7 +464,7 @@ class Application(fix.Application):       # 定义一个类并继承‘fix.Appli
         return msg
 
     def runTestCase(self, row):
-
+        # 判断case是下单还是撤单
         action = row["ActionType"]
         if action == 'NewAck':
             self.insert_order_request(row)
@@ -460,11 +474,13 @@ class Application(fix.Application):       # 定义一个类并继承‘fix.Appli
     def load_test_case(self):
         """Run"""
         with open('case/REX_Functional_Test_Matrix.json', 'r') as f_json:
+            # 生成报告模版
             generation('case/REX_Functional_Test_Matrix.json', 'report/rex_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
+                # new - > partially fill - > cancel case，休眠2m再执行
                 if row["Id"] == "57":
                     time.sleep(120)
                     self.runTestCase(row)
