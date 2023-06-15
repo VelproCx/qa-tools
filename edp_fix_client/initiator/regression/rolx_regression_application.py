@@ -40,13 +40,13 @@ class Application(fix.Application):
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
         self.sessionID = sessionID
-        print("onCreate : Session (%s)" % sessionID.toString())
+        print("onCreate : Session ({})" .format(sessionID.toString()))
         return
 
     def onLogon(self, sessionID):
         # "客户端登陆成功时候调用此方法"
         self.sessionID = sessionID
-        print("Successful Logon to session '%s'." % sessionID.toString())
+        print("Successful Logon to session '{}'." .format(sessionID.toString()))
         return
 
     def onLogout(self, sessionID):
@@ -57,7 +57,7 @@ class Application(fix.Application):
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
         self.Result = self.compare_field_values('case/ROL_Functional_Test_Matrix.json', 'logs/recv_data.json', 'ordstatus')
-        logfix.info("Result : Total = %d,Success = %d,Fail = %d" % (self.Total, self.Success, self.Fail))
+        logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/rolx_report.xlsx', self.Result, 2, 'P')
         send_mail(['report/rolx_report.xlsx', 'logs/rolx_report.log'])
