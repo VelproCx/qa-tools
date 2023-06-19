@@ -7,7 +7,7 @@ import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
-
+import random
 __SOH__ = chr(1)
 
 # report
@@ -20,9 +20,12 @@ class Application(fix.Application):
     execID = 0
     ORDERS_DICT = []
     LASTEST_ORDER = {}
-    Success = 0
-    Fail = 0
+    Accepted = 0
+    Rejected = 0
     Total = 0
+    Filled = 0
+    num = 1
+    Expired = 0
 
     def __init__(self):
         super().__init__()
@@ -42,10 +45,7 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
-        logfix.info("Result : Total = %d,Success = %d,Fail = %d" % (self.Total, self.Success, self.Fail))
-        if self.Total != self.Success + self.Fail:
-            miss_Num = self.Total - (self.Success + self.Fail)
-            logfix.info("miss Order,missNum = %s"%(miss_Num))
+        logfix.info("Result : Total = {},Accepted = {},Filled = {},Rejected = {}" .format(self.Total, self.Accepted, self.Filled, self.Rejected))
         print("Session (%s) logout !" % sessionID.toString())
         return
 
@@ -59,7 +59,6 @@ class Application(fix.Application):
         # "发送业务消息时候调用此方法"
         msg = message.toString().replace(__SOH__, "|")
         logfix.info("(sendMsg) S >> %s" % msg)
-        self.Total = self.Total + 1
         return
 
     def fromAdmin(self, message, sessionID):
@@ -74,19 +73,25 @@ class Application(fix.Application):
         self.ORDERS_DICT = message.getField(11)
         ordStatus = message.getField(39)
         msg = message.toString().replace(__SOH__, "|")
-        if ordStatus == "2":
-            logfix.info("(recvMsg)R < < %s"%msg)
-            self.Success = self.Success + 1
-            logfix.info("Result : Success," + "OrdStasus = " + ordStatus)
-        elif ordStatus == "8":
+
+        if ordStatus == "8":
             logfix.info("(recvMsg) R << %s" % msg)
-            self.Fail = self.Fail + 1
-            logfix.info("Result : Fail ," + "ordStatus =" + ordStatus)
-        # else:
-        #     logfix.info("(recvMsg) R << %s" % msg)
-        #     self.Total = self.Total + 1
-        #     self.Success = self.Success + 1
-        #     logfix.info("Result : Success ," + "ordStatus =" + ordStatus)
+            self.Rejected = self.Rejected + 1
+            self.Total = self.Total + 1
+            logfix.info("Result : Rejected ," + "ordStatus =" + ordStatus)
+        elif ordStatus == "0":
+            logfix.info("(recvMsg) R << %s" % msg)
+            self.Total = self.Total + 1
+            self.Accepted = self.Accepted + 1
+            logfix.info("Result : Accepted ," + "ordStatus =" + ordStatus)
+        elif ordStatus == "C":
+            logfix.info("(recvMsg) R << %s" % msg)
+            self.Expired = self.Expired + 1
+            logfix.info("Result : Accepted ," + "ordStatus =" + ordStatus)
+        elif ordStatus == "2":
+            logfix.info("(recvMsg) R << %s" % msg)
+            self.Filled = self.Filled + 1
+            logfix.info("Result : Filled ," + "ordStatus =" + ordStatus)
 
         self.onMessage(message, sessionID)
         logfix.info("-------------------------------------------------------------------------------------------------")
@@ -101,84 +106,51 @@ class Application(fix.Application):
         self.execID += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
-        return '9002023' + str(t) + str(self.execID).zfill(8)
+        return '2023900' + str(t) + str(self.execID).zfill(8)
+
+    def getOrderQty(self):
+        # 随机生成Qty1-5
+        orderQty = random.randint(1, 5)
+        return orderQty
 
     def insert_order_request(self, row):
-        logfix.info("Test Contexts：" + row["Comment"])
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account(row["Account"]))
+        msg.setField(fix.Account("RUAT_ACCOUNT_3"))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
-        msg.setField(fix.OrderQty(row["OrderQty"]))
-        msg.setField(fix.OrdType(row["OrdType"]))
-        msg.setField(fix.Side(row["Side"]))
+        msg.setField(fix.OrderQty(1))
+        msg.setField(fix.OrdType("1"))
         msg.setField(fix.Symbol(row["Symbol"]))
         msg.setField(fix.HandlInst('1'))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
 
-        if row["TimeInForce"] != "":
-            msg.setField(fix.TimeInForce(row["TimeInForce"]))
-
-        if row["Rule80A"] != "":
-            msg.setField(fix.Rule80A(row["Rule80A"]))
-
-        if row["CashMargin"] != "":
-            msg.setField(fix.CashMargin(row["CashMargin"]))
-
-        # 自定义Tag
-        if row["CrossingPriceType"] != "":
-            msg.setField(8164, row["CrossingPriceType"])
-
-        if row["MarginTransactionType"] != "":
-            msg.setField(8214, row["MarginTransactionType"])
+        if self.num % 2 == 0:
+            msg.setField(fix.Side("2"))
+        else:
+            msg.setField(fix.Side("1"))
 
         # 获取TransactTime
         trstime = fix.TransactTime()
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
         msg.setField(trstime)
 
-        # 判断订单类型
-        # if row["OrdType"] == "2":
-        #     price_value = float(row["Price"])
-        #     price_field = fix.DoubleField(44, price_value)  # 44 is the tag for Price field
-        #     msg.setField(price_field)
-        #     # msg.setField(fix.Price(row["Price"]))
-        #
-        # # elif row["OrdType"] == fix.OrdType_STOP or row["OrdType"] == fix.OrdType_STOP_LIMIT:
-        # #     msg.setField(fix.Price(row["Price" + 5]))
-        # elif row["OrdType"] == "1":
-        #     print("")
-
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
-        time.sleep(1)
 
     def runTestCase(self, row):
-
-        action = row["ActionType"]
-        if action == 'NewAck':
-            self.insert_order_request(row)
-        elif action == 'CancelAck':
-            self.order_cancel_request(row)
+        self.insert_order_request(row)
 
     def load_test_case(self):
         """Run"""
-        with open('case/Rol_Load_Test_Matrix.json', 'r') as f_json:
+        with open('../case/topix400_case.json', 'r') as f_json:
             case_data_list = json.load(f_json)
-            time.sleep(0.04)
+            time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
-            # num = 0
-            # while num < 50000:
-            #     num += 1
-            #     for row in case_data_list["testCase"]:
-            #         self.runTestCase(row)
-            #         time.sleep(1)
-
-            NewTime = datetime.now()
-            while NewTime.hour < 15:
+            while self.num < 127:
+                self.num += 1
                 for row in case_data_list["testCase"]:
                     self.runTestCase(row)
-
+                    time.sleep(0.004)
