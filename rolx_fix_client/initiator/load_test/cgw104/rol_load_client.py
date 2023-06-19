@@ -3,7 +3,7 @@ import sys
 import argparse
 from datetime import timedelta, datetime
 import quickfix
-from rex_load_application import Application
+from rol_load_application import Application
 import time
 global initiator
 

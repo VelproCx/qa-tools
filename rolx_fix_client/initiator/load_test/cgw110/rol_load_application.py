@@ -71,16 +71,19 @@ class Application(fix.Application):
         ordStatus = message.getField(39)
         msg = message.toString().replace(__SOH__, "|")
 
-        if ordStatus == "8":
-            logfix.info("(recvMsg) R << %s" % msg)
-            self.Total = self.Total + 1
-            self.Fail = self.Fail + 1
-            logfix.info("Result : Fail ," + "ordStatus =" + ordStatus)
-        else:
-            logfix.info("(recvMsg) R << %s" % msg)
-            self.Total = self.Total + 1
-            self.Success = self.Success + 1
-            logfix.info("Result : Success ," + "ordStatus =" + ordStatus)
+        # if ordStatus == "8":
+        #     logfix.info("(recvMsg) R << %s" % msg)
+        #     self.Rejected = self.Rejected + 1
+        #     logfix.info("Result : Rejected ," + "ordStatus =" + ordStatus)
+        # elif ordStatus == "0":
+        #     logfix.info("(recvMsg) R << %s" % msg)
+        #     self.Total = self.Total + 1
+        #     self.Accepted = self.Accepted + 1
+        #     logfix.info("Result : Accepted ," + "ordStatus =" + ordStatus)
+        # elif ordStatus == "2":
+        #     logfix.info("(recvMsg) R << %s" % msg)
+        #     self.Filled = self.Filled + 1
+        #     logfix.info("Result : Filled ," + "ordStatus =" + ordStatus)
 
         self.onMessage(message, sessionID)
         logfix.info("-------------------------------------------------------------------------------------------------")
@@ -136,7 +139,7 @@ class Application(fix.Application):
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             num = 0
-            while num < 45:
+            while num < 127:
                 num += 1
                 for row in case_data_list["testCase"]:
                     self.runTestCase(row)
