@@ -100,10 +100,6 @@ class Application(fix.Application):
                 logfix.info("(sendMsg) Cancel Ack >> %s" % msg + 'Order Cancel Request FixMsg Error!')
         return
 
-    def onMessage(self, message, sessionID):
-        """Processing application message here"""
-        pass
-
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
         msg = message.toString().replace(__SOH__, "|")
