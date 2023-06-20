@@ -69,6 +69,47 @@ class Application(fix.Application):
         logfix.info("(Core) S >> %s" % msg)
         return
 
+    def toApp(self, message, sessionID):
+        # "发送业务消息时候调用此方法"
+        logfix.info("-------------------------------------------------------------------------------------------------")
+        msgType = message.getHeader().getField(35)
+        msg = message.toString().replace(__SOH__, "|")
+        # 7.1 New Order Single
+        if msgType == "D":
+            orderQty = message.getField(38)
+            ordType = message.getField(40)
+            clOrdID = message.getField(11)
+            side = message.getField(54)
+            symbol = message.getField(55)
+            transactTime = message.getField(60)
+            if (clOrdID, orderQty, ordType,
+                side, symbol, transactTime,
+                ) != "":
+                logfix.info("(sendMsg) New Ack >> %s" % msg)
+            else:
+                logfix.info("(sendMsg) New Ack >> %s" % msg + 'New Order Single FixMsg Error!')
+        # 7.4 Order Cancel Request
+        elif msgType == "F":
+            clOrdID = message.getField(11)
+            side = message.getField(54)
+            symbol = message.getField(55)
+            transactTime = message.getField(60)
+            if (clOrdID, side, symbol, transactTime) != "":
+                logfix.info("(sendMsg) Cancel Ack >> %s" % msg)
+            else:
+                logfix.info("(sendMsg) Cancel Ack >> %s" % msg + 'Order Cancel Request FixMsg Error!')
+        return
+
+    def onMessage(self, message, sessionID):
+        """Processing application message here"""
+        pass
+
+    def fromAdmin(self, message, sessionID):
+        # "接收会话类型消息时调用此方法"
+        msg = message.toString().replace(__SOH__, "|")
+        logfix.info("(Core) R << %s" % msg)
+        return
+
     def fromApp(self, message, sessionID):
         logfix.info("-------------------------------------------------------------------------------------------------")
         # "接收业务消息时调用此方法"
@@ -298,189 +339,6 @@ class Application(fix.Application):
         """Processing application message here"""
         pass
 
-    def fromAdmin(self, message, sessionID):
-        # "接收会话类型消息时调用此方法"
-        msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) R << %s" % msg)
-        return
-
-    def fromApp(self, message, sessionID):
-        logfix.info("-------------------------------------------------------------------------------------------------")
-        # "接收业务消息时调用此方法"
-        msgType = message.getHeader().getField(35)
-        clOrdID = message.getField(11)
-        orderID = message.getField(37)
-        ordStatus = message.getField(39)
-        transactTime = message.getField(60)
-        fsxTransactTime = message.getField(8169)
-
-        # 模糊匹配方法，判断收到fix消息体中的clordId是否在列表中，true则更新status，false则新增一条数据
-        # 设置匹配的阈值
-        threshold = 1
-        # 使用difflib模块的get_close_matches函数进行模糊匹配
-        matches = difflib.get_close_matches(clOrdID, [item['clordId'] for item in self.ReceveRes], n=1, cutoff=threshold)
-        # 如果有匹配结果
-        if matches:
-            matched_clordId = matches[0]
-            for item in self.ReceveRes:
-                if item['clordId'] == matched_clordId:
-                    # 更新该组数据的ordstatus
-                    item['ordstatus'] = str(ordStatus)
-        else:
-            # 添加新的数据到数组中
-            self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': str(ordStatus)})
-        if msgType != '9':
-            avgPx = message.getField(6)
-            CumQty = message.getField(14)
-            execID = message.getField(17)
-            execTransType = message.getField(20)
-            orderQty = message.getField(38)
-            ordType = message.getField(40)
-            rule80A = message.getField(47)
-            side = message.getField(54)
-            symbol = message.getField(55)
-            timeInForce = message.getField(59)
-            clientID = message.getField(109)
-            execType = message.getField(150)
-            leavesQty = message.getField(151)
-            cashMargin = message.getField(544)
-            crossingPriceType = message.getField(8164)
-            marginTransactionType = message.getField(8214)
-            if symbol == '5076' or symbol == '1311' or symbol == '6954':
-                self.ORDERS_DICT = message.getField(11)
-            msg = message.toString().replace(__SOH__, "|")
-            # 7.2 Execution Report – Order Accepted
-            if ordStatus == "0":
-                execBroker = message.getField(76)
-                lastShares = message.getField(32)
-                lastPx = message.getField(31)
-                clOrdID = message.getField(11)
-                if (
-                avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty, ordType, rule80A,
-                side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
-                crossingPriceType, fsxTransactTime, marginTransactionType) != "":
-                    logfix.info("(recvMsg) Order Accepted << %s" % msg + "ordStatus = " + str(ordStatus))
-                    logfix.info("Result : Order Accepted ," + "ordStatus =" + ordStatus)
-                else:
-                    logfix.info("(recvMsg) Order Accepted << %s" % msg + 'Order Accepted FixMsg Error!')
-                if execType != ordStatus:
-                    logfix.info(
-                        "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
-            # 7.3 Execution Report – Order Rejected
-            elif ordStatus == "8":
-                text = message.getField(58)
-                ordRejReason = message.getField(103)
-                lastShares = message.getField(32)
-                lastPx = message.getField(31)
-                clOrdID = message.getField(11)
-                if (
-                avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty, ordType, rule80A,
-                side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin, crossingPriceType,
-                fsxTransactTime, marginTransactionType, text, ordRejReason) != "":
-                    logfix.info("(recvMsg) Order Rej << %s" % msg + "RejRes = " + str(text))
-                else:
-                    logfix.info("(recvMsg) Order Rejected << %s" % msg + 'Order Rejected FixMsg Error!')
-                if execType != ordStatus:
-                    logfix.info(
-                        "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
-            # 7.6 Execution Report – Order Canceled
-            elif ordStatus == "4":
-                origClOrdID = message.getField(41)
-                execBroker = message.getField(76)
-                clOrdID = message.getField(11)
-                if (avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
-                    side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
-                    crossingPriceType,
-                    fsxTransactTime, marginTransactionType, origClOrdID, execBroker) != "":
-                    logfix.info("(recvMsg) Order Canceled << %s" % msg + "ordStatus = " + str(ordStatus))
-                else:
-                    logfix.info("(recvMsg) Order Canceled << %s" % msg + 'Order Canceled FixMsg Error!')
-                if execType != ordStatus:
-                    logfix.info(
-                        "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
-            # 7.7 Execution Report – Trade
-            elif ordStatus == "1" or ordStatus == "2":
-                lastPx = float(message.getField(31))
-                lastShares = message.getField(32)
-                execBroker = message.getField(76)
-                primaryLastPx = float(message.getField(8031))
-                primaryBidPx = float(message.getField(8032))
-                primaryAskPx = float(message.getField(8033))
-                routingDecisionTime = message.getField(8051)
-                propExecPrice = message.getField(8165)
-                PropExecID = message.getField(8166)
-                clOrdID = message.getField(11)
-                adjustLastPxBuy = math.ceil(primaryAskPx * (1 + self.ROL_PROP_BPS_BUY))
-                adjustLastPxSell = math.floor(primaryBidPx * (1 - self.ROL_PROP_BPS_SELL))
-                if (
-                avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty, ordType, rule80A,
-                side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
-                crossingPriceType, fsxTransactTime, marginTransactionType, primaryLastPx, primaryBidPx, primaryAskPx,
-                routingDecisionTime, propExecPrice, PropExecID) != "":
-                    logfix.info(
-                        "(recvMsg) Order Filled << %s" % msg + 'Side: ' + str(side) + ',' + "Fill Price: " + str(
-                            lastPx) + ',' + "AdjustLastPx Of Buy: " + str(
-                            adjustLastPxBuy) + ',' + "AdjustLastPx Of Sell: " + str(
-                            adjustLastPxSell) + ',' + "Order Type:" + str(ordType))
-                    logfix.info("Result : Order Filled ," + "ordStatus =" + ordStatus)
-                else:
-                    logfix.info("(recvMsg) Order Filled << %s" % msg + "Order Trade FixMsg Error!")
-                if execType != ordStatus:
-                    logfix.info("(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
-                    # Fill Price Check
-                if ordType == '1':
-                    if side == "1":
-                        adjustLastPx = math.ceil(primaryAskPx * (1 + self.ROL_PROP_BPS_BUY))
-                        if adjustLastPx == lastPx:
-                            return True
-                        else:
-                            logfix.info(
-                                'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol + ',' + 'adjustLastPx：' + str(
-                                    adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
-                    elif side == "2":
-                        adjustLastPx = math.floor(primaryBidPx * (1 - self.ROL_PROP_BPS_SELL))
-                        if adjustLastPx == lastPx:
-                            return True
-                        else:
-                            logfix.info(
-                                'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol + ',' + 'adjustLastPx：' + str(
-                                    adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
-            #  7.8 Execution Report – End of Day Expired
-            elif ordStatus == "C":
-                text = message.getField(58)
-                execBroker = message.getField(76)
-                origClOrdID = message.getField(41)
-                clOrdID = message.getField(11)
-                if (avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
-                    side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
-                    crossingPriceType, fsxTransactTime, marginTransactionType, execBroker, origClOrdID, text) != "":
-                    logfix.info("(recvMsg) Order Expired << %s" % msg + "ExpireRes = " + str(text))
-                    logfix.info("Result : Order Expired ," + "ordStatus =" + ordStatus)
-                else:
-                    logfix.info("(recvMsg) Order Expired << %s" % msg + "Order Expired FixMsg Error!")
-                if execType != ordStatus:
-                    logfix.info(
-                        "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
-        else:
-            origClOrdID = message.getField(41)
-            text = message.getField(58)
-            cxlRejReason = message.getField(102)
-            cxlRejResponseTo = message.getField(434)
-            clOrdID = message.getField(11)
-            msg = message.toString().replace(__SOH__, "|")
-            if (clOrdID, orderID, transactTime, fsxTransactTime, origClOrdID, text,
-                 cxlRejReason,cxlRejResponseTo) != "":
-                logfix.info("(recvMsg) Order Canceled << %s" % msg + "ordStatus = " + str(ordStatus))
-            else:
-                logfix.info("(recvMsg) Order Canceled << %s" % msg + 'Order Canceled FixMsg Error!')
-
-        self.onMessage(message, sessionID)
-        return
-
-    def onMessage(self, message, sessionID):
-        """Processing application message here"""
-        pass
-
     # 结果数据比对方法
     def compare_field_values(self, json_file1, json_file2, field_name):
         resList = []
@@ -607,7 +465,6 @@ class Application(fix.Application):
 
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
-        time.sleep(1)
 
     def order_cancel_request(self, row):
         # 使用变量接收上一个订单clOrdId
