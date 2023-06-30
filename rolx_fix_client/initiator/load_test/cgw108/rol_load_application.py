@@ -8,6 +8,7 @@ from datetime import datetime
 from model.logger import setup_logger
 import json
 import random
+
 __SOH__ = chr(1)
 
 # report
@@ -24,8 +25,8 @@ class Application(fix.Application):
     Rejected = 0
     Total = 0
     Filled = 0
-    Expired = 0
     num = 1
+    Expired = 0
 
     def __init__(self):
         super().__init__()
@@ -45,7 +46,11 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
-        logfix.info("Result : Total = {},Accepted = {},Filled = {},Rejected = {}" .format(self.Total, self.Accepted, self.Filled, self.Rejected))
+        logfix.info(
+            "Result : Total = {},Accepted = {},Filled = {},Rejected = {},Expired = {}".format(self.Total, self.Accepted,
+                                                                                              self.Filled,
+                                                                                              self.Rejected,
+                                                                                              self.Expired))
         print("Session (%s) logout !" % sessionID.toString())
         return
 
@@ -86,8 +91,8 @@ class Application(fix.Application):
             logfix.info("Result : Accepted ," + "ordStatus =" + ordStatus)
         elif ordStatus == "C":
             logfix.info("(recvMsg) R << %s" % msg)
-            self.Expired = self.Expire d+ 1
-            logfix.info("Result : Accepted ," + "ordStatus =" + ordStatus)
+            self.Expired = self.Expired + 1
+            logfix.info("Result : Expired ," + "ordStatus =" + ordStatus)
         elif ordStatus == "2":
             logfix.info("(recvMsg) R << %s" % msg)
             self.Filled = self.Filled + 1
@@ -106,7 +111,8 @@ class Application(fix.Application):
         self.execID += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
-        return '2023900' + str(t) + str(self.execID).zfill(8)
+        str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
+        return str(t) + str1 + str(self.execID).zfill(6)
 
     def getOrderQty(self):
         # 随机生成Qty1-5
@@ -127,7 +133,7 @@ class Application(fix.Application):
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
 
-        if self.num % 2 == 0:
+        if (self.num % 2) == 0:
             msg.setField(fix.Side("2"))
         else:
             msg.setField(fix.Side("1"))
@@ -149,7 +155,7 @@ class Application(fix.Application):
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while self.num < 127:
+            while self.num < 504:
                 self.num += 1
                 for row in case_data_list["testCase"]:
                     self.runTestCase(row)

@@ -73,7 +73,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         logfix.info("Result : Total = %d,Success = %d,Fail = %d" % (self.Total, self.Success, self.Fail))
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/rex_report.xlsx', self.Result, 2, 'P')  # 并写入文件
-        # send_mail(['report/rex_report.xlsx', 'logs/rex_report.log'])
+        send_mail(['report/rex_report.xlsx', 'logs/rex_report.log'])
         return
 
     def toAdmin(self, message, sessionID):
@@ -434,9 +434,8 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         self.execID += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
-        # 随机生成六位随机数并组合成字符串
-        str1 = ''.join([str(i) for i in random.sample(range(0, 9), 6)])
-        return '9002023' + str1 + str(t) + str(self.execID).zfill(8)
+        str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
+        return str(t) + str1 + str(self.execID).zfill(6)
 
     def insert_order_request(self, row):
         # 构造一个FIX协议消息（NewOrderSingle消息）并设置消息中的各个字段值
@@ -514,7 +513,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         return msg
 
     def runTestCase(self, row):
-        # 判断case是下单还是撤单
+        # 判断case是下单还是取消订单
         action = row["ActionType"]
         if action == 'NewAck':
             self.insert_order_request(row)
@@ -530,7 +529,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
-                # new - > partially fill - > cancel case，休眠2m再执行
+                # new - > partially fill - > cancel case，休眠2min再执行
                 if row["Id"] == "57":
                     time.sleep(120)
                     self.runTestCase(row)

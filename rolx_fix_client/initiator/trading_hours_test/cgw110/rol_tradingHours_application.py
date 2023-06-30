@@ -7,6 +7,7 @@ import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
+import random
 
 __SOH__ = chr(1)
 
@@ -98,7 +99,8 @@ class Application(fix.Application):
         self.execID += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
-        return '2023' + str(t) + str(self.execID).zfill(8)
+        str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
+        return str(t) + str1 + str(self.execID).zfill(6)
 
     def insert_order_request(self, row):
         logfix.info("Test Contexts：" + row["Comment"])
