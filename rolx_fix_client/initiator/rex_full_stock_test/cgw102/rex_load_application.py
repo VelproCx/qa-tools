@@ -9,6 +9,7 @@ from model.logger import setup_logger
 import json
 import random
 import math
+
 __SOH__ = chr(1)
 
 # report
@@ -27,6 +28,15 @@ class Application(fix.Application):
     sideNum = 0
     REX_PROP_BPS_BUY = 0.0022
     REX_PROP_BPS_SELL = 0.0022
+    Rejected = 0
+    Book_is_closed = 0
+    Accepted = 0
+    Filled = 0
+    PartiallyFilled = 0
+    NewAck = 0
+    Expired = 0
+    No_open_price = 0
+
     def __init__(self):
         super().__init__()
         self.sessionID = None
@@ -45,6 +55,12 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
+        logfix.info(
+            "Result : NewAck ={} Accepted = {} , Rejected= {}, Expired= {}, Filled = {}, PartiallyFilled = {}, "
+            "Book_is_closed={},""No_open_price={}".format
+            (self.NewAck, self.Accepted, self.Rejected, self.Expired, self.Filled, self.PartiallyFilled,
+             self.Book_is_closed, self.No_open_price))
+
         # logfix.info("Result : Total = %d,Success = %d,Fail = %d" % (self.Total, self.Success, self.Fail))
         # self.logsCheck()
         print("Session (%s) logout !" % sessionID.toString())
@@ -121,6 +137,8 @@ class Application(fix.Application):
                 side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
                 crossingPriceType, fsxTransactTime, marginTransactionType) != "":
                 logfix.info("(recvMsg) Order Accepted << %s" % msg + "ordStatus = " + str(ordStatus))
+                self.Accepted += 1
+
             else:
                 logfix.info("(recvMsg) Order Accepted << %s" % msg + 'Order Accepted FixMsg Error!')
         # 7.3 Execution Report – Order Rejected
@@ -134,6 +152,9 @@ class Application(fix.Application):
                 side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin, crossingPriceType,
                 fsxTransactTime, marginTransactionType, text, ordRejReason) != "":
                 logfix.info("(recvMsg) Order Rej << %s" % msg + "RejRes = " + str(text))
+                self.Rejected += 1
+                if text == "Book is CLOSED":
+                    self.Book_is_closed += 1
             else:
                 logfix.info("(recvMsg) Order Rej << %s" % msg + 'Order Rejected FixMsg Error!')
         # 7.7 Execution Report – Trade
@@ -151,14 +172,18 @@ class Application(fix.Application):
             # Trade Tags is null check
             if (avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty, ordType, rule80A,
                 side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
-                crossingPriceType, fsxTransactTime, marginTransactionType,primaryLastPx,routingDecisionTime,propExecPrice,PropExecID) != "":
-                logfix.info("(recvMsg) Order Filled << %s" % msg + 'Side: ' + str(side) + ',' + "Fill Price: " + str(lastPx) + ',' + "AdjustLastPx Of Buy: " + str(adjustLastPxBuy) + ',' + "AdjustLastPx Of Sell: " + str(adjustLastPxSell) )
+                crossingPriceType, fsxTransactTime, marginTransactionType, primaryLastPx, routingDecisionTime,
+                propExecPrice, PropExecID) != "":
+                logfix.info("(recvMsg) Order Filled << %s" % msg + 'Side: ' + str(side) + ',' + "Fill Price: " + str(
+                    lastPx) + ',' + "AdjustLastPx Of Buy: " + str(
+                    adjustLastPxBuy) + ',' + "AdjustLastPx Of Sell: " + str(adjustLastPxSell))
             else:
                 logfix.info("(recvMsg) Order Filled << %s" % msg + "Trade FixMsg Error!")
             # Fill Price Check
             if side == "1":
                 adjustLastPx = math.ceil(primaryLastPx * (1 + self.REX_PROP_BPS_BUY))
                 if adjustLastPx == lastPx:
+                    self.PartiallyFilled += 1
                     return True
                 else:
                     logfix.info(
@@ -167,6 +192,7 @@ class Application(fix.Application):
             elif side == "2":
                 adjustLastPx = math.floor(primaryLastPx * (1 - self.REX_PROP_BPS_SELL))
                 if adjustLastPx == lastPx:
+                    self.Filled += 1
                     return True
                 else:
                     logfix.info(
@@ -180,8 +206,9 @@ class Application(fix.Application):
             clOrdID = message.getField(11)
             if (avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
                 side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
-                crossingPriceType, fsxTransactTime, marginTransactionType,execBroker,origClOrdID, text) != "":
+                crossingPriceType, fsxTransactTime, marginTransactionType, execBroker, origClOrdID, text) != "":
                 logfix.info("(recvMsg) Order Expired << %s" % msg + "ExpireRes = " + str(text))
+                self.Expired += 1
             else:
                 logfix.info("(recvMsg) Order Expired << %s" % msg + "Order Accepted FixMsg Error!")
 

@@ -1,0 +1,17 @@
+{
+  "testCase": [
+    {"Id": "1",
+      "Account": "RSIT_ACCOUNT_1",
+      "ActionType": "NewAck",
+      "OrderQty": 5,
+      "OrdType": "1",
+      "Side": "1",
+      "Symbol": "5110",
+      "TimeInForce": "0",
+      "CrossingPriceType": "REX",
+      "Rule80A": "P",
+      "CashMargin": "1",
+      "MarginTransactionType": "0"
+    }
+  ]
+}
