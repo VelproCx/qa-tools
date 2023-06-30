@@ -85,7 +85,7 @@ class Application(fix.Application):
 
             # Added tag to the EDP project
             MinQty = message.getField(110)
-            OrderClassification = message.getField(8086)
+            OrderClassification = message.getField(8060)
             CrossingPriceType = message.getField(8164)
             SelfTradePreventionId = message.getField(8174)
 
@@ -99,10 +99,11 @@ class Application(fix.Application):
         # 7.4 Order Cancel Request
         elif msgType == "F":
             clOrdID = message.getField(11)
+            origClOrdID = message.getField(41)
             side = message.getField(54)
             symbol = message.getField(55)
             transactTime = message.getField(60)
-            if(clOrdID, side, symbol, transactTime) != "":
+            if(clOrdID, side, symbol, transactTime, origClOrdID) != "":
                 logfix.info("(sendMsg) Cancel Ack >> {}".format(msg))
             else:
                 logfix.info("(sendMsg) Cancel Ack >> {}".format(msg) + 'Order Cancel Request FixMsg Error!')
@@ -159,7 +160,7 @@ class Application(fix.Application):
 
             # Added tag to the EDP project
             MinQty = message.getField(110)
-            OrderClassification = message.getField(8086)
+            OrderClassification = message.getField(8060)
             SelfTradePreventionId = message.getField(8174)
 
             if symbol == '5076' or symbol == '1311' or symbol == '6954':

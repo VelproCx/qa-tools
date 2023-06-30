@@ -8,6 +8,7 @@ from datetime import datetime
 from model.logger import setup_logger
 import json
 import random
+
 __SOH__ = chr(1)
 
 # report
@@ -20,9 +21,12 @@ class Application(fix.Application):
     execID = 0
     ORDERS_DICT = []
     LASTEST_ORDER = {}
-    Success = 0
-    Fail = 0
+    Accepted = 0
+    Rejected = 0
     Total = 0
+    Filled = 0
+    num = 1
+    Expired = 0
 
     def __init__(self):
         super().__init__()
@@ -42,7 +46,11 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
-        logfix.info("Result : Total = %d,Success = %d,Fail = %d" % (self.Total, self.Success, self.Fail))
+        logfix.info(
+            "Result : Total = {},Accepted = {},Filled = {},Rejected = {},Expired = {}".format(self.Total, self.Accepted,
+                                                                                              self.Filled,
+                                                                                              self.Rejected,
+                                                                                              self.Expired))
         print("Session (%s) logout !" % sessionID.toString())
         return
 
@@ -71,19 +79,24 @@ class Application(fix.Application):
         ordStatus = message.getField(39)
         msg = message.toString().replace(__SOH__, "|")
 
-        # if ordStatus == "8":
-        #     logfix.info("(recvMsg) R << %s" % msg)
-        #     self.Rejected = self.Rejected + 1
-        #     logfix.info("Result : Rejected ," + "ordStatus =" + ordStatus)
-        # elif ordStatus == "0":
-        #     logfix.info("(recvMsg) R << %s" % msg)
-        #     self.Total = self.Total + 1
-        #     self.Accepted = self.Accepted + 1
-        #     logfix.info("Result : Accepted ," + "ordStatus =" + ordStatus)
-        # elif ordStatus == "2":
-        #     logfix.info("(recvMsg) R << %s" % msg)
-        #     self.Filled = self.Filled + 1
-        #     logfix.info("Result : Filled ," + "ordStatus =" + ordStatus)
+        if ordStatus == "8":
+            logfix.info("(recvMsg) R << %s" % msg)
+            self.Rejected = self.Rejected + 1
+            self.Total = self.Total + 1
+            logfix.info("Result : Rejected ," + "ordStatus =" + ordStatus)
+        elif ordStatus == "0":
+            logfix.info("(recvMsg) R << %s" % msg)
+            self.Total = self.Total + 1
+            self.Accepted = self.Accepted + 1
+            logfix.info("Result : Accepted ," + "ordStatus =" + ordStatus)
+        elif ordStatus == "C":
+            logfix.info("(recvMsg) R << %s" % msg)
+            self.Expired = self.Expired + 1
+            logfix.info("Result : Expired ," + "ordStatus =" + ordStatus)
+        elif ordStatus == "2":
+            logfix.info("(recvMsg) R << %s" % msg)
+            self.Filled = self.Filled + 1
+            logfix.info("Result : Filled ," + "ordStatus =" + ordStatus)
 
         self.onMessage(message, sessionID)
         logfix.info("-------------------------------------------------------------------------------------------------")
@@ -98,7 +111,8 @@ class Application(fix.Application):
         self.execID += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
-        return '2023900' + str(t) + str(self.execID).zfill(8)
+        str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
+        return str(t) + str1 + str(self.execID).zfill(6)
 
     def getOrderQty(self):
         # 随机生成Qty1-5
@@ -112,13 +126,17 @@ class Application(fix.Application):
         header.setField(fix.MsgType("D"))
         msg.setField(fix.Account("RUAT_ACCOUNT_10"))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
-        msg.setField(fix.OrderQty(self.getOrderQty()))
+        msg.setField(fix.OrderQty(1))
         msg.setField(fix.OrdType("1"))
         msg.setField(fix.Symbol(row["Symbol"]))
         msg.setField(fix.HandlInst('1'))
-        msg.setField(fix.Side("2"))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
+
+        if (self.num % 2) == 0:
+            msg.setField(fix.Side("2"))
+        else:
+            msg.setField(fix.Side("1"))
 
         # 获取TransactTime
         trstime = fix.TransactTime()
@@ -127,20 +145,18 @@ class Application(fix.Application):
 
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
-        time.sleep(1)
 
     def runTestCase(self, row):
         self.insert_order_request(row)
 
     def load_test_case(self):
         """Run"""
-        with open('../case/top500.json', 'r') as f_json:
+        with open('../case/topix400_case.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
-            num = 0
-            while num < 127:
-                num += 1
+            while self.num < 127:
+                self.num += 1
                 for row in case_data_list["testCase"]:
                     self.runTestCase(row)
                     time.sleep(0.004)
