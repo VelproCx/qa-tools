@@ -4,113 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bccaebb-8226-4346-b537-2df88f68e408" name="Changes" comment="update config path">
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/case/REX_Functional_Test_Matrix.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/case/ROL_Functional_Test_Matrix.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/mail/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/mail/run_email.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/method/data_comparison.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/method/file_generation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/report/rex_report.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/report/rolx_report.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/rex_client.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/rex_regression_application.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/rex_regression_client.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/rex_start.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/rolx_client.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/rolx_regression_application.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/rolx_regression_client.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/rolx_start.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/spec/FIX40.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/spec/FIX41.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/spec/FIX42.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/spec/FIX43.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/spec/FIX44.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/spec/FIX50.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/spec/FIX50SP1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/spec/FIX50SP2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/spec/FIXT11.xml" afterDir="false" />
+    <list default="true" id="6bccaebb-8226-4346-b537-2df88f68e408" name="Changes" comment="add comment">
+      <change afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/regression/case/test2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/case/rex_1602.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/case/ROL_FOR_PROD.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/case/test.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw101/rex_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw101/rex_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw102/rex_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw102/rex_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw103/rex_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw103/rex_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw104/rex_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw104/rex_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw105/rex_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw105/rex_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw106/rol_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw106/rol_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw107/rol_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw107/rol_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw108/rol_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw108/rol_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw109/rol_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw109/rol_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw110/rol_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw110/rol_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/rex_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/rex_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/rol_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/rol_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/regression/rex_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/regression/rex_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/regression/rolx_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/regression/rolx_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.body" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/case/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.header" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/model/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.seqnums" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.session" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.body" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.header" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.seqnums" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.session" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/edp_regression_application.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/edp_regression_application.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/regression/logs/rolx_report.log" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/regression/logs/rolx_report.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/regression/report/rolx_report.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/regression/report/rolx_report.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/regression/rex_regression_application.py" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/regression/rex_regression_application.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/regression/rolx_regression_application.py" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/regression/rolx_regression_application.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw101/rex_load_application.py" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw101/rex_load_application.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw101/rex_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw101/rex_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw102/rex_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw102/rex_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw103/rex_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw103/rex_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw104/rex_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw104/rex_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw105/rex_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw105/rex_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw106/rex_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw106/rex_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw107/rex_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw107/rex_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw108/rex_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw108/rex_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw109/rex_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw109/rex_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/logs/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.event.current.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/logs/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.messages.current.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/logs/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.event.current.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/logs/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.messages.current.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/logs/GLOBAL.event.current.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/logs/GLOBAL.messages.current.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/logs/report.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/model/Field.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/model/Field.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/model/Message.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/model/Message.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/model/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/model/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/model/logger.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.body" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.header" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.seqnums" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.session" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.body" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.header" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.seqnums" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/Sessions/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.session" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw101/rex_load_start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw101/rex_load_start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/case/topix400_case.json" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/case/topix400_case.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw101/rol_load_application.py" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw101/rol_load_application.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw101/rol_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw101/rol_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw102/rol_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw102/rol_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw103/rol_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw103/rol_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw104/rol_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw104/rol_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw105/rol_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw105/rol_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw106/rol_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw106/rol_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw107/rol_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw107/rol_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw108/rol_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw108/rol_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw109/rol_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw109/rol_load_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/logs/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.event.current.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/logs/FIX.4.2-RSIT_ROLX_1-FSX_SIT_ROLX.messages.current.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/logs/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.event.current.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/logs/FIX.4.2-RSIT_ROLX_2-FSX_SIT_ROLX.messages.current.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/logs/GLOBAL.event.current.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/logs/GLOBAL.messages.current.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/logs/report.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/model/Field.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/model/Message.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/model/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/regression/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/model/logger.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw101/rol_tradingHours_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw101/rol_tradingHours_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw102/rol_tradingHours_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw102/rol_tradingHours_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw103/rol_tradingHours_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw103/rol_tradingHours_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw104/rol_tradingHours_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw104/rol_tradingHours_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw105/rol_tradingHours_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw105/rol_tradingHours_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw106/rol_tradingHours_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw106/rol_tradingHours_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw107/rol_tradingHours_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw107/rol_tradingHours_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw108/rol_tradingHours_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw108/rol_tradingHours_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw109/rol_tradingHours_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw109/rol_tradingHours_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw110/rol_tradingHours_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/trading_hours_test/cgw110/rol_tradingHours_client.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw101/rol_load_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw101/rol_load_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw101/rol_load_start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw101/rol_load_start.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,24 +43,98 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/elevenchen/Desktop/qa-tools/edp_fix_client",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/elevenchen/Desktop/qa-tools/edp_fix_client&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/edp_fix_client" />
       <recent name="$PROJECT_DIR$" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/case" />
+      <recent name="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/case" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Shell Script.rex_load_start.sh (1)">
+    <configuration name="rex_load_start.sh (1)" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw101/rex_load_start.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/rolx_fix_client/initiator/rex_full_stock_test/cgw101" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/sh" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="rex_load_start.sh" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw101/rex_load_start.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw101" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/sh" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="rol_load_start.sh" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw101/rol_load_start.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw101" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/zsh" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="rolx_start.sh" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/rolx_fix_client/initiator/regression/rolx_start.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/rolx_fix_client/initiator/regression" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/sh" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Shell Script.rex_load_start.sh (1)" />
+        <item itemvalue="Shell Script.rol_load_start.sh" />
+        <item itemvalue="Shell Script.rolx_start.sh" />
+        <item itemvalue="Shell Script.rex_load_start.sh" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -164,6 +150,10 @@
       <workItem from="1686493141480" duration="610000" />
       <workItem from="1686540036001" duration="1144000" />
       <workItem from="1686745806211" duration="1005000" />
+      <workItem from="1687310163124" duration="14469000" />
+      <workItem from="1687661575406" duration="39319000" />
+      <workItem from="1687952380950" duration="8680000" />
+      <workItem from="1688039871803" duration="20506000" />
     </task>
     <task id="LOCAL-00001" summary="AutoFixClient first commit">
       <created>1686313466031</created>
@@ -193,7 +183,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686745986710</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="add comment">
+      <created>1687230207096</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1687230207096</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,6 +224,10 @@
     <MESSAGE value="update config file" />
     <MESSAGE value="Add comment" />
     <MESSAGE value="update config path" />
-    <option name="LAST_COMMIT_MESSAGE" value="update config path" />
+    <MESSAGE value="add comment" />
+    <option name="LAST_COMMIT_MESSAGE" value="add comment" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/qa_tools$rex_regression_application.coverage" NAME="rex_regression_application Coverage Results" MODIFIED="1686825973619" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rolx_fix_client/initiator/regression" />
   </component>
 </project>

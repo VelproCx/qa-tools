@@ -8,3 +8,5 @@
 cd /initiator/rolx_full_stock_test/cgw101
 sleep 5
 python3 rol_load_client.py rol_load_client.cfg
+
+

@@ -59,7 +59,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
 
     def onLogout(self, sessionID):
         # 主要功能是在客户端断开连接时进行日志检查，将接收到的响应结果写入到文件中，
-        # 并将响应结果与预期结果进行比较。比较结果将保存在self.Result属性中。
+        # 并将响应结果与预期结果进行比较。比较结果将保存在self.Result数组中。
         # 然后，使用日志记录器logfix输出比较结果的统计信息，包括总数、成功数和失败数。
         # 在控制台上输出一个字符串，表示会话已经结束。最后，调用self.writeResExcel方法，将比较结果写入到Excel文件rex_report.xlsx中
         # "客户端断开连接时候调用此方法"
@@ -135,7 +135,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         transactTime = message.getField(60)
         fsxTransactTime = message.getField(8169)
 
-        if ordStatus == '4':
+        if ordStatus == '4':  # Canceled 取消订单
             symbol = message.getField(55)  # 使用getField方法获取消息中的55字段的值
             print(symbol)
             if symbol == '1311':  # 如果symbol字段的值为1311，则将clOrdID字段的值加1，并将其转换为字符串类型，赋值给变量new_clOrdID和clOrdID
@@ -509,4 +509,3 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                 else:
                     time.sleep(1)
                     self.runTestCase(row)
-
