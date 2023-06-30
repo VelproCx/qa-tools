@@ -1,0 +1,21 @@
+{
+  "testCase": [
+    {
+      "Id": "29",
+      "ScenarioName": "Symbol Check",
+      "Account": "RUAT_ACCOUNT_3",
+      "Market": "ROLX",
+      "ActionType": "NewAck",
+      "Comment": "ROLX_Limit_NewAck",
+      "OrderQty": 5,
+      "OrdType": "2",
+      "Price": 369,
+      "Side": "2",
+      "Symbol": "9999",
+      "TimeInForce": "0",
+      "CrossingPriceType": "ROL",
+      "Rule80A": "P",
+      "CashMargin": "1",
+      "MarginTransactionType": "0"
+    } ]
+}

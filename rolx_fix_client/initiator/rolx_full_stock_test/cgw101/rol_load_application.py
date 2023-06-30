@@ -10,6 +10,7 @@ import json
 import random
 # from mail.run_email import send_mail
 import math
+
 __SOH__ = chr(1)
 
 # report
@@ -18,16 +19,20 @@ logfix = logging.getLogger('logfix')
 
 
 class Application(fix.Application):
-    orderID = 0
+    Accepted = 0
     execID = 0
     ORDERS_DICT = []
     LASTEST_ORDER = {}
-    Success = 0
-    Fail = 0
-    Total = 0
     sideNum = 0
     ROL_PROP_BPS_BUY = 0.0022
     ROL_PROP_BPS_SELL = 0.0022
+    Rejected = 0
+    Book_is_closed = 0
+    Filled = 0
+    PartiallyFilled = 0
+    NewAck = 0
+    Expired = 0
+
     def __init__(self):
         super().__init__()
         self.sessionID = None
@@ -46,8 +51,19 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
+        logfix.info(
+            "Result : NewAck ={} Accepted = {} , Rejected= {}, Expired= {}, Filled = {}, PartiallyFilled = {}, "
+            "Book_is_closed={}".format
+            (self.NewAck, self.Accepted, self.Rejected, self.Expired, self.Filled, self.PartiallyFilled,
+             self.Book_is_closed))
+
         # logfix.info("Result : Total = %d,Success = %d,Fail = %d" % (self.Total, self.Success, self.Fail))
         # self.logsCheck()
+        # if self.Rejected == self.Book_is_closed:
+        #     logfix.info("case OK")
+        # else:
+        #     logfix.info("case NG")
+
         print("Session (%s) logout !" % sessionID.toString())
         # send_mail('./report.log')
         return
@@ -75,6 +91,7 @@ class Application(fix.Application):
                 side, symbol, transactTime,
                 ) != "":
                 logfix.info("(sendMsg) New Ack >> %s" % msg)
+                self.NewAck += 1
             else:
                 logfix.info("(sendMsg) New Ack >> %s" % msg + 'New Order Single FixMsg Error!')
         return
@@ -122,6 +139,7 @@ class Application(fix.Application):
                 side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
                 crossingPriceType, fsxTransactTime, marginTransactionType) != "":
                 logfix.info("(recvMsg) Order Accepted << %s" % msg + "ordStatus = " + str(ordStatus))
+                self.Accepted += 1
             else:
                 logfix.info("(recvMsg) Order Accepted << %s" % msg + 'Order Accepted FixMsg Error!')
         # 7.3 Execution Report – Order Rejected
@@ -131,10 +149,15 @@ class Application(fix.Application):
             lastShares = message.getField(32)
             lastPx = message.getField(31)
             clOrdID = message.getField(11)
+
             if (avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty, ordType, rule80A,
                 side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin, crossingPriceType,
                 fsxTransactTime, marginTransactionType, text, ordRejReason) != "":
                 logfix.info("(recvMsg) Order Rej << %s" % msg + "RejRes = " + str(text))
+                self.Rejected += 1
+                if text == "Book is CLOSED":
+                    self.Book_is_closed += 1
+
             else:
                 logfix.info("(recvMsg) Order Rej << %s" % msg + 'Order Rejected FixMsg Error!')
         # 7.7 Execution Report – Trade
@@ -154,25 +177,32 @@ class Application(fix.Application):
             # Trade Tags is null check
             if (avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty, ordType, rule80A,
                 side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
-                crossingPriceType, fsxTransactTime, marginTransactionType,primaryLastPx,primaryBidPx,primaryAskPx,routingDecisionTime,propExecPrice,PropExecID) != "":
-                logfix.info("(recvMsg) Order Filled << %s" % msg + 'Side: ' + str(side) + ',' + "Fill Price: " + str(lastPx) + ',' + "AdjustLastPx Of Buy: " + str(adjustLastPxBuy) + ',' + "AdjustLastPx Of Sell: " + str(adjustLastPxSell) )
+                crossingPriceType, fsxTransactTime, marginTransactionType, primaryLastPx, primaryBidPx, primaryAskPx,
+                routingDecisionTime, propExecPrice, PropExecID) != "":
+                logfix.info("(recvMsg) Order Filled << %s" % msg + 'Side: ' + str(side) + ',' + "Fill Price: " + str(
+                    lastPx) + ',' + "AdjustLastPx Of Buy: " + str(
+                    adjustLastPxBuy) + ',' + "AdjustLastPx Of Sell: " + str(adjustLastPxSell))
             else:
                 logfix.info("(recvMsg) Order Filled << %s" % msg + "Trade FixMsg Error!")
             # Fill Price Check
             if side == "1":
                 adjustLastPx = math.ceil(primaryAskPx * (1 + self.ROL_PROP_BPS_BUY))
                 if adjustLastPx == lastPx:
+                    self.PartiallyFilled += 1
                     return True
                 else:
-                    logfix.info('Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol + ',' + 'adjustLastPx：' + str(
-                        adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
+                    logfix.info(
+                        'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol + ','
+                        + 'adjustLastPx：' + str(adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
             elif side == "2":
                 adjustLastPx = math.floor(primaryBidPx * (1 - self.ROL_PROP_BPS_SELL))
                 if adjustLastPx == lastPx:
+                    self.Filled += 1
                     return True
                 else:
-                    logfix.info('Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol + ',' + 'adjustLastPx：' + str(
-                        adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
+                    logfix.info(
+                        'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol + ','
+                        + 'adjustLastPx：' + str(adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
         #  7.8 Execution Report – End of Day Expired
         elif ordStatus == "C":
             text = message.getField(58)
@@ -181,8 +211,9 @@ class Application(fix.Application):
             clOrdID = message.getField(11)
             if (avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
                 side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
-                crossingPriceType, fsxTransactTime, marginTransactionType,execBroker,origClOrdID, text) != "":
+                crossingPriceType, fsxTransactTime, marginTransactionType, execBroker, origClOrdID, text) != "":
                 logfix.info("(recvMsg) Order Expired << %s" % msg + "ExpireRes = " + str(text))
+                self.Expired += 1
             else:
                 logfix.info("(recvMsg) Order Expired << %s" % msg + "Order Expired FixMsg Error!")
 
@@ -209,18 +240,20 @@ class Application(fix.Application):
         t = int(time.time())
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 6)])
         return '2023' + str1 + str(t) + str(self.execID).zfill(8)
+
     # Order Qty 随机生成
     def getOrderQty(self):
         # 随机生成Qty1-5
         orderQty = random.randint(1, 5)
         return orderQty
+
     # New Ack Req
     def insert_order_request(self, row):
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account("RUAT_ACCOUNT_1"))
+        msg.setField(fix.Account("RSIT_ACCOUNT_1"))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(self.getOrderQty()))
         msg.setField(fix.OrdType("1"))
@@ -249,7 +282,7 @@ class Application(fix.Application):
     # 加载用例文件
     def load_test_case(self):
         """Run"""
-        with open('../case/full_stock_List.json', 'r') as f_json:
+        with open('../case/ROL_FOR_PROD.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(1)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
@@ -260,3 +293,6 @@ class Application(fix.Application):
                 for row in case_data_list["testCase"]:
                     self.runTestCase(row)
                     time.sleep(0.04)
+            # for row in case_data_list["testCase"]:
+            #     self.runTestCase(row)
+            #     time.sleep(1)
