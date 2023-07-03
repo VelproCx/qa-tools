@@ -17,11 +17,7 @@ from openpyxl import  load_workbook
 
 import pandas as pd
 # report
-<<<<<<< HEAD
-setup_logger('logfix', 'edp_report.log')
-=======
 setup_logger('logfix', 'logs/edp_report.log')
->>>>>>> b1decb1 (updete edp_regression_application.py & add gRpc file)
 logfix = logging.getLogger('logfix')
 
 class Application(fix.Application):
@@ -55,7 +51,7 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
-        # self.logsCheck()
+        self.logsCheck()
         json_data = json.dumps(self.ReceveRes)
         # 将JSON数据写入文件
         with open('logs/recv_data.json', 'w') as file:
@@ -63,13 +59,8 @@ class Application(fix.Application):
         self.Result = self.compare_field_values('case/EDP_Functional_Test_Matrix.json', 'logs/recv_data.json', 'ordstatus')
         logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
         print("Session (%s) logout !" % sessionID.toString())
-<<<<<<< HEAD
-        # self.writeResExcel('report/rolx_report.xlsx', self.Result, 2, 'P')
-        # send_mail(['report/rolx_report.xlsx', 'logs/rolx_report.log'])
-=======
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'P')
         # send_mail(['report/edp_report.xlsx', 'logs/edp_report.log'])
->>>>>>> b1decb1 (updete edp_regression_application.py & add gRpc file)
         return
 
     def toAdmin(self, message, sessionID):
@@ -92,22 +83,17 @@ class Application(fix.Application):
             symbol = message.getField(55)
             transactTime = message.getField(60)
 
-<<<<<<< HEAD
-            # MinQty = message.getField(110)
-            # OrderClassification = message.getField(8086)
-            # CrossingPriceType = message.getField(8164)
-            # SelfTradePreventionId = message.getField(8174)
-=======
             # Added tag to the EDP project
 
             MinQty = message.getField(110)
             OrderClassification = message.getField(8060)
             CrossingPriceType = message.getField(8164)
             SelfTradePreventionId = message.getField(8174)
->>>>>>> b1decb1 (updete edp_regression_application.py & add gRpc file)
 
             if (clOrdID, orderQty, ordType,
-                side, symbol, transactTime) != "":
+                side, symbol, transactTime,
+                MinQty, OrderClassification, CrossingPriceType,
+                SelfTradePreventionId) != "":
                 logfix.info("(sendMsg) New Ack >> {}".format(msg))
             else:
                 logfix.info("(sendMsg) New Ack >> {}".format(msg) + 'New Order Single FixMsg Error!')
@@ -159,8 +145,6 @@ class Application(fix.Application):
             ordStatus = message.getField(39)
             transactTime = message.getField(60)
             fsxTransactTime = message.getField(8169)
-
-
 
         # 模糊匹配方法，判断收到fix消息体中的clordId是否在列表中，true则更新status，false则新增一条数据
         # 设置匹配的阈值
@@ -561,13 +545,8 @@ class Application(fix.Application):
 
     def load_test_case(self):
         """Run"""
-<<<<<<< HEAD
-        with open('case/test.json', 'r') as f_json:
-            # generation('case/ROL_Functional_Test_Matrix.json', 'report/rolx_report.xlsx')
-=======
         with open('case/EDP_Functional_Test_Matrix.json', 'r') as f_json:
             generation('case/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
->>>>>>> b1decb1 (updete edp_regression_application.py & add gRpc file)
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
