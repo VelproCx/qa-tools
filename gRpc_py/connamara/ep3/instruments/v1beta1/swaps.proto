@@ -1,0 +1,786 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.instruments.v1beta1;
+
+option go_package = "instrumentsv1beta1";
+option java_package = "com.connamara.ep3.instruments.v1beta1";
+option java_outer_classname = "SwapsProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Instruments.V1Beta1";
+option objc_class_prefix = "CEI";
+
+import "connamara/ep3/type/v1beta1/type.proto";
+
+//InterestRateSwapAttributesSideConvention defines the side conventions for IRS instruments.
+enum InterestRateSwapAttributesSideConvention {
+    INTEREST_RATE_SWAP_ATTRIBUTES_SIDE_CONVENTION_UNDEFINED = 0;
+
+    // Pay Fixed
+    INTEREST_RATE_SWAP_ATTRIBUTES_SIDE_CONVENTION_BUY = 1;
+
+    // Receive Fixed
+    INTEREST_RATE_SWAP_ATTRIBUTES_SIDE_CONVENTION_SELL = 2;
+}
+
+//InterestRateSwapAttributesBusinessDayConvention defines the business day convention rules for IRS instruments.
+enum InterestRateSwapAttributesBusinessDayConvention {
+    INTEREST_RATE_SWAP_ATTRIBUTES_BUSINESS_DAY_CONVENTION_UNDEFINED = 0;
+
+    // Modified Following
+    INTEREST_RATE_SWAP_ATTRIBUTES_BUSINESS_DAY_CONVENTION_MODIFIED_FOLLOWING = 1;
+
+    // Following
+    INTEREST_RATE_SWAP_ATTRIBUTES_BUSINESS_DAY_CONVENTION_FOLLOWING = 2;
+
+    // FRN
+    INTEREST_RATE_SWAP_ATTRIBUTES_BUSINESS_DAY_CONVENTION_FRN = 3;
+
+    // Preceding
+    INTEREST_RATE_SWAP_ATTRIBUTES_BUSINESS_DAY_CONVENTION_PRECEDING = 4;
+
+    // ModPreceding
+    INTEREST_RATE_SWAP_ATTRIBUTES_BUSINESS_DAY_CONVENTION_MODIFIED_PRECEDING = 5;
+
+    // Nearest
+    INTEREST_RATE_SWAP_ATTRIBUTES_BUSINESS_DAY_CONVENTION_NEAREST = 6;
+
+    // None
+    INTEREST_RATE_SWAP_ATTRIBUTES_BUSINESS_DAY_CONVENTION_NONE = 7;
+
+    // NotApplicable
+    INTEREST_RATE_SWAP_ATTRIBUTES_BUSINESS_DAY_CONVENTION_NOTAPPLICABLE = 8;
+
+}
+
+//InterestRateSwapAttributesFrequency defines the frequencies for payment rules for IRS instruments.
+enum InterestRateSwapAttributesFrequency {
+    INTEREST_RATE_SWAP_ATTRIBUTES_FREQUENCY_UNDEFINED = 0;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_FREQUENCY_MONTHLY = 1;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_FREQUENCY_QUARTERLY = 2;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_FREQUENCY_SEMI_ANNUALLY = 3;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_FREQUENCY_ANNUALLY = 4;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_FREQUENCY_DAILY = 5;
+}
+
+//InterestRateSwapAttributesCompoundingMethod defines the compounding method rules for IRS instruments.
+enum InterestRateSwapAttributesCompoundingMethod {
+    INTEREST_RATE_SWAP_ATTRIBUTES_COMPOUNDING_METHOD_UNDEFINED = 0;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_COMPOUNDING_METHOD_NONE = 1;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_COMPOUNDING_METHOD_FLAT = 2;
+}
+
+//InterestRateSwapAttributesDayCountConvention defines day/year counting rules for IRS instruments.
+enum InterestRateSwapAttributesDayCountConvention {
+    INTEREST_RATE_SWAP_ATTRIBUTES_DAY_COUNT_CONVENTION_UNDEFINED = 0;
+
+    // 30/360
+    INTEREST_RATE_SWAP_ATTRIBUTES_DAY_COUNT_CONVENTION_30_360 = 1;
+
+    // ACT/360
+    INTEREST_RATE_SWAP_ATTRIBUTES_DAY_COUNT_CONVENTION_ACT_360 = 2;
+
+    // ACT/365.FIXED
+    INTEREST_RATE_SWAP_ATTRIBUTES_DAY_COUNT_CONVENTION_ACT_365_FIXED = 3;
+}
+
+// InterestRateSwapAttributesDateRelativeTo defines payment date relative to rules for IRS instruments.
+enum InterestRateSwapAttributesDateRelativeTo {
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_DATE_RELATIVE_TO_UNDEFINED = 0;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_DATE_RELATIVE_TO_CALCULATION_PERIOD_START_DATE = 1;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_DATE_RELATIVE_TO_CALCULATION_PERIOD_END_DATE = 2;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_DATE_RELATIVE_TO_LAST_PRICING_DATE = 3;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_DATE_RELATIVE_TO_RESET_DATE = 4;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_DATE_RELATIVE_TO_VALUATION_DATE = 5;
+
+}
+
+// InterestRateSwapAttributesDayType defines day type rules for IRS instruments.
+enum InterestRateSwapAttributesDayType {
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_DAY_TYPE_UNDEFINED = 0;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_DAY_TYPE_BUSINESS = 1;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_DAY_TYPE_CALENDAR = 2;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_DAY_TYPE_COMMODITY_BUSINESS = 3;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_DAY_TYPE_CURRENCY_BUSINESS = 4;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_DAY_TYPE_EXCHANGE_BUSINESS = 5;
+
+    INTEREST_RATE_SWAP_ATTRIBUTES_DAY_TYPE_SCHEDULED_TRADING_DAY = 6;
+
+}
+
+// InterestRateSwapAttributesTimePeriod defines time period rules for IRS instruments.
+enum InterestRateSwapAttributesTimePeriod {
+    INTEREST_RATE_SWAP_ATTRIBUTES_TIME_PERIOD_UNDEFINED = 0;
+
+    // Associated period is in years.
+    INTEREST_RATE_SWAP_ATTRIBUTES_TIME_PERIOD_YEARS = 1;
+
+    // Associated period is in months.
+    INTEREST_RATE_SWAP_ATTRIBUTES_TIME_PERIOD_MONTHS = 2;
+
+    // Associated period is in days.
+    INTEREST_RATE_SWAP_ATTRIBUTES_TIME_PERIOD_DAYS = 3;
+}
+
+//InterestRateSwapAttributes are attributes that define an Interest Rate Swap tradable instrument.
+message InterestRateSwapAttributes {
+    // tenor is the duration of the contract in units given by the tenor time period
+    int32 tenor = 1;
+
+    // side conventions for the swap
+    InterestRateSwapAttributesSideConvention side_convention = 2;
+
+    type.v1beta1.Date swap_effective_date = 3;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention effective_date_business_day_convention = 4;
+
+    type.v1beta1.Date maturity_date = 5;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention maturity_date_business_day_convention = 6;
+
+    // usually only 1 calendar but can be 2.
+    //New York | London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string roll_and_payment_date_holiday_calendars = 7;
+
+    // Quarterly | SemiAnnual | Annually
+    InterestRateSwapAttributesFrequency fixed_payment_frequency = 8;
+
+    // NONE | FLAT
+    InterestRateSwapAttributesCompoundingMethod fixed_compounding_method = 9;
+
+    // 30/360 | ACT/360 | ACT/365.FIXED
+    InterestRateSwapAttributesDayCountConvention fixed_day_count_convention = 10;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention fixed_business_day_convention = 11;
+
+    // NONE | FLAT
+    InterestRateSwapAttributesCompoundingMethod float_compounding_method = 12;
+
+    //ACT/360 | ACT/365.FIXED
+    InterestRateSwapAttributesDayCountConvention float_day_count_convention = 13;
+
+    // London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string float_holiday_calendars = 14;
+
+    // Quarterly | Semiannually
+    InterestRateSwapAttributesFrequency float_payment_frequency = 15;
+
+    // Monthly | Quarterly | Semiannually
+    InterestRateSwapAttributesFrequency float_rate_reset_frequency = 16;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention float_reset_date_business_day_convention = 17;
+
+    type.v1beta1.Date first_float_reset_date = 18;
+
+    type.v1beta1.Date first_float_fixing_date = 19;
+
+    // 1M USD LIBOR | 3M USD LIBOR | 6M USD LIBOR | 3M EURIBOR | 6M EURIBOR | 3M GDP LIBOR | 6M GDP LIBOR |
+    // 3M CDOR | 6M NIBOR | 3M JPY LIBOR | 6M JPY LIBOR | 6M CNF LIBOR | 3M BBSW | 6M BBSW | 3M STIBOR | 6M CIBOR2
+    string floating_rate_index = 20;
+
+    // EOM | FRN | IMM | IMMCAD | IMMAUD | IMMNZD | SFE | NONE | TBILL | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+    // 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 |
+    // MON | TUE | WED | THU | FRI | SAT | SUN
+    string float_roll_convention = 21;
+
+    // EOM | FRN | IMM | IMMCAD | IMMAUD | IMMNZD | SFE | NONE | TBILL | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+    // 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 |
+    // MON | TUE | WED | THU | FRI | SAT | SUN
+    string fixed_roll_convention = 22;
+
+    type.v1beta1.Date float_first_unadjusted_payment_date = 23;
+
+    type.v1beta1.Date fixed_first_unadjusted_payment_date = 24;
+
+    // CalculationPeriodStartDate | CalculationPeriodEndDate | LastPricingDate | ResetDate | ValuationDate
+    InterestRateSwapAttributesDateRelativeTo float_payment_date_relative_to = 25;
+
+    // CalculationPeriodStartDate | CalculationPeriodEndDate | LastPricingDate | ResetDate | ValuationDate
+    InterestRateSwapAttributesDateRelativeTo fixed_payment_date_relative_to = 26;
+
+    // Business | Calendar | CommodityBusiness | CurrencyBusiness | ExchangeBusiness | ScheduledTradingDay
+    InterestRateSwapAttributesDayType float_fixing_dates_day_type = 27;
+
+    int32 float_fixing_dates_offset = 28;
+
+    // 1M | 3M | 6M | 1Y | etc...
+    string floating_rate_index_tenor = 29;
+
+    type.v1beta1.Date unadjusted_effective_date = 30;
+
+    type.v1beta1.Date unadjusted_maturity_date = 31;
+
+    int32 effective_date_offset = 32;
+
+    // Restricted to only enum values: CalculationPeriodStartDate | CalculationPeriodEndDate
+    InterestRateSwapAttributesDateRelativeTo float_reset_date_relative_to = 33;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention float_fixing_date_business_day_convention = 34;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention float_business_day_convention = 35;
+
+    // London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string float_fixing_date_holiday_calendars = 36;
+
+    // Years | Months | Days
+    InterestRateSwapAttributesTimePeriod tenor_time_period = 37;
+}
+
+//ForwardStartingInterestRateSwapAttributes are attributes that define a Forward Starting Interest Rate Swap tradable instrument.
+message ForwardStartingInterestRateSwapAttributes {
+    // tenor is the duration of the contract in units given by the tenor time period
+    int32 tenor = 1;
+
+    // side conventions for the swap
+    InterestRateSwapAttributesSideConvention side_convention = 2;
+
+    type.v1beta1.Date swap_effective_date = 3;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention effective_date_business_day_convention = 4;
+
+    type.v1beta1.Date maturity_date = 5;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention maturity_date_business_day_convention = 6;
+
+    // usually only 1 calendar but can be 2.
+    //New York | London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string roll_and_payment_date_holiday_calendars = 7;
+
+    // Quarterly | SemiAnnual | Annually
+    InterestRateSwapAttributesFrequency fixed_payment_frequency = 8;
+
+    // NONE | FLAT
+    InterestRateSwapAttributesCompoundingMethod fixed_compounding_method = 9;
+
+    // 30/360 | ACT/360 | ACT/365.FIXED
+    InterestRateSwapAttributesDayCountConvention fixed_day_count_convention = 10;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention fixed_business_day_convention = 11;
+
+    // NONE | FLAT
+    InterestRateSwapAttributesCompoundingMethod float_compounding_method = 12;
+
+    //ACT/360 | ACT/365.FIXED
+    InterestRateSwapAttributesDayCountConvention float_day_count_convention = 13;
+
+    // London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string float_holiday_calendars = 14;
+
+    // Quarterly | Semiannually
+    InterestRateSwapAttributesFrequency float_payment_frequency = 15;
+
+    // Monthly | Quarterly | Semiannually
+    InterestRateSwapAttributesFrequency float_rate_reset_frequency = 16;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention float_reset_date_business_day_convention = 17;
+
+    type.v1beta1.Date first_float_reset_date = 18;
+
+    type.v1beta1.Date first_float_fixing_date = 19;
+
+    // 1M USD LIBOR | 3M USD LIBOR | 6M USD LIBOR | 3M EURIBOR | 6M EURIBOR | 3M GDP LIBOR | 6M GDP LIBOR |
+    // 3M CDOR | 6M NIBOR | 3M JPY LIBOR | 6M JPY LIBOR | 6M CNF LIBOR | 3M BBSW | 6M BBSW | 3M STIBOR | 6M CIBOR2
+    string floating_rate_index = 20;
+
+    // EOM | FRN | IMM | IMMCAD | IMMAUD | IMMNZD | SFE | NONE | TBILL | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+    // 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 |
+    // MON | TUE | WED | THU | FRI | SAT | SUN
+    string float_roll_convention = 21;
+
+    // EOM | FRN | IMM | IMMCAD | IMMAUD | IMMNZD | SFE | NONE | TBILL | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+    // 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 |
+    // MON | TUE | WED | THU | FRI | SAT | SUN
+    string fixed_roll_convention = 22;
+
+    type.v1beta1.Date float_first_unadjusted_payment_date = 23;
+
+    type.v1beta1.Date fixed_first_unadjusted_payment_date = 24;
+
+    // CalculationPeriodStartDate | CalculationPeriodEndDate | LastPricingDate | ResetDate | ValuationDate
+    InterestRateSwapAttributesDateRelativeTo float_payment_date_relative_to = 25;
+
+    // CalculationPeriodStartDate | CalculationPeriodEndDate | LastPricingDate | ResetDate | ValuationDate
+    InterestRateSwapAttributesDateRelativeTo fixed_payment_date_relative_to = 26;
+
+    // Business | Calendar | CommodityBusiness | CurrencyBusiness | ExchangeBusiness | ScheduledTradingDay
+    InterestRateSwapAttributesDayType float_fixing_dates_day_type = 27;
+
+    int32 float_fixing_dates_offset = 28;
+
+    // 1M | 3M | 6M | 1Y | etc...
+    string floating_rate_index_tenor = 29;
+
+    type.v1beta1.Date unadjusted_effective_date = 30;
+
+    type.v1beta1.Date unadjusted_maturity_date = 31;
+
+    int32 effective_date_offset = 32;
+
+    // Restricted to only enum values: CalculationPeriodStartDate | CalculationPeriodEndDate
+    InterestRateSwapAttributesDateRelativeTo float_reset_date_relative_to = 33;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention float_fixing_date_business_day_convention = 34;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention float_business_day_convention = 35;
+
+    // London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string float_fixing_date_holiday_calendars = 36;
+
+    // in units given by forward starting period time period
+    int32 forward_starting_period = 37;
+
+    // Years | Months | Days
+    InterestRateSwapAttributesTimePeriod tenor_time_period = 38;
+
+    // Years | Months | Days
+    InterestRateSwapAttributesTimePeriod forward_starting_period_time_period = 39;
+}
+
+
+//BasisSwapAttributes are attributes that define an Basis Swap tradable instrument.
+message BasisSwapAttributes {
+    // tenor is the duration of the contract in units given by the tenor time period
+    int32 tenor = 1;
+
+    // side conventions for the swap
+    InterestRateSwapAttributesSideConvention side_convention = 2;
+
+    int32 effective_date_offset = 3;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention effective_date_business_day_convention = 4;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention maturity_date_business_day_convention = 5;
+
+    type.v1beta1.Date swap_effective_date = 6;
+
+    // maturity date calculated by date adjustments server
+    type.v1beta1.Date maturity_date = 7;
+
+    // Monthly | Quarterly | Semiannually
+    InterestRateSwapAttributesFrequency leg1_float_rate_reset_frequency = 8;
+    InterestRateSwapAttributesFrequency leg2_float_rate_reset_frequency = 9;
+
+    // Quarterly | SemiAnnual | Annually
+    InterestRateSwapAttributesFrequency leg1_float_payment_frequency = 10;
+    InterestRateSwapAttributesFrequency leg2_float_payment_frequency = 11;
+
+    // NONE | FLAT
+    InterestRateSwapAttributesCompoundingMethod leg1_float_compounding_method = 12;
+    InterestRateSwapAttributesCompoundingMethod leg2_float_compounding_method = 13;
+
+    //ACT/360 | ACT/365.FIXED
+    InterestRateSwapAttributesDayCountConvention leg1_float_day_count_convention = 14;
+    InterestRateSwapAttributesDayCountConvention leg2_float_day_count_convention = 15;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention leg1_float_business_day_convention = 16;
+    InterestRateSwapAttributesBusinessDayConvention leg2_float_business_day_convention = 17;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention leg1_float_reset_date_business_day_convention = 18;
+    InterestRateSwapAttributesBusinessDayConvention leg2_float_reset_date_business_day_convention = 19;
+
+    // Restricted to only enum values: CalculationPeriodStartDate | CalculationPeriodEndDate
+    InterestRateSwapAttributesDateRelativeTo leg1_float_reset_date_relative_to = 20;
+    InterestRateSwapAttributesDateRelativeTo leg2_float_reset_date_relative_to = 21;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention leg1_float_fixing_date_business_day_convention = 22;
+    InterestRateSwapAttributesBusinessDayConvention leg2_float_fixing_date_business_day_convention = 23;
+
+    // London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string leg1_float_fixing_date_holiday_calendars = 24;
+    repeated string leg2_float_fixing_date_holiday_calendars = 25;
+
+    type.v1beta1.Date leg1_first_float_reset_date = 26;
+    type.v1beta1.Date leg2_first_float_reset_date = 27;
+
+    type.v1beta1.Date leg1_first_float_fixing_date = 28;
+    type.v1beta1.Date leg2_first_float_fixing_date = 29;
+
+    // 1M USD LIBOR | 3M USD LIBOR | 6M USD LIBOR | 3M EURIBOR | 6M EURIBOR | 3M GDP LIBOR | 6M GDP LIBOR |
+    // 3M CDOR | 6M NIBOR | 3M JPY LIBOR | 6M JPY LIBOR | 6M CNF LIBOR | 3M BBSW | 6M BBSW | 3M STIBOR | 6M CIBOR2
+    string leg1_floating_rate_index = 30;
+    string leg2_floating_rate_index = 31;
+
+    // 1M | 3M | 6M | 1Y | etc...
+    string leg1_floating_rate_index_tenor = 32;
+    string leg2_floating_rate_index_tenor = 33;
+
+    // EOM | FRN | IMM | IMMCAD | IMMAUD | IMMNZD | SFE | NONE | TBILL | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+    // 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 |
+    // MON | TUE | WED | THU | FRI | SAT | SUN
+    string leg1_float_roll_convention = 34;
+    string leg2_float_roll_convention = 35;
+
+    type.v1beta1.Date leg1_float_first_unadjusted_payment_date = 36;
+    type.v1beta1.Date leg2_float_first_unadjusted_payment_date = 37;
+
+    // CalculationPeriodStartDate | CalculationPeriodEndDate | LastPricingDate | ResetDate | ValuationDate
+    InterestRateSwapAttributesDateRelativeTo leg1_float_payment_date_relative_to = 38;
+    InterestRateSwapAttributesDateRelativeTo leg2_float_payment_date_relative_to = 39;
+
+    // Business | Calendar | CommodityBusiness | CurrencyBusiness | ExchangeBusiness | ScheduledTradingDay
+    InterestRateSwapAttributesDayType leg1_float_fixing_dates_day_type = 40;
+    InterestRateSwapAttributesDayType leg2_float_fixing_dates_day_type = 41;
+
+    int32 leg1_float_fixing_dates_offset = 42;
+    int32 leg2_float_fixing_dates_offset = 43;
+
+    type.v1beta1.Date float_first_unadjusted_effective_date = 44;
+
+    type.v1beta1.Date unadjusted_maturity_date = 45;
+
+    // usually only 1 calendar but can be 2.
+    //New York | London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string roll_and_payment_date_holiday_calendars = 46;
+
+    // Years | Months | Days
+    InterestRateSwapAttributesTimePeriod tenor_time_period = 47;
+}
+
+//ForwardRateAgreementSwapAttributes are attributes that define an Forward Rate Agreement Swap tradable instrument.
+message ForwardRateAgreementSwapAttributes {
+    // tenor is the duration of the contract in units given by the tenor time period
+    int32 tenor = 1;
+
+    // in units given by forward starting period time period
+    int32 forward_starting_period = 2;
+
+    // side conventions for the swap
+    InterestRateSwapAttributesSideConvention side_convention = 3;
+
+    // swap effective date calculated by date adjustments server
+    type.v1beta1.Date swap_effective_date = 4;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention effective_date_business_day_convention = 5;
+
+    // maturity date calculated by date adjustments server
+    type.v1beta1.Date maturity_date = 6;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention maturity_date_business_day_convention = 7;
+
+    // 30/360 | ACT/360 | ACT/365.FIXED
+    InterestRateSwapAttributesDayCountConvention fixed_day_count_convention = 8;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention fixed_business_day_convention = 9;
+
+    // London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string fixed_fixing_date_holiday_calendars = 10;
+
+    //ACT/360 | ACT/365.FIXED
+    InterestRateSwapAttributesDayCountConvention float_day_count_convention = 11;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention float_business_day_convention = 12;
+
+    // London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string float_fixing_date_holiday_calendars = 13;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention float_fixing_date_business_day_convention = 14;
+
+    // 1M USD LIBOR | 3M USD LIBOR | 6M USD LIBOR | 3M EURIBOR | 6M EURIBOR | 3M GDP LIBOR | 6M GDP LIBOR |
+    // 3M CDOR | 6M NIBOR | 3M JPY LIBOR | 6M JPY LIBOR | 6M CNF LIBOR | 3M BBSW | 6M BBSW | 3M STIBOR | 6M CIBOR2
+    string floating_rate_index = 15;
+
+    // Business | Calendar | CommodityBusiness | CurrencyBusiness | ExchangeBusiness | ScheduledTradingDay
+    InterestRateSwapAttributesDayType float_fixing_dates_day_type = 16;
+
+    int32 float_fixing_dates_offset = 17;
+
+    type.v1beta1.Date float_fixing_date = 18;
+
+    int32 calculation_period_number_of_days = 19;
+
+    type.v1beta1.Date unadjusted_effective_date = 20;
+
+    type.v1beta1.Date unadjusted_maturity_date = 21;
+
+    // 1M | 3M | 6M | 1Y | etc...
+    string floating_rate_index_tenor = 22;
+
+    // usually only 1 calendar but can be 2.
+    //New York | London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string roll_and_payment_date_holiday_calendars = 23;
+
+    // Years | Months | Days
+    InterestRateSwapAttributesTimePeriod tenor_time_period = 24;
+
+    // Years | Months | Days
+    InterestRateSwapAttributesTimePeriod forward_starting_period_time_period = 25;
+}
+
+//OvernightIndexSwapAttributes are attributes that define an Overnight Index Swap tradable instrument.
+message OvernightIndexSwapAttributes {
+    // tenor is the duration of the contract in units given by the tenor time period
+    int32 tenor = 1;
+
+    // side conventions for the swap
+    InterestRateSwapAttributesSideConvention side_convention = 2;
+
+    type.v1beta1.Date swap_effective_date = 3;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention effective_date_business_day_convention = 4;
+
+    type.v1beta1.Date maturity_date = 5;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention maturity_date_business_day_convention = 6;
+
+    // usually only 1 calendar but can be 2.
+    //New York | London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string fixed_holiday_calendars = 7;
+
+    // Quarterly | SemiAnnual | Annually
+    InterestRateSwapAttributesFrequency fixed_payment_frequency = 8;
+
+    // NONE | FLAT
+    InterestRateSwapAttributesCompoundingMethod fixed_compounding_method = 9;
+
+    // 30/360 | ACT/360 | ACT/365.FIXED
+    InterestRateSwapAttributesDayCountConvention fixed_day_count_convention = 10;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention fixed_business_day_convention = 11;
+
+    // NONE | FLAT
+    InterestRateSwapAttributesCompoundingMethod float_compounding_method = 12;
+
+    //ACT/360 | ACT/365.FIXED
+    InterestRateSwapAttributesDayCountConvention float_day_count_convention = 13;
+
+    // London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string float_holiday_calendars = 14;
+
+    // Quarterly | Semiannually
+    InterestRateSwapAttributesFrequency float_payment_frequency = 15;
+
+    // Monthly | Quarterly | Semiannually
+    InterestRateSwapAttributesFrequency float_rate_reset_frequency = 16;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention float_reset_date_business_day_convention = 17;
+
+    type.v1beta1.Date first_float_reset_date = 18;
+
+    type.v1beta1.Date first_float_fixing_date = 19;
+
+    // 1M USD LIBOR | 3M USD LIBOR | 6M USD LIBOR | 3M EURIBOR | 6M EURIBOR | 3M GDP LIBOR | 6M GDP LIBOR |
+    // 3M CDOR | 6M NIBOR | 3M JPY LIBOR | 6M JPY LIBOR | 6M CNF LIBOR | 3M BBSW | 6M BBSW | 3M STIBOR | 6M CIBOR2
+    string floating_rate_index = 20;
+
+    // EOM | FRN | IMM | IMMCAD | IMMAUD | IMMNZD | SFE | NONE | TBILL | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+    // 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 |
+    // MON | TUE | WED | THU | FRI | SAT | SUN
+    string float_roll_convention = 21;
+
+    // EOM | FRN | IMM | IMMCAD | IMMAUD | IMMNZD | SFE | NONE | TBILL | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+    // 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 |
+    // MON | TUE | WED | THU | FRI | SAT | SUN
+    string fixed_roll_convention = 22;
+
+    type.v1beta1.Date float_first_unadjusted_payment_date = 23;
+
+    type.v1beta1.Date fixed_first_unadjusted_payment_date = 24;
+
+    // CalculationPeriodStartDate | CalculationPeriodEndDate | LastPricingDate | ResetDate | ValuationDate
+    InterestRateSwapAttributesDateRelativeTo float_payment_date_relative_to = 25;
+
+    // CalculationPeriodStartDate | CalculationPeriodEndDate | LastPricingDate | ResetDate | ValuationDate
+    InterestRateSwapAttributesDateRelativeTo fixed_payment_date_relative_to = 26;
+
+    // Business | Calendar | CommodityBusiness | CurrencyBusiness | ExchangeBusiness | ScheduledTradingDay
+    InterestRateSwapAttributesDayType float_fixing_dates_day_type = 27;
+
+    int32 float_fixing_dates_offset = 28;
+
+    // 1M | 3M | 6M | 1Y | etc...
+    string floating_rate_index_tenor = 29;
+
+    type.v1beta1.Date unadjusted_effective_date = 30;
+
+    type.v1beta1.Date unadjusted_maturity_date = 31;
+
+    int32 effective_date_offset = 32;
+
+    // Restricted to only enum values: CalculationPeriodStartDate | CalculationPeriodEndDate
+    InterestRateSwapAttributesDateRelativeTo float_reset_date_relative_to = 33;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention float_fixing_date_business_day_convention = 34;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention float_business_day_convention = 35;
+
+    // London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string float_fixing_date_holiday_calendars = 36;
+
+    // in units given by forward starting period time period
+    int32 forward_starting_period = 37;
+
+    int32 fixed_payment_date_offset = 38;
+
+    int32 float_payment_date_offset = 39;
+
+    // Business | Calendar | CommodityBusiness | CurrencyBusiness | ExchangeBusiness | ScheduledTradingDay
+    InterestRateSwapAttributesDayType payment_date_day_type = 40;
+
+    // Years | Months | Days
+    InterestRateSwapAttributesTimePeriod tenor_time_period = 41;
+
+    // Years | Months | Days
+    InterestRateSwapAttributesTimePeriod forward_starting_period_time_period = 42;
+}
+
+//SinglePeriodSwapAttributes are attributes that define an Single Period Swap tradable instrument.
+message SinglePeriodSwapAttributes {
+    // tenor is the duration of the contract in units given by the tenor time period
+    int32 tenor = 1;
+
+    // side conventions for the swap
+    InterestRateSwapAttributesSideConvention side_convention = 2;
+
+    type.v1beta1.Date swap_effective_date = 3;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention effective_date_business_day_convention = 4;
+
+    type.v1beta1.Date maturity_date = 5;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention maturity_date_business_day_convention = 6;
+
+    // usually only 1 calendar but can be 2.
+    //New York | London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string roll_and_payment_date_holiday_calendars = 7;
+
+    // Quarterly | SemiAnnual | Annually
+    InterestRateSwapAttributesFrequency fixed_payment_frequency = 8;
+
+    // NONE | FLAT
+    InterestRateSwapAttributesCompoundingMethod fixed_compounding_method = 9;
+
+    // 30/360 | ACT/360 | ACT/365.FIXED
+    InterestRateSwapAttributesDayCountConvention fixed_day_count_convention = 10;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention fixed_business_day_convention = 11;
+
+    // NONE | FLAT
+    InterestRateSwapAttributesCompoundingMethod float_compounding_method = 12;
+
+    //ACT/360 | ACT/365.FIXED
+    InterestRateSwapAttributesDayCountConvention float_day_count_convention = 13;
+
+    // London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string float_holiday_calendars = 14;
+
+    // Quarterly | Semiannually
+    InterestRateSwapAttributesFrequency float_payment_frequency = 15;
+
+    // Monthly | Quarterly | Semiannually
+    InterestRateSwapAttributesFrequency float_rate_reset_frequency = 16;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention float_reset_date_business_day_convention = 17;
+
+    type.v1beta1.Date first_float_reset_date = 18;
+
+    type.v1beta1.Date first_float_fixing_date = 19;
+
+    // 1M USD LIBOR | 3M USD LIBOR | 6M USD LIBOR | 3M EURIBOR | 6M EURIBOR | 3M GDP LIBOR | 6M GDP LIBOR |
+    // 3M CDOR | 6M NIBOR | 3M JPY LIBOR | 6M JPY LIBOR | 6M CNF LIBOR | 3M BBSW | 6M BBSW | 3M STIBOR | 6M CIBOR2
+    string floating_rate_index = 20;
+
+    // EOM | FRN | IMM | IMMCAD | IMMAUD | IMMNZD | SFE | NONE | TBILL | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+    // 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 |
+    // MON | TUE | WED | THU | FRI | SAT | SUN
+    string float_roll_convention = 21;
+
+    // EOM | FRN | IMM | IMMCAD | IMMAUD | IMMNZD | SFE | NONE | TBILL | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+    // 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 | 28 | 29 | 30 |
+    // MON | TUE | WED | THU | FRI | SAT | SUN
+    string fixed_roll_convention = 22;
+
+    type.v1beta1.Date float_first_unadjusted_payment_date = 23;
+
+    type.v1beta1.Date fixed_first_unadjusted_payment_date = 24;
+
+    // CalculationPeriodStartDate | CalculationPeriodEndDate | LastPricingDate | ResetDate | ValuationDate
+    InterestRateSwapAttributesDateRelativeTo float_payment_date_relative_to = 25;
+
+    // CalculationPeriodStartDate | CalculationPeriodEndDate | LastPricingDate | ResetDate | ValuationDate
+    InterestRateSwapAttributesDateRelativeTo fixed_payment_date_relative_to = 26;
+
+    // Business | Calendar | CommodityBusiness | CurrencyBusiness | ExchangeBusiness | ScheduledTradingDay
+    InterestRateSwapAttributesDayType float_fixing_dates_day_type = 27;
+
+    int32 float_fixing_dates_offset = 28;
+
+    // 1M | 3M | 6M | 1Y | etc...
+    string floating_rate_index_tenor = 29;
+
+    type.v1beta1.Date unadjusted_effective_date = 30;
+
+    type.v1beta1.Date unadjusted_maturity_date = 31;
+
+    // Restricted to only enum values: CalculationPeriodStartDate | CalculationPeriodEndDate
+    InterestRateSwapAttributesDateRelativeTo float_reset_date_relative_to = 32;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention float_fixing_date_business_day_convention = 33;
+
+    // Modified Following | Following | FRN | Preceding | Modified Preceding | Nearest | NotApplicable | None
+    InterestRateSwapAttributesBusinessDayConvention float_business_day_convention = 34;
+
+    // London | TARGET | Canada | Norway | Swiss | Japan | Sweden | Denmark
+    repeated string float_fixing_date_holiday_calendars = 35;
+    
+    // Years | Months | Days
+    InterestRateSwapAttributesTimePeriod tenor_time_period = 36;
+
+    // Monthly | Quarterly | Semiannually
+    InterestRateSwapAttributesFrequency fixed_calculation_period_frequency = 37;
+}

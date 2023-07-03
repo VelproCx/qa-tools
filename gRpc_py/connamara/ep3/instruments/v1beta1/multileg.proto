@@ -1,0 +1,33 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.instruments.v1beta1;
+
+option go_package = "instrumentsv1beta1";
+option java_package = "com.connamara.ep3.instruments.v1beta1";
+option java_outer_classname = "MultilegProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Instruments.V1Beta1";
+option objc_class_prefix = "CEI";
+
+//MultilegAttributes are attributes that define a Multileg tradable instrument.
+message MultilegAttributes {
+    // legs describe the underlying instruments that make up the overall strategy.
+    repeated LegAttributes legs = 1;
+}
+
+//LegAttributes are attributes that define a leg of a Multileg tradable instrument.
+message LegAttributes {
+    // symbol is the instrument id of the individual leg.
+    string symbol = 1;
+
+    // ratio is the multiplier of trade quantity that must align with the other legs.
+    int64 ratio = 2;
+
+    // opposing_side describes if this leg should have a side opposite the other legs.
+    bool opposing_side = 3;
+}

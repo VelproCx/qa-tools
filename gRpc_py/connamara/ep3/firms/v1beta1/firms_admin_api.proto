@@ -1,0 +1,387 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.firms.v1beta1;
+
+option go_package = "firmsv1beta1";
+option java_package = "com.connamara.ep3.firms.v1beta1";
+option java_outer_classname = "FirmsAdminApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Firms.V1Beta1";
+option objc_class_prefix = "CEF";
+
+import "connamara/ep3/firms/v1beta1/firms.proto";
+
+// FirmsAdminAPI exposes the grpc services for managing firms, users, accounts, groups and permissioning.
+service FirmsAdminAPI {
+    // CreateUser creates a new user.
+    rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {}
+
+    // UpdateUser updates an existing user.
+    rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {}
+
+    // DeleteUser deletes the user matching the request.
+    rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {}
+
+    // SetUserSuspendState sets the user suspension state.
+    rpc SetUserSuspendState(SetUserSuspendStateRequest) returns (SetUserSuspendStateResponse) {}
+
+    // SetUserRole sets the user role.
+    rpc SetUserRole(SetUserRoleRequest) returns (SetUserRoleResponse) {}
+
+    // CreateUserKey creates a new user key.
+    rpc CreateUserKey(CreateUserKeyRequest) returns (CreateUserKeyResponse) {}
+
+    // SetUserKeyRole sets the role of the user key matching the request.
+    rpc SetUserKeyRole(SetUserKeyRoleRequest) returns (SetUserKeyRoleResponse) {}
+
+    // SetUserKeyJti sets the jti of the user key matching the request.
+    rpc SetUserKeyJti(SetUserKeyJtiRequest) returns (SetUserKeyJtiResponse) {}
+
+    // DeleteUserKey revokes a user key matching the request.
+    rpc DeleteUserKey(DeleteUserKeyRequest) returns (DeleteUserKeyResponse) {}
+
+    // AddUserToGroup adds the user to the specified group.
+    rpc AddUserToGroup(AddUserToGroupRequest) returns (AddUserToGroupResponse) {}
+
+    // RemoveUserFromGroup removes the user from the specified group.
+    rpc RemoveUserFromGroup(RemoveUserFromGroupRequest) returns (RemoveUserFromGroupResponse) {}
+
+    // CreateGroup creates a new group.
+    rpc CreateGroup(CreateGroupRequest) returns (CreateGroupResponse) {}
+
+    // SetGroupSuspendState sets the group suspension state.
+    rpc SetGroupSuspendState(SetGroupSuspendStateRequest) returns (SetGroupSuspendStateResponse) {}
+
+    // DeleteGroup deletes the group matching the request.
+    rpc DeleteGroup(DeleteGroupRequest) returns (DeleteGroupResponse) {}
+
+    // AddUserToAccount adds the user to the specified account.
+    rpc AddUserToAccount(AddUserToAccountRequest) returns (AddUserToAccountResponse) {}
+
+    // RemoveUserFromAccount removes the user from the specified account.
+    rpc RemoveUserFromAccount(RemoveUserFromAccountRequest) returns (RemoveUserFromAccountResponse) {}
+
+    // CreateAccount creates a new account.
+    rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {}
+
+    // UpdateAccount updates an existing account.
+    rpc UpdateAccount(UpdateAccountRequest) returns (UpdateAccountResponse) {}
+
+    // SetAccountSuspendState sets the account suspension state.
+    rpc SetAccountSuspendState(SetAccountSuspendStateRequest) returns (SetAccountSuspendStateResponse) {}
+
+    // DeleteAccount deletes the account matching the request.
+    rpc DeleteAccount(DeleteAccountRequest) returns (DeleteAccountResponse) {}
+
+    // CreateFirm creates a new firm.
+    rpc CreateFirm(CreateFirmRequest) returns (CreateFirmResponse) {}
+
+    // SetFirmSuspendState sets the firm suspension state.
+    rpc SetFirmSuspendState(SetFirmSuspendStateRequest) returns (SetFirmSuspendStateResponse) {}
+
+    // SetAssociatedFirms sets the associations for a given firm association.
+    rpc SetAssociatedFirms(SetAssociatedFirmsRequest) returns (SetAssociatedFirmsResponse) {}
+
+    // UpdateUserAttributes sets the user attributes.
+    rpc UpdateUserAttributes(UpdateUserAttributesRequest) returns (UpdateUserAttributesResponse) {}
+
+    // UpdateFirmAttributes sets the firm attributes.
+    rpc UpdateFirmAttributes(UpdateFirmAttributesRequest) returns (UpdateFirmAttributesResponse) {}
+
+    // DeleteFirm deletes the firm matching the request.
+    rpc DeleteFirm(DeleteFirmRequest) returns (DeleteFirmResponse) {}
+
+    // UndeleteFirm restores a deleted firm.
+    rpc UndeleteFirm(UndeleteFirmRequest) returns (UndeleteFirmResponse) {}
+
+    // UndeleteAccount restores a deleted account.
+    rpc UndeleteAccount(UndeleteAccountRequest) returns (UndeleteAccountResponse) {}
+
+     // UndeleteUser restores a deleted user.
+    rpc UndeleteUser(UndeleteUserRequest) returns (UndeleteUserResponse) {}
+
+    // UpdateFirm updates an existing firm.
+    rpc UpdateFirm(UpdateFirmRequest) returns (UpdateFirmResponse) {}
+
+    // SetCommission sets the commission assignment.
+    rpc SetCommission(SetCommissionRequest) returns (SetCommissionResponse) {}
+
+    // DeleteCommission deletes the commission assignment.
+    rpc DeleteCommission(DeleteCommissionRequest) returns (DeleteCommissionResponse) {}
+}
+
+message CreateUserRequest {
+    // The parent resource where the User is to be created (a firm)
+    string parent = 1;
+
+    // The user resource to create
+    User user = 2;
+}
+
+message CreateUserResponse {
+    User user = 2;
+}
+
+message UpdateUserRequest {
+    User user = 1;
+}
+
+message UpdateUserResponse {
+    User user = 1;
+}
+
+message DeleteUserRequest {
+    string name = 1;
+}
+
+message DeleteUserResponse {
+    User user = 1;
+}
+
+message SetUserSuspendStateRequest {
+    string name = 1;
+    bool is_suspended = 2;
+}
+
+message SetUserSuspendStateResponse {
+    User user = 1;
+}
+
+message SetUserRoleRequest {
+    string name = 1;
+    UserRole role = 2;
+}
+
+message SetUserRoleResponse {
+    User user = 1;
+}
+
+message CreateUserKeyRequest {
+    UserKey key = 1;
+}
+
+message CreateUserKeyResponse {
+    UserKey key = 1;
+}
+message SetUserKeyRoleRequest {
+    string name = 1;
+    string user = 2;
+    UserRole role = 3;
+    string description = 4;
+}
+
+message SetUserKeyRoleResponse {
+    UserKey key = 1;
+}
+
+message SetUserKeyJtiRequest {
+    string name = 1;
+    string user = 2;
+    string jti = 3;
+}
+
+message SetUserKeyJtiResponse {
+    UserKey key = 1;
+}
+
+message DeleteUserKeyRequest {
+    string name = 1;
+    string user = 2;
+}
+
+message DeleteUserKeyResponse {}
+
+message AddUserToGroupRequest {
+    repeated string users = 1;
+    string group_id = 2;
+}
+
+message AddUserToGroupResponse {}
+
+message RemoveUserFromGroupRequest {
+    repeated string users = 1;
+    string group_id = 2;
+}
+
+message RemoveUserFromGroupResponse {}
+
+message AddUserToAccountRequest {
+    repeated string users = 1;
+    string account = 2;
+    repeated CustomerOrderCapacity customer_order_capacities = 3;
+}
+
+message AddUserToAccountResponse {}
+
+message RemoveUserFromAccountRequest {
+    repeated string users = 1;
+    string account = 2;
+}
+
+message RemoveUserFromAccountResponse {}
+
+message SetGroupSuspendStateRequest {
+    string group_id = 1;
+    bool is_suspended = 2;
+}
+
+message SetGroupSuspendStateResponse {
+    Group group = 1;
+}
+
+message SetAccountSuspendStateRequest {
+    string name = 1;
+    bool is_suspended = 2;
+}
+
+message SetAccountSuspendStateResponse {
+    Account account = 1;
+}
+
+message DeleteGroupRequest {
+    string group_id = 1;
+}
+
+message DeleteGroupResponse {}
+
+message DeleteAccountRequest {
+    string name = 1;
+}
+
+message DeleteAccountResponse {
+    Account account = 1;
+}
+
+message CreateFirmRequest {
+    Firm firm = 1;
+}
+
+message CreateFirmResponse {
+    Firm firm = 2;
+}
+
+message DeleteFirmRequest {
+    string name = 1;
+}
+
+message DeleteFirmResponse {
+    Firm firm = 1;
+}
+
+message SetFirmSuspendStateRequest {
+    string name = 1;
+    bool is_suspended = 2;
+}
+
+message SetFirmSuspendStateResponse {
+    Firm firm = 1;
+}
+
+message SetAssociatedFirmsRequest {
+    string firm = 1;
+    FirmAssociationType type = 2;
+    repeated string associated_firms = 3;
+}
+
+message SetAssociatedFirmsResponse {
+    repeated string associated_firms = 1;
+}
+
+message UpdateUserAttributesRequest {
+    //parent user resource
+    string parent = 1;
+    UserAttributes attributes = 2;
+}
+
+message UpdateUserAttributesResponse {
+    UserAttributes attributes = 1;
+}
+
+message UpdateFirmAttributesRequest {
+    //parent firm resource
+    string parent = 1;
+    FirmAttributes attributes = 2;
+}
+
+message UpdateFirmAttributesResponse {
+    FirmAttributes attributes = 1;
+}
+
+message CreateGroupRequest {
+    Group group = 1;
+}
+
+message CreateGroupResponse {
+    Group group = 1;
+}
+
+message CreateAccountRequest {
+    string parent = 1;
+    Account account = 2;
+}
+
+message CreateAccountResponse {
+    Account account = 1;
+}
+
+message UpdateAccountRequest {
+    Account account = 1;
+}
+
+message UpdateAccountResponse {
+    Account account = 1;
+}
+
+message UndeleteFirmRequest {
+    string name = 1;
+}
+
+message UndeleteFirmResponse {
+    Firm firm = 1;
+}
+
+message UndeleteAccountRequest {
+    string name = 1;
+}
+
+message UndeleteAccountResponse {
+    Account account = 1;
+}
+
+message UndeleteUserRequest {
+    string name = 1;
+}
+
+message UndeleteUserResponse {
+    User user = 1;
+}
+
+
+message UpdateFirmRequest {
+    Firm firm = 1;
+}
+
+message UpdateFirmResponse {
+    Firm firm = 1;
+}
+
+message SetCommissionRequest {
+    CommissionAssignment commission = 1;
+}
+
+message SetCommissionResponse {
+    CommissionAssignment commission = 1;
+}
+
+message DeleteCommissionRequest {
+    CommissionRule rule = 1;
+}
+
+message DeleteCommissionResponse {
+    CommissionAssignment commission = 1;
+}

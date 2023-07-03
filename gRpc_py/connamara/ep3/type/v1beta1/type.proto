@@ -1,0 +1,73 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.type.v1beta1;
+
+option go_package = "typev1beta1";
+option java_package = "com.connamara.ep3.type.v1beta1";
+option java_outer_classname = "TypeProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Type.V1Beta1";
+option objc_class_prefix = "CET";
+
+// Date represents a whole or partial calendar date.
+message Date {
+    // Year of date. Must be from 1 to 9999, or 0 if specifying a date without
+    // a year.
+    int32 year = 1;
+
+    // Month of year. Must be from 1 to 12, or 0 if specifying a year without a
+    // month and day.
+    int32 month = 2;
+
+    // Day of month. Must be from 1 to 31 and valid for the year and month, or 0
+    // if specifying a year by itself or a year and month where the day is not
+    // significant.
+    int32 day = 3;
+}
+
+// TimeOfDay represents a time of day. The date and time zone are either not significant
+// or are specified elsewhere. Related types are [google.type.Date][google.type.Date]
+// and `google.protobuf.Timestamp`.
+message TimeOfDay {
+    // Hours of day in 24 hour format. Must be from 0 to 23.
+    int32 hours = 1;
+
+    // Minutes of hour of day. Must be from 0 to 59.
+    int32 minutes = 2;
+
+    // Seconds of minutes of the time. Must be from 0 to 59.
+    int32 seconds = 3;
+}
+
+// DayOfWeek represents a day of week.
+enum DayOfWeek {
+    // The unspecified day-of-week.
+    DAY_OF_WEEK_UNSPECIFIED = 0;
+
+    // The day-of-week of Monday.
+    DAY_OF_WEEK_MONDAY = 1;
+
+    // The day-of-week of Tuesday.
+    DAY_OF_WEEK_TUESDAY = 2;
+
+    // The day-of-week of Wednesday.
+    DAY_OF_WEEK_WEDNESDAY = 3;
+
+    // The day-of-week of Thursday.
+    DAY_OF_WEEK_THURSDAY = 4;
+
+    // The day-of-week of Friday.
+    DAY_OF_WEEK_FRIDAY = 5;
+
+    // The day-of-week of Saturday.
+    DAY_OF_WEEK_SATURDAY = 6;
+
+    // The day-of-week of Sunday.
+    DAY_OF_WEEK_SUNDAY = 7;
+}

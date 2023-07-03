@@ -1,0 +1,31 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.books.v1beta1;
+
+option go_package = "booksv1beta1";
+option java_package = "com.connamara.ep3.books.v1beta1";
+option java_outer_classname = "BooksApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Books.V1Beta1";
+option objc_class_prefix = "CEB";
+
+import "connamara/ep3/books/v1beta1/books.proto";
+
+//BooksAPI is the API for accessing Books.
+service BooksAPI {
+    //GetBookStatus returns the book status for a book.
+    rpc GetBookStatus(GetBookStatusRequest) returns (GetBookStatusResponse) {}
+}
+ 
+message GetBookStatusRequest {
+    string symbol = 1;
+}
+
+message GetBookStatusResponse {
+    BookStatus book_status = 1;
+}

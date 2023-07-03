@@ -1,0 +1,180 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.trades.v1beta1;
+
+option go_package = "tradesv1beta1";
+option java_package = "com.connamara.ep3.trades.v1beta1";
+option java_outer_classname = "TradesProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Trades.V1Beta1";
+option objc_class_prefix = "CET";
+
+import "connamara/ep3/orders/v1beta1/orders.proto";
+import "connamara/ep3/books/v1beta1/books.proto";
+import "google/protobuf/timestamp.proto";
+
+// TradeType describes the execution type of the trade.
+enum TradeType {
+    TRADE_TYPE_UNDEFINED = 0;
+    TRADE_TYPE_REGULAR = 1;
+    TRADE_TYPE_REQUEST_FOR_QUOTE = 2;
+}
+
+//TradeState indicates the state of a trade.
+enum TradeState {
+    TRADE_STATE_UNDEFINED = 0;
+
+    // Trade created
+    TRADE_STATE_NEW = 1;
+
+    // Trade successfully cleared by clearing house
+    TRADE_STATE_CLEARED = 2;
+
+    // Trade withdrawal request successfully approved
+    TRADE_STATE_BUSTED = 3;
+
+    // Trade information sent to clearinghouse
+    TRADE_STATE_INFLIGHT = 4;
+
+    // Clearinghouse is pending at least one DCM claim for the trade
+    TRADE_STATE_PENDING_RISK = 5;
+
+    // Clearinghouse is pending the counterparty DCM claim
+    TRADE_STATE_PENDING_CLEARED = 6;
+
+    // Clearinghouse has rejected the trade
+    TRADE_STATE_REJECTED = 7;
+
+    // Clearing request acknowledged by clearing house
+    TRADE_STATE_CLEARING_ACKNOWLEDGED = 8;
+
+    // Trade has requested to retry clearing and is pending submission to the clearing house
+    TRADE_STATE_RETRY_REQUEST = 9;
+}
+
+// Trade is an execution grouping reflecting a trade between two orders in the system.
+message Trade {
+    // Exchange assigned ID for this trade
+    string id = 1;
+
+    // Execution for the incoming order included in the trade
+    orders.v1beta1.Execution aggressor_execution = 2;
+
+    // Execution for the resting order included in the trade
+    orders.v1beta1.Execution passive_execution = 3;
+
+    // Symbol for the book this trade occurred
+    string symbol = 4;
+
+    // Type of trade specified
+    TradeType trade_type = 5;
+
+    // State of the trade
+    TradeState state = 6;
+
+    // The creation timestamp of the trade
+    google.protobuf.Timestamp create_time = 7;
+
+    // The update timestamp of the trade
+    google.protobuf.Timestamp update_time = 8;
+
+    // The trade price
+    int64 price = 9;
+
+    // The trade qty
+    int64 qty = 10;
+
+    // incoming order included in the trade. 
+    // NOTE the order state is the state of the order at the time of the trade.
+    orders.v1beta1.Order aggressor = 11;
+
+    // the resting order included in the trade
+    // NOTE the order state is the state of the order at the time of the trade.
+    orders.v1beta1.Order passive = 12;
+
+    // The reporting counterparty of the trade.
+    orders.v1beta1.Side reporting_counterparty = 13;
+
+    // The book status of all instruments updated by and/or relevant to the trade.
+    map<string, books.v1beta1.BookStatus> book_statuses = 14;
+
+    // The previous status of all instruments updated by and/or relevant to the trade.
+    map<string, books.v1beta1.BookStatus> previous_statuses = 15;
+
+    // Additional detail regarding the status of the trade. May be empty.
+    string text = 16;
+}
+
+// TradeCaptureReportType is the type of the Trade Capture Report.
+enum TradeCaptureReportType {
+    TRADE_CAPTURE_REPORT_TYPE_UNDEFINED = 0;
+    // Trade created
+    TRADE_CAPTURE_REPORT_TYPE_NEW = 1;
+    // Trade withdrawal request successfully approved
+    TRADE_CAPTURE_REPORT_TYPE_BUST = 3;
+    TRADE_CAPTURE_REPORT_TYPE_CORRECT = 4;
+}
+
+// TradeCaptureReport events are emitted by the trades server.
+message TradeCaptureReport {
+    // Exchange assigned ID for this tcr
+    string id = 1;
+
+    // The Trade
+    Trade trade = 2;
+
+    // Time that this tcr was created
+    google.protobuf.Timestamp create_time = 3;
+
+    // The type of the TCR
+    TradeCaptureReportType type = 5;
+
+    // The symbol
+    string symbol = 6;
+}
+
+// TradeStats are a collection of stats on a set of trades.
+message TradeStats {
+    // First trade price in a collection of trades
+    int64 first = 1;
+
+    // Last trade price in a collection of trades
+    int64 last = 2;
+
+    // High trade price in a collection of trades
+    int64 high = 3;
+
+    // Low trade price in a collection of trades
+    int64 low = 4;
+
+    // Total number of trades
+    int64 total_trade_count = 5;
+
+    // The number of cleared trades
+    int64 cleared_trade_count = 6;
+
+    // Volume in this time
+    int64 volume = 7;
+
+    // Volume that has been cleared
+    int64 cleared_volume = 8;
+}
+
+// TradeSide indicates either the passive or aggressor side of a Trade Capture Report.
+enum TradeSide {
+    // Default undefined state.
+    TRADE_SIDE_UNDEFINED = 0;
+
+    // Indicates the side of the trade that removed liquidity from the market and did not rest on the book.
+    TRADE_SIDE_AGGRESSOR = 1;
+
+    // Indicates the side of the trade that was originally providing liquidity in the market and was resting on the book.
+    TRADE_SIDE_PASSIVE = 2;
+}
+

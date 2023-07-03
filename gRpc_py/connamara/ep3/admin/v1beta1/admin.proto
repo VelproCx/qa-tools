@@ -1,0 +1,364 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.admin.v1beta1;
+
+option go_package = "adminv1beta1";
+option java_package = "com.connamara.ep3.admin.v1beta1";
+option java_outer_classname = "AdminProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Admin.V1Beta1";
+option objc_class_prefix = "CEA";
+
+import "google/protobuf/timestamp.proto";
+import "connamara/ep3/type/v1beta1/type.proto";
+import "connamara/ep3/orders/v1beta1/orders.proto";
+import "connamara/ep3/trades/v1beta1/trades.proto";
+import "connamara/ep3/firms/v1beta1/firms.proto";
+import "connamara/ep3/instruments/v1beta1/instruments.proto";
+import "connamara/ep3/v1beta1/api.proto";
+
+// ParticipantState of the exchange participant.
+enum ParticipantState {
+    PARTICIPANT_STATE_ACTIVE = 0;
+    PARTICIPANT_STATE_SUSPENDED = 1;
+}
+
+// ParticipantGroupState of the exchange participant group.
+enum ParticipantGroupState {
+    PARTICIPANT_GROUP_STATE_ACTIVE = 0;
+    PARTICIPANT_GROUP_STATE_SUSPENDED = 1;
+}
+
+// AccountState of the exchange account.
+enum AccountState {
+    ACCOUNT_STATE_ACTIVE = 0;
+    ACCOUNT_STATE_SUSPENDED = 1;
+}
+
+// FirmState of the exchange firm.
+enum FirmState {
+    FIRM_STATE_ACTIVE = 0;
+    FIRM_STATE_SUSPENDED = 1;
+}
+
+// FirmType of the exchange firm.
+enum FirmType {
+    FIRM_TYPE_UNDEFINED = 0;
+    FIRM_TYPE_PARTICIPANT = 1;
+    FIRM_TYPE_SUPERVISOR = 2;
+    FIRM_TYPE_CLEARING_MEMBER = 3;
+    FIRM_TYPE_CLEARING_HOUSE = 4;
+    FIRM_TYPE_AGENT = 5;
+}
+
+// ParticipantRole of the exchange participant.
+enum ParticipantRole {
+    PARTICIPANT_ROLE_UNDEFINED = 0;
+    PARTICIPANT_ROLE_TRADING = 1;
+    PARTICIPANT_ROLE_MARKET_DATA = 2;
+    PARTICIPANT_ROLE_DROP_COPY = 3;
+    PARTICIPANT_ROLE_SURVEILLANCE = 4;
+    PARTICIPANT_ROLE_SUPERVISOR_READ_ONLY_ADMIN = 5;
+    PARTICIPANT_ROLE_SUPERVISOR_ADMIN = 6;
+    PARTICIPANT_ROLE_SUPERVISOR_ONBOARDING_ADMIN = 7;
+    PARTICIPANT_ROLE_SUPERVISOR_EXCHANGE_OPERATION_ADMIN = 8;
+}
+
+// Participant is an entity that can place orders into the exchange.
+message Participant {
+    // name uniquely identifies this participant.
+    string name = 1;
+
+    // group_ids are a list of groups that this participant belongs to.
+    repeated string group_ids = 2;
+
+    // The current state for the participant.
+    ParticipantState state = 3;
+
+    // The current role for the participant.
+    ParticipantRole role = 4;
+
+    // firm indicates the associated firm of this participant.
+    string firm = 5;
+
+    // service_user indicates if the user is a service user.
+    bool service_user = 6;
+
+    // accounts are a collection of accounts that this participant belongs to and the associated relationship to each.
+    map<string, firms.v1beta1.CustomerOrderCapacity> accounts = 7;
+
+    // The resource id for this participant.
+    string id = 8;
+
+    // The display name for this participant.
+    string display_name = 9;
+
+    // The creation timestamp of the user.
+    google.protobuf.Timestamp create_time = 10;
+
+    // The update timestamp of the user.
+    google.protobuf.Timestamp update_time = 11;
+
+    // The deletion timestamp of the user.
+    google.protobuf.Timestamp delete_time = 12;
+
+    // Indicates if the user is deleted.
+    bool deleted = 13;
+
+    //Aliases for downstream adapters that use a different user identifier.
+    map<string, string> aliases = 14;
+}
+
+// UserAttributes are the attributes of a user.
+message UserAttributes {
+    string legal_name = 1;
+    string phone_number = 2;
+    string email = 3;
+    type.v1beta1.Date date_of_birth = 4;
+    string registration_number = 5;
+    string description = 6;
+    string address = 7;
+    string oauth_id = 8;
+}
+
+// FirmAttributes are the attributes of a firm.
+message FirmAttributes {
+    string legal_name = 1;
+    string phone_number = 2;
+    string email = 3;
+    string legal_entity_identifier = 4;
+    FirmParticipantType participant_type = 5;
+    string business_contact_name = 6;
+
+}
+
+// FirmParticipantType is the type of participant of the exchange firm.
+enum FirmParticipantType {
+    FIRM_PARTICIPANT_TYPE_UNDEFINED = 0;
+    FIRM_PARTICIPANT_TYPE_SWAP_DEALER = 1;
+    FIRM_PARTICIPANT_TYPE_MAJOR_SWAP_PARTICIPANT = 2;
+    FIRM_PARTICIPANT_TYPE_FINANCIAL_ENTITY = 3;
+    FIRM_PARTICIPANT_TYPE_NON_US_PERSON = 4;
+    FIRM_PARTICIPANT_TYPE_US_PERSON = 5;
+}
+
+// ParticipantGroup is a logical grouping of participants.
+message ParticipantGroup {
+    // id uniquely identifies this participant group.
+    string id = 1;
+
+    // The current state for the participant group.
+    ParticipantGroupState state = 2;
+
+    // firm indicates the associated firm of this participant group.
+    string firm = 4;
+}
+
+// Account is a tradable account on the system.
+message Account {
+    // name uniquely identifies this account.
+    string name = 1;
+
+    // The current state for the account.
+    AccountState state = 2;
+
+    // parent_firm indicates the parent firm of this account.
+    string parent_firm = 3;
+
+    // associated_firm indicates the associated firm of this group.
+    string associated_firm = 4;
+
+    // resource id for this account.
+    string id = 5;
+
+    // Pretty display name for the account.
+    string display_name = 6;
+
+    //Aliases for downstream adapters that use a different account identifier.
+    map<string, string> aliases = 7;
+    
+    // Indicates if the account is deleted.
+    bool deleted = 8;
+
+    // Indicates the risk system to use.
+    string risk_system = 9;
+
+    // Whitelist for the allowable instruments that may be traded by this account.
+    firms.v1beta1.AccountInstrumentRestriction whitelist = 10;
+
+    // Order size limit.
+    instruments.v1beta1.OrderSizeLimit order_size_limit = 11;
+
+    // Blacklist for the disallowed instruments that may be traded by this account.
+    firms.v1beta1.AccountInstrumentRestriction blacklist = 12;
+
+    // The priority weight assigned to orders associated with this account.
+    int64 priority_weight = 13;
+
+    // If set, collateral_account indicates the account to use for balance queries and adjustments on this account.
+    string collateral_account = 14;
+
+    // Type of account, default undefined
+    firms.v1beta1.AccountType account_type = 15;
+}
+
+// Firm is a logical namespace for participants and groups.
+message Firm {
+    // id uniquely identifies this firm.
+    string id = 1;
+
+    // The current state for the firm.
+    FirmState state = 2;
+
+    // The assigned type of the firm.
+    FirmType type = 3;
+
+    // The fully qualified resource name for the firm.
+    string name = 4;
+
+    // The pretty display name for the firm.
+    string display_name = 5;
+
+    // The creation timestamp of the firm.
+    google.protobuf.Timestamp create_time = 6;
+
+    // The update timestamp of the firm.
+    google.protobuf.Timestamp update_time = 7;
+
+    // The deletion timestamp of the firm.
+    google.protobuf.Timestamp delete_time = 8;
+
+    // Indicates if the firm is deleted.
+    bool deleted = 9;
+
+    //Aliases for downstream adapters that use a different firm identifier.
+    map<string, string> aliases = 10;
+}
+
+// UserKey is an entity that represents an API Key that can be used to access the exchange.
+message UserKey {
+    // name is the common name for this user key.
+    string name = 1;
+
+    // user id is the associated user for this key.
+    string user_id = 2;
+
+    // jti is the token identifier for the actual token that will validate against this key.
+    string jti = 3;
+
+    // The current role for the key.
+    ParticipantRole role = 4;
+
+    // API description.
+    string description = 5;
+}
+
+// TradeCaptureReportState of the trade capture report.
+enum TradeCaptureReportState {
+    TRADE_CAPTURE_REPORT_STATE_PENDING = 0;
+    TRADE_CAPTURE_REPORT_STATE_CLEARED = 1;
+    TRADE_CAPTURE_REPORT_STATE_BUSTED = 2;
+}
+
+// TradeCaptureReport is a trade abstraction.
+message TradeCaptureReport {
+    // Exchange assigned ID for this tcr.
+    string id = 1;
+
+    // The Trade.
+    Trade trade = 2;
+
+    // Time that this trade occurred.
+    google.protobuf.Timestamp trade_time = 3;
+
+    // Time that this trade was marked as cleared.
+    google.protobuf.Timestamp cleared_time = 4;
+
+    // The current state for the trade capture report.
+    TradeCaptureReportState state = 5;
+
+    // Orders are all orders affected by this Trade.
+    repeated ep3.v1beta1.Order orders = 6;
+}
+
+// BookSnapshot includes the orders and status of a book.
+message BookSnapshot {
+    // Bids is a price-time ordered list of orders on the bid side of the book.
+    repeated ep3.v1beta1.Order bids = 1;
+
+    // Offers is a price-time ordered list of orders on the offer side of the book.
+    repeated ep3.v1beta1.Order offers = 2;
+
+    // BookStatus indicates the Bookstatus at the time of snapshot.
+    BookStatus status = 3;
+
+    // StopBids is a price-time ordered list of stop orders on the bid side of the book.
+    repeated ep3.v1beta1.Order stop_bids = 4;
+
+    // StopOffers is a price-time ordered list of stop orders on the offer side of the book.
+    repeated ep3.v1beta1.Order stop_offers = 5;
+
+    // AsOfTime refers to the last transact time this book snapshot is valid.
+    google.protobuf.Timestamp as_of_time = 6;
+
+    // SearchExecutionsPageToken refers to the search executions page token one can use to poll incremental updates from this snapshot onwards.
+    string search_executions_page_token = 7;
+}
+
+// BookStatus includes information about a book.
+message BookStatus {
+    // State of the underlying book.
+    enum State {
+        STATE_CLOSED = 0;
+        STATE_OPEN = 1;
+        STATE_SUSPENDED = 2;
+        STATE_EXPIRED = 3;
+        STATE_PRE_OPEN = 4;
+        STATE_TERMINATED = 5;
+        STATE_HALTED = 6;
+    }
+
+    State state = 1;
+    
+    // Stats contains the current set of instrument stats at the time of the snapshot.
+    instruments.v1beta1.InstrumentStats stats = 4;
+
+    // TransactTime refers to the last transact time of this book status.
+    google.protobuf.Timestamp transact_time = 5;
+}
+
+// Trade is an execution grouping reflecting a trade between two orders in the system.
+message Trade {
+    // Exchange assigned ID for this trade.
+    string id = 1;
+
+    // Execution for the incoming order included in the trade.
+    ep3.v1beta1.Execution aggressor = 2;
+
+    // Execution for the resting order included in the trade.
+    ep3.v1beta1.Execution passive = 3;
+
+    // Type of trade specified.
+    trades.v1beta1.TradeType trade_type = 4;
+
+    // State of trade specified.
+    trades.v1beta1.TradeState state = 5;
+
+    // Reporting counterparty for this trade.
+    orders.v1beta1.Side reporting_counterparty = 6;
+
+    // The book status of all instruments updated by and/or relevant to the trade.
+    map<string, BookStatus> book_statuses = 14;
+
+    // The previous status of all instruments updated by and/or relevant to the trade.
+    map<string, BookStatus> previous_statuses = 15;
+
+    // Additional detail regarding the status of the trade. May be empty.
+    string text = 16;
+}

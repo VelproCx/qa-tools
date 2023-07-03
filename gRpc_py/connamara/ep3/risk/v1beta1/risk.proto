@@ -1,0 +1,69 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.risk.v1beta1;
+
+option go_package = "riskv1beta1";
+option java_package = "com.connamara.ep3.risk.v1beta1";
+option java_outer_classname = "RiskProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Risk.V1Beta1";
+option objc_class_prefix = "CER";
+
+// SecurityType is a code to identify the classification of the security.
+enum SecurityType {
+    // Undefined state of the security type
+    SECURITY_TYPE_UNDEFINED = 0;
+
+    // Unique identifier that stands for the Committee on Uniform Securities Identification Procedures
+    SECURITY_TYPE_CUSIP = 1;
+
+    // Stands for the Stock Exchange Daily Official List assigned to securities that trade on LSEG
+    SECURITY_TYPE_SEDOL = 2;
+
+    // Japanese domestic code
+    SECURITY_TYPE_QUIK = 3;
+
+    // International Securities Identification Number
+    SECURITY_TYPE_ISIN = 4;
+
+    // ISO Standard currency code
+    SECURITY_TYPE_ISO_CURRENCY = 5;
+
+    // Reuters Instrument Code
+    SECURITY_TYPE_RIC_CODE = 6;
+}
+
+// SecurityDefinition contains descriptive meta data regarding a security.
+message SecurityDefinition {
+    //Security ID, which may be a CUSIP, market symbol, or similar unique identifier
+    string security_id = 1;
+
+    //Plaintext description of the security
+    string description = 2;
+
+    //The type of the security
+    SecurityType security_type = 3;
+}
+
+// PendingWithdrawal describes a pending withdrawal of fiat currency from a given account.
+message PendingWithdrawal {
+    //Unique identifier for the withdrawal.
+    string id = 1;
+
+    //Account name.
+    string name = 2;
+
+    //Fiat currency.
+    string currency = 3;
+
+    //Balance to withdraw.
+    string balance = 4;
+
+    //Description for the withdrawal request.
+    string description = 5;
+}

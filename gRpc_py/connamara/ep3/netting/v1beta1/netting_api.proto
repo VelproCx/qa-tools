@@ -1,0 +1,74 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.netting.v1beta1;
+
+option go_package = "nettingv1beta1";
+option java_package = "com.connamara.ep3.netting.v1beta1";
+option java_outer_classname = "NettingApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Netting.V1Beta1";
+option objc_class_prefix = "CEN";
+
+//NettingAPI is an API for managing the netting service.
+service NettingAPI {
+    // PerformNetting commands the netting service to net positions.
+    rpc PerformNetting(PerformNettingRequest) returns (PerformNettingResponse) {}
+
+    // PerformResolution declares a specific sub type winner for a specific symbol and pays out to parties holding the winning sub type.
+    rpc PerformResolution(PerformResolutionRequest) returns (PerformResolutionResponse) {}
+
+    // MergeSubTypePositions commands the netting service to merge non-nettable positions into nettable positions.
+    rpc MergeSubTypePositions(MergeSubTypePositionsRequest) returns (MergeSubTypePositionsResponse) {}
+}
+
+message PerformNettingRequest {
+    // The specific symbol to perform netting against. If not provided, all symbols will be netted.
+    string symbol = 1;
+
+    // The specific account to perform netting against. If not provided, all accounts will be netted.
+    string account = 2;
+}
+
+message PerformNettingResponse {
+    // The collection of all netted positions per symbol.
+    map<string, int64> netted_positions = 1;
+}
+
+message PerformResolutionRequest {
+    // The specific symbol to perform resolution against.
+    string symbol = 1;
+
+    // The specific sub type that is being declared the winner.
+    string symbol_sub_type = 2;
+}
+
+message PerformResolutionResponse {
+}
+
+message MergeSubTypePositionsRequest {
+    // The specific symbol to merge positions against. If not provided, all symbols will be merged.
+    string symbol = 1;
+
+    // The specific account to merge positions against. If not provided, all accounts will be merged.
+    string account = 2;
+}
+
+message MergeSubTypePositionsResponse {
+    // SubTypePositions holds the details of a specific symbol sub type's nettable position.
+    message SubTypePositions {
+        // The collection of newly merged nettable positions per sub type.
+        map<string, int64> merged = 1;
+
+        // The collection of total nettable positions per sub type.
+        map<string, int64> total = 2;
+    }
+
+    // The collection of nettable positions per symbol.
+    map<string, SubTypePositions> nettable_positions = 1;
+}

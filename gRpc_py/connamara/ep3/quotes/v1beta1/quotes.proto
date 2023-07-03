@@ -1,0 +1,227 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.quotes.v1beta1;
+
+option go_package = "quotesv1beta1";
+option java_package = "com.connamara.ep3.quotes.v1beta1";
+option java_outer_classname = "QuotesProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Quotes.V1Beta1";
+option objc_class_prefix = "CEQ";
+
+import "connamara/ep3/orders/v1beta1/orders.proto";
+import "connamara/ep3/orders/v1beta1/orders_context.proto";
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+
+// Quote is a quote sent to and from the RFQ Exchange.
+message Quote {
+    // Exchange assigned ID for this quote.
+    string id = 1;
+
+    // Exchange assigned resource name for this quote.
+    string name = 2;
+
+    // Client assigned ID for this quote.
+    string client_id = 3;
+
+    // Exchange assigned ID for the quote request that this quote references.
+    string quote_request_id = 4;
+
+    // Desired price for the quote in integer representation.
+    int64 price = 5;
+
+    // The side for the order of the quote.
+    orders.v1beta1.Side side = 6;
+
+    // The quantity for this quote.
+    int64 order_qty = 7;
+
+    // The symbol for this quote.
+    string symbol = 8;
+
+    // Timestamp at which this quote will expire.
+    google.protobuf.Timestamp expiration_time = 9;
+
+    // Account is the trading account for this quote.
+    string account = 10;
+
+    // The market participant that created this quote.
+    string user = 11;
+
+    // The firm that created this quote.
+    string firm = 12;
+
+    // Context may contain additional meta data regarding the order.
+    orders.v1beta1.OrderContext context = 13;
+
+    // Context may contain additional meta data regarding the parent order.
+    orders.v1beta1.OrderContext parent_context = 14;
+
+    // The status of the quote.
+    QuoteStatus status = 15;
+
+    // Client assigned ID for the order.
+    string clord_id = 17;
+
+    // The time this quote was inserted into the exchange.
+    google.protobuf.Timestamp insert_time = 18;
+
+    // When set, the token assigned to this quote following risk approval.
+    string risk_approval_id = 19;
+
+    // The agent participant that created this quote on behalf of the designated user.
+    string submitting_user = 20;
+}
+
+// RequestForQuote is a quote request into the RFQ Exchange.
+message RequestForQuote {
+    // Exchange assigned ID for the quote request.
+    string id = 1;
+
+    // Exchange assigned resource name for the quote request.
+    string name = 2;
+
+    // Client assigned ID for this quote request.
+    string client_id = 3;
+
+    // The side for the order of the quote.
+    orders.v1beta1.Side side = 4;
+
+    // The quantity for the quote request.
+    int64 order_qty = 5;
+
+    // The symbol for the quote request.
+    string symbol = 6;
+
+    // Timestamp at which this quote will expire.
+    google.protobuf.Timestamp expiration_time = 7;
+
+    // Account is the trading account for this quote request.
+    string account = 8;
+
+    // The market participant that created this quote request.
+    string user = 9;
+
+    // Whitelist of targeted firms that this quote request will target.
+    repeated string firms = 10;
+
+    // The time this request was inserted into the exchange.
+    google.protobuf.Timestamp insert_time = 11;
+
+    // Context may contain additional meta data regarding the order.
+    orders.v1beta1.OrderContext context = 12;
+
+    // The status of the quote request.
+    QuoteStatus status = 13;
+
+    // The firm that created this quote request.
+    string firm = 14;
+
+    // The agent participant that created this quote request on behalf of the designated user.
+    string submitting_user = 15;
+}
+
+// QuoteCancel is a request to cancel a quote in the RFQ Exchange.
+message QuoteCancel {
+    // Exchange assigned resource name for the quote to cancel.
+    string name = 1;
+
+    // The symbol for the request to cancel the quote.
+    string symbol = 2;
+
+    // The market participant that is asking to cancel the quote.
+    string user = 3;
+
+    // Context may contain additional meta data regarding the order.
+    orders.v1beta1.OrderContext context = 12;
+}
+
+// QuotePass is a request to pass on a quote in the RFQ Exchange.
+message QuotePass {
+    // Exchange assigned resource name for the quote to pass.
+    string name = 1;
+
+    // The symbol for the quote to pass.
+    string symbol = 2;
+
+    // The market participant that is asking to pass the quote
+    string user = 3;
+
+    // Context may contain additional meta data regarding the order.
+    orders.v1beta1.OrderContext context = 12;
+}
+
+// QuoteReject is a reject for a message sent to the RFQ Exchange.
+message QuoteReject {
+    oneof parent {
+        RequestForQuote request_for_quote = 1;
+        Quote quote = 2;
+        QuoteCancel quote_cancel = 3;
+        QuotePass quote_pass = 5;
+    }
+
+    // Reason for the QuoteReject.
+    QuoteRejectReason reject_reason = 10;
+
+    // Free format text.
+    string text = 11;
+
+    // The symbol for the quote being rejected.
+    string symbol = 12;
+}
+
+//QuoteEvent is the event type emitted by the Quotes Server.
+message QuoteEvent {
+    repeated google.protobuf.Any quote_events = 5;
+}
+
+// QuoteStatus indicates the status of a quote.
+enum QuoteStatus {
+    // Default undefined state.
+    QUOTE_STATUS_UNDEFINED = 0;
+
+    // Quote is pending and awaiting a decision by the RFQ sender to choose which quote they want to take.
+    QUOTE_STATUS_PENDING = 1;
+
+    // Quote is accepted. A quote is accepted when the RFQ sender chooses this quote to fulfill its request.
+    QUOTE_STATUS_ACCEPTED = 2;
+
+    // Quote is deleted. When the party that has sent the original quote cancels it, the quote becomes deleted.
+    QUOTE_STATUS_DELETED = 3;
+
+    // Quote is expired. A quote that has passed its expiration time becomes expired.
+    QUOTE_STATUS_EXPIRED = 4;
+
+    // Quote is passed. A quote is passed when the user chose not to accept this quote.
+    QUOTE_STATUS_PASSED = 5;
+
+    // Quote is done away. A quote is done away when another quote has been accepted instead of this one.
+    QUOTE_STATUS_DONE_AWAY = 6;
+
+    // quote is pending risk approval
+    QUOTE_STATUS_PENDING_RISK = 7;
+
+    // quote is rejected by the exchange
+    QUOTE_STATUS_REJECTED = 8;
+}
+
+// QuoteRejectReason indicates the reason behind a quote or request reject.
+enum QuoteRejectReason {
+    // Default undefined state.
+    QUOTE_REJECT_REASON_UNDEFINED = 0;
+
+    // Quote reject reason is due to an action different than the other specific enum values in this definition.
+    QUOTE_REJECT_REASON_OTHER = 1;
+
+    // Quote was rejected due to an unknown exchange symbol.
+    QUOTE_REJECT_REASON_UNKNOWN_SYMBOL = 2;
+
+    // Quote was rejected due to the exchange being closed.
+    QUOTE_REJECT_REASON_EXCHANGE_CLOSED = 3;
+}

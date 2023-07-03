@@ -1,0 +1,101 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.v1beta1;
+
+option go_package = "ep3v1beta1";
+option java_package = "com.connamara.ep3.v1beta1";
+option java_outer_classname = "QuoteApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.V1Beta1";
+option objc_class_prefix = "CEX";
+
+import "connamara/ep3/v1beta1/api.proto";
+import "connamara/ep3/orders/v1beta1/orders.proto";
+import "connamara/ep3/quotes/v1beta1/quotes.proto";
+import "google/protobuf/timestamp.proto";
+
+// QuoteAPI is the API Surface for connected clients to query history of quotes and requests.
+service QuoteAPI {
+    // SearchRequestForQuotes lists all request for quotes matching the request.
+    rpc SearchRequestForQuotes(SearchRequestForQuotesRequest) returns (SearchRequestForQuotesResponse) {}
+
+    // SearchQuotes lists all quotes matching the request.
+    rpc SearchQuotes(SearchQuotesRequest) returns (SearchQuotesResponse) {}
+}
+
+message SearchRequestForQuotesRequest {
+    // The maximum number of objects to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    string account = 3;
+    string symbol = 4;
+    string quote_request_id = 5;
+    string client_id = 6;
+    orders.v1beta1.Side side = 7;
+    repeated quotes.v1beta1.QuoteStatus statuses = 8;
+
+    // Start time for the objects to be fetched
+    google.protobuf.Timestamp start_time = 9;
+
+    // End time for the objects to be fetched
+    google.protobuf.Timestamp end_time = 10;
+}
+
+message SearchRequestForQuotesResponse {
+    repeated ep3.v1beta1.RequestForQuote request_for_quotes = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 2;
+
+    bool eof = 3;
+}
+
+message SearchQuotesRequest {
+    // The maximum number of objects to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    string account = 3;
+    string symbol = 4;
+    string quote_request_id = 5;
+    string quote_id = 6;
+    string client_id = 7;
+    orders.v1beta1.Side side = 8;
+    repeated quotes.v1beta1.QuoteStatus statuses = 9;
+
+    // Start time for the objects to be fetched
+    google.protobuf.Timestamp start_time = 10;
+
+    // End time for the objects to be fetched
+    google.protobuf.Timestamp end_time = 11;
+}
+
+message SearchQuotesResponse {
+    repeated ep3.v1beta1.Quote quotes = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 2;
+
+    bool eof = 3;
+}

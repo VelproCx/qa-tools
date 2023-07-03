@@ -1,0 +1,72 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.alert.v1beta1;
+
+option go_package = "alertv1beta1";
+option java_package = "com.connamara.ep3.alert.v1beta1";
+option java_outer_classname = "AlertProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Alert.V1Beta1";
+option objc_class_prefix = "CEA";
+
+import "google/protobuf/timestamp.proto";
+
+//Alert describes the details of an alert event.
+message Alert {
+    // The unique identifier of the alert itself.
+    string id = 1;
+
+    // The current status of the alert.
+    AlertStatus status = 2;
+
+    // The ID of the trade associated with the alert.
+    string trade_id = 3;
+
+    // The source venue of the alert, such as CME, LCH, DTCC, CFTC, etc.
+    string venue = 4;
+
+    // A detailed description regarding the alert.
+    string description = 5;
+
+    // Time at which the alert was raised.
+    google.protobuf.Timestamp alert_time = 6;
+
+    // The symbol of the alert.
+    string symbol = 7;
+
+    // The fully qualified resource name of the account associated with the alert.
+    string account = 8;
+
+    // The fully qualified resource name of the firm associated with the alert.
+    string firm = 9;
+
+    // The name of the alert, such as Front Running, Clearing Refused, Manipulative Activity, etc.
+    string alert_name = 10;
+
+    // The fully qualified resource name of the firm targeted by the alert.
+    string target_firm = 11;
+}
+
+//AlertStatus defines the lifecycle stages of an alert.
+enum AlertStatus {
+    // Default undefined state.
+    ALERT_STATUS_UNDEFINED = 0;
+
+    // Indicates that the alert is new and has not yet been triaged.
+    ALERT_STATUS_NEW = 1;
+
+    // Represents that an administrator has acknowledged the alert and is currently investigating.
+    ALERT_STATUS_IN_PROGESS = 2;
+
+    // An alert under review has been properly investigated and is pending final resolution.
+    ALERT_STATUS_UNDER_REVIEW = 3;
+
+    // Final state for a resolved alert. No further action is necessary.
+    ALERT_STATUS_RESOLVED = 4;
+}

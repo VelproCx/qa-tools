@@ -1,0 +1,25 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.orders.v1beta1;
+
+option go_package = "ordersv1beta1";
+option java_package = "com.connamara.ep3.orders.v1beta1";
+option java_outer_classname = "OrdersContextProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Orders.V1Beta1";
+option objc_class_prefix = "CEO";
+
+import "google/protobuf/any.proto";
+import "connamara/ep3/fix/v1beta1/fix.proto";
+
+// OrderContext contains additional meta data regarding an order.
+message OrderContext {
+    google.protobuf.Any any_context = 1;
+
+    fix.v1beta1.FIXOrderContext fix_context = 2;
+}

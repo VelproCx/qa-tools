@@ -1,0 +1,62 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.trades.v1beta1;
+
+option go_package = "tradesv1beta1";
+option java_package = "com.connamara.ep3.trades.v1beta1";
+option java_outer_classname = "TradesAdminApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Trades.V1Beta1";
+option objc_class_prefix = "CET";
+
+import "connamara/ep3/trades/v1beta1/trades.proto";
+import "connamara/ep3/fpml/v1beta1/fpml.proto";
+
+//TradesAdminAPI is an API for managing Trades.
+service TradesAdminAPI {
+    // UpdateTradeState updates the state of a trade.
+    rpc UpdateTradeState(UpdateTradeStateRequest) returns (UpdateTradeStateResponse) {}
+
+    // AcknowledgeTrade acknowledges receipt and the acceptance or rejection of the passive or aggressor side of the trade.
+    rpc AcknowledgeTrade(AcknowledgeTradeRequest) returns (AcknowledgeTradeResponse) {}
+
+    // GetFpmlTradeCaptureReport generates a trade fpml from a given trade capture report.
+    rpc GetFpmlTradeCaptureReport(GetFpmlTradeCaptureReportRequest) returns (GetFpmlTradeCaptureReportResponse) {}
+}
+
+message UpdateTradeStateRequest {
+    string trade_id = 1;
+    TradeState state = 2;
+    string text = 3;
+}
+
+message UpdateTradeStateResponse {
+
+}
+
+message AcknowledgeTradeRequest {
+    string trade_id = 1;
+    TradeSide trade_side = 2;
+    bool accept = 3;
+    string reject_text = 4;
+}
+
+message AcknowledgeTradeResponse {
+
+}
+
+message GetFpmlTradeCaptureReportRequest {
+    fpml.v1beta1.GeneratorConfig fpml_generator_config = 1;
+    string trade_capture_report_id = 2;
+}
+
+message GetFpmlTradeCaptureReportResponse {
+    string fpml_trade = 1;
+}
+

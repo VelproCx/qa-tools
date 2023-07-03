@@ -1,0 +1,103 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.orders.v1beta1;
+
+option go_package = "ordersv1beta1";
+option java_package = "com.connamara.ep3.orders.v1beta1";
+option java_outer_classname = "OrdersApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Orders.V1Beta1";
+option objc_class_prefix = "CEO";
+
+import "connamara/ep3/orders/v1beta1/orders.proto";
+import "google/protobuf/timestamp.proto";
+
+// OrdersAPI is the API surface for managing orders on the exchange.
+service OrdersAPI {
+    // SearchOrders returns a list of orders given request criteria.
+    rpc SearchOrders(SearchOrdersRequest) returns (SearchOrdersResponse) {}
+
+    // SearchExecutions returns a list of executions given request criteria.
+    rpc SearchExecutions(SearchExecutionsRequest) returns (SearchExecutionsResponse) {}
+
+    // StreamExecutions streams a list of executions given request criteria.
+    rpc StreamExecutions(StreamExecutionsRequest) returns (stream StreamExecutionsResponse) {}
+}
+
+message SearchOrdersRequest {
+    string order_id = 1;
+    string symbol = 2;
+    string participant = 3;
+    repeated string accounts = 4;
+    string cl_ord_id = 5;
+    Side side = 6;
+    int64 order_qty = 7;
+    OrderType order_type = 8;
+    google.protobuf.Timestamp start_time = 9;
+    google.protobuf.Timestamp end_time = 10;
+    int32 page_size = 11;
+    string page_token = 12;
+    OrderStateFilter order_state_filter = 13;
+    string cross_id = 14;
+    string host_cross_id = 15;
+    string submitting_participant = 16;
+    string client_account_id = 17;
+    string client_participant_id = 18;
+    string parent_order_id = 19;
+    string symbol_sub_type = 20;
+}
+
+message SearchOrdersResponse {
+    repeated Order orders = 1;
+    string next_page_token = 2;
+}
+
+message SearchExecutionsRequest {
+    int32 page_size = 1;
+    string page_token = 2;
+    string order_id = 3;
+    string participant = 4;
+    string cl_ord_id = 5;
+    google.protobuf.Timestamp start_time = 6;
+    google.protobuf.Timestamp end_time = 7;
+    string symbol = 8;
+    repeated ExecutionType exec_types = 9;
+    bool newest_first = 10;
+    string submitting_participant = 11;
+    repeated string accounts = 12;
+    string client_account_id = 13;
+    string client_participant_id = 14;
+    string parent_order_id = 15;
+    string symbol_sub_type = 16;
+}
+
+message SearchExecutionsResponse {
+    //ExecutionTransaction bundles an execution with its transact time.
+    message ExecutionTransaction {
+        Execution execution = 1;
+        google.protobuf.Timestamp transact_time = 2;
+
+        //Order is the order state at the end of the transaction that resulted in the execution.
+        Order order = 3;
+    }
+
+    repeated ExecutionTransaction execution_transactions = 1;
+    string next_page_token = 2;
+    bool eof = 3;
+}
+
+message StreamExecutionsRequest {
+    SearchExecutionsRequest request = 1;
+
+    //If true, keep the connection open to capture new executions as they are inserted into the database.
+    bool stay_open = 2;
+}
+
+message StreamExecutionsResponse {
+    SearchExecutionsResponse response = 1;
+}

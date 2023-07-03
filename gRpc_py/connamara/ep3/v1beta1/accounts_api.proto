@@ -1,0 +1,85 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.v1beta1;
+
+option go_package = "ep3v1beta1";
+option java_package = "com.connamara.ep3.v1beta1";
+option java_outer_classname = "AccountsApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.V1Beta1";
+option objc_class_prefix = "CEX";
+
+import "connamara/ep3/firms/v1beta1/firms.proto";
+
+// AccountsAPI is the API Surface for connected clients to query account details.
+service AccountsAPI {
+    // ListUsers returns the users that the user may trade on behalf of.
+    rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {}
+
+    // ListAccounts returns the accounts that the user may use to trade.
+    rpc ListAccounts(ListAccountsRequest) returns (ListAccountsResponse) {}
+
+    // GetWhoAmI returns the user information of the caller.
+    rpc GetWhoAmI(GetWhoAmIRequest) returns (GetWhoAmIResponse) {}
+}
+
+// Request to list the users that the user may trade on behalf of.
+message ListUsersRequest {}
+
+message ListUsersResponse {
+    // List of fully qualified resource names for users found (ie: "firms/[firmid]/users/[userid]").
+    repeated string users = 1;
+
+    // List of display names for the users found.
+    repeated string display_names = 2;
+
+    // List of fully qualified resource names for the firms associated with the users found (ie: "firms/[firmid]").
+    repeated string firms = 3;
+
+    // List of display names for the firms associated with the users found.
+    repeated string firms_display_names = 4;
+}
+
+// Request to list the accounts belonging to the specified user.
+message ListAccountsRequest {
+    // Fully qualified resource name for the user whos accounts to list (ie: "firms/[firmid]/users/[userid]").
+    // If left empty, lists all accounts.
+    string user = 1;
+}
+
+message ListAccountsResponse {
+    // List of fully qualified resource names for the accounts found (ie: "firms/[firmid]/accounts/[accountid]").
+    repeated string accounts = 1;
+
+    // List of display names for the accounts found.
+    repeated string display_names = 2;
+}
+
+// Request to get the user information of the caller.
+message GetWhoAmIRequest {}
+
+message GetWhoAmIResponse{
+    // Fully qualified resource name for the user (ie: "firms/[firmid]/users/[userid]").
+    string user = 1;
+
+    // Display name for the user.
+    string user_display_name = 2;
+    
+    // Fully qualified resource name for the firm associated with the user (ie: "firms/[firmid]").
+    string firm = 3;
+    
+    // Display name for the firm associated with the user.
+    string firm_display_name = 4;
+    
+    // The claim string for the user to verify whether the user is entitled to perform audience specific requests.
+    string audience = 5;
+    
+    // The type of the firm associated with the user.
+    firms.v1beta1.FirmType firm_type = 6;
+}

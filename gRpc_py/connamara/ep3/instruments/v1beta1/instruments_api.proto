@@ -1,0 +1,478 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.instruments.v1beta1;
+
+option go_package = "instrumentsv1beta1";
+option java_package = "com.connamara.ep3.instruments.v1beta1";
+option java_outer_classname = "InstrumentsApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Instruments.V1Beta1";
+option objc_class_prefix = "CEI";
+
+import "connamara/ep3/instruments/v1beta1/instruments.proto";
+import "connamara/ep3/instruments/v1beta1/swaps.proto";
+import "connamara/ep3/instruments/v1beta1/derivatives.proto";
+import "connamara/ep3/instruments/v1beta1/multileg.proto";
+import "connamara/ep3/instruments/v1beta1/event.proto";
+import "connamara/ep3/type/v1beta1/type.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/any.proto";
+
+//InstrumentsAPI is the core grpc interface to the Instrument Server.
+service InstrumentsAPI {
+    // ListProducts returns a listing of all known products.
+    rpc ListProducts(ListProductsRequest) returns (ListProductsResponse) {}
+
+    // CreateProduct creates a product.
+    rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse) {}
+
+    // UpdateProduct updates a product.
+    rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse) {}
+
+    // GetProduct returns a product matching the request.
+    rpc GetProduct(GetProductRequest) returns (GetProductResponse) {}
+
+    // DeleteProduct deletes the product matching the request.
+    rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse) {}
+
+    // ListInstruments returns a list of tradable instruments matching the request.
+    rpc ListInstruments(ListInstrumentsRequest) returns (ListInstrumentsResponse) {}
+
+    // ListSymbols returns a list of symbols on the exchange.
+    rpc ListSymbols(ListSymbolsRequest) returns (ListSymbolsResponse) {}
+
+    // GetInstrument returns the tradable instrument matching the request.
+    rpc GetInstrument(GetInstrumentRequest) returns (GetInstrumentResponse) {}
+
+    // CreateInstrument creates an instrument.
+    rpc CreateInstrument(CreateInstrumentRequest) returns (CreateInstrumentResponse) {}
+
+    // UpdatePendingInstrument updates a tradable instrument only if in the pending state.
+    rpc UpdatePendingInstrument(UpdatePendingInstrumentRequest) returns (UpdatePendingInstrumentResponse) {}
+
+    // UpdateActiveInstrument updates a subset of tradable instrument that may be altered in any active state.
+    rpc UpdateActiveInstrument(UpdateActiveInstrumentRequest) returns (UpdateActiveInstrumentResponse) {}
+
+    // DeleteInstrument deletes the instrument matching the request.
+    // Note: this request will hard delete the instrument.  If softdeleting, UpdateInstrumentState to TERMINATED
+    rpc DeleteInstrument(DeleteInstrumentRequest) returns (DeleteInstrumentResponse) {}
+
+    // UpdateInstrumentState sets the state of the tradable instrument.
+    rpc UpdateInstrumentState(UpdateInstrumentStateRequest) returns (UpdateInstrumentStateResponse) {}
+
+    // UpdateInstrumentStats updates all stats of the tradable instrument.
+    rpc UpdateInstrumentStats(UpdateInstrumentStatsRequest) returns (UpdateInstrumentStatsResponse) {}
+
+    // UpdateLastPrice updates the last price of the tradable instrument.
+    rpc UpdateLastPrice(UpdateLastPriceRequest) returns (UpdateLastPriceResponse) {}
+
+    // UpdateSettlementPrice updates the settlement price of the tradable instrument.
+    rpc UpdateSettlementPrice(UpdateSettlementPriceRequest) returns (UpdateSettlementPriceResponse) {}
+
+    // UpdateOpenInterest updates the open interest of the tradable instrument.
+    rpc UpdateOpenInterest(UpdateOpenInterestRequest) returns (UpdateOpenInterestResponse) {}
+
+    // GetMetadata returns miscellaneous server metadata.
+    rpc GetMetadata(GetMetadataRequest) returns (GetMetadataResponse) {}
+
+    // ListenInstruments returns a stream of instrument updates.
+    rpc ListenInstruments(ListenInstrumentsRequest) returns (stream ListenInstrumentsResponse) {}
+
+    // CreateHolidayCalendar creates a holiday calendar.
+    rpc CreateHolidayCalendar(CreateHolidayCalendarRequest) returns (CreateHolidayCalendarResponse) {}
+
+    // GetHolidayCalendar gets a holiday calendar.
+    rpc GetHolidayCalendar(GetHolidayCalendarRequest) returns (GetHolidayCalendarResponse) {}
+
+    // UpdateHolidayCalendar updates a holiday calendar.
+    rpc UpdateHolidayCalendar(UpdateHolidayCalendarRequest) returns (UpdateHolidayCalendarResponse) {}
+
+    // DeleteHolidayCalendar deletes a holiday calendar.
+    rpc DeleteHolidayCalendar(DeleteHolidayCalendarRequest) returns (DeleteHolidayCalendarResponse) {}
+
+    // ListHolidayCalendars returns a listing of all known holiday calendars.
+    rpc ListHolidayCalendars(ListHolidayCalendarsRequest) returns (ListHolidayCalendarsResponse) {}
+}
+
+// A request to list all products on the exchange.
+message ListProductsRequest {}
+
+message ListProductsResponse {
+    repeated Product products = 1;
+}
+
+// A request to create a product by defining a product as a field.
+message CreateProductRequest {
+    Product product = 1;
+}
+
+message CreateProductResponse {
+    Product product = 1;
+}
+
+// A request to update a product by passing in the product you wish to update.
+message UpdateProductRequest {
+    Product product = 1;
+}
+
+message UpdateProductResponse {
+    Product product = 1;
+}
+
+// Get product based off of unique product ID.
+message GetProductRequest {
+    string product_id = 1;
+}
+
+message GetProductResponse {
+    Product product = 1;
+}
+
+// Delete product based off of unique product ID.
+message DeleteProductRequest {
+    string product_id = 1;
+}
+
+message DeleteProductResponse {}
+
+// A request to list the available instruments as they are updated live on the underlying database. Requires no fields.
+message ListenInstrumentsRequest {}
+
+// ListenInstrumentsResponse is a notification of a change in state for an instrument
+message ListenInstrumentsResponse {
+    // The instrument to update
+    Instrument instrument = 1;
+}
+
+// A request to get various service metadata. Has no fields.
+message GetMetadataRequest {}
+
+message GetMetadataResponse {
+    map<string, string> metadata = 1;
+}
+
+// A request to get an instrument based off of unique instrument ID.
+message GetInstrumentRequest{
+    string instrument_id = 1;
+}
+
+message GetInstrumentResponse {
+    Instrument instrument = 1;
+}
+
+// A request to create an instrument by defining a new instrument in the fields.
+message CreateInstrumentRequest {
+    Instrument instrument = 1;
+}
+
+message CreateInstrumentResponse {
+    Instrument instrument = 1;
+}
+
+// Delete an instrument based off of unique Instrument ID.
+message DeleteInstrumentRequest{
+    string instrument_id = 1;
+}
+
+message DeleteInstrumentResponse{}
+
+// Update an instrument that currently has a trade state of pending.
+message UpdatePendingInstrumentRequest {
+    Instrument instrument = 1;
+}
+
+message UpdatePendingInstrumentResponse {
+    Instrument instrument = 1;
+}
+
+// Update the
+message UpdateInstrumentStateRequest{
+    // Unique ID to define the instrument.
+    string instrument_id = 1;
+    // If set, the update will happen at a scheduled time.
+    bool is_scheduled = 2;
+    // If is_scheduled is false, this is the desired instrument state.
+    InstrumentState state = 3;
+    // If non_blocking and is_scheduled are both true, then do not synchronously wait for the scheduler to evaluate before returning.
+    bool non_blocking = 4;
+    // If set, schedule the state transition to occur at a point in the future.
+    google.protobuf.Timestamp schedule_execution_time = 5;
+}
+
+message UpdateInstrumentStateResponse {
+    Instrument instrument = 1;
+}
+
+// Update the stats of the instrument based on unique ID.
+message UpdateInstrumentStatsRequest{
+    // Unique ID defining the instrument.
+    string instrument_id = 1;
+
+    // The requested stats for the instrument.
+    InstrumentStats stats = 2;
+
+    // If provided, overrides the time this request was inserted into the exchange.
+    google.protobuf.Timestamp transact_time = 3;
+}
+
+message UpdateInstrumentStatsResponse {}
+
+// Update the last price of an instrument based on unique ID.
+message UpdateLastPriceRequest{
+    // Unique ID defining the instrument.
+    string instrument_id = 1;
+
+    // The requested last price for the instrument.
+    int64 last_price = 2;
+
+    // If provided, overrides the time this request was inserted into the exchange.
+    google.protobuf.Timestamp transact_time = 3;
+
+    // The requested last quantity for the instrument.
+    int64 last_quantity = 4;
+
+    // If set, only update the total notional volume and shares traded as a result of this request.
+    bool only_volume = 5;
+}
+
+message UpdateLastPriceResponse {}
+
+// Update the settlement price based on the book symbol.
+message UpdateSettlementPriceRequest {
+    // The book symbol.
+    string symbol = 1;
+
+    // The requested settlement price.
+    int64 settlement_price = 2;
+
+    // If provided, overrides the time this request was inserted into the exchange.
+    google.protobuf.Timestamp transact_time = 3;
+
+    // If true, the settlement price is preliminary.
+    bool settlement_preliminary = 4;
+
+    // If true, clear the settlement price.
+    bool clear = 5;
+}
+
+message UpdateSettlementPriceResponse {}
+
+// Update the open interest for a book symbol.
+message UpdateOpenInterestRequest {
+    // The book symbol.
+    string symbol = 1;
+
+    // The requested open interest.
+    int64 open_interest = 2;
+
+    // If provided, overrides the time this request was inserted into the exchange.
+    google.protobuf.Timestamp transact_time = 3;
+
+    // If true, clear the open interest.
+    bool clear = 4;
+
+    // If true, change the open interest using the field as a delta rather than setting the value explicitly.
+    bool delta = 5;
+}
+
+message UpdateOpenInterestResponse {}
+
+// List the instruments based off of possible fields to filter the returned instruments.
+message ListInstrumentsRequest {
+    // The maximum number of Instruments to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call to `ListInstruments`
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // if set, filter returned instruments belonging to product.
+    string product_id = 3;
+
+    // if set, filter out any pending instruments.
+    bool only_active = 4;
+
+    // A list of symbols to filter upon and return in a response.
+    // This field is optional.
+    repeated string symbols = 5;
+
+    // if true, result set includes terminated instruments.
+    bool show_deleted = 6;
+
+    // The instrument states to filter upon.
+    repeated InstrumentState states = 7;
+
+    // The instrument types to filter upon.
+    InstrumentType type = 8;
+
+    // Used to filter instruments by their scheduling state.
+    SchedulingFilterState filter_state = 9;
+}
+
+message ListInstrumentsResponse {
+    repeated Instrument instruments = 1;
+
+    // A pagination token returned from a previous call to `ListInstruments`
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 2;
+
+    //Eof is true if no more instruments given the filtering criteria are available at this time.
+    bool eof = 3;
+}
+
+// List the available symbols. Request has no fields.
+message ListSymbolsRequest {}
+
+message ListSymbolsResponse {
+    repeated string symbols = 1;
+}
+
+// Update the active instruments based off of unique instrument ID.
+message UpdateActiveInstrumentRequest {
+    // Unique ID to define the instrument.
+    string instrument_id = 1;
+
+    // UpdateHoursRequest specifies the trading schedule to modify.
+    message UpdateHoursRequest{
+        repeated TradingHours trading_schedule = 1;
+    }
+    UpdateHoursRequest update_hours = 2;
+
+    // UpdateDatesRequest specifies the dates to modify on an instrument.
+    message UpdateDatesRequest{
+        type.v1beta1.Date start_date = 1;
+        type.v1beta1.Date expiration_date = 2;
+        type.v1beta1.Date termination_date = 3;
+        bool start_date_update = 4;
+        bool expiration_date_update = 5;
+        bool termination_date_update = 6;
+        type.v1beta1.TimeOfDay expiration_time = 7;
+        bool expiration_time_update = 8;
+        type.v1beta1.Date last_trade_date = 9;
+        type.v1beta1.TimeOfDay last_trade_time = 10;
+        bool last_trade_date_update = 11;
+        bool last_trade_time_update = 12;
+    }
+    UpdateDatesRequest update_dates = 3;
+
+    // UpdatePriceLimit specifies a price limit update.
+    message UpdatePriceLimitRequest{
+        PriceLimit price_limit = 1;
+    }
+    UpdatePriceLimitRequest update_price_limit = 4;
+
+    // UpdateOrderSizeLimit specifies an order size limit update.
+    message UpdateOrderSizeLimitRequest{
+        OrderSizeLimit order_size_limit = 1;
+    }
+    UpdateOrderSizeLimitRequest update_order_size_limit = 5;
+
+    // UpdateHideMarketDataRequest specifies a hide market data update.
+    message UpdateHideMarketDataRequest{
+        bool hide_market_data = 1;
+    }
+    UpdateHideMarketDataRequest update_hide_market_data = 6;
+
+    // UpdateRejectQuotesRequest specifies a reject quotes update.
+    message UpdateRejectQuotesRequest{
+        bool reject_quotes = 1;
+    }
+    UpdateRejectQuotesRequest update_reject_quotes = 7;
+
+    // UpdateHolidayCalendarsRequest specifies a holiday calendar update.
+    message UpdateHolidayCalendarsRequest{
+        repeated string holiday_calendars = 1;
+    }
+    UpdateHolidayCalendarsRequest update_holiday_calendars = 8;
+
+    // UpdateProductRequest specifies a product id update.
+    message UpdateProductRequest{
+        string id = 1;
+    }
+    UpdateProductRequest update_product = 9;
+
+    // UpdateMetadataRequest specifies a metadata update.
+    message UpdateMetadataRequest{
+        map<string, string> metadata = 1;
+    }
+    UpdateMetadataRequest update_metadata = 10;
+
+    // UpdatePositionLimitRequest specifies a position limit update.
+    message UpdatePositionLimitRequest{
+        int64 position_limit = 1;
+    }
+    UpdatePositionLimitRequest update_position_limit = 11;
+
+    // UpdateTypeAttributesRequest specifies a type attributes update.
+    message UpdateTypeAttributesRequest {
+        oneof type_attributes {
+            InterestRateSwapAttributes interest_rate_swap_attributes = 1;
+            google.protobuf.Any custom_attributes = 2;
+            ForwardRateAgreementSwapAttributes forward_rate_agreement_swap_attributes = 3;
+            string json_attributes = 4;
+            FutureAttributes future_attributes = 5;
+            OptionAttributes option_attributes = 6;
+            MultilegAttributes multileg_attributes = 7;
+            ForwardStartingInterestRateSwapAttributes forward_starting_interest_rate_swap_attributes = 8;
+            BasisSwapAttributes basis_swap_attributes = 9;
+            EventAttributes event_attributes = 10;
+            OvernightIndexSwapAttributes overnight_index_swap_attributes = 11;
+            SinglePeriodSwapAttributes single_period_swap_attributes = 12;
+        }
+    }
+    UpdateTypeAttributesRequest update_type_attributes = 12;
+}
+
+message UpdateActiveInstrumentResponse {
+    Instrument instrument = 1;
+}
+
+// List the holiday calendars that are defined. Has no fields.
+message ListHolidayCalendarsRequest {}
+
+message ListHolidayCalendarsResponse {
+    repeated HolidayCalendar holiday_calendars = 1;
+}
+
+// Create a new holiday calendar after defining one in the fields.
+message CreateHolidayCalendarRequest {
+    HolidayCalendar holiday_calendar = 1;
+}
+
+message CreateHolidayCalendarResponse {
+    HolidayCalendar holiday_calendar = 1;
+}
+
+// Update a currently created holiday calendar.
+message UpdateHolidayCalendarRequest {
+    HolidayCalendar holiday_calendar = 1;
+}
+
+message UpdateHolidayCalendarResponse {
+    HolidayCalendar holiday_calendar = 1;
+}
+
+// Get a holiday calendar based on its ID.
+message GetHolidayCalendarRequest {
+    string id = 1;
+}
+
+message GetHolidayCalendarResponse {
+    HolidayCalendar holiday_calendar = 1;
+}
+
+// Delete a holiday calendar based on its ID.
+message DeleteHolidayCalendarRequest {
+    string id = 1;
+}
+
+message DeleteHolidayCalendarResponse {}
+

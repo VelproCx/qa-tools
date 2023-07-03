@@ -1,0 +1,132 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.hedger.v1beta1;
+
+option go_package = "hedgerv1beta1";
+option java_package = "com.connamara.ep3.hedger.v1beta1";
+option java_outer_classname = "HedgerApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Hedger.V1Beta1";
+option objc_class_prefix = "CEH";
+
+import "connamara/ep3/hedger/v1beta1/hedger.proto";
+
+// HedgerAPI is the Hedger API for managing hedger internal to EP3.
+service HedgerAPI {
+    //CreateHedgeAlgorithm creates the specified hedge algorithm.
+    rpc CreateHedgeAlgorithm(CreateHedgeAlgorithmRequest) returns (CreateHedgeAlgorithmResponse);
+
+    //BatchCreateHedgeAlgorithm batch creates the specified hedge algorithms.
+    rpc BatchCreateHedgeAlgorithm(BatchCreateHedgeAlgorithmRequest) returns (BatchCreateHedgeAlgorithmResponse);
+
+    //RemoveHedgeAlgorithm removes the specified hedge algorithm.
+    rpc RemoveHedgeAlgorithm(RemoveHedgeAlgorithmRequest) returns (RemoveHedgeAlgorithmResponse);
+
+    //BatchRemoveHedgeAlgorithm batch removes the specified hedge algorithms.
+    rpc BatchRemoveHedgeAlgorithm(BatchRemoveHedgeAlgorithmRequest) returns (BatchRemoveHedgeAlgorithmResponse);
+
+    // ListHedgeAlgorithms returns a list of Hedge Algorithms.
+    rpc ListHedgeAlgorithms (ListHedgeAlgorithmsRequest) returns (ListHedgeAlgorithmsResponse);
+
+    // RemoveAllHedgeSymbolReferences removes all hedge markets and hedge algorithms corresponding to the provided symbol.
+    rpc RemoveAllHedgeSymbolReferences (RemoveAllHedgeSymbolReferencesRequest) returns (RemoveAllHedgeSymbolReferencesResponse);
+
+    // RemoveHedgeMarkets removes all hedge markets corresponding to the provided symbol from a specific hedge algo.
+    rpc RemoveHedgeMarkets (RemoveHedgeMarketsRequest) returns (RemoveHedgeMarketsResponse);
+}
+
+message ListHedgeAlgorithmsRequest {
+    // The maximum number of HedgeAlgorithms to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call to `ListHedgeAlgorithms`
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // Symbol to filter the HedgeAlgorithms returned in a response.
+    // This field is optional.
+    string symbol = 3;
+
+    // If set, return algos for which the filter symbol is defined within hedge markets.
+    // This field is optional.
+    bool search_symbol_within_markets = 4;
+}
+
+message ListHedgeAlgorithmsResponse {
+    repeated HedgeAlgorithm hedge_algorithms = 1;
+
+    // A pagination token returned from a previous call to `ListHedgeAlgorithms`
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 2;
+}
+
+message CreateHedgeAlgorithmRequest {
+    string symbol = 1;
+    repeated HedgeMarket hedge_markets = 2;
+    string hedge_participant = 3;
+    string hedge_account = 4;
+    bool reject_buy = 5;
+    bool reject_sell = 6;
+    bool spread = 7;
+
+    // If true, append the given hedge markets to an existing algo
+    bool append = 8;
+}
+
+message CreateHedgeAlgorithmResponse {
+    HedgeAlgorithm hedge_algorithm = 1;
+}
+
+message BatchCreateHedgeAlgorithmRequest {
+    repeated CreateHedgeAlgorithmRequest requests = 1;
+}
+
+message BatchCreateHedgeAlgorithmResponse {
+    repeated CreateHedgeAlgorithmResponse responses = 1;
+}
+
+message RemoveHedgeAlgorithmRequest {
+    string symbol = 1;
+}
+
+message RemoveHedgeAlgorithmResponse {
+    HedgeAlgorithm hedge_algorithm = 1;
+}
+
+message BatchRemoveHedgeAlgorithmRequest {
+    repeated RemoveHedgeAlgorithmRequest requests = 1;
+}
+
+message BatchRemoveHedgeAlgorithmResponse {
+    repeated RemoveHedgeAlgorithmResponse responses = 1;
+}
+
+message RemoveAllHedgeSymbolReferencesRequest {
+    string symbol = 1;
+}
+
+message RemoveAllHedgeSymbolReferencesResponse {
+    // Affected hedge algorithms referenced by the symbol
+    repeated HedgeAlgorithm hedge_algorithms = 1;
+}
+
+message RemoveHedgeMarketsRequest {
+    // The hedge algo symbol
+    string symbol = 1;
+
+    // The hedge market symbols to remove
+    repeated string hedge_market_symbols = 2;
+}
+
+message RemoveHedgeMarketsResponse {
+    HedgeAlgorithm hedge_algorithm = 1;
+}

@@ -1,0 +1,395 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.firms.v1beta1;
+
+option go_package = "firmsv1beta1";
+option java_package = "com.connamara.ep3.firms.v1beta1";
+option java_outer_classname = "FirmsProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Firms.V1Beta1";
+option objc_class_prefix = "CEF";
+
+import "google/protobuf/timestamp.proto";
+import "connamara/ep3/type/v1beta1/type.proto";
+import "connamara/ep3/instruments/v1beta1/instruments.proto";
+import "connamara/ep3/orders/v1beta1/orders.proto";
+
+// UserRole of the exchange user.
+enum UserRole {
+    USER_ROLE_UNDEFINED = 0;
+    USER_ROLE_TRADING = 1;
+    USER_ROLE_MARKET_DATA = 2;
+    USER_ROLE_DROP_COPY = 3;
+    USER_ROLE_SURVEILLANCE = 4;
+    USER_ROLE_SUPERVISOR_READ_ONLY_ADMIN = 5;
+    USER_ROLE_SUPERVISOR_ADMIN = 6;
+    USER_ROLE_SUPERVISOR_ONBOARDING_ADMIN = 7;
+    USER_ROLE_SUPERVISOR_EXCHANGE_OPERATION_ADMIN = 8;
+}
+
+// UserState of the exchange user.
+enum UserState {
+    USER_STATE_ACTIVE = 0;
+    USER_STATE_SUSPENDED = 1;
+}
+
+// CustomerOrderCapacity defines the relationship between an exchange user and its assignment to accounts.
+enum CustomerOrderCapacity {
+    //The default undefined relationship between exchange user and account.
+    CUSTOMER_ORDER_CAPACITY_UNDEFINED = 0;
+
+    //Indicates that the account belongs to the exchange user directly.
+    CUSTOMER_ORDER_CAPACITY_OWN_ACCOUNT = 1;
+
+    //Indicates that the exchange user represents a clearing firm trading for its proprietary account.
+    CUSTOMER_ORDER_CAPACITY_PROPRIETARY_ACCOUNT = 2;
+
+    //A financial advisor represents an exchange user that trades in a specific account for the benefit of the owner.
+    CUSTOMER_ORDER_CAPACITY_FINANCIAL_ADVISOR = 3;
+
+    //Represents a retail customer (a natural person) that trades within an account without any computerized trading method such as an algo modifying orders prior to submission.
+    CUSTOMER_ORDER_CAPACITY_RETAIL_CUSTOMER = 4;
+}
+
+// UserKey is an entity that represents an API Key that can be used to access the exchange.
+message UserKey {
+    // jti uniquely identifies this user key
+    string jti = 1;
+
+    // name is the common name for this user key
+    string name = 2;
+
+    // user id is the associated user for this key
+    string user_id = 3;
+
+    // The current role for the key
+    UserRole role = 4;
+
+    // API description
+    string description = 5;
+}
+
+// User is an entity that can place orders into the exchange.
+message User {
+    // The fully qualified resource name for the user
+    string name = 1;
+
+    // group_ids are a list of groups that this user belongs to
+    repeated string group_ids = 2;
+
+    // The current state for the user
+    UserState state = 3;
+
+    // The current role for the user
+    UserRole role = 4;
+
+    // Firm indicates the associated firm of this user
+    // This field is output on successful User creation to an existing Firm parent
+    string firm = 5;
+
+    // service_user indicates if the user is a service user
+    bool service_user = 6;
+
+    // accounts are a collection of accounts that this participant belongs to and the associated relationship to each
+    map<string, CustomerOrderCapacity> accounts = 7;
+
+    // The resource id for this user
+    string id = 8;
+
+    // The pretty display name for the user
+    string display_name = 9;
+
+    // The creation timestamp of the user
+    google.protobuf.Timestamp create_time = 10;
+
+    // The update timestamp of the user
+    google.protobuf.Timestamp update_time = 11;
+
+    // The deletion timestamp of the user
+    google.protobuf.Timestamp delete_time = 12;
+
+    // Indicates if the user is deleted
+    bool deleted = 13;
+
+    //Aliases for downstream adapters that use a different user identifier.
+    map<string, string> aliases = 14;
+}
+
+// UserAttributes are the attributes of a user.
+message UserAttributes {
+    string legal_name = 1;
+    string phone_number = 2;
+    string email = 3;
+    type.v1beta1.Date date_of_birth = 4;
+    string registration_number = 5;
+    string description = 6;
+    string address = 7;
+    string oauth_id = 8;
+}
+
+// FirmAttributes are the attributes of a firm.
+message FirmAttributes {
+    string legal_name = 1;
+    string phone_number = 2;
+    string email = 3;
+    string legal_entity_identifier = 4;
+    FirmParticipantType participant_type = 5;
+    string business_contact_name = 6;
+}
+
+// FirmParticipantType is the type of participant of the exchange firm.
+enum FirmParticipantType {
+    FIRM_PARTICIPANT_TYPE_UNDEFINED = 0;
+    FIRM_PARTICIPANT_TYPE_SWAP_DEALER = 1;
+    FIRM_PARTICIPANT_TYPE_MAJOR_SWAP_PARTICIPANT = 2;
+    FIRM_PARTICIPANT_TYPE_FINANCIAL_ENTITY = 3;
+    FIRM_PARTICIPANT_TYPE_NON_US_PERSON = 4;
+    FIRM_PARTICIPANT_TYPE_US_PERSON = 5;
+}
+
+// FirmState of the exchange firm.
+enum FirmState {
+    FIRM_STATE_ACTIVE = 0;
+    FIRM_STATE_SUSPENDED = 1;
+}
+
+// FirmAssociationType of the exchange firm.
+enum FirmAssociationType {
+    FIRM_ASSOCIATION_TYPE_UNDEFINED = 0;
+    FIRM_ASSOCIATION_TYPE_PARTICIPANT_TO_CLEARING_MEMBER = 1;
+    FIRM_ASSOCIATION_TYPE_CLEARING_MEMBER_TO_CLEARING_HOUSE = 2;
+    FIRM_ASSOCIATION_TYPE_AFFILIATED_PARTICIPANTS = 3;
+    FIRM_ASSOCIATION_TYPE_RFQ_ASSOCIATION = 4;
+    FIRM_ASSOCIATION_TYPE_PARTICIPANT_TO_AGENT = 5;
+}
+
+// FirmType of the exchange firm.
+enum FirmType {
+    FIRM_TYPE_UNDEFINED = 0;
+    FIRM_TYPE_PARTICIPANT = 1;
+    FIRM_TYPE_SUPERVISOR = 2;
+    FIRM_TYPE_CLEARING_MEMBER = 3;
+    FIRM_TYPE_CLEARING_HOUSE = 4;
+    FIRM_TYPE_AGENT = 5;
+}
+
+// Firm is a logical namespace for users and groups.
+message Firm {
+    // The resource id for this firm, must be globally unique.
+    string id = 1;
+
+    // The current state for the firm
+    FirmState state = 2;
+
+    // The assigned type of the firm
+    FirmType type = 3;
+
+    // The fully qualified resource name for the firm
+    string name = 4;
+
+    // The pretty display name for the firm
+    string display_name = 5;
+
+    // The creation timestamp of the firm
+    google.protobuf.Timestamp create_time = 6;
+
+    // The update timestamp of the firm
+    google.protobuf.Timestamp update_time = 7;
+
+    // The deletion timestamp of the firm
+    google.protobuf.Timestamp delete_time = 8;
+
+    // Indicates if the firm is deleted
+    bool deleted = 9;
+
+    //Aliases for downstream adapters that use a different firm identifier.
+    map<string, string> aliases = 10;
+}
+
+
+// AccountState of the exchange account.
+enum AccountState {
+    ACCOUNT_STATE_ACTIVE = 0;
+    ACCOUNT_STATE_SUSPENDED = 1;
+}
+
+// AccountType of the account.
+enum AccountType {
+    //The default undefined type.
+    ACCOUNT_TYPE_UNDEFINED = 0;
+
+    //Indicates the account is carried on customer side of the books.
+    ACCOUNT_TYPE_CUSTOMER = 1;
+
+    //Indicates the account is carried on non-customer side of books.
+    ACCOUNT_TYPE_NON_CUSTOMER = 2;
+
+    //Indicates the account is a house trader.
+    ACCOUNT_TYPE_HOUSE_TRADER = 3;
+
+    //Indicates the account is a floor trader.
+    ACCOUNT_TYPE_FLOOR_TRADER = 4;
+
+    //Indicates the account is carried on non-customer side of books and is cross margined.
+    ACCOUNT_TYPE_NON_CUSTOMER_CROSS_MARGINED = 5;
+
+    //Indicates the account is a house trader and is cross margined.
+    ACCOUNT_TYPE_HOUSE_TRADER_CROSS_MARGINED = 6;
+
+    //Indicates a joint back office account (JBO).
+    ACCOUNT_TYPE_JOINT_BACK_OFFICE = 7;
+
+    //Indicates the account is a equities specialist.
+    ACCOUNT_TYPE_EQUITIES_SPECIALIST = 8;
+
+    //Indicates the account is a options market maker.
+    ACCOUNT_TYPE_OPTIONS_MARKET_MAKER = 9;
+
+    //Indicates a options firm account.
+    ACCOUNT_TYPE_OPTIONS_FIRM_ACCOUNT = 10;
+
+    //Indicates the account aggregates orders from customers and non-customers.
+    //In the context of IIROC UMIR this account type can be used for bundled orders (BU), i.e. orders including client, non-client and principal orders.
+    ACCOUNT_TYPE_AGGREGATED_CUSTOMER_AND_NON_CUSTOMER = 11;
+
+    //Indicates the account aggregates orders from multiple customers.
+    //In the context of IIROC UMIR this account type can be used for multiple client orders (MC), i.e. orders including orders from more than one client but no principal or non-client orders.
+    ACCOUNT_TYPE_AGGREGATED_MULTIPLE_CUSTOMERS = 12;
+
+    //Indicates the account is a liquidity provider.
+    ACCOUNT_TYPE_LIQUIDITY_PROVIDER = 13;
+}
+
+// Account is a tradable account on the system.
+message Account {
+    // Name is the resource name that uniquely identifies the Account
+    string name = 1;
+
+    // The current state for the account
+    AccountState state = 2;
+
+    // parent_firm indicates the parent firm of this account
+    string parent_firm = 3;
+
+    // associated_firm indicates the associated firm of this group
+    string associated_firm = 4;
+
+    // resource id for the account
+    string id = 5;
+
+    // pretty display name for the account
+    string display_name = 6;
+
+    // The creation timestamp of the user
+    google.protobuf.Timestamp create_time = 7;
+
+    // The update timestamp of the user
+    google.protobuf.Timestamp update_time = 8;
+
+    // The deletion timestamp of the user
+    google.protobuf.Timestamp delete_time = 9;
+
+    // Indicates if the user is deleted
+    bool deleted = 10;
+
+    //Aliases for downstream adapters that use a different account identifier.
+    map<string, string> aliases = 11;
+
+    // Indicates the risk system to use.
+    string risk_system = 12;
+
+    // Whitelist for the allowable instruments that may be traded by this account.
+    AccountInstrumentRestriction whitelist = 13;
+
+    // Order size limit
+    instruments.v1beta1.OrderSizeLimit order_size_limit = 14;
+
+    // Blacklist for the disallowed instruments that may be traded by this account.
+    AccountInstrumentRestriction blacklist = 15;
+
+    // The priority weight assigned to orders associated with this account
+    int64 priority_weight = 16;
+
+    // If set, collateral_account indicates the account to use for balance queries and adjustments on this account
+    string collateral_account = 17;
+
+    // Type of account, default undefined
+    AccountType account_type = 18;
+}
+
+// GroupState of the exchange group.
+enum GroupState {
+    GROUP_STATE_ACTIVE = 0;
+    GROUP_STATE_SUSPENDED = 1;
+}
+
+// Group is a logical grouping of users.
+message Group {
+    // id uniquely identifies this group
+    string id = 1;
+
+    // The current state for the group
+    GroupState state = 2;
+
+    // firm indicates the associated firm of this group
+    string firm = 3;
+}
+
+// FirmsNotification is a notification of a change in state for participant entities.
+message FirmsNotification {
+    // The user to update
+    User user = 1;
+
+    // The groups to update
+    repeated Group groups = 2;
+
+    // The accounts to update
+    repeated Account accounts = 3;
+
+    // The firms to update
+    repeated Firm firms = 4;
+}
+
+// AccountInstrumentRestriction describes the allowable instruments that may or may not be traded by an account.
+message AccountInstrumentRestriction {
+    //If set, enforce the restriction, default (false) is to allow all
+    bool enabled = 1;
+
+    //List of tradable products, all child instruments can be traded in the context of a whitelist, disallowed for a blacklist
+    repeated string products = 2;
+
+    //List of instrument symbols that may be traded by the account in the context of a whitelist, disallowed for a blacklist
+    repeated string symbols = 3;
+}
+
+// CommissionAssignment defines a commission to be applied on an order upon creation and a rule to determine assignment.
+message CommissionAssignment {
+    // The commission to be applied if an order matches this particular commission assignment
+    orders.v1beta1.Commission commission = 1;
+
+    // The rule for the commission to be applied
+    CommissionRule rule = 2;
+}
+
+// CommissionRule defines the rule by which commissions.
+message CommissionRule {
+    // The firm to match to the commission assignment, left blank if the assignment is global to the exchange
+    string firm = 1;
+
+    // If set, override a matching commission rule for the given firm should the user be equal
+    string user_override = 2;
+
+    // If set, override a matching commission rule for the given firm should the symbol be equal
+    string symbol_override = 3;
+
+    // If set, override a matching commission rule for the given firm should the side be equal
+    orders.v1beta1.Side side_override = 4;
+
+    // Dictate the date and time for when this commission rule is applicable (optional)
+    google.protobuf.Timestamp expiration_time = 5;
+}

@@ -1,0 +1,103 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.risk.v1beta1;
+
+option go_package = "riskv1beta1";
+option java_package = "com.connamara.ep3.risk.v1beta1";
+option java_outer_classname = "RiskApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Risk.V1Beta1";
+option objc_class_prefix = "CER";
+
+import "connamara/ep3/orders/v1beta1/orders.proto";
+import "connamara/ep3/quotes/v1beta1/quotes.proto";
+import "connamara/ep3/books/v1beta1/books.proto";
+import "connamara/ep3/trades/v1beta1/trades.proto";
+import "connamara/ep3/positions/v1beta1/positions.proto";
+
+//RiskAPI is the API for accessing Risk.
+service RiskAPI {
+    //ReportOrderEvent reports an order event to the external risk component.
+    rpc ReportOrderEvent(ReportOrderEventRequest) returns (ReportOrderEventResponse) {}
+
+    //ReportQuoteEvent reports a quote event to the external risk component.
+    rpc ReportQuoteEvent(ReportQuoteEventRequest) returns (ReportQuoteEventResponse) {}
+
+    //ReportTradeCaptureReports reports trade capture reports to the external risk component.
+    rpc ReportTradeCaptureReports(ReportTradeCaptureReportsRequest) returns (ReportTradeCaptureReportsResponse) {}
+
+    //ReportPositionAdjustment reports a position adjustment to the external risk component.
+    rpc ReportPositionAdjustment(ReportPositionAdjustmentRequest) returns (ReportPositionAdjustmentResponse) {}
+
+    //RiskCheckOrder enqueues a request to create an order.
+    rpc RiskCheckOrder(RiskCheckOrderRequest) returns (RiskCheckOrderResponse) {}
+
+    //RiskCheckOrderUpdate checks a request to update an order.
+    rpc RiskCheckOrderUpdate(RiskCheckOrderUpdateRequest) returns (RiskCheckOrderUpdateResponse) {}
+
+    //RiskCheckQuote enqueues a request to create a quote.
+    rpc RiskCheckQuote(RiskCheckQuoteRequest) returns (RiskCheckQuoteResponse) {}
+}
+
+message ReportOrderEventRequest {
+    repeated orders.v1beta1.Order orders = 1;
+    map<string, books.v1beta1.BookStatus> associated_statuses = 2;
+    string symbol = 3;
+    repeated orders.v1beta1.Execution executions = 4;
+}
+
+message ReportOrderEventResponse {
+}
+
+message ReportQuoteEventRequest {
+    repeated quotes.v1beta1.Quote quotes = 1;
+}
+
+message ReportQuoteEventResponse {
+}
+
+message ReportTradeCaptureReportsRequest {
+    repeated trades.v1beta1.TradeCaptureReport trade_capture_reports = 1;
+}
+
+message ReportTradeCaptureReportsResponse {
+}
+
+message RiskCheckOrderRequest {
+    orders.v1beta1.Order order = 1;
+}
+
+message RiskCheckOrderResponse {
+    // When set, indicates immediate risk approval
+    string risk_approval_id = 1;
+}
+
+message RiskCheckOrderUpdateRequest {
+    orders.v1beta1.CancelReplaceOrderRequest request = 1;
+}
+
+message RiskCheckOrderUpdateResponse {
+    // When set, indicates immediate risk approval
+    string risk_approval_id = 1;
+}
+
+message RiskCheckQuoteRequest {
+    quotes.v1beta1.Quote quote = 1;
+}
+
+message RiskCheckQuoteResponse {
+    // When set, indicates immediate risk approval
+    string risk_approval_id = 1;
+}
+
+message ReportPositionAdjustmentRequest {
+    positions.v1beta1.PositionAdjustment adjustment = 1;
+}
+
+message ReportPositionAdjustmentResponse {
+}

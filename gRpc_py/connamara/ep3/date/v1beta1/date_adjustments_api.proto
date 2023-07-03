@@ -1,0 +1,59 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.date.v1beta1;
+
+option go_package = "datev1beta1";
+option java_package = "com.connamara.ep3.date.v1beta1";
+option java_outer_classname = "DateAdjustmentsApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Date.V1Beta1";
+option objc_class_prefix = "CED";
+
+import "connamara/ep3/type/v1beta1/type.proto";
+import "connamara/ep3/instruments/v1beta1/swaps.proto";
+import "connamara/ep3/instruments/v1beta1/instruments.proto";
+
+// The date adjustments service definition.
+service DateAdjustmentsAPI {
+    // Sends a date adjustment request.
+    rpc AdjustDates (AdjustDatesRequest) returns (AdjustDatesResponse) {}
+
+    // FetchHolidayCalendar gets a holiday calendar.
+    rpc FetchHolidayCalendar(FetchHolidayCalendarRequest) returns (FetchHolidayCalendarResponse) {}
+}
+
+// The request message containing required fields for date adjustment
+message AdjustDatesRequest {
+    type.v1beta1.Date start_date = 1;
+    instruments.v1beta1.InterestRateSwapAttributes interest_rate_swap_attributes = 2;
+    instruments.v1beta1.ForwardRateAgreementSwapAttributes forward_rate_agreement_swap_attributes = 3;
+    repeated instruments.v1beta1.HolidayCalendar holiday_calendars = 4;
+    instruments.v1beta1.ForwardStartingInterestRateSwapAttributes forward_starting_interest_rate_swap_attributes = 5;
+    instruments.v1beta1.BasisSwapAttributes basis_swap_attributes = 6;
+    instruments.v1beta1.OvernightIndexSwapAttributes overnight_index_swap_attributes = 7;
+    instruments.v1beta1.SinglePeriodSwapAttributes single_period_swap_attributes = 8;
+}
+
+// The response message containing adjusted dates
+message AdjustDatesResponse {
+    instruments.v1beta1.InterestRateSwapAttributes interest_rate_swap_attributes = 1;
+    instruments.v1beta1.ForwardRateAgreementSwapAttributes forward_rate_agreement_swap_attributes = 2;
+    instruments.v1beta1.ForwardStartingInterestRateSwapAttributes forward_starting_interest_rate_swap_attributes = 3;
+    instruments.v1beta1.BasisSwapAttributes basis_swap_attributes = 4;
+    instruments.v1beta1.OvernightIndexSwapAttributes overnight_index_swap_attributes = 5;
+    instruments.v1beta1.SinglePeriodSwapAttributes single_period_swap_attributes = 6;
+}
+
+message FetchHolidayCalendarRequest {
+    string id = 1;
+}
+
+message FetchHolidayCalendarResponse {
+    instruments.v1beta1.HolidayCalendar holiday_calendar = 1;
+}

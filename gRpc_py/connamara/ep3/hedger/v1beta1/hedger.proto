@@ -1,0 +1,75 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.hedger.v1beta1;
+
+option go_package = "hedgerv1beta1";
+option java_package = "com.connamara.ep3.hedger.v1beta1";
+option java_outer_classname = "HedgerProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Hedger.V1Beta1";
+option objc_class_prefix = "CEH";
+
+import "connamara/ep3/orders/v1beta1/orders_context.proto";
+
+// HedgerAlgorithmStatus is the status of a given hedge algorithm.
+enum HedgeAlgorithmStatus {
+    HEDGE_ALGORITHM_STATUS_UNDEFINED = 0;
+    HEDGE_ALGORITHM_STATUS_PENDING = 1;
+    HEDGE_ALGORITHM_STATUS_ACTIVE = 2;
+    HEDGE_ALGORITHM_STATUS_PENDING_REMOVE = 3;
+}
+
+// HedgeMarket defines what markets to hedge into and by what price model.
+message HedgeMarket {
+    //Symbol describes the market that a parent order shall hedge into.
+    string symbol = 1;
+
+    //If an incoming order is a buy, then increment the price in ticks by this value for the hedge.
+    int64 buy_price_increment = 2;
+
+    //If an incoming order is a sell, then increment the price in ticks by this value for the hedge.
+    int64 sell_price_increment = 3;
+
+    //If an incoming order is a buy, then multiply the price scale by this value for the hedge. If zero, then no scale applied.
+    int64 buy_scale = 4;
+
+    //If an incoming order is a sell, then multiply the price scale by this value for the hedge. If zero, then no scale applied.
+    int64 sell_scale = 5;
+
+    //If set, orders submitted against the parent symbol shall appear on the opposite side in the hedge market.
+    bool opposing_side = 6;
+
+    //If an incoming order is a buy, then multiply the quantity by this value for the hedge. If zero, then not applied.
+    int64 buy_quantity_ratio = 7;
+
+    //If an incoming order is a buy, then multiply the quantity by this value for the hedge. If zero, then not applied.
+    int64 sell_quantity_ratio = 8;
+
+    //If set, orders submitted against the parent symbol shall be mandated as strict limit orders in the hedge market.
+    bool strict_limit = 9;
+}
+
+// HedgeAlgorithm describes a Hedge Algorithm managed by the Hedger.
+message HedgeAlgorithm {
+    string symbol = 1; 
+    HedgeAlgorithmStatus status = 2;
+    repeated HedgeMarket hedge_markets = 3;
+    string hedge_participant = 4;
+    string hedge_account = 5;
+    bool reject_buy = 6;
+    bool reject_sell = 7;
+    bool spread = 8;
+}
+
+//HedgerContext is attached to all hedge orders produced by the Hedger.
+message HedgerContext {
+    string participant_symbol = 1;
+    bool is_offsetting = 2;
+    orders.v1beta1.OrderContext parent_context = 3;
+}

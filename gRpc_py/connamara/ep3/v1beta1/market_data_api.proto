@@ -1,0 +1,108 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.v1beta1;
+
+option go_package = "ep3v1beta1";
+option java_package = "com.connamara.ep3.v1beta1";
+option java_outer_classname = "MarketDataApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.V1Beta1";
+option objc_class_prefix = "CEX";
+
+import "connamara/ep3/v1beta1/api.proto";
+import "connamara/ep3/instruments/v1beta1/instruments.proto";
+import "google/protobuf/timestamp.proto";
+
+// MarketDataAPI is the API Surface for connected clients to consume market data.
+service MarketDataAPI {
+    // CreateMarketDataSubscription creates a subscription for market data.
+    rpc CreateMarketDataSubscription(CreateMarketDataSubscriptionRequest) returns (stream CreateMarketDataSubscriptionResponse) {}
+
+    // ListInstruments returns a list of tradable instruments matching the request.
+    rpc ListInstruments(ListInstrumentsRequest) returns (ListInstrumentsResponse) {}
+
+    // ListSymbols returns a list of symbols on the exchange.
+    rpc ListSymbols(ListSymbolsRequest) returns (ListSymbolsResponse) {}
+
+    // GetInstrumentMetadata returns miscellaneous instrument metadata.
+    rpc GetInstrumentMetadata(GetInstrumentMetadataRequest) returns (GetInstrumentMetadataResponse) {}
+}
+
+message CreateMarketDataSubscriptionRequest {
+    repeated string symbols = 1;
+    bool unaggregated = 2;
+    int32 depth = 3;
+}
+
+message CreateMarketDataSubscriptionResponse {
+    // BookEntry lists a price and volume for a given record in a market data update.
+    message BookEntry {
+        int64 px = 1;
+        int64 qty = 2;
+        string symbol_sub_type = 3;
+    }
+
+    // Update is streamed on a market data update.
+    message Update {
+        string symbol = 1;
+        repeated BookEntry bids = 2;
+        repeated BookEntry offers = 3;
+        InstrumentState state = 4;
+        instruments.v1beta1.InstrumentStats stats = 5;
+        google.protobuf.Timestamp transact_time = 6;
+        bool book_hidden = 7;
+    }
+
+    oneof event {
+        Heartbeat heartbeat = 1;
+        Update update = 2;
+    }
+}
+
+message ListInstrumentsRequest {
+    // The maximum number of Instruments to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call to `ListInstruments`
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // A list of symbols to filter upon and return in a response.
+    // This field is optional.
+    repeated string symbols = 3;
+
+    // If set, filter returned instruments belonging to product
+    string product_id = 4;
+}
+
+message ListInstrumentsResponse {
+    repeated Instrument instruments = 1;
+
+    // A pagination token returned from a previous call to `ListInstruments`
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 2;
+
+    //Eof is true if no more instruments given the filtering criteria are available at this time
+    bool eof = 3;
+}
+
+message ListSymbolsRequest {}
+
+message ListSymbolsResponse {
+    repeated string symbols = 1;
+}
+
+message GetInstrumentMetadataRequest {}
+
+message GetInstrumentMetadataResponse {
+    map<string, string> metadata = 1;
+}
