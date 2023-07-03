@@ -12,13 +12,18 @@ import json
 from mail.run_email import send_mail
 from method.file_generation import generation
 import math
+import random
+
 __SOH__ = chr(1)
+
 from openpyxl import Workbook, load_workbook
 
 import pandas as pd
+
 # report
 setup_logger('logfix', 'logs/rolx_report.log')
 logfix = logging.getLogger('logfix')
+
 
 class Application(fix.Application):
     orderID = 0
@@ -56,7 +61,8 @@ class Application(fix.Application):
         # 将JSON数据写入文件
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = self.compare_field_values('case/EDP_Functional_Test_Matrix.json', 'logs/recv_data.json', 'ordstatus')
+        self.Result = self.compare_field_values('case/ROL_Functional_Test_Matrix.json', 'logs/recv_data.json',
+                                                'ordstatus')
         logfix.info("Result : Total = %d,Success = %d,Fail = %d" % (self.Total, self.Success, self.Fail))
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/rolx_report.xlsx', self.Result, 2, 'P')
@@ -181,9 +187,7 @@ class Application(fix.Application):
                 cashMargin = message.getField(544)
                 crossingPriceType = message.getField(8164)
                 marginTransactionType = message.getField(8214)
-                if symbol == '5076':
-                    self.PTF_CANCEL_LIST.append(message.getField(11))
-                elif symbol == '1311' or symbol == '6954':
+                if symbol == '5076' or symbol == '1311' or symbol == '6954':
                     self.ORDERS_DICT = message.getField(11)
                 msg = message.toString().replace(__SOH__, "|")
                 # 7.2 Execution Report – Order Accepted
@@ -411,7 +415,8 @@ class Application(fix.Application):
         self.execID += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
-        return '2023900' + str(t) + str(self.execID).zfill(6)
+        str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
+        return str(t) + str1 + str(self.execID).zfill(6)
 
     def insert_order_request(self, row):
         msg = fix.Message()
@@ -476,7 +481,6 @@ class Application(fix.Application):
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.Symbol(row["Symbol"]))
         msg.setField(fix.Side(row["Side"]))
-
         trstime = fix.TransactTime()
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
         msg.setField(trstime)
@@ -500,7 +504,6 @@ class Application(fix.Application):
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
                 self.runTestCase(row)
-                self.Total += 1
                 # 增加判断条件，判断是否为需要cancel的symbol
                 if row["Symbol"] == "5076":
                     time.sleep(3)
