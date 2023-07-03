@@ -1,0 +1,33 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.wire.v1beta1;
+
+option go_package = "wirev1beta1";
+option java_package = "com.connamara.ep3.wire.v1beta1";
+option java_outer_classname = "WireProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Wire.V1Beta1";
+option objc_class_prefix = "CEW";
+
+import "google/protobuf/any.proto";
+
+//TransactionEventOffset is a topic/partition/offset tuple for a given point in time along the 
+//message route.
+message TransactionEventOffset {
+    string topic = 1;
+    int32 partition = 2;
+    int64 offset = 3;
+}
+
+//TransactionEvent is the base message type Transactional Events.  The TransactionEvent includes the even payload
+//as well as the route the transaction took as it works its way through the messaging system.
+message TransactionEvent {
+    repeated TransactionEventOffset trace_route = 1;
+    repeated google.protobuf.Any payload = 2;
+}
+

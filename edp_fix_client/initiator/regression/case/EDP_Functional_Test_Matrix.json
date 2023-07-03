@@ -1,0 +1,26 @@
+{
+  "testCase": [
+    {
+      "Id": "27",
+      "ScenarioName": "BBO Price Rounding Check",
+      "Account": "RSIT_ACCOUNT_3",
+      "Market": "EDP",
+      "ActionType": "NewAck",
+      "Comment": "ROLX_Market_NewAck",
+      "OrderQty": 10,
+      "OrdType": "2",
+      "Price": 1400,
+      "Side": "1",
+      "Symbol": "5110",
+      "TimeInForce": "3",
+      "MinQty": 0,
+      "OrderClassification": "3",
+      "SelfTradePreventionId": "0",
+      "CrossingPriceType": "EDP",
+      "Rule80A": "P",
+      "CashMargin": "1",
+      "MarginTransactionType": "0",
+      "ordstatus": "2"
+    }
+  ]
+}

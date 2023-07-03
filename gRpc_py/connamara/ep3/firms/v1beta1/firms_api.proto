@@ -1,0 +1,269 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.firms.v1beta1;
+
+option go_package = "firmsv1beta1";
+option java_package = "com.connamara.ep3.firms.v1beta1";
+option java_outer_classname = "FirmsApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Firms.V1Beta1";
+option objc_class_prefix = "CEF";
+
+import "connamara/ep3/firms/v1beta1/firms.proto";
+
+// FirmsAPI exposes the grpc services for accessing firms, users, accounts, groups and permissioning.
+service FirmsAPI {
+    // GetUser gets the user matching the request.
+    rpc GetUser(GetUserRequest) returns (GetUserResponse) {}
+
+    // GetUserKey fetches a user key matching the request.
+    rpc GetUserKey(GetUserKeyRequest) returns (GetUserKeyResponse) {}
+
+    // ListUserKeys lists all user keys matching the request.
+    rpc ListUserKeys(ListUserKeysRequest) returns (ListUserKeysResponse) {}
+
+    // GetGroup gets the group matching the request.
+    rpc GetGroup(GetGroupRequest) returns (GetGroupResponse) {}
+
+    // ListGroups lists all groups matching the request.
+    rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse) {}
+
+    // GetAccount gets the account matching the request.
+    rpc GetAccount(GetAccountRequest) returns (GetAccountResponse) {}
+
+    // ListAccounts lists all known accounts.
+    rpc ListAccounts(ListAccountsRequest) returns (ListAccountsResponse) {}
+
+    // ListUsers lists known users.
+    rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {}
+
+    // ListUserAttributes lists the user attributes.
+    rpc ListUserAttributes(ListUserAttributesRequest) returns (ListUserAttributesResponse) {}
+
+    // GetAssociatedFirms gets the associations for a given firm association.
+    rpc GetAssociatedFirms(GetAssociatedFirmsRequest) returns (GetAssociatedFirmsResponse) {}
+
+    // GetUserAttributes gets the user attributes.
+    rpc GetUserAttributes(GetUserAttributesRequest) returns (GetUserAttributesResponse) {}
+
+    // GetFirmAttributes gets the firm attributes.
+    rpc GetFirmAttributes(GetFirmAttributesRequest) returns (GetFirmAttributesResponse) {}
+
+    // GetFirm gets the firm matching the request.
+    rpc GetFirm(GetFirmRequest) returns (GetFirmResponse) {}
+
+    // ListFirms lists all known firms.
+    rpc ListFirms(ListFirmsRequest) returns (ListFirmsResponse) {}
+
+    // ListFirmAttributes lists the firm attributes.
+    rpc ListFirmAttributes(ListFirmAttributesRequest) returns (ListFirmAttributesResponse) {}
+
+    // ListCommissions lists all known commissions.
+    rpc ListCommissions(ListCommissionsRequest) returns (ListCommissionsResponse) {}
+
+    // ListenCommissions listens to a live update stream of commissions.
+    rpc ListenCommissions(ListenCommissionsRequest) returns (stream ListenCommissionsResponse) {}
+}
+
+message GetUserRequest {
+    string name = 1;
+}
+
+message GetUserResponse {
+    User user = 1;
+}
+
+message GetUserKeyRequest {
+    string jti = 1;
+}
+
+message GetUserKeyResponse {
+    UserKey key = 1;
+}
+
+message ListUserKeysRequest {
+    string user = 1;
+}
+
+message ListUserKeysResponse {
+    repeated UserKey keys = 1;
+}
+
+message ListUsersRequest {
+    // The maximum number of Users to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // if set, filter returned users belonging to a group
+    string group_id = 3;
+
+    // if set, filter returned users belonging to a firm
+    repeated string firms = 4;
+
+    // if set, filter returned users by their role
+    UserRole role = 5;
+
+    // if set, filter returned users if they are a service user, otherwise filter as only standard users
+    bool service_user = 6;
+
+    // if set, filter returned users belonging to an account
+    string account = 7;
+
+    bool show_deleted = 8;
+}
+
+message ListUsersResponse {
+    repeated User users = 1;
+
+    // A pagination token returned from a previous call to `ListUsers`
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 2;
+}
+
+message ListUserAttributesRequest {
+    string legal_name = 1;
+    string phone_number = 2;
+    string email = 3;
+    string registration_number = 4;
+    string oauth_id = 5;
+}
+
+message ListUserAttributesResponse {
+    repeated string parents = 1;
+    repeated UserAttributes attributes = 2;
+}
+
+message GetGroupRequest {
+    string group_id = 1;
+}
+
+message GetGroupResponse {
+    Group group = 1;
+}
+
+message GetAccountRequest {
+    string name = 1;
+}
+
+message GetAccountResponse {
+    Account account = 1;
+}
+
+message ListGroupsRequest {
+    // The maximum number of Groups to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // if set, filter returned groups belonging to a firm
+    string firm = 3;
+}
+
+message ListGroupsResponse {
+    repeated Group groups = 1;
+}
+
+message ListAccountsRequest {
+    // The maximum number of Accounts to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // if set, filter returned accounts belonging to a firm
+    string firm = 3;
+
+    bool show_deleted = 4;
+}
+
+message ListAccountsResponse {
+    repeated Account accounts = 1;
+}
+
+message ListFirmsRequest {
+    FirmType type = 1;
+    bool show_deleted = 2;
+}
+
+message ListFirmsResponse {
+    repeated Firm firms = 1;
+}
+
+message GetFirmRequest {
+    string name = 1;
+}
+
+message GetFirmResponse {
+    Firm firm = 1;
+}
+
+message GetAssociatedFirmsRequest {
+    string firm = 1;
+    FirmAssociationType type = 2;
+    bool show_unidirectional_assignees = 3;
+}
+
+message GetAssociatedFirmsResponse {
+    repeated string associated_firms = 1;
+}
+
+message GetUserAttributesRequest {
+    string parent = 1;
+}
+
+message GetUserAttributesResponse {
+    UserAttributes attributes = 1;
+}
+
+message GetFirmAttributesRequest {
+    string parent = 1;
+}
+
+message GetFirmAttributesResponse {
+    FirmAttributes attributes = 1;
+}
+
+message ListFirmAttributesRequest {
+    string legal_name = 1;
+    string phone_number = 2;
+    string email = 3;
+    string legal_entity_identifier = 4;
+    FirmParticipantType participant_type = 5;
+    string business_contact_name = 6;
+
+}
+
+message ListFirmAttributesResponse {
+    repeated string parents = 1;
+    repeated FirmAttributes attributes = 2;
+}
+
+message ListCommissionsRequest {}
+
+message ListCommissionsResponse {
+    repeated CommissionAssignment commissions = 1;
+}
+
+message ListenCommissionsRequest {}
+
+message ListenCommissionsResponse {
+    ListCommissionsResponse response = 1;
+}

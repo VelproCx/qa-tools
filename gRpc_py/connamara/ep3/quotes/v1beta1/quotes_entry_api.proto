@@ -1,0 +1,57 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.quotes.v1beta1;
+
+option go_package = "quotesv1beta1";
+option java_package = "com.connamara.ep3.quotes.v1beta1";
+option java_outer_classname = "QuotesEntryApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Quotes.V1Beta1";
+option objc_class_prefix = "CEQ";
+
+import "connamara/ep3/quotes/v1beta1/quotes.proto";
+
+// QuotesEntryAPI is the API surface for entering quotes on the exchange.
+service QuotesEntryAPI {
+    // CreateRequestForQuote creates a request for quote on the exchange.
+    rpc CreateRequestForQuote(CreateRequestForQuoteRequest) returns (CreateRequestForQuoteResponse) {}
+
+    // CreateQuote creates a quote on the exchange.
+    rpc CreateQuote(CreateQuoteRequest) returns (CreateQuoteResponse) {}
+    
+    // CancelQuote cancels a quote on the exchange.
+    rpc CancelQuote(CancelQuoteRequest) returns (CancelQuoteResponse) {}
+
+    // PassQuote passes on a quote from the exchange.
+    rpc PassQuote(PassQuoteRequest) returns (PassQuoteResponse) {}
+}
+
+message CreateRequestForQuoteRequest {
+    quotes.v1beta1.RequestForQuote request_for_quote = 1;
+}
+
+message CreateRequestForQuoteResponse {
+}
+
+message CreateQuoteRequest {
+    quotes.v1beta1.Quote quote = 1;
+}
+
+message CreateQuoteResponse {}
+
+message CancelQuoteRequest {
+    quotes.v1beta1.QuoteCancel quote_cancel = 1;
+}
+
+message CancelQuoteResponse {}
+
+message PassQuoteRequest {
+    quotes.v1beta1.QuotePass quote_pass = 1;
+}
+
+message PassQuoteResponse {}

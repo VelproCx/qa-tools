@@ -1,4 +1,4 @@
 #!/bin/sh
-cd ./initiator
+cd ./initiator/regression
 sleep 5
-python3 rolx_regression_client.py rolx_client.cfg
+python3 edp_regression_client.py edp_client.cfg

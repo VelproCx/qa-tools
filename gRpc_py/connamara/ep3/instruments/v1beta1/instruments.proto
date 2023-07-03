@@ -1,0 +1,415 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.instruments.v1beta1;
+
+option go_package = "instrumentsv1beta1";
+option java_package = "com.connamara.ep3.instruments.v1beta1";
+option java_outer_classname = "InstrumentsProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Instruments.V1Beta1";
+option objc_class_prefix = "CEI";
+
+import "google/protobuf/any.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "connamara/ep3/type/v1beta1/type.proto";
+import "connamara/ep3/instruments/v1beta1/swaps.proto";
+import "connamara/ep3/instruments/v1beta1/derivatives.proto";
+import "connamara/ep3/instruments/v1beta1/multileg.proto";
+import "connamara/ep3/instruments/v1beta1/event.proto";
+
+// PriceLimit describes optional price limits on an instrument.
+message PriceLimit {
+    int64 low = 1;
+    int64 high = 2;
+    bool low_set = 3;
+    bool high_set = 4;
+    double relative_low = 5;
+    double relative_high = 6;
+    bool relative_low_set = 7;
+    bool relative_high_set = 8;
+}
+
+// OrderSizeLimit describes optional order size limits on an instrument.
+message OrderSizeLimit {
+    int64 low = 1;
+    int64 high = 2;
+    bool low_set = 3;
+    bool high_set = 4;
+}
+
+// TradingHours is an abstraction for describing an Instrument trading schedule.
+message TradingHours {
+    // The days of the week for which this trading hours segment is active.
+    repeated type.v1beta1.DayOfWeek days_of_week = 1;
+
+    // The time of day to apply the rules of this trading hours segment, represented in the exchange time zone.
+    type.v1beta1.TimeOfDay time_of_day = 2;
+
+    // The duration of time that this trading hours segment is to be applied.
+    google.protobuf.Duration duration = 3;
+
+    // The state of the instrument for trading.
+    InstrumentState state = 4;
+
+    // Set if the instrument should hide upstream market data information during this stage.
+    bool hide_market_data = 5;
+}
+
+// InstrumentAttributes are attributes of an instrument.
+message InstrumentAttributes {
+    // The minimum tick increment, determines the valid prices that can be traded for the book.
+    double tick_size = 1;
+
+    // The minimum lot size that can be traded.
+    int64 minimum_trade_qty = 2;
+
+    // The start date for the instrument.
+    type.v1beta1.Date start_date = 3;
+
+    // The date at which the instrument expires.
+    type.v1beta1.Date expiration_date = 4;
+
+    // The date where the instrument will be closed.
+    type.v1beta1.Date termination_date = 5;
+
+    // The abstraction of the available hours for trading.
+    repeated TradingHours trading_schedule = 6;
+
+    // The price limit for the instrument.
+    PriceLimit price_limit = 7;
+
+    // The limit on order size for the instrument.
+    OrderSizeLimit order_size_limit = 8;
+
+    // The contract multipler that represents the number of underlying shares that a single lot of this instrument represents when traded.
+    // For example, trading 5 lots of an instrument with a multiplier of 100 represents 500 shares of the underlying.
+    // Credit risk checks will take this value into account when calculating the total notional value of a trade..
+    string base_currency = 9;
+
+    // The multiplier for trades on the instrument.
+    double multiplier = 10;
+
+    // Name of the clearing house that clears the instrument.
+    string clearing_house = 11;
+
+    // Minimum number of unaffiliated firms required when submitting request for quotes.
+    int64 minimum_unaffiliated_firms = 12;
+
+    // Amount of time an order from a cross should rest in the book before matching.
+    google.protobuf.Duration cross_order_resting_duration = 13;
+
+    // Expiration time of the instrument.
+    type.v1beta1.TimeOfDay expiration_time = 14;
+
+    // Number of days required to settle a trade of this instrument.
+    int64 trade_settlement_period = 15;
+
+    // Holiday calendars assigned to the instrument.
+    repeated string holiday_calendars = 16;
+
+    // The scale applied to an instruments quantity in order to represent fractional shares.
+    // For example, Bitcoin would use a value of 100000000 for fractional quantity scale to represent the smallest fractional
+    // quantity that can be traded of a single bitcoin, also known as a Satoshi.
+    int64 fractional_qty_scale = 17;
+
+    // Miscellaneous metadata to be stored with the instrument.
+    map<string, string> metadata = 18;
+
+    // Set if the instrument should be exempt from reporting.
+    bool reporting_exempt = 19;
+
+    // Set if instrument has a maximum position limit.
+    int64 position_limit = 20;
+
+    // Last trade date of the instrument.
+    type.v1beta1.Date last_trade_date = 21;
+
+    // Last trade time of the instrument. If not provided, defaults to one second before midnight on the last trade date.
+    type.v1beta1.TimeOfDay last_trade_time = 22;
+
+    // Assume this is ["Energy", "Oil"] for a "WTI Crude" product. This does two things:
+    // 1. Defines a particular "branch" of a multi-leveled (two levels in this case) category hierarchy. That is:
+    // A) "Energy" is one instance of a Level 1 category (likely among several other Level 1 category instances such as Agriculture, Metals, etc)
+    // B) "Oil" is one instance of a Level 2 category
+    // C) "Oil" belongs to the "Energy" Level 1 category (this is what is meant by defining a particular "branch")
+    //
+    // 2. The "WTI Crude" product belongs to the last category instance listed in the array, which is the "Oil" Level 2 category in this example.
+    // To summarize, this structure not only indicates the single category instance that a product belongs to, but it also (optionally) allows for defining a multi-leveled hierarchy of categories that exists above that single category instance.
+    repeated string category_levels = 23;
+
+    // The URL of the page on the exchange's website that provides detailed specifications for the product.
+    string exchange_spec_url = 24;
+}
+
+// Product is an abstraction of Instrument attributes.
+message Product {
+    // ID uniquely identifies this product.
+    string id = 1;
+
+    // Description provides a summary of the product.
+    string description = 2;
+
+    // Attributes are what the instrument is set to and define the instrument.
+    InstrumentAttributes attributes = 3;
+
+    // A flag set for if the product is terminated or not.
+    bool is_terminated = 4;
+    
+    // Instrument type specific attributes.
+    oneof type_attributes {
+        InterestRateSwapAttributes interest_rate_swap_attributes = 5;
+        google.protobuf.Any custom_attributes = 6;
+        ForwardRateAgreementSwapAttributes forward_rate_agreement_swap_attributes = 7;
+        string json_attributes = 8;
+        FutureAttributes future_attributes = 9;
+        OptionAttributes option_attributes = 10;
+        MultilegAttributes multileg_attributes = 11;
+        ForwardStartingInterestRateSwapAttributes forward_starting_interest_rate_swap_attributes = 12;
+        BasisSwapAttributes basis_swap_attributes = 13;
+        EventAttributes event_attributes = 14;
+        OvernightIndexSwapAttributes overnight_index_swap_attributes = 15;
+        SinglePeriodSwapAttributes single_period_swap_attributes = 16;
+    }
+}
+
+// InstrumentState of the Instrument.
+enum InstrumentState {
+    // The instrument is still pending.
+    INSTRUMENT_STATE_PENDING = 0;
+
+    // The instrument is closed. No trading can occur.
+    INSTRUMENT_STATE_CLOSED = 1;
+
+    // The instrument is open and is available for full trading.
+    INSTRUMENT_STATE_OPEN = 2;
+
+    // The instrument is available to place orders and modify them before the opening, but no matching will occur until the open.
+    INSTRUMENT_STATE_PREOPEN = 3;
+
+    // The instrument has temporarily suspended trading. In this state, no orders can be placed or modified, but they can be cancelled.
+    INSTRUMENT_STATE_SUSPENDED = 4;
+
+    // The instrument has expired.
+    INSTRUMENT_STATE_EXPIRED = 5;
+
+    // The instrument has been terminated.
+    INSTRUMENT_STATE_TERMINATED = 6;
+
+    // The instrument has halted trading.
+    // This state is similar to the suspended state in that no orders can be placed or modified,
+    // but orders cannot be cancelled unlike the suspended state which allows cancellation.
+    INSTRUMENT_STATE_HALTED = 7;
+}
+
+// InstrumentType of the Instrument.
+enum InstrumentType {
+    // Instrument type is unset.
+    INSTRUMENT_TYPE_UNSET = 0;
+    // Instrument type is default and does not contain any special type attributes.
+    INSTRUMENT_TYPE_DEFAULT = 1;
+    // Instrument is a Future.
+    INSTRUMENT_TYPE_FUTURE = 2;
+    // Instrument is an Option.
+    INSTRUMENT_TYPE_OPTION = 3;
+    // Instrument is a Multileg.
+    INSTRUMENT_TYPE_MULTILEG = 4;
+    // Instrument is an Interest Rate Swap.
+    INSTRUMENT_TYPE_IRS = 5;
+    // Instrument is a Forward Rate Agreement Swap.
+    INSTRUMENT_TYPE_FRA = 6;
+    // Instrument is a Forward Starting Interest Rate Swap.
+    INSTRUMENT_TYPE_FSIRS = 7;
+    // Instrument is a Basis Swap.
+    INSTRUMENT_TYPE_BASIS = 8;
+    // Instrument is an Event Swap.
+    INSTRUMENT_TYPE_EVENT = 9;
+    // Instrument is an Overnight Index Swap.
+    INSTRUMENT_TYPE_OIS = 10;
+    // Instrument is a Single Period Swap.
+    INSTRUMENT_TYPE_SPS = 11;
+}
+
+// SchedulingState of the Filter.
+enum SchedulingFilterState {
+    // Filter state is unset.
+    SCHEDULING_FILTER_STATE_UNSET = 0;
+    // Filter state is manual.
+    SCHEDULING_FILTER_STATE_MANUAL = 1;
+    // Filter state is scheduled.
+    SCHEDULING_FILTER_STATE_SCHEDULED = 2;
+}
+
+// Instrument is an abstraction of something that can be traded on the exchange.
+message Instrument {
+    // unique identifier for this tradable instrument.
+    string id = 1;
+
+    // Product ID for this instrument.
+    string product_id = 2;
+
+    // The set of attributes that define the instrument.
+    InstrumentAttributes attributes = 3;
+
+    // The current state for the tradable instrument.
+    InstrumentState state = 4;
+
+    // The price scale for the tradable instrument, populated based off of InstrumentAttributes.tick_size.
+    int64 price_scale = 5;
+
+    // The scheduled state of the tradable instrument, may only be set true if attributes has a valid trading_schedule.
+    bool is_scheduled = 6;
+
+    // Description of the tradable instrument.
+    string description = 7;
+
+    // Routing key of the tradable instrument, used to group otherwise separate instruments onto the same internal partitions.
+    string routing_key = 8;
+
+    // Instrument type specific attributes.
+    oneof type_attributes {
+        InterestRateSwapAttributes interest_rate_swap_attributes = 9;
+        google.protobuf.Any custom_attributes = 10;
+        ForwardRateAgreementSwapAttributes forward_rate_agreement_swap_attributes = 11;
+        string json_attributes = 12;
+        FutureAttributes future_attributes = 19;
+        OptionAttributes option_attributes = 20;
+        MultilegAttributes multileg_attributes = 21;
+        ForwardStartingInterestRateSwapAttributes forward_starting_interest_rate_swap_attributes = 22;
+        BasisSwapAttributes basis_swap_attributes = 23;
+        EventAttributes event_attributes = 24;
+        OvernightIndexSwapAttributes overnight_index_swap_attributes = 25;
+        SinglePeriodSwapAttributes single_period_swap_attributes = 26;
+    }
+
+    // Set if the instrument should be non-tradable, as in the case of an index.
+    bool non_tradable = 16;
+
+    // Set if the instrument should hide upstream market data information.
+    bool hide_market_data = 17;
+
+    // Set if the instrument should reject quotes.
+    bool reject_quotes = 18;
+}
+
+// InstrumentStats are a collection of stats on an instrument.
+message InstrumentStats {
+    oneof open {
+        int64 open_px = 1;
+    }
+
+    oneof close {
+        int64 close_px = 2;
+    }
+
+    oneof low {
+        int64 low_px = 3;
+    }
+
+    oneof high {
+        int64 high_px = 4;
+    }
+
+    oneof last_trade {
+        int64 last_trade_px = 5;
+    }
+
+    oneof indicative_open {
+        int64 indicative_open_px = 6;
+    }
+
+    oneof settlement {
+        int64 settlement_px = 7;
+    }
+
+    oneof shares {
+        int64 shares_traded = 8;
+    }
+
+    oneof notional {
+        int64 notional_traded = 9;
+    }
+
+    oneof last_quantity {
+        int64 last_trade_qty = 10;
+    }
+
+    oneof interest {
+        int64 open_interest = 11;
+    }
+
+    oneof settlement_preliminary {
+        bool settlement_preliminary_flag = 12;
+    }
+
+    oneof open_set {
+        google.protobuf.Timestamp open_set_time = 13;
+    }
+
+    oneof close_set {
+        google.protobuf.Timestamp close_set_time = 14;
+    }
+
+    oneof high_set {
+        google.protobuf.Timestamp high_set_time = 15;
+    }
+
+    oneof low_set {
+        google.protobuf.Timestamp low_set_time = 16;
+    }
+
+    oneof last_trade_set {
+        google.protobuf.Timestamp last_trade_set_time = 17;
+    }
+
+    oneof indicative_open_set {
+        google.protobuf.Timestamp indicative_open_set_time = 18;
+    }
+
+    oneof settlement_set {
+        google.protobuf.Timestamp settlement_set_time = 19;
+    }
+
+    oneof interest_set {
+        google.protobuf.Timestamp open_interest_set_time = 20;
+    }
+
+    oneof notional_set {
+        google.protobuf.Timestamp notional_set_time = 21;
+    }
+}
+
+// Holiday is a calendar entry.
+message Holiday {
+    // Date set for the calendar entry.
+    type.v1beta1.Date date = 1;
+
+    // Time of day for the calendar entry.
+    type.v1beta1.TimeOfDay time_of_day = 2;
+
+    // Duration of the calendar entry.
+    google.protobuf.Duration duration = 3;
+
+    // Description of what the calendar entry represents, which can simply be the name of the official holiday or other market event descriptor.
+    string description = 4;
+}
+
+// HolidayCalendar is a collection of entries that describe exchange holidays.
+message HolidayCalendar {
+    // Unique identifier for this calendar.
+    string id = 1;
+
+    // The list of holidays in this calendar.
+    repeated Holiday holidays = 2;
+
+    // Description of the calendar itself, which can be used to represent a long form name of the holiday collection.
+    string description = 3;
+
+    // If set, all instruments regardless of assignment will use this holiday calendar.
+    bool global = 4;
+}

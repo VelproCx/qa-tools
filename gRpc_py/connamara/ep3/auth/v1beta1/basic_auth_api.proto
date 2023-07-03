@@ -1,0 +1,86 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.auth.v1beta1;
+
+option go_package = "authv1beta1";
+option java_package = "com.connamara.ep3.auth.v1beta1";
+option java_outer_classname = "BasicAuthApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Auth.V1Beta1";
+option objc_class_prefix = "CEA";
+
+import "google/protobuf/timestamp.proto";
+
+// BasicAuthAPI is the Basic Authentication API for EP3.
+service BasicAuthAPI {
+    // Login authenticates users and returns a JWT to be used for API requests.
+    rpc Login (LoginRequest) returns (LoginResponse);
+
+    // Register asks the server to register the given user.
+    rpc Register (RegisterRequest) returns (RegisterResponse);
+
+    // Logout requests that the token currently associated with the authenticated caller be blacklisted.
+    rpc Logout (LogoutRequest) returns (LogoutResponse);
+
+    //RefreshAccessToken request for a new access token using a valid refresh token.
+    rpc RefreshAccessToken(RefreshAccessTokenRequest) returns (RefreshAccessTokenResponse);
+
+    // ChangePassword of the given user.
+    rpc ChangePassword (ChangePasswordRequest) returns (ChangePasswordResponse);
+
+}
+
+message LoginRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message LoginResponse {
+    string access_token = 1;
+    google.protobuf.Timestamp access_issue_time = 2;
+    google.protobuf.Timestamp access_expiration_time = 3;
+    string refresh_token = 4;
+    google.protobuf.Timestamp refresh_issue_time = 5;
+    google.protobuf.Timestamp refresh_expiration_time = 6;
+}
+
+message LogoutRequest {
+    // If provided, the access token to revoke as part of logout
+    string access_token = 1;
+
+    // If provided, the refresh token to revoke as part of logout
+    string refresh_token = 2;
+}
+
+message LogoutResponse {}
+
+message RegisterRequest {
+    string token = 1;
+    string password = 2;
+}
+
+message RegisterResponse {}
+
+message RefreshAccessTokenRequest {
+    string refresh_token = 1;
+}
+
+message RefreshAccessTokenResponse {
+    string access_token = 1;
+    google.protobuf.Timestamp access_issue_time = 2;
+    google.protobuf.Timestamp access_expiration_time = 3;
+}
+
+message ChangePasswordRequest {
+    string old_password = 1;
+    string new_password = 2;
+    string username = 3;
+}
+
+message ChangePasswordResponse {}

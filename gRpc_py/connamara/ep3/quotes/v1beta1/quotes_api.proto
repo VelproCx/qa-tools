@@ -1,0 +1,232 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.quotes.v1beta1;
+
+option go_package = "quotesv1beta1";
+option java_package = "com.connamara.ep3.quotes.v1beta1";
+option java_outer_classname = "QuotesApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Quotes.V1Beta1";
+option objc_class_prefix = "CEQ";
+
+import "connamara/ep3/quotes/v1beta1/quotes.proto";
+import "connamara/ep3/orders/v1beta1/orders.proto";
+import "google/protobuf/timestamp.proto";
+
+// QuotesAPI is the API surface for retrieving quotes on the exchange.
+service QuotesAPI {
+    // GetRequestForQuote returns a RequestForQuote.
+    rpc GetRequestForQuote(GetRequestForQuoteRequest) returns (GetRequestForQuoteResponse) {}
+
+    // ListRequestForQuotes returns a list of RequestForQuotes filtered based on the request passed.
+    // Each RequestForQuote will have a list of available firms that the quote is available for
+    rpc ListRequestForQuotes(ListRequestForQuotesRequest) returns (ListRequestForQuotesResponse) {}
+
+    // GetQuote returns a Quote.
+    rpc GetQuote(GetQuoteRequest) returns (GetQuoteResponse) {}
+
+    // ListQuotes returns a list of Quotes.
+    rpc ListQuotes(ListQuotesRequest) returns (ListQuotesResponse) {}
+
+    // ListQuoteHistory retuns the list of quote history items.
+    // List of quotes that have previously been requested to be inserted into the exchange.
+    // Quotes have been either accepted or rejected.
+    // The results of this call describe the lifecycle of a quote and its state changes
+    rpc ListQuoteHistory(ListQuoteHistoryRequest) returns (ListQuoteHistoryResponse) {}
+
+    // ListRfqHistory retuns the list of RFQ history items.
+    // List of previous RequestForQuote requests on insert into the exchange.
+    // The results of this call describe the lifecycle of an RFQ and its state change
+    rpc ListRfqHistory(ListRfqHistoryRequest) returns (ListRfqHistoryResponse) {}
+}
+
+// Get a RequestForQuote based off of exchange ID.
+message GetRequestForQuoteRequest {
+    // Exchange ID For the requested quote request (required).
+    string name = 1;
+}
+
+message GetRequestForQuoteResponse {
+    quotes.v1beta1.RequestForQuote request_for_quote = 1;
+}
+
+// Listing of RequestForQuotes filtered based off of request parameters
+// All fields optional and limit search, an empty request will return a list of all RequestForQuotes
+message ListRequestForQuotesRequest {
+    // The maximum number of objects to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    string user = 3;
+    string account = 4;
+    string symbol = 5;
+
+    // Exchange ID for the quote request.
+    string quote_request_id = 6;
+
+    // ID For client making the request.
+    string client_id = 7;
+
+    // The side for the order of the quote.
+    orders.v1beta1.Side side = 8;
+
+    // The status of the quote.
+    repeated QuoteStatus statuses = 9;
+
+    // Start time for the objects to be fetched
+    google.protobuf.Timestamp start_time = 10;
+
+    // End time for the objects to be fetched
+    google.protobuf.Timestamp end_time = 11;
+
+    // The whitelisted firms available for the quote request (ie: "firms/[firmid]").
+    repeated string firms = 13;
+    string submitting_user = 14;
+
+    // If true, only return two sided request for quotes.
+    bool only_two_sided = 15;
+}
+
+message ListRequestForQuotesResponse {
+    repeated quotes.v1beta1.RequestForQuote request_for_quotes = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 2;
+
+    // A flag for if the list has ended.
+    bool eof = 3;
+}
+
+// Get a Quote based off of Exchange ID
+message GetQuoteRequest {
+    // Exchange ID For the quote (required).
+    string name = 1;
+}
+
+message GetQuoteResponse {
+    quotes.v1beta1.Quote quote = 1;
+}
+
+// Listing of Quotes filtered based off of request parameters
+// All fields optional and limit search, an empty request will return a list of all Quotes
+message ListQuotesRequest {
+    // The maximum number of objects to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    string user = 3;
+    string account = 4;
+    string symbol = 5;
+
+    // Exchange ID for the quote request.
+    string quote_request_id = 6;
+
+    // Exchange ID for the quote.
+    string quote_id = 7;
+
+    // ID For client making the request.
+    string client_id = 8;
+
+    // The side for the order of the quote.
+    orders.v1beta1.Side side = 9;
+
+    // The status of the quote.
+    repeated QuoteStatus statuses = 10;
+
+    // Start time for the objects to be fetched.
+    google.protobuf.Timestamp start_time = 11;
+
+    // End time for the objects to be fetched.
+    google.protobuf.Timestamp end_time = 12;
+
+    // The firm with the quote information.
+    string firm = 14;
+
+    // The user submitting the quote request.
+    string submitting_user = 15;
+}
+
+message ListQuotesResponse {
+    repeated quotes.v1beta1.Quote quotes = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 3;
+
+    // A flag for if the list has ended.
+    bool eof = 4;
+}
+
+// Listing of the Quote history based off of name
+message ListQuoteHistoryRequest {
+    // The maximum number of objects to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // The fully qualified resource name associated with the Quote (required).
+    string rfq_name = 3;
+}
+
+message ListQuoteHistoryResponse {
+    // The list of quote event history.
+    repeated quotes.v1beta1.Quote quotes = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 2;
+
+    // A flag for if the list is ended.
+    bool eof = 3;
+}
+
+// Listing of the RequestForQuote history based off of name
+message ListRfqHistoryRequest {
+    // The maximum number of objects to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // The fully qualified resource name for the RequestForQuote (required).
+    string rfq_name = 3;
+}
+
+message ListRfqHistoryResponse {
+    // The list RFQ event history.
+    repeated quotes.v1beta1.RequestForQuote request_for_quotes = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 2;
+
+    // A flag for if the list is ended.
+    bool eof = 3;
+}

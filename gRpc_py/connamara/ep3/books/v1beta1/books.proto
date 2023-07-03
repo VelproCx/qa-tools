@@ -1,0 +1,165 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.books.v1beta1;
+
+option go_package = "booksv1beta1";
+option java_package = "com.connamara.ep3.books.v1beta1";
+option java_outer_classname = "BooksProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Books.V1Beta1";
+option objc_class_prefix = "CEB";
+
+import "connamara/ep3/instruments/v1beta1/instruments.proto";
+import "connamara/ep3/orders/v1beta1/orders.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/any.proto";
+
+// SetBookStateRequest is a request to set the state of a book.
+message SetBookStateRequest {
+    // The book symbol
+    string symbol = 1;
+
+    // The requested book state
+    BookStatus.State state = 2;
+
+    // The requested book price limit
+    instruments.v1beta1.PriceLimit price_limit = 3;
+
+    // The requested book order size limit
+    instruments.v1beta1.OrderSizeLimit order_size_limit = 4;
+}
+
+// BookStats are statistics of a book.
+message BookStats {
+    int64 open = 1;
+    int64 close = 2;
+    int64 high = 3;
+    int64 low = 4;
+    int64 last_trade = 5;
+    bool open_set = 6;
+    bool close_set = 7;
+    bool high_set = 8;
+    bool low_set = 9;
+    bool last_trade_set = 10;
+    int64 indicative_open = 11;
+    bool indicative_open_set = 12;
+    int64 settlement = 13;
+    bool settlement_set = 14;
+    int64 shares_traded = 15;
+    bool shares_traded_set = 16;
+    int64 notional_traded = 17;
+    bool notional_traded_set = 18;
+    int64 last_trade_qty = 19;
+    bool last_trade_qty_set = 20;
+    int64 open_interest = 21;
+    bool open_interest_set = 22;
+    bool settlement_preliminary = 23;
+    google.protobuf.Timestamp open_set_time = 24;
+    google.protobuf.Timestamp close_set_time = 25;
+    google.protobuf.Timestamp high_set_time = 26;
+    google.protobuf.Timestamp low_set_time = 27;
+    google.protobuf.Timestamp last_trade_set_time = 28;
+    google.protobuf.Timestamp indicative_open_set_time = 29;
+    google.protobuf.Timestamp settlement_set_time = 30;
+    google.protobuf.Timestamp open_interest_set_time = 31;
+    google.protobuf.Timestamp notional_set_time = 32;
+}
+
+// BookStatus includes information about the book.
+message BookStatus {
+    //State indicates the state of the book.
+    enum State {
+        STATE_CLOSED = 0;
+        STATE_OPEN = 1;
+        STATE_SUSPENDED = 2;
+        STATE_EXPIRED = 3;
+        STATE_PRE_OPEN = 4;
+        STATE_TERMINATED = 5;
+        STATE_HALTED = 6;
+    }
+
+    State state = 1;
+
+    // The price limits for the book
+    instruments.v1beta1.PriceLimit price_limit = 4;
+
+    // Market book stats sent on events
+    BookStats book_stats = 5;
+
+    // The order size limits for the book
+    instruments.v1beta1.OrderSizeLimit order_size_limit = 6;
+
+    // Specifies the minimum order quantity allowed to be traded to be entered for the book
+    int64 minimum_trade_quantity = 7;
+
+    // The minimum tick increment, determines the valid prices that can be traded for the book
+    int64 tick_size = 8;
+
+    // TransactTime is the last update time of this particular book
+    google.protobuf.Timestamp transact_time = 9;
+
+    // Context may contain additional meta data regarding the book status
+    google.protobuf.Any context = 16;
+}
+
+// BookEvent is emitted by the Exchange on any book transaction including order events and book state changes.
+message BookEvent {
+    string symbol = 1;
+
+    // True if the BookEvent was emitted by a book state change
+    bool book_state_change = 3;
+
+    // Orders are all orders affected by this book event
+    repeated orders.v1beta1.Order orders = 4;
+
+    google.protobuf.Timestamp transact_time = 7;
+
+    // CancelReject that may be triggered by this book event
+    orders.v1beta1.CancelReject cancel_reject = 8;
+
+    // The event that triggered this Book Event to occur.  Can be result of
+    // order action, or book state change
+    google.protobuf.Any trigger = 9;
+
+    // Context may contain additional meta data regarding the book event
+    google.protobuf.Any context = 16;
+
+    // executions triggered by this book event in chronological order
+    repeated orders.v1beta1.Execution executions = 17;
+
+    // Book statuses associated with the book event. Can be a result of a multi leg trade.
+    map<string, BookStatus> associated_statuses = 18;
+
+    // Previous statuses associated with each book prior to the book event.
+    map<string, BookStatus> previous_statuses = 19;
+}
+
+// BookSnapshot includes the orders and status of a book.
+message BookSnapshot {
+    // Bids is a price-time ordered list of orders on the bid side of the book.
+    repeated orders.v1beta1.Order bids = 1;
+
+    // Offers is a price-time ordered list of orders on the offer side of the book.
+    repeated orders.v1beta1.Order offers = 2;
+
+    // BookStatus indicates the Bookstatus at the time of snapshot.
+    BookStatus status = 3;
+
+    // StopBids is a price-time ordered list of stop orders on the bid side of the book.
+    repeated orders.v1beta1.Order stop_bids = 4;
+
+    // StopOffers is a price-time ordered list of stop orders on the offer side of the book.
+    repeated orders.v1beta1.Order stop_offers = 5;
+
+    // For background, in the GetUnAggregatedBookRequest, AsOfTime is an optional argument that can fetch the state of the book as of the last state transition prior to this time.
+    // Therefore, in the BookSnapshot proto, AsOfTime is the transaction time of the last state transition that is included in the book snapshot.
+    google.protobuf.Timestamp as_of_time = 6;
+
+    // SearchExecutionsPageToken refers to the search executions page token one can use to poll incremental updates from this snapshot onwards.
+    string search_executions_page_token = 7;
+}

@@ -1,0 +1,451 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.v1beta1;
+
+option go_package = "ep3v1beta1";
+option java_package = "com.connamara.ep3.v1beta1";
+option java_outer_classname = "ApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.V1Beta1";
+option objc_class_prefix = "CEX";
+
+import "google/protobuf/any.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "connamara/ep3/type/v1beta1/type.proto";
+import "connamara/ep3/instruments/v1beta1/instruments.proto";
+import "connamara/ep3/orders/v1beta1/orders.proto";
+import "connamara/ep3/orders/v1beta1/orders_context.proto";
+import "connamara/ep3/quotes/v1beta1/quotes.proto";
+import "connamara/ep3/trades/v1beta1/trades.proto";
+import "connamara/ep3/instruments/v1beta1/swaps.proto";
+import "connamara/ep3/instruments/v1beta1/derivatives.proto";
+import "connamara/ep3/instruments/v1beta1/multileg.proto";
+import "connamara/ep3/instruments/v1beta1/event.proto";
+
+// InstrumentState denotes the current state of an instrument.
+enum InstrumentState {
+    INSTRUMENT_STATE_CLOSED = 0;
+    INSTRUMENT_STATE_OPEN = 1;
+    INSTRUMENT_STATE_PREOPEN = 2;
+    INSTRUMENT_STATE_SUSPENDED = 3;
+    INSTRUMENT_STATE_EXPIRED = 4;
+    INSTRUMENT_STATE_TERMINATED = 5;
+    INSTRUMENT_STATE_HALTED = 6;
+}
+
+// Order indicates an order received by the exchange.
+message Order {
+    // Exchange assigned ID for the order
+    string id = 1;
+
+    orders.v1beta1.OrderType type = 2;
+
+    orders.v1beta1.Side side = 3;
+
+    int64 order_qty = 4;
+
+    string symbol = 5;
+
+    // Client assigned ID for the order
+    string clord_id = 6;
+
+    // Absence of this field is interpreted as DAY
+    orders.v1beta1.TimeInForce time_in_force = 7;
+
+    // Account is the trading account for this order
+    string account = 8;
+
+    // Cumulative filled order qty
+    int64 cum_qty = 9;
+
+    // Average fill price
+    double avg_px = 10;
+
+    // Remaining working qty
+    int64 leaves_qty = 11;
+
+    orders.v1beta1.OrderState state = 12;
+
+    // Participant that placed this order
+    string participant = 13;
+
+    // Integer price representation (for limit, stop limit)
+    int64 price = 14;
+
+    // The time this order was inserted into the book or the time the order was replaced in the book
+    google.protobuf.Timestamp insert_time = 15;
+
+    // Integer stop price representation (for stop, stop limit)
+    int64 stop_price = 16;
+
+    // Minimum quantity (optional for IOC time in force)
+    int64 min_qty = 17;
+
+    // The time this order was created
+    google.protobuf.Timestamp create_time = 18;
+    
+    // Set if all or none of the order qty should be filled
+    bool all_or_none = 19;
+
+    // Client assigned Order Cross ID
+    string cross_id = 20;
+
+    // Exchange generated Host Cross ID
+    string host_cross_id = 21;
+
+    // If this order is being submitted on behalf of another entity, set to the agent submitter
+    string submitting_participant = 22;
+
+    // Client assigned free-form account ID for the order
+    string client_account_id = 23;
+
+    // Client assigned free-form participant ID for the order
+    string client_participant_id = 24;
+
+    // The parent order this order is the child of
+    string parent_order_id = 25;
+
+    // The total basis points associated with all commissions on this order
+    int64 commissions_basis_points = 26;
+
+    // Set if immediate match is not desired
+    bool participate_dont_initiate = 27;
+
+    // Fixed point decimal representation of the total cash order qty
+    int64 cash_order_qty = 28;
+
+    // The sub type of the instrument symbol
+    string symbol_sub_type = 29;
+
+    // Set if this particular order must be filled at the exact limit price specified without price improvement
+    bool strict_limit = 30;
+
+    // The time at which this order was risk checked
+    google.protobuf.Timestamp risk_check_time = 31;
+
+    // The risk status given by the position risk check
+    string collateral_memo = 32;
+
+    // Relative priority among the same price level
+    int64 priority_weight = 33;
+
+    // The time at which this order shall expire if the time in force is set as good till time
+    google.protobuf.Timestamp good_till_time = 34;
+
+    // Context may contain additional meta data regarding the order
+    orders.v1beta1.OrderContext context = 35;
+
+    // A flag that if set indicates that the price of a limit order shall be set to the price at the top of the book on the same side as this order.
+    bool best_limit = 36;
+
+    // A flag that if set indicates that the price of a limit order shall be set to the price at the top of the book on the opposing side as this order, thus able to immediately match.
+    bool immediately_executable_limit = 37;
+}
+
+// Heartbeat can be sent on a streaming RPC call to keep the line open.
+message Heartbeat {}
+
+// Execution denotes a state change for an order in the exchange.
+message Execution {
+    // Exchange assigned ID for this execution
+    string id = 1;
+
+    // The Order the time of this execution
+    Order order = 2;
+
+    int64 last_shares = 3;
+
+    int64 last_px = 4;
+
+    orders.v1beta1.ExecutionType type = 5;
+
+    // Free format text
+    string text = 6;
+
+    // For optional use if exec type is rejected
+    orders.v1beta1.OrdRejectReason order_reject_reason = 7;
+
+    google.protobuf.Timestamp transact_time = 8;
+
+    //if a fill on a multi leg instrument, contains the derived leg prices at the time of execution
+    repeated orders.v1beta1.LegPrice leg_prices = 9;
+}
+
+// CancelReject denotes a cancel or replace request that was rejected.
+message CancelReject {
+    // Maps to exchange assigned ID for the order that could not be canceled or replaced
+    string order_id = 1;
+
+    // Reason for the cancel or cancel reject
+    orders.v1beta1.CxlRejReason reject_reason = 2;
+
+    // Free format text
+    string text = 3;
+
+    // Set if this cancel reject was for a replace or not
+    bool is_replace = 4;
+
+    // Client assigned ID for the order
+    string clord_id = 5;
+
+    google.protobuf.Timestamp transact_time = 6;
+}
+
+// Instrument is an asset that can be trading on the exchange platform.
+message Instrument {
+    // unique identifier for this instrument
+    string symbol = 1;
+    double tick_size = 2;
+    string base_currency = 3;
+    double multiplier = 4;
+    int64 minimum_trade_qty = 5;
+    type.v1beta1.Date start_date = 6;
+    type.v1beta1.Date expiration_date = 7;
+    type.v1beta1.Date termination_date = 8;
+    repeated instruments.v1beta1.TradingHours trading_schedule = 9;
+
+    // description of the instrument
+    string description = 10;
+
+    // name of the clearing house that clears the instrument
+    string clearing_house = 11;
+
+    // minimum number of unaffiliated firms required when submitting request for quotes
+    int64 minimum_unaffiliated_firms = 12;
+
+    // Instrument type specific attributes
+    oneof type_attributes {
+        instruments.v1beta1.InterestRateSwapAttributes interest_rate_swap_attributes = 13;
+        google.protobuf.Any custom_attributes = 14;
+        instruments.v1beta1.ForwardRateAgreementSwapAttributes forward_rate_agreement_swap_attributes = 15;
+        string json_attributes = 17;
+        instruments.v1beta1.FutureAttributes future_attributes = 26;
+        instruments.v1beta1.OptionAttributes option_attributes = 27;
+        instruments.v1beta1.MultilegAttributes multileg_attributes = 28;
+        instruments.v1beta1.ForwardStartingInterestRateSwapAttributes forward_starting_interest_rate_swap_attributes = 29;
+        instruments.v1beta1.BasisSwapAttributes basis_swap_attributes = 30;
+        instruments.v1beta1.EventAttributes event_attributes = 33;
+        instruments.v1beta1.OvernightIndexSwapAttributes overnight_index_swap_attributes = 37;
+        instruments.v1beta1.SinglePeriodSwapAttributes single_period_swap_attributes = 38;
+    }
+
+    // Set if the instrument should be non-tradable, as in the case of an index
+    bool non_tradable = 16;
+
+    // Product ID for this instrument
+    string product_id = 18;
+
+    // Price limits for this instrument
+    instruments.v1beta1.PriceLimit price_limit = 19;
+
+    // Order size limits for this instrument
+    instruments.v1beta1.OrderSizeLimit order_size_limit = 20;
+
+    // Amount of time an order from a cross should rest in the book before matching
+    google.protobuf.Duration cross_order_resting_duration = 21;
+
+    // Expiration time of this instrument
+    type.v1beta1.TimeOfDay expiration_time = 22;
+
+    // number of days required to settle a trade of this instrument
+    int64 trade_settlement_period = 23;
+
+    // holiday calendars assigned to the instrument
+    repeated string holiday_calendars = 24;
+
+    // The scale applied to an instruments quantity in order to represent fractional shares
+    int64 fractional_qty_scale = 25;
+
+    // Miscellaneous metadata to be stored with the instrument
+    map<string, string> metadata = 31;
+
+    // The current state for the tradable instrument at the time of the query
+    InstrumentState state = 32;
+
+    int64 position_limit = 34;
+
+    // Last trade date of the instrument.
+    type.v1beta1.Date last_trade_date = 35;
+
+    // Last trade time of the instrument. If not provided, defaults to one second before midnight on the last trade date.
+    type.v1beta1.TimeOfDay last_trade_time = 36;
+}
+
+// Position represents a position for a given account and symbol.
+message Position {
+    string account = 1;
+    string symbol = 2;
+    int64 net_position = 3;
+    int64 qty_bought = 4;
+    int64 qty_sold = 5;
+    int64 cost = 6;
+    int64 realized = 7;
+    int64 bod_position = 8;
+    bool expired = 9;
+    string symbol_sub_type = 10;
+}
+
+// RequestForQuote is a quote request into the RFQ Exchange.
+message RequestForQuote {
+    // Exchange assigned ID for the quote request
+    string id = 1;
+
+    // Exchange assigned resource name for the quote request
+    string name = 2;
+
+    // Client assigned ID for this quote request
+    string client_id = 3;
+
+    orders.v1beta1.Side side = 4;
+
+    int64 order_qty = 5;
+
+    string symbol = 6;
+
+    // Timestamp at which this quote will expire
+    google.protobuf.Timestamp expiration_time = 7;
+
+    // Account is the trading account for this quote request
+    string account = 8;
+
+    // The market participant that created this quote request
+    string user = 9;
+
+    // Whitelist of targeted firms that this quote request will target
+    repeated string firms = 10;
+
+    // The time this request was inserted into the exchange
+    google.protobuf.Timestamp insert_time = 11;
+
+    // The status of the request
+    quotes.v1beta1.QuoteStatus status = 12;
+
+    // The firm that created this quote request
+    string firm = 13;
+
+    // The agent participant that created this quote request on behalf of the designated user
+    string submitting_user = 14;
+}
+
+// Quote is a quote sent to and from the RFQ Exchange.
+message Quote {
+    // Exchange assigned ID for this quote
+    string id = 1;
+
+    // Exchange assigned resource name for this quote
+    string name = 2;
+
+    // Client assigned ID for this quote
+    string client_id = 3;
+
+    // Exchange assigned ID for the quote request that this quote references
+    string quote_request_id = 4;
+
+    // Desired price for the quote in integer representation
+    int64 price = 5;
+
+    orders.v1beta1.Side side = 6;
+
+    int64 order_qty = 7;
+
+    string symbol = 8;
+
+    // Timestamp at which this quote will expire
+    google.protobuf.Timestamp expiration_time = 9;
+
+    // Account is the trading account for this quote
+    string account = 10;
+
+    // The market participant that created this quote
+    string user = 11;
+
+    // The firm that created this quote
+    string firm = 12;
+
+    // The status of the quote
+    quotes.v1beta1.QuoteStatus status = 13;
+
+    // Client assigned ID for the order
+    string clord_id = 15;
+
+    // The time this quote was inserted into the exchange
+    google.protobuf.Timestamp insert_time = 16;
+
+    // The agent participant that created this quote on behalf of the designated user
+    string submitting_user = 17;
+}
+
+// QuoteCancel is a request to cancel a quote in the RFQ Exchange.
+message QuoteCancel {
+    // Exchange assigned resource name for the quote to cancel
+    string name = 1;
+
+    string symbol = 2;
+}
+
+// QuotePass is a request to pass on a quote in the RFQ Exchange.
+message QuotePass {
+    // Exchange assigned resource name for the quote to pass
+    string name = 1;
+
+    string symbol = 2;
+}
+
+// QuoteAccept is a request to accept a quote in the RFQ Exchange.
+message QuoteAccept {
+    // Exchange assigned resource name for the quote to accept
+    string name = 1;
+
+    // Client assigned ID for the order
+    string clord_id = 2;
+
+    string symbol = 3;
+}
+
+// QuoteReject is a reject for a message sent to the RFQ Exchange.
+message QuoteReject {
+    oneof parent {
+        RequestForQuote request_for_quote = 1;
+        Quote quote = 2;
+        QuoteCancel quote_cancel = 3;
+        QuoteAccept quote_accept = 4;
+        QuotePass quote_pass = 5;
+    }
+
+    quotes.v1beta1.QuoteRejectReason reject_reason = 10;
+
+    string text = 11;
+
+    string symbol = 12;
+}
+
+// Trade is an execution grouping reflecting a trade between two orders in the system.
+message Trade {
+    // Exchange assigned ID for this trade
+    string id = 1;
+
+    // Execution for the incoming order included in the trade
+    Execution aggressor = 2;
+
+    // Execution for the resting order included in the trade
+    Execution passive = 3;
+
+    // Type of trade specified
+    trades.v1beta1.TradeType trade_type = 4;
+
+    // State of trade specified
+    trades.v1beta1.TradeState state = 5;
+
+    // Reporting counterparty for this trade
+    orders.v1beta1.Side reporting_counterparty = 6;
+
+    // Additional detail regarding the status of the trade. May be empty.
+    string text = 7;
+}

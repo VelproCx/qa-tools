@@ -1,0 +1,89 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.instruments.v1beta1;
+
+option go_package = "instrumentsv1beta1";
+option java_package = "com.connamara.ep3.instruments.v1beta1";
+option java_outer_classname = "EventProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Instruments.V1Beta1";
+option objc_class_prefix = "CEI";
+
+import "connamara/ep3/hedger/v1beta1/hedger.proto";
+import "connamara/ep3/type/v1beta1/type.proto";
+
+//EventAttributes are attributes that define an Event tradable instrument.
+message EventAttributes {
+    // sub_types describe the instrument sub type price adjustment models.
+    repeated hedger.v1beta1.HedgeMarket sub_types = 1;
+
+    // Soft maximum number of contracts an account can have open interest in for a given Product before exchange personnel should begin reviewing the account’s positions. Used for alerting only. EP3 will not reject orders that would cause the Position Accountability Value to be exceeded.
+    int64 position_accountability_value = 2;
+
+    // The legal language describing how the market outcome and expiration is determined.
+    string underlying_event_specification = 3;
+
+    // The exact question that describes the conditions for an affirmative outcome of the event. Example: Will the May 2022 CPI be greater than 1.5%?
+    string question = 4;
+
+    // Source of the resulting outcome.
+    string source_agency = 5;
+
+    // The value of the payout.
+    int64 payout_value = 6;
+
+    // Determines the threshold by which an event is said to have happened.
+    string strike_value = 7;
+
+    // Type of evaluation to be used when interpreting strike_value.
+    string evaluation_type = 8;
+
+    // Date for approximate time of event happening.
+    type.v1beta1.Date time_specifier = 9;
+
+    // The common/shared ID across EP3 event instruments that describes the underlying market conditions for an event.
+    string event_id = 10;
+
+    // The common/shared display name across EP3 event instruments that describes the underlying market conditions for an event.
+    string event_display_name = 11;
+
+    // Describes what the strike_value (which is a string in the proto) represents in a business sense. Likely to be "string", "integer", "decimal", or "percentage".
+    // For example a strike_value of "1.5" and a strike_unit of "percentage" means that the strike is 1.5%.
+    string strike_unit = 12;
+
+    // For strike_units of "percentage", this indicates if the outcome data value (e.g. 1.5%) used to resolve an event (e.g. May 2022 CPI) was calculated by the data source (e.g. Bureau of Labor Statistics) as a month-over-month change or a year-over-year change.
+    // For all other strike_units (string, integer, decimal), this will be set to "CALCULATION_METHOD_VALUE", indicating a single outcome data value is used to resolve an event (e.g. "Donald Trump" or "12 inches of rain"), with no comparison to a prior data value required.
+    CalculationMethod calculation_method = 13;
+
+    // Hard maximum number of contracts an account can have open interest in for a given Product. Used for alerting only. EP3 will not reject orders that would cause the Position Limit to be exceeded.
+    int64 position_limit = 14;
+
+    // The website of the Source Agency.
+    string source_agency_url = 15;
+
+    // The expected date that settlement payouts will be given to the holders of the event contract with the correct outcome.
+    type.v1beta1.Date expected_payout_date = 16;
+
+    // The expected time that settlement payouts will be given to the holders of the event contract with the correct outcome.
+    type.v1beta1.TimeOfDay expected_payout_time = 17;
+}
+
+// CalculationMethod of the event.
+enum CalculationMethod {
+    // The undefined default value.
+    CALCULATION_METHOD_UNDEFINED = 0;
+
+    // Indicates the outcome data value (e.g. 1.5%) used to resolve an event (e.g. May 2022 CPI) was calculated by the data source (e.g. Bureau of Labor Statistics) as a month-over-month change.
+    CALCULATION_METHOD_MONTH_OVER_MONTH = 1;
+
+    // Indicates the outcome data value (e.g. 1.5%) used to resolve an event (e.g. May 2022 CPI) was calculated by the data source (e.g. Bureau of Labor Statistics) as a year-over-year change.
+    CALCULATION_METHOD_YEAR_OVER_YEAR = 2;
+
+    // Indicates a single outcome data value is used to resolve the event (e.g. "Donald Trump" or "12 inches of rain"), with no comparison to a prior data value required.
+    CALCULATION_METHOD_VALUE = 3;
+}

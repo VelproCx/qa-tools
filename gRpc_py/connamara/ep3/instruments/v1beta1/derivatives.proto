@@ -1,0 +1,47 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.instruments.v1beta1;
+
+option go_package = "instrumentsv1beta1";
+option java_package = "com.connamara.ep3.instruments.v1beta1";
+option java_outer_classname = "DerivativesProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Instruments.V1Beta1";
+option objc_class_prefix = "CEI";
+
+import "connamara/ep3/type/v1beta1/type.proto";
+
+//FutureAttributes are attributes that define a Future tradable instrument.
+message FutureAttributes {
+    // maturity_date is the maturity date of the derivative contract
+    type.v1beta1.Date maturity_date = 1;
+}
+
+//OptionAttributes are attributes that define a Option tradable instrument.
+message OptionAttributes {
+    // maturity_date is the maturity date of the derivative contract
+    type.v1beta1.Date maturity_date = 1;
+
+    // put_or_call determines if the contract is a put or call
+    PutOrCall put_or_call = 2;
+
+    // Integer strike price representation
+    int64 strike_price = 3;
+}
+
+// PutOrCall represents if an option type is a put or call.
+enum PutOrCall {
+    // The undefined default value
+    PUT_OR_CALL_UNDEFINED = 0;
+
+    // Gives the holder the right to sell the underlying
+    PUT_OR_CALL_PUT = 1;
+
+    // Gives the holder the right to buy the underlying
+    PUT_OR_CALL_CALL = 2;
+}

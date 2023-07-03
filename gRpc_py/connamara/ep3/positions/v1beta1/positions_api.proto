@@ -1,0 +1,36 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.positions.v1beta1;
+
+option go_package = "positionsv1beta1";
+option java_package = "com.connamara.ep3.positions.v1beta1";
+option java_outer_classname = "PositionsApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Positions.V1Beta1";
+option objc_class_prefix = "CEP";
+
+import "connamara/ep3/positions/v1beta1/positions.proto";
+
+
+// PositionsAPI is an API for accessing positions. 
+service PositionsAPI {
+    //ListPositions returns a paginated response of positions in the system.
+    rpc ListPositions(ListPositionsRequest) returns (ListPositionsResponse) {}
+}
+
+message ListPositionsRequest {
+    repeated string accounts = 1;
+    int32 page_size = 2;
+    string page_token = 3;
+}
+
+message ListPositionsResponse {
+    repeated Position positions = 1;
+    string next_page_token = 2;
+    bool eof = 3;
+}

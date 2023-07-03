@@ -1,0 +1,62 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.positions.v1beta1;
+
+option go_package = "positionsv1beta1";
+option java_package = "com.connamara.ep3.positions.v1beta1";
+option java_outer_classname = "PositionsProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Positions.V1Beta1";
+option objc_class_prefix = "CEP";
+
+import "connamara/ep3/orders/v1beta1/orders.proto";
+
+// Position represents a position for a given account and symbol.
+message Position {
+    string account = 1;
+    string symbol = 2;
+    int64 net_position = 3;
+    int64 qty_bought = 4;
+    int64 qty_sold = 5;
+    int64 cost = 6;
+    int64 realized = 7;
+
+    // FillRecord is a record of a fill event contributed to the current position.
+    message FillRecord {
+        int64 qty = 1;
+        int64 px = 2;
+        orders.v1beta1.Side side = 3;
+    }
+
+    repeated FillRecord fill_records = 8;
+
+    int64 bod_position = 9;
+
+    string symbol_sub_type = 10;
+}
+
+// PositionEvent represents a set of position updates emitted following processing of a set of book events.
+message PositionEvent {
+    repeated Position positions = 2;
+    repeated bool is_removal = 5;
+}
+
+// PositionAdjustment represents a position update triggered by an admin.
+message PositionAdjustment {
+    //Account name
+    string name = 1;
+
+    //Symbol
+    string symbol = 2;
+
+    //Adjustment amount
+    int64 delta = 3;
+
+    //Symbol Sub Type
+    string symbol_sub_type = 4;
+}

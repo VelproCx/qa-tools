@@ -1,0 +1,56 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.quotes.v1beta1;
+
+option go_package = "quotesv1beta1";
+option java_package = "com.connamara.ep3.quotes.v1beta1";
+option java_outer_classname = "QuotesAdminApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Quotes.V1Beta1";
+option objc_class_prefix = "CEQ";
+
+import "connamara/ep3/fpml/v1beta1/fpml.proto";
+
+// QuotesAdminAPI is the API surface for managing quotes on the exchange.
+service QuotesAdminAPI {
+    // RiskRejectQuote rejects a quote that has been placed in a PendingRisk state.
+    rpc RiskRejectQuote(RiskRejectQuoteRequest) returns(RiskRejectQuoteResponse) {}
+
+    // RiskApproveQuote approves a quote that has been placed in a PendingRisk state.
+    rpc RiskApproveQuote(RiskApproveQuoteRequest) returns(RiskApproveQuoteResponse) {}
+
+    // GetFpmlQuote generates a trade fpml from a given quote.
+    rpc GetFpmlQuote(GetFpmlQuoteRequest) returns (GetFpmlQuoteResponse) {}
+}
+
+message RiskRejectQuoteRequest {
+    string symbol = 1;
+    string quote = 2;
+    string reject_reason = 3;
+}
+
+message RiskRejectQuoteResponse {}
+
+message RiskApproveQuoteRequest {
+    string symbol = 1;
+    string quote = 2;
+
+    //Optional approval id token added to the quote on approval.
+    string approval_id = 3;
+}
+
+message RiskApproveQuoteResponse {}
+
+message GetFpmlQuoteRequest {
+    fpml.v1beta1.GeneratorConfig fpml_generator_config = 1;
+    string quote_name = 2;
+}
+
+message GetFpmlQuoteResponse {
+    string fpml_trade = 1;
+}

@@ -1,0 +1,34 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.fix.v1beta1;
+
+option go_package = "fixv1beta1";
+option java_package = "com.connamara.ep3.fix.v1beta1";
+option java_outer_classname = "FixProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Fix.V1Beta1";
+option objc_class_prefix = "CEF";
+
+// FIXOrderContext is the context set for orders sent via the FIX API.
+message FIXOrderContext {
+    string begin_string = 1;
+    string target_comp_id = 2;
+    string sender_comp_id = 3;
+
+    string orig_clord_id = 5;
+
+    string security_type = 6;
+
+    string target_sub_id = 16;
+    string target_location_id = 17;
+    string sender_sub_id = 18;
+    string sender_location_id = 19;
+    string on_behalf_of_comp_id = 20;
+    string on_behalf_of_sub_id = 21;
+
+}

@@ -1,0 +1,201 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.trades.v1beta1;
+
+option go_package = "tradesv1beta1";
+option java_package = "com.connamara.ep3.trades.v1beta1";
+option java_outer_classname = "TradesApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Trades.V1Beta1";
+option objc_class_prefix = "CET";
+
+import "connamara/ep3/orders/v1beta1/orders.proto";
+import "connamara/ep3/trades/v1beta1/trades.proto";
+import "google/protobuf/timestamp.proto";
+
+//TradesAPI is an API for accessing Trades.
+service TradesAPI {
+    //GetTradeCaptureReport returns the requested TradeCaptureReport.
+    rpc GetTradeCaptureReport(GetTradeCaptureReportRequest) returns (GetTradeCaptureReportResponse) {}
+
+    //ListTradeCaptureReports returns a paginated list of TradeCaptureReports.
+    rpc ListTradeCaptureReports(ListTradeCaptureReportsRequest) returns (ListTradeCaptureReportsResponse) {}
+
+    //StreamTradeCaptureReports streams trade capture reports specified by criteria in request.
+    rpc StreamTradeCaptureReports(StreamTradeCaptureReportsRequest) returns (stream StreamTradeCaptureReportsResponse) {}
+
+    //GetTradeStats returns trade statistics for a given symbol and time horizon.
+    rpc GetTradeStats(GetTradeStatsRequest) returns (GetTradeStatsResponse) {}
+
+    //ListTrades returns a paginated list of Trades.
+    rpc ListTrades(ListTradesRequest) returns (ListTradesResponse) {}
+
+    //StreamTrades streams trades specified by criteria in request.
+    rpc StreamTrades(StreamTradesRequest) returns (stream StreamTradesResponse) {}
+
+    //UpdateReportingCounterparty updates the reporting counterparty for an existing trade.
+    rpc UpdateReportingCounterparty(UpdateReportingCounterpartyRequest) returns (UpdateReportingCounterpartyResponse) {}
+}
+
+message GetTradeCaptureReportRequest {
+    string tcr_id = 1;
+}
+
+message GetTradeCaptureReportResponse {
+    TradeCaptureReport trade_capture_report = 1;
+}
+
+message ListTradeCaptureReportsRequest {
+    int32 page_size = 1;
+    string page_token = 2;
+
+    // Start time for the trades to be fetched as tcrs
+    google.protobuf.Timestamp start_time = 3;
+
+    // End time for the trades to be fetched as tcrs
+    google.protobuf.Timestamp end_time = 4;
+
+    // Participant to filter upon
+    string participant = 5;
+
+    // Order ID to filter upon
+    string order_id = 6;
+
+    // Trade ID to filter upon
+    string trade_id = 7;
+
+    // Execution ID to filter upon
+    string exec_id = 8;
+
+    // Symbol to filter upon
+    string symbol = 9;
+
+    bool newest_first = 10;
+
+    // TradeType to filter upon
+    TradeType trade_type = 11;
+
+    // Accounts to filter upon
+    repeated string accounts = 12;
+
+    // Client account ID to filter upon
+    string client_account_id = 13;
+
+    // Client participant ID to filter upon
+    string client_participant_id = 14;
+
+    // Trade states to filter upon
+    repeated TradeState states = 15;
+
+    // Parent order ID to filter upon
+    string parent_order_id = 16;
+
+    // Symbol Sub Type to filter upon
+    string symbol_sub_type = 17;
+}
+
+message ListTradeCaptureReportsResponse {
+    repeated TradeCaptureReport reports = 1;
+    string next_page_token = 2;
+    bool eof = 3;
+}
+
+message StreamTradeCaptureReportsRequest {
+    ListTradeCaptureReportsRequest request = 1;
+
+    //If true, keep the connection open to capture new trade capture reports as they are inserted into the database.
+    bool stay_open = 2;
+}
+
+message StreamTradeCaptureReportsResponse {
+    ListTradeCaptureReportsResponse response = 1;
+}
+
+message UpdateReportingCounterpartyRequest {
+    string trade_id = 1;
+    orders.v1beta1.Side reporting_counterparty = 2;
+}
+
+message UpdateReportingCounterpartyResponse {
+}
+
+message GetTradeStatsRequest {
+    string symbol = 1;
+    google.protobuf.Timestamp start_time = 2;
+    google.protobuf.Timestamp end_time = 3;
+}
+
+message GetTradeStatsResponse {
+    TradeStats stats = 1;
+}
+
+message ListTradesRequest {
+    int32 page_size = 1;
+    string page_token = 2;
+    bool newest_first = 3;
+
+    // Start time for the trades to be fetched
+    google.protobuf.Timestamp start_time = 4;
+
+    // End time for the trades to be fetched
+    google.protobuf.Timestamp end_time = 5;
+
+    // Participant to filter upon
+    string participant = 6;
+
+    // Order ID to filter upon
+    string order_id = 7;
+
+    // Trade ID to filter upon
+    string trade_id = 8;
+
+    // Symbol to filter upon
+    string symbol = 9;
+
+    // TradeType to filter upon
+    TradeType trade_type = 10;
+
+    // Exec ID to filter upon
+    string exec_id = 11;
+
+    // Accounts to filter upon
+    repeated string accounts = 12;
+
+    // Client account ID to filter upon
+    string client_account_id = 13;
+
+    // Client participant ID to filter upon
+    string client_participant_id = 14;
+
+    // Trade states to filter upon
+    repeated TradeState states = 15;
+
+    // Parent order ID to filter upon
+    string parent_order_id = 16;
+
+    // Symbol Sub Type to filter upon
+    string symbol_sub_type = 17;
+}
+
+message ListTradesResponse {
+    repeated Trade trades = 1;
+    string next_page_token = 2;
+    bool eof = 3;
+}
+
+message StreamTradesRequest {
+    ListTradesRequest request = 1;
+
+    //If true, keep the connection open to capture new trades as they are inserted into the database.
+    bool stay_open = 2;
+}
+
+message StreamTradesResponse {
+    ListTradesResponse response = 1;
+}

@@ -1,0 +1,55 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.token.v1beta1;
+
+option go_package = "tokenv1beta1";
+option java_package = "com.connamara.ep3.token.v1beta1";
+option java_outer_classname = "TokenAdminApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Token.V1Beta1";
+option objc_class_prefix = "CET";
+
+import "connamara/ep3/token/v1beta1/token.proto";
+
+// TokenAdminAPI is the internal service for requesting and revoking tokens.
+service TokenAdminAPI {
+    //CreateToken creates an Access Token and optional Refresh Token.
+    rpc CreateToken(CreateTokenRequest) returns (CreateTokenResponse) {}
+
+    //RefreshAccessToken creates a new Access Token using a provided Refresh Token JWT.
+    rpc RefreshAccessToken(RefreshAccessTokenRequest) returns (RefreshAccessTokenResponse) {}
+
+    //RevokeTokens revokes all tokens with the given JWTs.
+    rpc RevokeTokens(RevokeTokensRequest) returns (RevokeTokensResponse) {}
+}
+
+message CreateTokenRequest {
+    Token token = 1;
+}
+
+message CreateTokenResponse {
+    Token token = 1;
+}
+
+message RefreshAccessTokenRequest {
+    string refresh_token = 1;
+    Token access_token = 2;
+}
+
+message RefreshAccessTokenResponse {
+    Token access_token = 1;
+}
+
+message RevokeTokensRequest {
+    repeated string tokens = 1;
+    string user = 2;
+    string firm = 3;
+}
+
+message RevokeTokensResponse {}

@@ -1,0 +1,61 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.token.v1beta1;
+
+option go_package = "tokenv1beta1";
+option java_package = "com.connamara.ep3.token.v1beta1";
+option java_outer_classname = "TokenProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Token.V1Beta1";
+option objc_class_prefix = "CET";
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "connamara/ep3/firms/v1beta1/firms.proto";
+
+//TokenType is the token type.
+enum TokenType {
+    TOKEN_TYPE_UNDEFINED = 0;
+    TOKEN_TYPE_REFRESH = 1;
+    TOKEN_TYPE_ACCESS = 2;
+}
+
+//Token is an abstraction for an access token with optional refresh JWT.
+message Token {
+    string subject = 2;
+    google.protobuf.Duration time_to_live_duration = 3;
+    string audience = 4;
+    string impersonator = 5;
+    string service_user_token_name = 6;
+    google.protobuf.Timestamp issue_time = 7;
+    google.protobuf.Timestamp expiration_time = 8;
+    string jwt = 9;
+    string jti = 10;
+
+    // if set, CreateToken will include a refresh token with the provided ttl
+    google.protobuf.Duration refresh_time_to_live_duration = 11;
+    google.protobuf.Timestamp refresh_expiration_time = 12;
+    string refresh_jwt = 13;
+
+    bool single_use = 14;
+}
+
+// TokenContext is the context set for objects sent via a token authenticated API.
+message TokenContext {
+    string user = 1;
+    string firm = 2;
+    string audience = 3;
+    firms.v1beta1.UserRole role = 4;
+    string impersonator = 5;
+    string issuer = 6;
+    string jti = 7;
+    google.protobuf.Timestamp issue_time = 8;
+    google.protobuf.Timestamp expiration_time = 9;
+    bool ott = 10;
+}

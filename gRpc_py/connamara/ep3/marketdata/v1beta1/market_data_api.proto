@@ -1,0 +1,64 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.marketdata.v1beta1;
+
+option go_package = "marketdatav1beta1";
+option java_package = "com.connamara.ep3.marketdata.v1beta1";
+option java_outer_classname = "MarketDataApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Marketdata.V1Beta1";
+option objc_class_prefix = "CEM";
+
+import "connamara/ep3/instruments/v1beta1/instruments.proto";
+import "google/protobuf/timestamp.proto";
+
+//MarketDataAPI exposes access to market data emitted by EP3.
+service MarketDataAPI {
+    // SearchInstrumentStats returns a list of instrument stats entries given request criteria.
+    // The result is a collection of stats on an instrument including times that it open/closed or the last quantity, etc.
+    rpc SearchInstrumentStats(SearchInstrumentStatsRequest) returns (SearchInstrumentStatsResponse) {}
+}
+
+// Request generated based on symbol to search for instrument stats
+message SearchInstrumentStatsRequest {
+    // The symbol being used for the search on instrument stats (required).
+    string symbol = 1;
+
+    // Start time for the objects to be fetched.
+    google.protobuf.Timestamp start_time = 2;
+
+    // End time for the objects to be fetched.
+    google.protobuf.Timestamp end_time = 3;
+
+    // The maximum number of objects to return in a response.
+    // This field is optional.
+    int32 page_size = 4;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 5;
+
+    // Flag that determines if the list should be ordered by the newest entry first.
+    bool newest_first = 6;
+}
+
+message SearchInstrumentStatsResponse {
+    // Collection of stats on an instrument.
+    repeated instruments.v1beta1.InstrumentStats stats = 1;
+
+    // Transaction time for the objects to be fetched.
+    repeated google.protobuf.Timestamp transact_time = 2;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    string next_page_token = 3;
+
+    // A flag for if the list is ended.
+    bool eof = 4;
+}

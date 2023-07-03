@@ -1,0 +1,493 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.orders.v1beta1;
+
+option go_package = "ordersv1beta1";
+option java_package = "com.connamara.ep3.orders.v1beta1";
+option java_outer_classname = "OrdersProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Orders.V1Beta1";
+option objc_class_prefix = "CEO";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/any.proto";
+import "connamara/ep3/orders/v1beta1/orders_context.proto";
+
+// Side indicates the side of an Order.
+enum Side {
+    SIDE_UNDEFINED = 0;
+    SIDE_BUY = 1;
+    SIDE_SELL = 2;
+}
+
+// OrderType indicates the type of an order.
+enum OrderType {
+    ORDER_TYPE_UNDEFINED = 0;
+
+    // An order that executes at the current best price. 
+    //If only partially filled, the remainder is cancelled and reinserted as a LIMIT order
+    //with the price equal to the price at which the filled portion of the order executed
+    ORDER_TYPE_MARKET_TO_LIMIT = 1;
+
+    // An order that will fill only at the specified price or better
+    ORDER_TYPE_LIMIT = 2;
+
+    // An order that will become active as a MARKET_TO_LIMIT order once a trade has occured at the specified stop price
+    ORDER_TYPE_STOP = 3;
+
+    // An order that will become active as a LIMIT order once a trade has occured at the specified stop price
+    ORDER_TYPE_STOP_LIMIT = 4;
+}
+
+// TimeInForce specifies how long the order remains in effect.
+enum TimeInForce {
+    // An unset value for TimeInForce. In the context of inserting orders, this will be interpreted as TIME_IN_FORCE_DAY
+    TIME_IN_FORCE_UNDEFINED = 0;
+
+    // Order will automatically cancel if it has not been filled by the close of the trading day
+    TIME_IN_FORCE_DAY = 1;
+
+    // Order will remain active until filled or cancelled
+    TIME_IN_FORCE_GOOD_TILL_CANCEL = 2;
+
+    // Order will attempt to fill immediately, then cancel any unfilled portions of the order
+    TIME_IN_FORCE_IMMEDIATE_OR_CANCEL = 3;
+
+    // Order will remain active until filled or until the time specified
+    TIME_IN_FORCE_GOOD_TILL_TIME = 4;
+}
+
+// CrossType specifies the type of order cross. Must be set when inserting a cross.
+enum CrossType {
+    CROSS_TYPE_UNDEFINED = 0;
+
+    //Cross order will either fill all of the order quantity or none of it
+    CROSS_TYPE_ALL_OR_NONE = 1;
+}
+
+// OrderState denotes the current order state.
+enum OrderState {
+    ORDER_STATE_NEW = 0;
+    ORDER_STATE_PARTIALLY_FILLED = 1;
+    ORDER_STATE_FILLED = 2;
+    ORDER_STATE_CANCELED = 3;
+    ORDER_STATE_REPLACED = 4;
+    ORDER_STATE_REJECTED = 5;
+    ORDER_STATE_EXPIRED = 6;
+
+    //Order received by exchange at edges of the system but has not been processed by matching engine.
+    ORDER_STATE_PENDING_NEW = 7;
+
+    //Cancel Replace request received by exchange at edges of the system but has not been processed by matching engine.
+    ORDER_STATE_PENDING_REPLACE = 8;
+
+    //Cancel request received by exchange at edges of the system but has not been processed by matching engine.
+    ORDER_STATE_PENDING_CANCEL = 9;
+
+    //Order is pending risk approval
+    ORDER_STATE_PENDING_RISK = 10;
+}
+
+// ExecutionType denotes the execution type.
+enum ExecutionType {
+    EXECUTION_TYPE_NEW = 0;
+    EXECUTION_TYPE_PARTIAL_FILL = 1;
+    EXECUTION_TYPE_FILL = 2;
+    EXECUTION_TYPE_CANCELED = 3;
+    EXECUTION_TYPE_REPLACE = 4;
+    EXECUTION_TYPE_REJECTED = 5;
+    EXECUTION_TYPE_EXPIRED = 6;
+}
+
+// OrdRejectReason is the code to identify reason for order rejection.
+enum OrdRejectReason {
+    ORD_REJECT_REASON_EXCHANGE_OPTION = 0;
+    ORD_REJECT_REASON_UNKNOWN_SYMBOL = 1;
+    ORD_REJECT_REASON_EXCHANGE_CLOSED = 2;
+    ORD_REJECT_REASON_INCORRECT_QUANTITY = 3;
+    ORD_REJECT_REASON_INVALID_PRICE_INCREMENT = 4;
+    ORD_REJECT_REASON_INCORRECT_ORDER_TYPE = 5;
+    ORD_REJECT_REASON_PRICE_OUT_OF_BOUNDS = 6;
+    ORD_REJECT_REASON_NO_LIQUIDITY = 7;
+}
+
+// CxlRejReason is a code to identify the reason for cancel rejection.
+enum CxlRejReason {
+    CXL_REJ_REASON_EXCHANGE_OPTION = 0;
+    CXL_REJ_REASON_UNKNOWN_ORDER = 1;
+    CXL_REJ_REASON_EXCHANGE_CLOSED = 2;
+    CXL_REJ_REASON_INCORRECT_QUANTITY = 3;
+    CXL_REJ_REASON_INVALID_PRICE_INCREMENT = 4;
+    CXL_REJ_REASON_PRICE_OUT_OF_BOUNDS = 5;
+}
+
+// PriceProtection describes the rules for price protection of market type orders.
+message PriceProtection {
+    // If present, a market type order may not fill past this price
+    int64 price = 1;
+}
+
+// OrderAttributes describe the attributes of an order.
+message OrderAttributes {
+    OrderType type = 1;
+
+    Side side = 2;
+
+    int64 order_qty = 3;
+
+    string symbol = 4;
+
+    // Integer price representation
+    int64 price = 5;
+
+    // Absence of this field is interpreted as DAY
+    TimeInForce time_in_force = 6;
+
+    // Client assigned ID for the order
+    string clord_id = 7;
+
+    // Account is the trading account for this order
+    string account = 8;
+
+    // Integer stop price representation
+    int64 stop_price = 9;
+
+    // Minimum quantity for IOC transactions
+    int64 min_qty = 10;
+
+    // Client assigned Self Match Prevention ID, leaving ID empty allows for self match trades
+    string self_match_prevention_id = 11;
+
+    // Set to quote name if order is to match against a quote
+    string quote = 12;
+
+    // Set if all or none of the order qty should be filled
+    bool all_or_none = 13;
+
+    // Client assigned Session ID, leaving ID empty allows for order to persist on session disconnect
+    string session_id = 14;
+
+    // Set to cross id if order is part of a cross
+    string cross_id = 15;
+
+    // Set to cross type if order is part of a cross
+    CrossType cross_type = 16;
+
+    // Set to exchange generated host cross id if order is part of a cross
+    string host_cross_id = 17;
+
+    // If this order is being submitted on behalf of another entity, set to the agent submitter
+    string submitting_participant = 18;
+
+    // Set to true if the order is a cross and it is the market prioritized side
+    bool cross_prioritized = 19;
+
+    // Set to a positive value if the order is a cross and is intended to rest in the book
+    google.protobuf.Duration cross_rest_duration = 20;
+
+    // Client assigned free-form account ID for the order
+    string client_account_id = 21;
+
+    // Client assigned free-form participant ID for the order
+    string client_participant_id = 22;
+
+    // Set if immediate match is not desired
+    bool participate_dont_initiate = 23;
+
+    // Relative priority among the same price level
+    int64 priority_weight = 24;
+
+    // Fixed point decimal representation of the total cash order qty
+    int64 cash_order_qty = 25;
+
+    // The sub type of the instrument symbol
+    string symbol_sub_type = 26;
+
+    // Set if this particular order must be filled at the exact limit price specified without price improvement
+    bool strict_limit = 27;
+
+    // The time at which this order was risk checked
+    google.protobuf.Timestamp risk_check_time = 28;
+
+    // The risk status given by the position risk check
+    string collateral_memo = 29;
+
+    // The time at which this order shall expire if the time in force is set as good till time
+    google.protobuf.Timestamp good_till_time = 30;
+
+    // If present, determines the price protection for market type orders
+    PriceProtection price_protection = 31;
+
+    // A flag that if set indicates that the price of a limit order shall be set to the price at the top of the book on the same side as this order upon insertion.
+    bool best_limit = 32;
+
+    // A flag that if set indicates that the price of a limit order shall be set to the price at the top of the book on the opposing side as this order, thus able to immediately match upon insertion.
+    bool immediately_executable_limit = 33;
+}
+
+// OrderStatus indicates the current status of an order.
+message OrderStatus {
+    // Cumulative filled order qty
+    int64 cum_qty = 1;
+
+    // Average fill price
+    double avg_px = 2;
+
+    // Remaining working qty
+    int64 leaves_qty = 3;
+
+    OrderState state = 4;
+
+    // Set if not yet inserted into book
+    bool pending = 5;
+
+    // When set, the token assigned to this order following risk approval
+    string risk_approval_id = 6;
+}
+
+// Commission indicates the fee assignments for the given order to be applied on fills.
+message Commission {
+    // Account is the exchange account name that will receive the commission payout
+    string account = 1;
+
+    // Dictates the unit of measure to calculate fees, where 100 basis points equal 1 percent of notional
+    int64 basis_points = 2;
+}
+
+// Execution indicates a state change for an order in the exchange.
+message Execution {
+    // Exchange assigned ID for this execution
+    string id = 1;
+
+    // Maps to exchange assigned ID for the executing order
+    string order_id = 2;
+
+    int64 last_shares = 3;
+
+    int64 last_px = 4;
+
+    OrderStatus order_status = 5;
+
+    ExecutionType type = 6;
+
+    // Free format text
+    string text = 7;
+
+    // For optional use if exec type is rejected
+    OrdRejectReason order_reject_reason = 8;
+
+    // Set if this execution is due to a specific participant's request
+    string participant = 9;
+
+    // if a fill, the trade id for this transaction
+    string trade_id = 10;
+
+    //if a fill, true if this execution belongs to aggressor order, false if belongs to passive order
+    bool aggressor = 11;
+
+    //if a fill, true if this execution belongs to an order involved in an order cross
+    bool cross = 12;
+
+    //if a fill on a multi leg instrument, contains the derived leg prices at the time of execution
+    repeated LegPrice leg_prices = 13;
+}
+
+// Order indicates an order received by the exchange, we are using nullable == false to avoid extra allocations.
+message Order {
+    // Exchange assigned ID for the order
+    string id = 1;
+
+    // Attributes for this order
+    OrderAttributes attributes = 2;
+
+    // Status for this order
+    OrderStatus status = 3;
+
+    // Participant that placed this order
+    string participant = 4;
+
+    // The time this order was inserted into the book or the time the order was replaced in the book
+    google.protobuf.Timestamp insert_time = 5;
+
+    // Context may contain additional meta data regarding the order
+    OrderContext context = 6;
+
+    // The time this order was initially received by the edges of the exchange
+    google.protobuf.Timestamp initial_order_receive_time = 7;
+
+    // The parent order this order is the child of
+    string parent_order_id = 8;
+
+    // The list of commissions that apply to this order
+    repeated Commission commissions = 9;
+}
+
+// LegPrice indicates a price for a leg as part of a multi leg instrument.
+message LegPrice {
+    // The symbol of the leg
+    string symbol = 1;
+
+    // Indicates that this entry is used as the anchor price
+    bool anchor = 2;
+
+    // The price of the leg
+    int64 px = 3;
+
+    // The quantity of the leg
+    int64 qty = 4;
+
+    // The side of the leg
+    Side side = 5;
+
+    // The reference price of the leg used in the calculation of the derived price
+    int64 reference_px = 6;
+}
+
+// CancelReject indicates a cancel or replace request that was rejected.
+message CancelReject {
+    // Maps to exchange assigned ID for the order that could not be canceled or replaced
+    string order_id = 1;
+
+    // Reason for the cancel or cancel reject
+    CxlRejReason reject_reason = 2;
+
+    // Free format text
+    string text = 3;
+
+    // Set if this cancel reject was for a replace or not
+    bool is_replace = 4;
+
+    // Client assigned ID for the order
+    string clord_id = 5;
+
+    // Set if this cancel reject is due to a specific participant's request
+    string participant = 6;
+
+    // Context may contain additional meta data regarding the order
+    OrderContext context = 7;
+}
+
+// InsertOrderCrossRequest is an order request into the Exchange where all orders should match against each other.
+message InsertOrderCrossRequest {
+    repeated Order orders = 1;
+    string symbol = 3;
+}
+
+// ReleaseOrderRequest is a request to release orders from the matching engine cache into the engine to make matches.
+message ReleaseOrderRequest {
+    // Exchange assigned IDs for the orders to be released
+    repeated string order_ids = 1;
+
+    string symbol = 3;
+}
+
+// InsertOrderRequest is a request to insert an order request into the matching engine.
+message InsertOrderRequest {
+    string symbol = 4;
+    Order order = 16;
+}
+
+// CancelReplace describes a request to replace attributes of a working order.
+message CancelReplaceOrderRequest {
+    // Exchange assigned ID for the order to be replaced
+    string order_id = 1;
+
+    // Client assigned ID for the cxl replace order
+    string clord_id = 2;
+
+    string symbol = 3;
+
+    // Desired limit price for the replaced order
+    int64 price = 4;
+
+    // Desired Order Qty for the replaced order
+    int64 order_qty = 5;
+
+    // The market participant that requested this order be amended
+    string participant = 6;
+
+    // Desired Time in Force for the replaced order
+    TimeInForce time_in_force = 7;
+
+    // Context is caller defined and will over-write the context of the order to be replaced
+    OrderContext context = 8;
+
+    // Desired stop price for the replaced order
+    int64 stop_price = 9;
+
+    // Desired min qty for the replaced order
+    int64 min_qty = 10;
+
+    // Set if all or none of the order qty should be filled
+    bool all_or_none = 11;
+
+    // When set, the token assigned to this cancel replace request following risk approval
+    string risk_approval_id = 12;
+
+    // Set if immediate match is not desired
+    bool participate_dont_initiate = 13;
+
+    //Desired priority weight for the replaced order
+    int64 priority_weight = 14;
+
+    // The sub type of the instrument symbol
+    string symbol_sub_type = 15;
+
+    // Set if this particular order must be filled at the exact limit price specified without price improvement
+    bool strict_limit = 16;
+
+    // The time at which this order was risk checked
+    google.protobuf.Timestamp risk_check_time = 17;
+
+    // The risk status given by the position risk check
+    string collateral_memo = 18;
+
+    // The time at which this order shall expire if the time in force is set as good till time
+    google.protobuf.Timestamp good_till_time = 19;
+
+    // A flag that if set indicates that the price of a limit order shall be set to the price at the top of the book on the same side as this order.
+    bool best_limit = 20;
+
+    // A flag that if set indicates that the price of a limit order shall be set to the price at the top of the book on the opposing side as this order, thus able to immediately match.
+    bool immediately_executable_limit = 21;
+}
+
+// OrderEvent is emitted as part of an order transaction.
+message OrderEvent {
+    string symbol = 1;
+
+    // Orders are all orders affected by this event
+    repeated Order orders = 2;
+
+    // executions triggered by this event in chronological order
+    repeated Execution executions = 3;
+
+    google.protobuf.Timestamp transact_time = 4;
+
+    // CancelReject that may be triggered by this event
+    CancelReject cancel_reject = 5;
+
+    // The event that triggered this Event to occur.
+    google.protobuf.Any trigger = 6;
+}
+
+// OrderStateFilter describes a filter for searching orders that are open or closed.
+enum OrderStateFilter {
+    ORDER_STATE_FILTER_UNDEFINED = 0;
+    ORDER_STATE_FILTER_OPEN = 1;
+    ORDER_STATE_FILTER_CLOSED = 2;
+    ORDER_STATE_FILTER_NEW = 3;
+    ORDER_STATE_FILTER_PARTIALLY_FILLED = 4;
+    ORDER_STATE_FILTER_FILLED = 5;
+    ORDER_STATE_FILTER_CANCELED = 6;
+    ORDER_STATE_FILTER_REPLACED = 7;
+    ORDER_STATE_FILTER_REJECTED = 8;
+    ORDER_STATE_FILTER_EXPIRED = 9;
+    ORDER_STATE_FILTER_PENDING_RISK = 10;
+}

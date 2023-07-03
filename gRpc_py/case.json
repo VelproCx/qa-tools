@@ -1,0 +1,6412 @@
+{
+  "testCase": [
+    {
+      "Symbol": "1301",
+      "Price": 3630
+    },
+    {
+      "Symbol": "1332",
+      "Price": 544
+    },
+    {
+      "Symbol": "1333",
+      "Price": 2443
+    },
+    {
+      "Symbol": "1375",
+      "Price": 1007
+    },
+    {
+      "Symbol": "1377",
+      "Price": 4045
+    },
+    {
+      "Symbol": "1414",
+      "Price": 5260
+    },
+    {
+      "Symbol": "1417",
+      "Price": 1504
+    },
+    {
+      "Symbol": "1435",
+      "Price": 205
+    },
+    {
+      "Symbol": "1515",
+      "Price": 3530
+    },
+    {
+      "Symbol": "1518",
+      "Price": 3790
+    },
+    {
+      "Symbol": "1605",
+      "Price": 1426
+    },
+    {
+      "Symbol": "1662",
+      "Price": 4845
+    },
+    {
+      "Symbol": "1720",
+      "Price": 671
+    },
+    {
+      "Symbol": "1721",
+      "Price": 2486
+    },
+    {
+      "Symbol": "1726",
+      "Price": 342
+    },
+    {
+      "Symbol": "1762",
+      "Price": 1982
+    },
+    {
+      "Symbol": "1766",
+      "Price": 7600
+    },
+    {
+      "Symbol": "1780",
+      "Price": 1052
+    },
+    {
+      "Symbol": "1801",
+      "Price": 4375
+    },
+    {
+      "Symbol": "1802",
+      "Price": 978
+    },
+    {
+      "Symbol": "1803",
+      "Price": 733
+    },
+    {
+      "Symbol": "1808",
+      "Price": 1539
+    },
+    {
+      "Symbol": "1812",
+      "Price": 1607
+    },
+    {
+      "Symbol": "1820",
+      "Price": 3555
+    },
+    {
+      "Symbol": "1821",
+      "Price": 421
+    },
+    {
+      "Symbol": "1822",
+      "Price": 3900
+    },
+    {
+      "Symbol": "1833",
+      "Price": 3235
+    },
+    {
+      "Symbol": "1835",
+      "Price": 2761
+    },
+    {
+      "Symbol": "1852",
+      "Price": 3255
+    },
+    {
+      "Symbol": "1860",
+      "Price": 710
+    },
+    {
+      "Symbol": "1861",
+      "Price": 2751
+    },
+    {
+      "Symbol": "1878",
+      "Price": 12580
+    },
+    {
+      "Symbol": "1882",
+      "Price": 6440
+    },
+    {
+      "Symbol": "1884",
+      "Price": 6760
+    },
+    {
+      "Symbol": "1885",
+      "Price": 2606
+    },
+    {
+      "Symbol": "1893",
+      "Price": 660
+    },
+    {
+      "Symbol": "1911",
+      "Price": 2640
+    },
+    {
+      "Symbol": "1925",
+      "Price": 3114
+    },
+    {
+      "Symbol": "1926",
+      "Price": 1974
+    },
+    {
+      "Symbol": "1928",
+      "Price": 2545
+    },
+    {
+      "Symbol": "1941",
+      "Price": 2129
+    },
+    {
+      "Symbol": "1944",
+      "Price": 1509
+    },
+    {
+      "Symbol": "1951",
+      "Price": 2399
+    },
+    {
+      "Symbol": "1954",
+      "Price": 3240
+    },
+    {
+      "Symbol": "1959",
+      "Price": 3405
+    },
+    {
+      "Symbol": "1963",
+      "Price": 1758
+    },
+    {
+      "Symbol": "1968",
+      "Price": 3825
+    },
+    {
+      "Symbol": "1969",
+      "Price": 2032
+    },
+    {
+      "Symbol": "1979",
+      "Price": 3515
+    },
+    {
+      "Symbol": "1982",
+      "Price": 2009
+    },
+    {
+      "Symbol": "2002",
+      "Price": 1561
+    },
+    {
+      "Symbol": "2004",
+      "Price": 2490
+    },
+    {
+      "Symbol": "2109",
+      "Price": 2046
+    },
+    {
+      "Symbol": "2117",
+      "Price": 1675
+    },
+    {
+      "Symbol": "2121",
+      "Price": 2631
+    },
+    {
+      "Symbol": "2124",
+      "Price": 2279
+    },
+    {
+      "Symbol": "2127",
+      "Price": 1199
+    },
+    {
+      "Symbol": "2146",
+      "Price": 2421
+    },
+    {
+      "Symbol": "2154",
+      "Price": 1877
+    },
+    {
+      "Symbol": "2157",
+      "Price": 919
+    },
+    {
+      "Symbol": "2163",
+      "Price": 1084
+    },
+    {
+      "Symbol": "2175",
+      "Price": 3330
+    },
+    {
+      "Symbol": "2181",
+      "Price": 2793
+    },
+    {
+      "Symbol": "2193",
+      "Price": 222
+    },
+    {
+      "Symbol": "2198",
+      "Price": 637
+    },
+    {
+      "Symbol": "2201",
+      "Price": 3905
+    },
+    {
+      "Symbol": "2206",
+      "Price": 3490
+    },
+    {
+      "Symbol": "2212",
+      "Price": 1587
+    },
+    {
+      "Symbol": "2217",
+      "Price": 3410
+    },
+    {
+      "Symbol": "2220",
+      "Price": 4320
+    },
+    {
+      "Symbol": "2222",
+      "Price": 8630
+    },
+    {
+      "Symbol": "2229",
+      "Price": 2924
+    },
+    {
+      "Symbol": "2264",
+      "Price": 4820
+    },
+    {
+      "Symbol": "2267",
+      "Price": 9240
+    },
+    {
+      "Symbol": "2269",
+      "Price": 6420
+    },
+    {
+      "Symbol": "2281",
+      "Price": 2161
+    },
+    {
+      "Symbol": "2282",
+      "Price": 3770
+    },
+    {
+      "Symbol": "2292",
+      "Price": 2750
+    },
+    {
+      "Symbol": "2305",
+      "Price": 2100
+    },
+    {
+      "Symbol": "2317",
+      "Price": 345
+    },
+    {
+      "Symbol": "2326",
+      "Price": 5430
+    },
+    {
+      "Symbol": "2327",
+      "Price": 3360
+    },
+    {
+      "Symbol": "2331",
+      "Price": 3510
+    },
+    {
+      "Symbol": "2337",
+      "Price": 288
+    },
+    {
+      "Symbol": "2353",
+      "Price": 256
+    },
+    {
+      "Symbol": "2371",
+      "Price": 1925
+    },
+    {
+      "Symbol": "2379",
+      "Price": 3660
+    },
+    {
+      "Symbol": "2384",
+      "Price": 3235
+    },
+    {
+      "Symbol": "2395",
+      "Price": 2671
+    },
+    {
+      "Symbol": "2412",
+      "Price": 2084
+    },
+    {
+      "Symbol": "2413",
+      "Price": 3305
+    },
+    {
+      "Symbol": "2427",
+      "Price": 1259
+    },
+    {
+      "Symbol": "2432",
+      "Price": 1797
+    },
+    {
+      "Symbol": "2433",
+      "Price": 1504
+    },
+    {
+      "Symbol": "2471",
+      "Price": 690
+    },
+    {
+      "Symbol": "2492",
+      "Price": 328
+    },
+    {
+      "Symbol": "2501",
+      "Price": 3135
+    },
+    {
+      "Symbol": "2502",
+      "Price": 4711
+    },
+    {
+      "Symbol": "2503",
+      "Price": 2006
+    },
+    {
+      "Symbol": "2531",
+      "Price": 1067
+    },
+    {
+      "Symbol": "2579",
+      "Price": 1419
+    },
+    {
+      "Symbol": "2587",
+      "Price": 4740
+    },
+    {
+      "Symbol": "2590",
+      "Price": 4800
+    },
+    {
+      "Symbol": "2593",
+      "Price": 4450
+    },
+    {
+      "Symbol": "2594",
+      "Price": 2074
+    },
+    {
+      "Symbol": "2602",
+      "Price": 3305
+    },
+    {
+      "Symbol": "2607",
+      "Price": 1998
+    },
+    {
+      "Symbol": "2651",
+      "Price": 5420
+    },
+    {
+      "Symbol": "2659",
+      "Price": 4160
+    },
+    {
+      "Symbol": "2664",
+      "Price": 2323
+    },
+    {
+      "Symbol": "2670",
+      "Price": 6780
+    },
+    {
+      "Symbol": "2681",
+      "Price": 1767
+    },
+    {
+      "Symbol": "2685",
+      "Price": 2273
+    },
+    {
+      "Symbol": "2692",
+      "Price": 4970
+    },
+    {
+      "Symbol": "2695",
+      "Price": 3180
+    },
+    {
+      "Symbol": "2726",
+      "Price": 2761
+    },
+    {
+      "Symbol": "2730",
+      "Price": 1319
+    },
+    {
+      "Symbol": "2733",
+      "Price": 4035
+    },
+    {
+      "Symbol": "2737",
+      "Price": 6770
+    },
+    {
+      "Symbol": "2749",
+      "Price": 343
+    },
+    {
+      "Symbol": "2752",
+      "Price": 1356
+    },
+    {
+      "Symbol": "2760",
+      "Price": 7930
+    },
+    {
+      "Symbol": "2764",
+      "Price": 191
+    },
+    {
+      "Symbol": "2767",
+      "Price": 4045
+    },
+    {
+      "Symbol": "2768",
+      "Price": 2576
+    },
+    {
+      "Symbol": "2784",
+      "Price": 1641
+    },
+    {
+      "Symbol": "2791",
+      "Price": 4930
+    },
+    {
+      "Symbol": "2792",
+      "Price": 1453
+    },
+    {
+      "Symbol": "2801",
+      "Price": 6520
+    },
+    {
+      "Symbol": "2802",
+      "Price": 4123
+    },
+    {
+      "Symbol": "2809",
+      "Price": 2248
+    },
+    {
+      "Symbol": "2810",
+      "Price": 2689
+    },
+    {
+      "Symbol": "2811",
+      "Price": 3030
+    },
+    {
+      "Symbol": "2815",
+      "Price": 4885
+    },
+    {
+      "Symbol": "2871",
+      "Price": 2720
+    },
+    {
+      "Symbol": "2875",
+      "Price": 5570
+    },
+    {
+      "Symbol": "2897",
+      "Price": 11380
+    },
+    {
+      "Symbol": "2914",
+      "Price": 2788
+    },
+    {
+      "Symbol": "2918",
+      "Price": 1885
+    },
+    {
+      "Symbol": "2930",
+      "Price": 334
+    },
+    {
+      "Symbol": "2931",
+      "Price": 958
+    },
+    {
+      "Symbol": "2980",
+      "Price": 3470
+    },
+    {
+      "Symbol": "3002",
+      "Price": 4365
+    },
+    {
+      "Symbol": "3003",
+      "Price": 1083
+    },
+    {
+      "Symbol": "3028",
+      "Price": 1950
+    },
+    {
+      "Symbol": "3030",
+      "Price": 755
+    },
+    {
+      "Symbol": "3034",
+      "Price": 1190
+    },
+    {
+      "Symbol": "3036",
+      "Price": 1346
+    },
+    {
+      "Symbol": "3038",
+      "Price": 3610
+    },
+    {
+      "Symbol": "3046",
+      "Price": 3520
+    },
+    {
+      "Symbol": "3048",
+      "Price": 1181
+    },
+    {
+      "Symbol": "3050",
+      "Price": 1193
+    },
+    {
+      "Symbol": "3053",
+      "Price": 172
+    },
+    {
+      "Symbol": "3064",
+      "Price": 1908
+    },
+    {
+      "Symbol": "3073",
+      "Price": 774
+    },
+    {
+      "Symbol": "3076",
+      "Price": 2133
+    },
+    {
+      "Symbol": "3086",
+      "Price": 1284
+    },
+    {
+      "Symbol": "3087",
+      "Price": 1879
+    },
+    {
+      "Symbol": "3088",
+      "Price": 6620
+    },
+    {
+      "Symbol": "3091",
+      "Price": 2411
+    },
+    {
+      "Symbol": "3092",
+      "Price": 3075
+    },
+    {
+      "Symbol": "3093",
+      "Price": 2414
+    },
+    {
+      "Symbol": "3097",
+      "Price": 7130
+    },
+    {
+      "Symbol": "3099",
+      "Price": 1411
+    },
+    {
+      "Symbol": "3101",
+      "Price": 1047
+    },
+    {
+      "Symbol": "3104",
+      "Price": 3100
+    },
+    {
+      "Symbol": "3105",
+      "Price": 990
+    },
+    {
+      "Symbol": "3106",
+      "Price": 2447
+    },
+    {
+      "Symbol": "3107",
+      "Price": 2064
+    },
+    {
+      "Symbol": "3116",
+      "Price": 2090
+    },
+    {
+      "Symbol": "3132",
+      "Price": 3540
+    },
+    {
+      "Symbol": "3141",
+      "Price": 3025
+    },
+    {
+      "Symbol": "3148",
+      "Price": 3380
+    },
+    {
+      "Symbol": "3150",
+      "Price": 2481
+    },
+    {
+      "Symbol": "3156",
+      "Price": 2215
+    },
+    {
+      "Symbol": "3167",
+      "Price": 862
+    },
+    {
+      "Symbol": "3175",
+      "Price": 777
+    },
+    {
+      "Symbol": "3179",
+      "Price": 906
+    },
+    {
+      "Symbol": "3182",
+      "Price": 2512
+    },
+    {
+      "Symbol": "3186",
+      "Price": 3175
+    },
+    {
+      "Symbol": "3193",
+      "Price": 2049
+    },
+    {
+      "Symbol": "3196",
+      "Price": 1379
+    },
+    {
+      "Symbol": "3197",
+      "Price": 1599
+    },
+    {
+      "Symbol": "3198",
+      "Price": 1768
+    },
+    {
+      "Symbol": "3222",
+      "Price": 1122
+    },
+    {
+      "Symbol": "3231",
+      "Price": 2921
+    },
+    {
+      "Symbol": "3244",
+      "Price": 2046
+    },
+    {
+      "Symbol": "3245",
+      "Price": 619
+    },
+    {
+      "Symbol": "3288",
+      "Price": 4840
+    },
+    {
+      "Symbol": "3289",
+      "Price": 639
+    },
+    {
+      "Symbol": "3291",
+      "Price": 2199
+    },
+    {
+      "Symbol": "3315",
+      "Price": 88
+    },
+    {
+      "Symbol": "3328",
+      "Price": 2503
+    },
+    {
+      "Symbol": "3333",
+      "Price": 1363
+    },
+    {
+      "Symbol": "3349",
+      "Price": 12630
+    },
+    {
+      "Symbol": "3360",
+      "Price": 2494
+    },
+    {
+      "Symbol": "3382",
+      "Price": 6134
+    },
+    {
+      "Symbol": "3387",
+      "Price": 960
+    },
+    {
+      "Symbol": "3391",
+      "Price": 9490
+    },
+    {
+      "Symbol": "3393",
+      "Price": 1041
+    },
+    {
+      "Symbol": "3395",
+      "Price": 1788
+    },
+    {
+      "Symbol": "3397",
+      "Price": 2696
+    },
+    {
+      "Symbol": "3401",
+      "Price": 1449
+    },
+    {
+      "Symbol": "3402",
+      "Price": 801.9
+    },
+    {
+      "Symbol": "3405",
+      "Price": 1209
+    },
+    {
+      "Symbol": "3407",
+      "Price": 954.1
+    },
+    {
+      "Symbol": "3415",
+      "Price": 457
+    },
+    {
+      "Symbol": "3436",
+      "Price": 1873
+    },
+    {
+      "Symbol": "3443",
+      "Price": 3520
+    },
+    {
+      "Symbol": "3445",
+      "Price": 3550
+    },
+    {
+      "Symbol": "3452",
+      "Price": 591
+    },
+    {
+      "Symbol": "3465",
+      "Price": 4105
+    },
+    {
+      "Symbol": "3480",
+      "Price": 3795
+    },
+    {
+      "Symbol": "3543",
+      "Price": 2360
+    },
+    {
+      "Symbol": "3548",
+      "Price": 839
+    },
+    {
+      "Symbol": "3549",
+      "Price": 7100
+    },
+    {
+      "Symbol": "3561",
+      "Price": 1392
+    },
+    {
+      "Symbol": "3563",
+      "Price": 3500
+    },
+    {
+      "Symbol": "3569",
+      "Price": 2519
+    },
+    {
+      "Symbol": "3591",
+      "Price": 2335
+    },
+    {
+      "Symbol": "3593",
+      "Price": 3225
+    },
+    {
+      "Symbol": "3626",
+      "Price": 3435
+    },
+    {
+      "Symbol": "3632",
+      "Price": 737
+    },
+    {
+      "Symbol": "3635",
+      "Price": 2370
+    },
+    {
+      "Symbol": "3636",
+      "Price": 5180
+    },
+    {
+      "Symbol": "3659",
+      "Price": 3070
+    },
+    {
+      "Symbol": "3660",
+      "Price": 445
+    },
+    {
+      "Symbol": "3667",
+      "Price": 363
+    },
+    {
+      "Symbol": "3672",
+      "Price": 184
+    },
+    {
+      "Symbol": "3679",
+      "Price": 412
+    },
+    {
+      "Symbol": "3697",
+      "Price": 22550
+    },
+    {
+      "Symbol": "3708",
+      "Price": 2947
+    },
+    {
+      "Symbol": "3738",
+      "Price": 1650
+    },
+    {
+      "Symbol": "3765",
+      "Price": 2328
+    },
+    {
+      "Symbol": "3769",
+      "Price": 11370
+    },
+    {
+      "Symbol": "3774",
+      "Price": 2677
+    },
+    {
+      "Symbol": "3778",
+      "Price": 585
+    },
+    {
+      "Symbol": "3788",
+      "Price": 3965
+    },
+    {
+      "Symbol": "3817",
+      "Price": 3025
+    },
+    {
+      "Symbol": "3861",
+      "Price": 538
+    },
+    {
+      "Symbol": "3863",
+      "Price": 1007
+    },
+    {
+      "Symbol": "3880",
+      "Price": 1077
+    },
+    {
+      "Symbol": "3896",
+      "Price": 770
+    },
+    {
+      "Symbol": "3901",
+      "Price": 2641
+    },
+    {
+      "Symbol": "3903",
+      "Price": 862
+    },
+    {
+      "Symbol": "3923",
+      "Price": 1736
+    },
+    {
+      "Symbol": "3932",
+      "Price": 2160
+    },
+    {
+      "Symbol": "3941",
+      "Price": 903
+    },
+    {
+      "Symbol": "3962",
+      "Price": 2665
+    },
+    {
+      "Symbol": "3983",
+      "Price": 1756
+    },
+    {
+      "Symbol": "3984",
+      "Price": 1691
+    },
+    {
+      "Symbol": "3994",
+      "Price": 4840
+    },
+    {
+      "Symbol": "4004",
+      "Price": 2309
+    },
+    {
+      "Symbol": "4005",
+      "Price": 477
+    },
+    {
+      "Symbol": "4008",
+      "Price": 4215
+    },
+    {
+      "Symbol": "4021",
+      "Price": 5890
+    },
+    {
+      "Symbol": "4022",
+      "Price": 2106
+    },
+    {
+      "Symbol": "4023",
+      "Price": 8300
+    },
+    {
+      "Symbol": "4025",
+      "Price": 4330
+    },
+    {
+      "Symbol": "4041",
+      "Price": 4510
+    },
+    {
+      "Symbol": "4042",
+      "Price": 1786
+    },
+    {
+      "Symbol": "4043",
+      "Price": 2116
+    },
+    {
+      "Symbol": "4044",
+      "Price": 2908
+    },
+    {
+      "Symbol": "4045",
+      "Price": 1225
+    },
+    {
+      "Symbol": "4046",
+      "Price": 4215
+    },
+    {
+      "Symbol": "4061",
+      "Price": 2944
+    },
+    {
+      "Symbol": "4062",
+      "Price": 4490
+    },
+    {
+      "Symbol": "4063",
+      "Price": 19210
+    },
+    {
+      "Symbol": "4088",
+      "Price": 1620
+    },
+    {
+      "Symbol": "4091",
+      "Price": 2363
+    },
+    {
+      "Symbol": "4109",
+      "Price": 2518
+    },
+    {
+      "Symbol": "4112",
+      "Price": 3120
+    },
+    {
+      "Symbol": "4114",
+      "Price": 5720
+    },
+    {
+      "Symbol": "4118",
+      "Price": 3445
+    },
+    {
+      "Symbol": "4151",
+      "Price": 2943
+    },
+    {
+      "Symbol": "4180",
+      "Price": 1710
+    },
+    {
+      "Symbol": "4182",
+      "Price": 1940
+    },
+    {
+      "Symbol": "4183",
+      "Price": 3250
+    },
+    {
+      "Symbol": "4185",
+      "Price": 3105
+    },
+    {
+      "Symbol": "4186",
+      "Price": 7240
+    },
+    {
+      "Symbol": "4187",
+      "Price": 2000
+    },
+    {
+      "Symbol": "4188",
+      "Price": 812
+    },
+    {
+      "Symbol": "4189",
+      "Price": 2625
+    },
+    {
+      "Symbol": "4202",
+      "Price": 938
+    },
+    {
+      "Symbol": "4203",
+      "Price": 4480
+    },
+    {
+      "Symbol": "4204",
+      "Price": 1811
+    },
+    {
+      "Symbol": "4205",
+      "Price": 1285
+    },
+    {
+      "Symbol": "4206",
+      "Price": 3030
+    },
+    {
+      "Symbol": "4208",
+      "Price": 2069
+    },
+    {
+      "Symbol": "4216",
+      "Price": 2835
+    },
+    {
+      "Symbol": "4218",
+      "Price": 1806
+    },
+    {
+      "Symbol": "4246",
+      "Price": 635
+    },
+    {
+      "Symbol": "4272",
+      "Price": 1193
+    },
+    {
+      "Symbol": "4307",
+      "Price": 2952
+    },
+    {
+      "Symbol": "4324",
+      "Price": 4360
+    },
+    {
+      "Symbol": "4337",
+      "Price": 3115
+    },
+    {
+      "Symbol": "4343",
+      "Price": 2845
+    },
+    {
+      "Symbol": "4344",
+      "Price": 234
+    },
+    {
+      "Symbol": "4348",
+      "Price": 2361
+    },
+    {
+      "Symbol": "4368",
+      "Price": 3645
+    },
+    {
+      "Symbol": "4369",
+      "Price": 2313
+    },
+    {
+      "Symbol": "4373",
+      "Price": 2360
+    },
+    {
+      "Symbol": "4382",
+      "Price": 1071
+    },
+    {
+      "Symbol": "4384",
+      "Price": 1354
+    },
+    {
+      "Symbol": "4385",
+      "Price": 2544
+    },
+    {
+      "Symbol": "4401",
+      "Price": 2128
+    },
+    {
+      "Symbol": "4403",
+      "Price": 5900
+    },
+    {
+      "Symbol": "4432",
+      "Price": 1819
+    },
+    {
+      "Symbol": "4443",
+      "Price": 1520
+    },
+    {
+      "Symbol": "4449",
+      "Price": 2566
+    },
+    {
+      "Symbol": "4452",
+      "Price": 5116
+    },
+    {
+      "Symbol": "4471",
+      "Price": 4280
+    },
+    {
+      "Symbol": "4480",
+      "Price": 4335
+    },
+    {
+      "Symbol": "4483",
+      "Price": 4280
+    },
+    {
+      "Symbol": "4502",
+      "Price": 4263
+    },
+    {
+      "Symbol": "4503",
+      "Price": 1886
+    },
+    {
+      "Symbol": "4506",
+      "Price": 868
+    },
+    {
+      "Symbol": "4507",
+      "Price": 6160
+    },
+    {
+      "Symbol": "4516",
+      "Price": 6310
+    },
+    {
+      "Symbol": "4519",
+      "Price": 3570
+    },
+    {
+      "Symbol": "4521",
+      "Price": 3640
+    },
+    {
+      "Symbol": "4523",
+      "Price": 7811
+    },
+    {
+      "Symbol": "4526",
+      "Price": 2034
+    },
+    {
+      "Symbol": "4527",
+      "Price": 2582
+    },
+    {
+      "Symbol": "4528",
+      "Price": 2851
+    },
+    {
+      "Symbol": "4530",
+      "Price": 3915
+    },
+    {
+      "Symbol": "4534",
+      "Price": 3420
+    },
+    {
+      "Symbol": "4536",
+      "Price": 1006
+    },
+    {
+      "Symbol": "4540",
+      "Price": 2630
+    },
+    {
+      "Symbol": "4543",
+      "Price": 3705
+    },
+    {
+      "Symbol": "4544",
+      "Price": 2687
+    },
+    {
+      "Symbol": "4547",
+      "Price": 2519
+    },
+    {
+      "Symbol": "4551",
+      "Price": 3255
+    },
+    {
+      "Symbol": "4552",
+      "Price": 1557
+    },
+    {
+      "Symbol": "4559",
+      "Price": 2197
+    },
+    {
+      "Symbol": "4568",
+      "Price": 4277
+    },
+    {
+      "Symbol": "4578",
+      "Price": 4164
+    },
+    {
+      "Symbol": "4581",
+      "Price": 5430
+    },
+    {
+      "Symbol": "4587",
+      "Price": 1875
+    },
+    {
+      "Symbol": "4612",
+      "Price": 1257
+    },
+    {
+      "Symbol": "4613",
+      "Price": 1845
+    },
+    {
+      "Symbol": "4626",
+      "Price": 2361
+    },
+    {
+      "Symbol": "4631",
+      "Price": 2429
+    },
+    {
+      "Symbol": "4634",
+      "Price": 1895
+    },
+    {
+      "Symbol": "4641",
+      "Price": 2398
+    },
+    {
+      "Symbol": "4661",
+      "Price": 21475
+    },
+    {
+      "Symbol": "4665",
+      "Price": 3120
+    },
+    {
+      "Symbol": "4666",
+      "Price": 2028
+    },
+    {
+      "Symbol": "4676",
+      "Price": 1112
+    },
+    {
+      "Symbol": "4680",
+      "Price": 480
+    },
+    {
+      "Symbol": "4681",
+      "Price": 2144
+    },
+    {
+      "Symbol": "4684",
+      "Price": 20070
+    },
+    {
+      "Symbol": "4686",
+      "Price": 3445
+    },
+    {
+      "Symbol": "4689",
+      "Price": 383
+    },
+    {
+      "Symbol": "4694",
+      "Price": 3165
+    },
+    {
+      "Symbol": "4704",
+      "Price": 6500
+    },
+    {
+      "Symbol": "4714",
+      "Price": 354
+    },
+    {
+      "Symbol": "4716",
+      "Price": 9350
+    },
+    {
+      "Symbol": "4726",
+      "Price": 1972
+    },
+    {
+      "Symbol": "4732",
+      "Price": 2232
+    },
+    {
+      "Symbol": "4733",
+      "Price": 4765
+    },
+    {
+      "Symbol": "4739",
+      "Price": 3060
+    },
+    {
+      "Symbol": "4745",
+      "Price": 531
+    },
+    {
+      "Symbol": "4751",
+      "Price": 1200
+    },
+    {
+      "Symbol": "4765",
+      "Price": 489
+    },
+    {
+      "Symbol": "4768",
+      "Price": 4585
+    },
+    {
+      "Symbol": "4776",
+      "Price": 2625
+    },
+    {
+      "Symbol": "4812",
+      "Price": 4890
+    },
+    {
+      "Symbol": "4819",
+      "Price": 4545
+    },
+    {
+      "Symbol": "4825",
+      "Price": 6780
+    },
+    {
+      "Symbol": "4848",
+      "Price": 2500
+    },
+    {
+      "Symbol": "4849",
+      "Price": 2409
+    },
+    {
+      "Symbol": "4887",
+      "Price": 3790
+    },
+    {
+      "Symbol": "4901",
+      "Price": 6419
+    },
+    {
+      "Symbol": "4902",
+      "Price": 602
+    },
+    {
+      "Symbol": "4911",
+      "Price": 6153
+    },
+    {
+      "Symbol": "4912",
+      "Price": 1476
+    },
+    {
+      "Symbol": "4917",
+      "Price": 1434
+    },
+    {
+      "Symbol": "4919",
+      "Price": 5820
+    },
+    {
+      "Symbol": "4921",
+      "Price": 2561
+    },
+    {
+      "Symbol": "4922",
+      "Price": 15730
+    },
+    {
+      "Symbol": "4927",
+      "Price": 1760
+    },
+    {
+      "Symbol": "4928",
+      "Price": 5560
+    },
+    {
+      "Symbol": "4956",
+      "Price": 1777
+    },
+    {
+      "Symbol": "4958",
+      "Price": 2935
+    },
+    {
+      "Symbol": "4967",
+      "Price": 8320
+    },
+    {
+      "Symbol": "4971",
+      "Price": 2219
+    },
+    {
+      "Symbol": "4975",
+      "Price": 3065
+    },
+    {
+      "Symbol": "4980",
+      "Price": 2708
+    },
+    {
+      "Symbol": "4985",
+      "Price": 4860
+    },
+    {
+      "Symbol": "5017",
+      "Price": 252
+    },
+    {
+      "Symbol": "5019",
+      "Price": 3075
+    },
+    {
+      "Symbol": "5020",
+      "Price": 462.6
+    },
+    {
+      "Symbol": "5021",
+      "Price": 3910
+    },
+    {
+      "Symbol": "5076",
+      "Price": 1037
+    },
+    {
+      "Symbol": "5101",
+      "Price": 2441
+    },
+    {
+      "Symbol": "5105",
+      "Price": 1599
+    },
+    {
+      "Symbol": "5108",
+      "Price": 5222
+    },
+    {
+      "Symbol": "5110",
+      "Price": 1230
+    },
+    {
+      "Symbol": "5122",
+      "Price": 3910
+    },
+    {
+      "Symbol": "5192",
+      "Price": 3870
+    },
+    {
+      "Symbol": "5201",
+      "Price": 4980
+    },
+    {
+      "Symbol": "5208",
+      "Price": 1400
+    },
+    {
+      "Symbol": "5214",
+      "Price": 2489
+    },
+    {
+      "Symbol": "5232",
+      "Price": 3830
+    },
+    {
+      "Symbol": "5233",
+      "Price": 2460
+    },
+    {
+      "Symbol": "5273",
+      "Price": 4395
+    },
+    {
+      "Symbol": "5288",
+      "Price": 635
+    },
+    {
+      "Symbol": "5301",
+      "Price": 1298
+    },
+    {
+      "Symbol": "5302",
+      "Price": 4160
+    },
+    {
+      "Symbol": "5310",
+      "Price": 4270
+    },
+    {
+      "Symbol": "5331",
+      "Price": 4470
+    },
+    {
+      "Symbol": "5332",
+      "Price": 4570
+    },
+    {
+      "Symbol": "5333",
+      "Price": 1794
+    },
+    {
+      "Symbol": "5334",
+      "Price": 2736
+    },
+    {
+      "Symbol": "5344",
+      "Price": 17360
+    },
+    {
+      "Symbol": "5351",
+      "Price": 4300
+    },
+    {
+      "Symbol": "5352",
+      "Price": 6590
+    },
+    {
+      "Symbol": "5384",
+      "Price": 6360
+    },
+    {
+      "Symbol": "5393",
+      "Price": 2589
+    },
+    {
+      "Symbol": "5401",
+      "Price": 3097
+    },
+    {
+      "Symbol": "5406",
+      "Price": 890
+    },
+    {
+      "Symbol": "5408",
+      "Price": 1069
+    },
+    {
+      "Symbol": "5410",
+      "Price": 3415
+    },
+    {
+      "Symbol": "5411",
+      "Price": 1745
+    },
+    {
+      "Symbol": "5423",
+      "Price": 1494
+    },
+    {
+      "Symbol": "5444",
+      "Price": 5270
+    },
+    {
+      "Symbol": "5451",
+      "Price": 2639
+    },
+    {
+      "Symbol": "5463",
+      "Price": 2823
+    },
+    {
+      "Symbol": "5471",
+      "Price": 5310
+    },
+    {
+      "Symbol": "5480",
+      "Price": 4485
+    },
+    {
+      "Symbol": "5481",
+      "Price": 2658
+    },
+    {
+      "Symbol": "5482",
+      "Price": 2320
+    },
+    {
+      "Symbol": "5563",
+      "Price": 374
+    },
+    {
+      "Symbol": "5602",
+      "Price": 2019
+    },
+    {
+      "Symbol": "5631",
+      "Price": 2625
+    },
+    {
+      "Symbol": "5659",
+      "Price": 4635
+    },
+    {
+      "Symbol": "5703",
+      "Price": 1448
+    },
+    {
+      "Symbol": "5706",
+      "Price": 3385
+    },
+    {
+      "Symbol": "5711",
+      "Price": 2142
+    },
+    {
+      "Symbol": "5713",
+      "Price": 5203
+    },
+    {
+      "Symbol": "5714",
+      "Price": 4515
+    },
+    {
+      "Symbol": "5726",
+      "Price": 3065
+    },
+    {
+      "Symbol": "5727",
+      "Price": 2129
+    },
+    {
+      "Symbol": "5741",
+      "Price": 2508
+    },
+    {
+      "Symbol": "5801",
+      "Price": 2427
+    },
+    {
+      "Symbol": "5802",
+      "Price": 1669
+    },
+    {
+      "Symbol": "5803",
+      "Price": 966
+    },
+    {
+      "Symbol": "5830",
+      "Price": 811
+    },
+    {
+      "Symbol": "5831",
+      "Price": 1109
+    },
+    {
+      "Symbol": "5832",
+      "Price": 966
+    },
+    {
+      "Symbol": "5857",
+      "Price": 1972
+    },
+    {
+      "Symbol": "5901",
+      "Price": 1738
+    },
+    {
+      "Symbol": "5911",
+      "Price": 2029
+    },
+    {
+      "Symbol": "5929",
+      "Price": 1418
+    },
+    {
+      "Symbol": "5938",
+      "Price": 2138
+    },
+    {
+      "Symbol": "5947",
+      "Price": 9690
+    },
+    {
+      "Symbol": "5970",
+      "Price": 1399
+    },
+    {
+      "Symbol": "5986",
+      "Price": 331
+    },
+    {
+      "Symbol": "5988",
+      "Price": 1929
+    },
+    {
+      "Symbol": "5991",
+      "Price": 898
+    },
+    {
+      "Symbol": "6005",
+      "Price": 3340
+    },
+    {
+      "Symbol": "6028",
+      "Price": 3470
+    },
+    {
+      "Symbol": "6035",
+      "Price": 1989
+    },
+    {
+      "Symbol": "6036",
+      "Price": 3565
+    },
+    {
+      "Symbol": "6050",
+      "Price": 2381
+    },
+    {
+      "Symbol": "6055",
+      "Price": 2363
+    },
+    {
+      "Symbol": "6058",
+      "Price": 1360
+    },
+    {
+      "Symbol": "6062",
+      "Price": 1109
+    },
+    {
+      "Symbol": "6080",
+      "Price": 4535
+    },
+    {
+      "Symbol": "6095",
+      "Price": 1369
+    },
+    {
+      "Symbol": "6098",
+      "Price": 3809
+    },
+    {
+      "Symbol": "6103",
+      "Price": 5240
+    },
+    {
+      "Symbol": "6104",
+      "Price": 2899
+    },
+    {
+      "Symbol": "6113",
+      "Price": 1199
+    },
+    {
+      "Symbol": "6134",
+      "Price": 2055
+    },
+    {
+      "Symbol": "6136",
+      "Price": 1928
+    },
+    {
+      "Symbol": "6141",
+      "Price": 2154
+    },
+    {
+      "Symbol": "6146",
+      "Price": 40000
+    },
+    {
+      "Symbol": "6167",
+      "Price": 585
+    },
+    {
+      "Symbol": "6178",
+      "Price": 1219
+    },
+    {
+      "Symbol": "6191",
+      "Price": 2551
+    },
+    {
+      "Symbol": "6196",
+      "Price": 4080
+    },
+    {
+      "Symbol": "6200",
+      "Price": 1309
+    },
+    {
+      "Symbol": "6201",
+      "Price": 7730
+    },
+    {
+      "Symbol": "6235",
+      "Price": 2100
+    },
+    {
+      "Symbol": "6240",
+      "Price": 405
+    },
+    {
+      "Symbol": "6254",
+      "Price": 4375
+    },
+    {
+      "Symbol": "6258",
+      "Price": 6470
+    },
+    {
+      "Symbol": "6262",
+      "Price": 672
+    },
+    {
+      "Symbol": "6268",
+      "Price": 3525
+    },
+    {
+      "Symbol": "6273",
+      "Price": 66940
+    },
+    {
+      "Symbol": "6277",
+      "Price": 2630
+    },
+    {
+      "Symbol": "6278",
+      "Price": 3235
+    },
+    {
+      "Symbol": "6284",
+      "Price": 4340
+    },
+    {
+      "Symbol": "6287",
+      "Price": 2309
+    },
+    {
+      "Symbol": "6289",
+      "Price": 2802
+    },
+    {
+      "Symbol": "6298",
+      "Price": 2300
+    },
+    {
+      "Symbol": "6301",
+      "Price": 3307
+    },
+    {
+      "Symbol": "6302",
+      "Price": 2946
+    },
+    {
+      "Symbol": "6305",
+      "Price": 3115
+    },
+    {
+      "Symbol": "6315",
+      "Price": 1831
+    },
+    {
+      "Symbol": "6323",
+      "Price": 10270
+    },
+    {
+      "Symbol": "6326",
+      "Price": 2086
+    },
+    {
+      "Symbol": "6356",
+      "Price": 487
+    },
+    {
+      "Symbol": "6358",
+      "Price": 3790
+    },
+    {
+      "Symbol": "6361",
+      "Price": 5590
+    },
+    {
+      "Symbol": "6367",
+      "Price": 23350
+    },
+    {
+      "Symbol": "6368",
+      "Price": 3380
+    },
+    {
+      "Symbol": "6369",
+      "Price": 2638
+    },
+    {
+      "Symbol": "6370",
+      "Price": 6030
+    },
+    {
+      "Symbol": "6371",
+      "Price": 3095
+    },
+    {
+      "Symbol": "6383",
+      "Price": 7240
+    },
+    {
+      "Symbol": "6387",
+      "Price": 3485
+    },
+    {
+      "Symbol": "6395",
+      "Price": 1003
+    },
+    {
+      "Symbol": "6406",
+      "Price": 3215
+    },
+    {
+      "Symbol": "6407",
+      "Price": 2011
+    },
+    {
+      "Symbol": "6412",
+      "Price": 2474
+    },
+    {
+      "Symbol": "6417",
+      "Price": 5570
+    },
+    {
+      "Symbol": "6418",
+      "Price": 1252
+    },
+    {
+      "Symbol": "6419",
+      "Price": 2481
+    },
+    {
+      "Symbol": "6420",
+      "Price": 4270
+    },
+    {
+      "Symbol": "6430",
+      "Price": 2676
+    },
+    {
+      "Symbol": "6432",
+      "Price": 2966
+    },
+    {
+      "Symbol": "6436",
+      "Price": 2492
+    },
+    {
+      "Symbol": "6448",
+      "Price": 2011
+    },
+    {
+      "Symbol": "6454",
+      "Price": 2143
+    },
+    {
+      "Symbol": "6457",
+      "Price": 2671
+    },
+    {
+      "Symbol": "6460",
+      "Price": 2348
+    },
+    {
+      "Symbol": "6463",
+      "Price": 1370
+    },
+    {
+      "Symbol": "6464",
+      "Price": 1087
+    },
+    {
+      "Symbol": "6465",
+      "Price": 4700
+    },
+    {
+      "Symbol": "6471",
+      "Price": 746
+    },
+    {
+      "Symbol": "6472",
+      "Price": 338
+    },
+    {
+      "Symbol": "6473",
+      "Price": 1018
+    },
+    {
+      "Symbol": "6474",
+      "Price": 3860
+    },
+    {
+      "Symbol": "6479",
+      "Price": 2381
+    },
+    {
+      "Symbol": "6481",
+      "Price": 2868
+    },
+    {
+      "Symbol": "6490",
+      "Price": 3340
+    },
+    {
+      "Symbol": "6501",
+      "Price": 7050
+    },
+    {
+      "Symbol": "6503",
+      "Price": 1549
+    },
+    {
+      "Symbol": "6504",
+      "Price": 5230
+    },
+    {
+      "Symbol": "6506",
+      "Price": 5150
+    },
+    {
+      "Symbol": "6516",
+      "Price": 5640
+    },
+    {
+      "Symbol": "6526",
+      "Price": 8290
+    },
+    {
+      "Symbol": "6532",
+      "Price": 5590
+    },
+    {
+      "Symbol": "6544",
+      "Price": 2005
+    },
+    {
+      "Symbol": "6586",
+      "Price": 3480
+    },
+    {
+      "Symbol": "6588",
+      "Price": 3860
+    },
+    {
+      "Symbol": "6590",
+      "Price": 13330
+    },
+    {
+      "Symbol": "6592",
+      "Price": 3750
+    },
+    {
+      "Symbol": "6594",
+      "Price": 6932
+    },
+    {
+      "Symbol": "6616",
+      "Price": 2520
+    },
+    {
+      "Symbol": "6617",
+      "Price": 2026
+    },
+    {
+      "Symbol": "6619",
+      "Price": 1320
+    },
+    {
+      "Symbol": "6622",
+      "Price": 4245
+    },
+    {
+      "Symbol": "6630",
+      "Price": 1452
+    },
+    {
+      "Symbol": "6632",
+      "Price": 385
+    },
+    {
+      "Symbol": "6645",
+      "Price": 7239
+    },
+    {
+      "Symbol": "6651",
+      "Price": 2648
+    },
+    {
+      "Symbol": "6652",
+      "Price": 3275
+    },
+    {
+      "Symbol": "6674",
+      "Price": 2479
+    },
+    {
+      "Symbol": "6676",
+      "Price": 3360
+    },
+    {
+      "Symbol": "6701",
+      "Price": 4780
+    },
+    {
+      "Symbol": "6702",
+      "Price": 17510
+    },
+    {
+      "Symbol": "6706",
+      "Price": 2166
+    },
+    {
+      "Symbol": "6707",
+      "Price": 8830
+    },
+    {
+      "Symbol": "6723",
+      "Price": 1710
+    },
+    {
+      "Symbol": "6724",
+      "Price": 1873
+    },
+    {
+      "Symbol": "6728",
+      "Price": 5270
+    },
+    {
+      "Symbol": "6730",
+      "Price": 1767
+    },
+    {
+      "Symbol": "6737",
+      "Price": 3700
+    },
+    {
+      "Symbol": "6740",
+      "Price": 42
+    },
+    {
+      "Symbol": "6752",
+      "Price": 1180
+    },
+    {
+      "Symbol": "6753",
+      "Price": 977
+    },
+    {
+      "Symbol": "6754",
+      "Price": 1257
+    },
+    {
+      "Symbol": "6755",
+      "Price": 3760
+    },
+    {
+      "Symbol": "6758",
+      "Price": 11440
+    },
+    {
+      "Symbol": "6762",
+      "Price": 4550
+    },
+    {
+      "Symbol": "6768",
+      "Price": 754
+    },
+    {
+      "Symbol": "6770",
+      "Price": 1425
+    },
+    {
+      "Symbol": "6779",
+      "Price": 1422
+    },
+    {
+      "Symbol": "6787",
+      "Price": 2752
+    },
+    {
+      "Symbol": "6789",
+      "Price": 3115
+    },
+    {
+      "Symbol": "6800",
+      "Price": 2002
+    },
+    {
+      "Symbol": "6806",
+      "Price": 16950
+    },
+    {
+      "Symbol": "6807",
+      "Price": 2268
+    },
+    {
+      "Symbol": "6841",
+      "Price": 2071
+    },
+    {
+      "Symbol": "6844",
+      "Price": 3480
+    },
+    {
+      "Symbol": "6845",
+      "Price": 3610
+    },
+    {
+      "Symbol": "6849",
+      "Price": 3375
+    },
+    {
+      "Symbol": "6856",
+      "Price": 7000
+    },
+    {
+      "Symbol": "6857",
+      "Price": 10070
+    },
+    {
+      "Symbol": "6859",
+      "Price": 2029
+    },
+    {
+      "Symbol": "6861",
+      "Price": 58250
+    },
+    {
+      "Symbol": "6866",
+      "Price": 7930
+    },
+    {
+      "Symbol": "6869",
+      "Price": 8302
+    },
+    {
+      "Symbol": "6875",
+      "Price": 2836
+    },
+    {
+      "Symbol": "6877",
+      "Price": 3840
+    },
+    {
+      "Symbol": "6902",
+      "Price": 7386
+    },
+    {
+      "Symbol": "6904",
+      "Price": 866
+    },
+    {
+      "Symbol": "6908",
+      "Price": 4685
+    },
+    {
+      "Symbol": "6914",
+      "Price": 2067
+    },
+    {
+      "Symbol": "6920",
+      "Price": 22555
+    },
+    {
+      "Symbol": "6923",
+      "Price": 2834
+    },
+    {
+      "Symbol": "6925",
+      "Price": 1593
+    },
+    {
+      "Symbol": "6927",
+      "Price": 401
+    },
+    {
+      "Symbol": "6929",
+      "Price": 2696
+    },
+    {
+      "Symbol": "6941",
+      "Price": 1793
+    },
+    {
+      "Symbol": "6951",
+      "Price": 4015
+    },
+    {
+      "Symbol": "6952",
+      "Price": 1352
+    },
+    {
+      "Symbol": "6954",
+      "Price": 22700
+    },
+    {
+      "Symbol": "6961",
+      "Price": 3955
+    },
+    {
+      "Symbol": "6963",
+      "Price": 10500
+    },
+    {
+      "Symbol": "6965",
+      "Price": 6660
+    },
+    {
+      "Symbol": "6966",
+      "Price": 6960
+    },
+    {
+      "Symbol": "6967",
+      "Price": 3800
+    },
+    {
+      "Symbol": "6971",
+      "Price": 6689
+    },
+    {
+      "Symbol": "6976",
+      "Price": 4185
+    },
+    {
+      "Symbol": "6981",
+      "Price": 7403
+    },
+    {
+      "Symbol": "6988",
+      "Price": 8390
+    },
+    {
+      "Symbol": "6996",
+      "Price": 1314
+    },
+    {
+      "Symbol": "6997",
+      "Price": 2115
+    },
+    {
+      "Symbol": "6999",
+      "Price": 1856
+    },
+    {
+      "Symbol": "7004",
+      "Price": 896
+    },
+    {
+      "Symbol": "7011",
+      "Price": 5046
+    },
+    {
+      "Symbol": "7012",
+      "Price": 3025
+    },
+    {
+      "Symbol": "7013",
+      "Price": 3630
+    },
+    {
+      "Symbol": "7014",
+      "Price": 385
+    },
+    {
+      "Symbol": "7033",
+      "Price": 3690
+    },
+    {
+      "Symbol": "7128",
+      "Price": 2955
+    },
+    {
+      "Symbol": "7148",
+      "Price": 1217
+    },
+    {
+      "Symbol": "7164",
+      "Price": 5290
+    },
+    {
+      "Symbol": "7167",
+      "Price": 369
+    },
+    {
+      "Symbol": "7173",
+      "Price": 3010
+    },
+    {
+      "Symbol": "7180",
+      "Price": 511
+    },
+    {
+      "Symbol": "7181",
+      "Price": 2411
+    },
+    {
+      "Symbol": "7182",
+      "Price": 1208
+    },
+    {
+      "Symbol": "7184",
+      "Price": 654
+    },
+    {
+      "Symbol": "7186",
+      "Price": 572
+    },
+    {
+      "Symbol": "7187",
+      "Price": 2380
+    },
+    {
+      "Symbol": "7201",
+      "Price": 524.2
+    },
+    {
+      "Symbol": "7202",
+      "Price": 1641
+    },
+    {
+      "Symbol": "7203",
+      "Price": 1902
+    },
+    {
+      "Symbol": "7205",
+      "Price": 572
+    },
+    {
+      "Symbol": "7211",
+      "Price": 532
+    },
+    {
+      "Symbol": "7239",
+      "Price": 1251
+    },
+    {
+      "Symbol": "7240",
+      "Price": 1282
+    },
+    {
+      "Symbol": "7242",
+      "Price": 3635
+    },
+    {
+      "Symbol": "7246",
+      "Price": 457
+    },
+    {
+      "Symbol": "7256",
+      "Price": 201
+    },
+    {
+      "Symbol": "7259",
+      "Price": 3760
+    },
+    {
+      "Symbol": "7261",
+      "Price": 1170
+    },
+    {
+      "Symbol": "7267",
+      "Price": 3460
+    },
+    {
+      "Symbol": "7269",
+      "Price": 4777
+    },
+    {
+      "Symbol": "7270",
+      "Price": 2198
+    },
+    {
+      "Symbol": "7271",
+      "Price": 686
+    },
+    {
+      "Symbol": "7272",
+      "Price": 3375
+    },
+    {
+      "Symbol": "7276",
+      "Price": 2287
+    },
+    {
+      "Symbol": "7278",
+      "Price": 1800
+    },
+    {
+      "Symbol": "7282",
+      "Price": 2167
+    },
+    {
+      "Symbol": "7294",
+      "Price": 753
+    },
+    {
+      "Symbol": "7309",
+      "Price": 21900
+    },
+    {
+      "Symbol": "7313",
+      "Price": 1732
+    },
+    {
+      "Symbol": "7327",
+      "Price": 3225
+    },
+    {
+      "Symbol": "7337",
+      "Price": 693
+    },
+    {
+      "Symbol": "7380",
+      "Price": 3190
+    },
+    {
+      "Symbol": "7381",
+      "Price": 4330
+    },
+    {
+      "Symbol": "7420",
+      "Price": 1633
+    },
+    {
+      "Symbol": "7421",
+      "Price": 1429
+    },
+    {
+      "Symbol": "7433",
+      "Price": 4840
+    },
+    {
+      "Symbol": "7447",
+      "Price": 1971
+    },
+    {
+      "Symbol": "7451",
+      "Price": 3290
+    },
+    {
+      "Symbol": "7453",
+      "Price": 1404
+    },
+    {
+      "Symbol": "7456",
+      "Price": 2270
+    },
+    {
+      "Symbol": "7458",
+      "Price": 4250
+    },
+    {
+      "Symbol": "7459",
+      "Price": 1750
+    },
+    {
+      "Symbol": "7476",
+      "Price": 5710
+    },
+    {
+      "Symbol": "7483",
+      "Price": 1769
+    },
+    {
+      "Symbol": "7494",
+      "Price": 357
+    },
+    {
+      "Symbol": "7512",
+      "Price": 891
+    },
+    {
+      "Symbol": "7513",
+      "Price": 559
+    },
+    {
+      "Symbol": "7516",
+      "Price": 3360
+    },
+    {
+      "Symbol": "7518",
+      "Price": 3285
+    },
+    {
+      "Symbol": "7532",
+      "Price": 2584
+    },
+    {
+      "Symbol": "7537",
+      "Price": 1323
+    },
+    {
+      "Symbol": "7545",
+      "Price": 1565
+    },
+    {
+      "Symbol": "7550",
+      "Price": 3810
+    },
+    {
+      "Symbol": "7552",
+      "Price": 1858
+    },
+    {
+      "Symbol": "7581",
+      "Price": 3055
+    },
+    {
+      "Symbol": "7595",
+      "Price": 3825
+    },
+    {
+      "Symbol": "7601",
+      "Price": 138
+    },
+    {
+      "Symbol": "7606",
+      "Price": 1741
+    },
+    {
+      "Symbol": "7611",
+      "Price": 2057
+    },
+    {
+      "Symbol": "7616",
+      "Price": 1875
+    },
+    {
+      "Symbol": "7630",
+      "Price": 4690
+    },
+    {
+      "Symbol": "7649",
+      "Price": 5730
+    },
+    {
+      "Symbol": "7701",
+      "Price": 3855
+    },
+    {
+      "Symbol": "7717",
+      "Price": 2519
+    },
+    {
+      "Symbol": "7727",
+      "Price": 468
+    },
+    {
+      "Symbol": "7729",
+      "Price": 4785
+    },
+    {
+      "Symbol": "7730",
+      "Price": 1862
+    },
+    {
+      "Symbol": "7731",
+      "Price": 1294
+    },
+    {
+      "Symbol": "7732",
+      "Price": 1698
+    },
+    {
+      "Symbol": "7733",
+      "Price": 2295
+    },
+    {
+      "Symbol": "7734",
+      "Price": 4955
+    },
+    {
+      "Symbol": "7735",
+      "Price": 10330
+    },
+    {
+      "Symbol": "7740",
+      "Price": 3165
+    },
+    {
+      "Symbol": "7741",
+      "Price": 13410
+    },
+    {
+      "Symbol": "7744",
+      "Price": 2130
+    },
+    {
+      "Symbol": "7747",
+      "Price": 2356
+    },
+    {
+      "Symbol": "7751",
+      "Price": 2960
+    },
+    {
+      "Symbol": "7752",
+      "Price": 1066
+    },
+    {
+      "Symbol": "7762",
+      "Price": 835
+    },
+    {
+      "Symbol": "7780",
+      "Price": 2951
+    },
+    {
+      "Symbol": "7817",
+      "Price": 2404
+    },
+    {
+      "Symbol": "7821",
+      "Price": 3350
+    },
+    {
+      "Symbol": "7832",
+      "Price": 8575
+    },
+    {
+      "Symbol": "7839",
+      "Price": 5150
+    },
+    {
+      "Symbol": "7846",
+      "Price": 4420
+    },
+    {
+      "Symbol": "7867",
+      "Price": 1301
+    },
+    {
+      "Symbol": "7868",
+      "Price": 2362
+    },
+    {
+      "Symbol": "7874",
+      "Price": 933
+    },
+    {
+      "Symbol": "7888",
+      "Price": 546
+    },
+    {
+      "Symbol": "7905",
+      "Price": 2127
+    },
+    {
+      "Symbol": "7911",
+      "Price": 2402
+    },
+    {
+      "Symbol": "7912",
+      "Price": 3640
+    },
+    {
+      "Symbol": "7917",
+      "Price": 3075
+    },
+    {
+      "Symbol": "7921",
+      "Price": 2175
+    },
+    {
+      "Symbol": "7936",
+      "Price": 3270
+    },
+    {
+      "Symbol": "7942",
+      "Price": 1590
+    },
+    {
+      "Symbol": "7943",
+      "Price": 2648
+    },
+    {
+      "Symbol": "7944",
+      "Price": 3895
+    },
+    {
+      "Symbol": "7947",
+      "Price": 3605
+    },
+    {
+      "Symbol": "7951",
+      "Price": 4955
+    },
+    {
+      "Symbol": "7956",
+      "Price": 2200
+    },
+    {
+      "Symbol": "7966",
+      "Price": 2196
+    },
+    {
+      "Symbol": "7970",
+      "Price": 1349
+    },
+    {
+      "Symbol": "7974",
+      "Price": 5464
+    },
+    {
+      "Symbol": "7984",
+      "Price": 1849
+    },
+    {
+      "Symbol": "7988",
+      "Price": 3460
+    },
+    {
+      "Symbol": "7990",
+      "Price": 2609
+    },
+    {
+      "Symbol": "7995",
+      "Price": 3240
+    },
+    {
+      "Symbol": "8001",
+      "Price": 4108
+    },
+    {
+      "Symbol": "8002",
+      "Price": 1758
+    },
+    {
+      "Symbol": "8005",
+      "Price": 785
+    },
+    {
+      "Symbol": "8008",
+      "Price": 1795
+    },
+    {
+      "Symbol": "8012",
+      "Price": 2044
+    },
+    {
+      "Symbol": "8014",
+      "Price": 2509
+    },
+    {
+      "Symbol": "8015",
+      "Price": 5580
+    },
+    {
+      "Symbol": "8016",
+      "Price": 337
+    },
+    {
+      "Symbol": "8020",
+      "Price": 1591
+    },
+    {
+      "Symbol": "8022",
+      "Price": 3030
+    },
+    {
+      "Symbol": "8031",
+      "Price": 3908
+    },
+    {
+      "Symbol": "8032",
+      "Price": 5150
+    },
+    {
+      "Symbol": "8035",
+      "Price": 45480
+    },
+    {
+      "Symbol": "8050",
+      "Price": 2926
+    },
+    {
+      "Symbol": "8053",
+      "Price": 2361
+    },
+    {
+      "Symbol": "8056",
+      "Price": 2921
+    },
+    {
+      "Symbol": "8057",
+      "Price": 4700
+    },
+    {
+      "Symbol": "8058",
+      "Price": 4675
+    },
+    {
+      "Symbol": "8059",
+      "Price": 5200
+    },
+    {
+      "Symbol": "8060",
+      "Price": 3090
+    },
+    {
+      "Symbol": "8068",
+      "Price": 2436
+    },
+    {
+      "Symbol": "8074",
+      "Price": 3635
+    },
+    {
+      "Symbol": "8075",
+      "Price": 5820
+    },
+    {
+      "Symbol": "8078",
+      "Price": 3970
+    },
+    {
+      "Symbol": "8079",
+      "Price": 4165
+    },
+    {
+      "Symbol": "8084",
+      "Price": 1866
+    },
+    {
+      "Symbol": "8086",
+      "Price": 1086
+    },
+    {
+      "Symbol": "8088",
+      "Price": 5660
+    },
+    {
+      "Symbol": "8093",
+      "Price": 1446
+    },
+    {
+      "Symbol": "8095",
+      "Price": 426
+    },
+    {
+      "Symbol": "8098",
+      "Price": 2610
+    },
+    {
+      "Symbol": "8101",
+      "Price": 1562
+    },
+    {
+      "Symbol": "8111",
+      "Price": 11350
+    },
+    {
+      "Symbol": "8113",
+      "Price": 5059
+    },
+    {
+      "Symbol": "8114",
+      "Price": 3925
+    },
+    {
+      "Symbol": "8129",
+      "Price": 2151
+    },
+    {
+      "Symbol": "8130",
+      "Price": 2383
+    },
+    {
+      "Symbol": "8136",
+      "Price": 4080
+    },
+    {
+      "Symbol": "8140",
+      "Price": 3075
+    },
+    {
+      "Symbol": "8153",
+      "Price": 3080
+    },
+    {
+      "Symbol": "8154",
+      "Price": 4670
+    },
+    {
+      "Symbol": "8155",
+      "Price": 2513
+    },
+    {
+      "Symbol": "8159",
+      "Price": 1873
+    },
+    {
+      "Symbol": "8160",
+      "Price": 2191
+    },
+    {
+      "Symbol": "8173",
+      "Price": 1991
+    },
+    {
+      "Symbol": "8174",
+      "Price": 1879
+    },
+    {
+      "Symbol": "8179",
+      "Price": 2560
+    },
+    {
+      "Symbol": "8194",
+      "Price": 2796
+    },
+    {
+      "Symbol": "8200",
+      "Price": 2251
+    },
+    {
+      "Symbol": "8214",
+      "Price": 785
+    },
+    {
+      "Symbol": "8218",
+      "Price": 2650
+    },
+    {
+      "Symbol": "8227",
+      "Price": 12930
+    },
+    {
+      "Symbol": "8233",
+      "Price": 1904
+    },
+    {
+      "Symbol": "8242",
+      "Price": 1359
+    },
+    {
+      "Symbol": "8252",
+      "Price": 2066
+    },
+    {
+      "Symbol": "8253",
+      "Price": 1824
+    },
+    {
+      "Symbol": "8255",
+      "Price": 3545
+    },
+    {
+      "Symbol": "8267",
+      "Price": 2613
+    },
+    {
+      "Symbol": "8273",
+      "Price": 2995
+    },
+    {
+      "Symbol": "8276",
+      "Price": 2177
+    },
+    {
+      "Symbol": "8278",
+      "Price": 1827
+    },
+    {
+      "Symbol": "8279",
+      "Price": 6840
+    },
+    {
+      "Symbol": "8281",
+      "Price": 979
+    },
+    {
+      "Symbol": "8282",
+      "Price": 1182
+    },
+    {
+      "Symbol": "8303",
+      "Price": 2436
+    },
+    {
+      "Symbol": "8304",
+      "Price": 2651
+    },
+    {
+      "Symbol": "8306",
+      "Price": 998.3
+    },
+    {
+      "Symbol": "8308",
+      "Price": 753.9
+    },
+    {
+      "Symbol": "8309",
+      "Price": 4961
+    },
+    {
+      "Symbol": "8316",
+      "Price": 6000
+    },
+    {
+      "Symbol": "8331",
+      "Price": 990
+    },
+    {
+      "Symbol": "8334",
+      "Price": 507
+    },
+    {
+      "Symbol": "8336",
+      "Price": 2497
+    },
+    {
+      "Symbol": "8341",
+      "Price": 2413
+    },
+    {
+      "Symbol": "8345",
+      "Price": 2437
+    },
+    {
+      "Symbol": "8354",
+      "Price": 3095
+    },
+    {
+      "Symbol": "8359",
+      "Price": 604
+    },
+    {
+      "Symbol": "8366",
+      "Price": 2908
+    },
+    {
+      "Symbol": "8367",
+      "Price": 2673
+    },
+    {
+      "Symbol": "8369",
+      "Price": 6430
+    },
+    {
+      "Symbol": "8377",
+      "Price": 1056
+    },
+    {
+      "Symbol": "8388",
+      "Price": 2236
+    },
+    {
+      "Symbol": "8392",
+      "Price": 2260
+    },
+    {
+      "Symbol": "8393",
+      "Price": 2783
+    },
+    {
+      "Symbol": "8410",
+      "Price": 269
+    },
+    {
+      "Symbol": "8411",
+      "Price": 2145
+    },
+    {
+      "Symbol": "8418",
+      "Price": 922
+    },
+    {
+      "Symbol": "8424",
+      "Price": 9090
+    },
+    {
+      "Symbol": "8425",
+      "Price": 3585
+    },
+    {
+      "Symbol": "8439",
+      "Price": 4630
+    },
+    {
+      "Symbol": "8473",
+      "Price": 2960
+    },
+    {
+      "Symbol": "8522",
+      "Price": 3620
+    },
+    {
+      "Symbol": "8566",
+      "Price": 3955
+    },
+    {
+      "Symbol": "8570",
+      "Price": 1332
+    },
+    {
+      "Symbol": "8572",
+      "Price": 327
+    },
+    {
+      "Symbol": "8584",
+      "Price": 4290
+    },
+    {
+      "Symbol": "8591",
+      "Price": 2426
+    },
+    {
+      "Symbol": "8593",
+      "Price": 695
+    },
+    {
+      "Symbol": "8595",
+      "Price": 2121
+    },
+    {
+      "Symbol": "8601",
+      "Price": 644
+    },
+    {
+      "Symbol": "8609",
+      "Price": 447
+    },
+    {
+      "Symbol": "8613",
+      "Price": 440
+    },
+    {
+      "Symbol": "8616",
+      "Price": 389
+    },
+    {
+      "Symbol": "8622",
+      "Price": 303
+    },
+    {
+      "Symbol": "8630",
+      "Price": 5796
+    },
+    {
+      "Symbol": "8697",
+      "Price": 1966
+    },
+    {
+      "Symbol": "8698",
+      "Price": 529
+    },
+    {
+      "Symbol": "8714",
+      "Price": 255
+    },
+    {
+      "Symbol": "8725",
+      "Price": 4457
+    },
+    {
+      "Symbol": "8750",
+      "Price": 2964
+    },
+    {
+      "Symbol": "8766",
+      "Price": 2866
+    },
+    {
+      "Symbol": "8771",
+      "Price": 2275
+    },
+    {
+      "Symbol": "8793",
+      "Price": 2580
+    },
+    {
+      "Symbol": "8795",
+      "Price": 2165
+    },
+    {
+      "Symbol": "8801",
+      "Price": 2485
+    },
+    {
+      "Symbol": "8802",
+      "Price": 1638
+    },
+    {
+      "Symbol": "8803",
+      "Price": 3595
+    },
+    {
+      "Symbol": "8804",
+      "Price": 1593
+    },
+    {
+      "Symbol": "8830",
+      "Price": 3100
+    },
+    {
+      "Symbol": "8848",
+      "Price": 325
+    },
+    {
+      "Symbol": "8850",
+      "Price": 2562
+    },
+    {
+      "Symbol": "8876",
+      "Price": 2168
+    },
+    {
+      "Symbol": "8877",
+      "Price": 2097
+    },
+    {
+      "Symbol": "8897",
+      "Price": 361
+    },
+    {
+      "Symbol": "8905",
+      "Price": 1810
+    },
+    {
+      "Symbol": "8919",
+      "Price": 2694
+    },
+    {
+      "Symbol": "9001",
+      "Price": 3005
+    },
+    {
+      "Symbol": "9003",
+      "Price": 2293
+    },
+    {
+      "Symbol": "9005",
+      "Price": 1631
+    },
+    {
+      "Symbol": "9006",
+      "Price": 1272
+    },
+    {
+      "Symbol": "9007",
+      "Price": 1639
+    },
+    {
+      "Symbol": "9008",
+      "Price": 4700
+    },
+    {
+      "Symbol": "9009",
+      "Price": 3870
+    },
+    {
+      "Symbol": "9010",
+      "Price": 4185
+    },
+    {
+      "Symbol": "9020",
+      "Price": 6905
+    },
+    {
+      "Symbol": "9021",
+      "Price": 5280
+    },
+    {
+      "Symbol": "9022",
+      "Price": 15300
+    },
+    {
+      "Symbol": "9024",
+      "Price": 1412
+    },
+    {
+      "Symbol": "9031",
+      "Price": 2408
+    },
+    {
+      "Symbol": "9037",
+      "Price": 3150
+    },
+    {
+      "Symbol": "9039",
+      "Price": 4400
+    },
+    {
+      "Symbol": "9041",
+      "Price": 4115
+    },
+    {
+      "Symbol": "9042",
+      "Price": 3840
+    },
+    {
+      "Symbol": "9044",
+      "Price": 2753
+    },
+    {
+      "Symbol": "9045",
+      "Price": 3400
+    },
+    {
+      "Symbol": "9046",
+      "Price": 3175
+    },
+    {
+      "Symbol": "9048",
+      "Price": 2077
+    },
+    {
+      "Symbol": "9058",
+      "Price": 6930
+    },
+    {
+      "Symbol": "9064",
+      "Price": 2331
+    },
+    {
+      "Symbol": "9065",
+      "Price": 4840
+    },
+    {
+      "Symbol": "9069",
+      "Price": 976
+    },
+    {
+      "Symbol": "9075",
+      "Price": 3360
+    },
+    {
+      "Symbol": "9076",
+      "Price": 1384
+    },
+    {
+      "Symbol": "9081",
+      "Price": 3270
+    },
+    {
+      "Symbol": "9090",
+      "Price": 1842
+    },
+    {
+      "Symbol": "9101",
+      "Price": 3329
+    },
+    {
+      "Symbol": "9104",
+      "Price": 3420
+    },
+    {
+      "Symbol": "9107",
+      "Price": 3250
+    },
+    {
+      "Symbol": "9110",
+      "Price": 4165
+    },
+    {
+      "Symbol": "9119",
+      "Price": 1002
+    },
+    {
+      "Symbol": "9142",
+      "Price": 2949
+    },
+    {
+      "Symbol": "9143",
+      "Price": 2095
+    },
+    {
+      "Symbol": "9147",
+      "Price": 7660
+    },
+    {
+      "Symbol": "9201",
+      "Price": 2601
+    },
+    {
+      "Symbol": "9202",
+      "Price": 2813
+    },
+    {
+      "Symbol": "9216",
+      "Price": 1537
+    },
+    {
+      "Symbol": "9260",
+      "Price": 3625
+    },
+    {
+      "Symbol": "9267",
+      "Price": 4245
+    },
+    {
+      "Symbol": "9273",
+      "Price": 637
+    },
+    {
+      "Symbol": "9274",
+      "Price": 787
+    },
+    {
+      "Symbol": "9279",
+      "Price": 4285
+    },
+    {
+      "Symbol": "9301",
+      "Price": 3115
+    },
+    {
+      "Symbol": "9302",
+      "Price": 4030
+    },
+    {
+      "Symbol": "9303",
+      "Price": 2107
+    },
+    {
+      "Symbol": "9308",
+      "Price": 2038
+    },
+    {
+      "Symbol": "9364",
+      "Price": 2695
+    },
+    {
+      "Symbol": "9380",
+      "Price": 288
+    },
+    {
+      "Symbol": "9381",
+      "Price": 1578
+    },
+    {
+      "Symbol": "9401",
+      "Price": 1629
+    },
+    {
+      "Symbol": "9404",
+      "Price": 1080
+    },
+    {
+      "Symbol": "9413",
+      "Price": 2128
+    },
+    {
+      "Symbol": "9418",
+      "Price": 2615
+    },
+    {
+      "Symbol": "9424",
+      "Price": 240
+    },
+    {
+      "Symbol": "9432",
+      "Price": 3972
+    },
+    {
+      "Symbol": "9433",
+      "Price": 4039
+    },
+    {
+      "Symbol": "9434",
+      "Price": 1532
+    },
+    {
+      "Symbol": "9449",
+      "Price": 2573
+    },
+    {
+      "Symbol": "9468",
+      "Price": 2733
+    },
+    {
+      "Symbol": "9470",
+      "Price": 863
+    },
+    {
+      "Symbol": "9501",
+      "Price": 480
+    },
+    {
+      "Symbol": "9502",
+      "Price": 1450
+    },
+    {
+      "Symbol": "9503",
+      "Price": 1323
+    },
+    {
+      "Symbol": "9504",
+      "Price": 704
+    },
+    {
+      "Symbol": "9505",
+      "Price": 571
+    },
+    {
+      "Symbol": "9506",
+      "Price": 683
+    },
+    {
+      "Symbol": "9507",
+      "Price": 752
+    },
+    {
+      "Symbol": "9508",
+      "Price": 754
+    },
+    {
+      "Symbol": "9509",
+      "Price": 485
+    },
+    {
+      "Symbol": "9513",
+      "Price": 2154
+    },
+    {
+      "Symbol": "9517",
+      "Price": 2032
+    },
+    {
+      "Symbol": "9519",
+      "Price": 2251
+    },
+    {
+      "Symbol": "9531",
+      "Price": 2681
+    },
+    {
+      "Symbol": "9532",
+      "Price": 2147
+    },
+    {
+      "Symbol": "9533",
+      "Price": 2510
+    },
+    {
+      "Symbol": "9601",
+      "Price": 11050
+    },
+    {
+      "Symbol": "9602",
+      "Price": 4730
+    },
+    {
+      "Symbol": "9603",
+      "Price": 2091
+    },
+    {
+      "Symbol": "9605",
+      "Price": 17110
+    },
+    {
+      "Symbol": "9612",
+      "Price": 2898
+    },
+    {
+      "Symbol": "9613",
+      "Price": 1883
+    },
+    {
+      "Symbol": "9616",
+      "Price": 5270
+    },
+    {
+      "Symbol": "9627",
+      "Price": 5600
+    },
+    {
+      "Symbol": "9663",
+      "Price": 7600
+    },
+    {
+      "Symbol": "9672",
+      "Price": 3725
+    },
+    {
+      "Symbol": "9678",
+      "Price": 2226
+    },
+    {
+      "Symbol": "9682",
+      "Price": 3095
+    },
+    {
+      "Symbol": "9684",
+      "Price": 6240
+    },
+    {
+      "Symbol": "9697",
+      "Price": 4490
+    },
+    {
+      "Symbol": "9699",
+      "Price": 3110
+    },
+    {
+      "Symbol": "9706",
+      "Price": 6500
+    },
+    {
+      "Symbol": "9719",
+      "Price": 1952
+    },
+    {
+      "Symbol": "9735",
+      "Price": 7875
+    },
+    {
+      "Symbol": "9744",
+      "Price": 2431
+    },
+    {
+      "Symbol": "9746",
+      "Price": 3645
+    },
+    {
+      "Symbol": "9757",
+      "Price": 2782
+    },
+    {
+      "Symbol": "9759",
+      "Price": 2292
+    },
+    {
+      "Symbol": "9760",
+      "Price": 300
+    },
+    {
+      "Symbol": "9766",
+      "Price": 6260
+    },
+    {
+      "Symbol": "9769",
+      "Price": 2011
+    },
+    {
+      "Symbol": "9783",
+      "Price": 1976
+    },
+    {
+      "Symbol": "9787",
+      "Price": 3020
+    },
+    {
+      "Symbol": "9790",
+      "Price": 2820
+    },
+    {
+      "Symbol": "9793",
+      "Price": 4025
+    },
+    {
+      "Symbol": "9824",
+      "Price": 3655
+    },
+    {
+      "Symbol": "9828",
+      "Price": 3045
+    },
+    {
+      "Symbol": "9830",
+      "Price": 2202
+    },
+    {
+      "Symbol": "9831",
+      "Price": 479
+    },
+    {
+      "Symbol": "9832",
+      "Price": 1448
+    },
+    {
+      "Symbol": "9843",
+      "Price": 16085
+    },
+    {
+      "Symbol": "9861",
+      "Price": 2371
+    },
+    {
+      "Symbol": "9869",
+      "Price": 3635
+    },
+    {
+      "Symbol": "9882",
+      "Price": 1778
+    },
+    {
+      "Symbol": "9887",
+      "Price": 4000
+    },
+    {
+      "Symbol": "9902",
+      "Price": 1903
+    },
+    {
+      "Symbol": "9934",
+      "Price": 2804
+    },
+    {
+      "Symbol": "9936",
+      "Price": 6070
+    },
+    {
+      "Symbol": "9946",
+      "Price": 1412
+    },
+    {
+      "Symbol": "9948",
+      "Price": 2218
+    },
+    {
+      "Symbol": "9956",
+      "Price": 1930
+    },
+    {
+      "Symbol": "9960",
+      "Price": 4155
+    },
+    {
+      "Symbol": "9962",
+      "Price": 3115
+    },
+    {
+      "Symbol": "9974",
+      "Price": 5530
+    },
+    {
+      "Symbol": "9983",
+      "Price": 82670
+    },
+    {
+      "Symbol": "9984",
+      "Price": 5729
+    },
+    {
+      "Symbol": "9987",
+      "Price": 3485
+    },
+    {
+      "Symbol": "9989",
+      "Price": 3710
+    },
+    {
+      "Symbol": "9995",
+      "Price": 414
+    },
+    {
+      "Symbol": "1379",
+      "Price": 1881
+    },
+    {
+      "Symbol": "1407",
+      "Price": 3560
+    },
+    {
+      "Symbol": "1419",
+      "Price": 3215
+    },
+    {
+      "Symbol": "1712",
+      "Price": 934
+    },
+    {
+      "Symbol": "1719",
+      "Price": 872
+    },
+    {
+      "Symbol": "1805",
+      "Price": 1065
+    },
+    {
+      "Symbol": "1813",
+      "Price": 1623
+    },
+    {
+      "Symbol": "1815",
+      "Price": 1788
+    },
+    {
+      "Symbol": "1870",
+      "Price": 819
+    },
+    {
+      "Symbol": "1871",
+      "Price": 642
+    },
+    {
+      "Symbol": "1887",
+      "Price": 552
+    },
+    {
+      "Symbol": "1890",
+      "Price": 908
+    },
+    {
+      "Symbol": "1898",
+      "Price": 800
+    },
+    {
+      "Symbol": "1929",
+      "Price": 931
+    },
+    {
+      "Symbol": "1934",
+      "Price": 758
+    },
+    {
+      "Symbol": "1942",
+      "Price": 877
+    },
+    {
+      "Symbol": "1949",
+      "Price": 2394
+    },
+    {
+      "Symbol": "1950",
+      "Price": 1501
+    },
+    {
+      "Symbol": "1961",
+      "Price": 1486
+    },
+    {
+      "Symbol": "1967",
+      "Price": 805
+    },
+    {
+      "Symbol": "1973",
+      "Price": 1629
+    },
+    {
+      "Symbol": "1976",
+      "Price": 789
+    },
+    {
+      "Symbol": "2001",
+      "Price": 1596
+    },
+    {
+      "Symbol": "2053",
+      "Price": 1036
+    },
+    {
+      "Symbol": "2060",
+      "Price": 683
+    },
+    {
+      "Symbol": "2130",
+      "Price": 1453
+    },
+    {
+      "Symbol": "2138",
+      "Price": 1061
+    },
+    {
+      "Symbol": "2148",
+      "Price": 1504
+    },
+    {
+      "Symbol": "2150",
+      "Price": 1223
+    },
+    {
+      "Symbol": "2153",
+      "Price": 1352
+    },
+    {
+      "Symbol": "2158",
+      "Price": 653
+    },
+    {
+      "Symbol": "2160",
+      "Price": 1154
+    },
+    {
+      "Symbol": "2168",
+      "Price": 1924
+    },
+    {
+      "Symbol": "2170",
+      "Price": 600
+    },
+    {
+      "Symbol": "2183",
+      "Price": 711
+    },
+    {
+      "Symbol": "2211",
+      "Price": 2493
+    },
+    {
+      "Symbol": "2270",
+      "Price": 1801
+    },
+    {
+      "Symbol": "2294",
+      "Price": 2044
+    },
+    {
+      "Symbol": "2296",
+      "Price": 716
+    },
+    {
+      "Symbol": "2309",
+      "Price": 1760
+    },
+    {
+      "Symbol": "2372",
+      "Price": 1993
+    },
+    {
+      "Symbol": "2374",
+      "Price": 785
+    },
+    {
+      "Symbol": "2375",
+      "Price": 325
+    },
+    {
+      "Symbol": "2378",
+      "Price": 892
+    },
+    {
+      "Symbol": "2389",
+      "Price": 1166
+    },
+    {
+      "Symbol": "2429",
+      "Price": 2691
+    },
+    {
+      "Symbol": "2438",
+      "Price": 909
+    },
+    {
+      "Symbol": "2453",
+      "Price": 789
+    },
+    {
+      "Symbol": "2461",
+      "Price": 410
+    },
+    {
+      "Symbol": "2462",
+      "Price": 1901
+    },
+    {
+      "Symbol": "2477",
+      "Price": 4965
+    },
+    {
+      "Symbol": "2484",
+      "Price": 474
+    },
+    {
+      "Symbol": "2489",
+      "Price": 650
+    },
+    {
+      "Symbol": "2491",
+      "Price": 1711
+    },
+    {
+      "Symbol": "2497",
+      "Price": 1228
+    },
+    {
+      "Symbol": "2533",
+      "Price": 267
+    },
+    {
+      "Symbol": "2613",
+      "Price": 1559
+    },
+    {
+      "Symbol": "2678",
+      "Price": 1733
+    },
+    {
+      "Symbol": "2698",
+      "Price": 2313
+    },
+    {
+      "Symbol": "2702",
+      "Price": 5420
+    },
+    {
+      "Symbol": "2715",
+      "Price": 1734
+    },
+    {
+      "Symbol": "2734",
+      "Price": 712
+    },
+    {
+      "Symbol": "2782",
+      "Price": 2734
+    },
+    {
+      "Symbol": "2790",
+      "Price": 1730
+    },
+    {
+      "Symbol": "2804",
+      "Price": 1905
+    },
+    {
+      "Symbol": "2874",
+      "Price": 997
+    },
+    {
+      "Symbol": "2908",
+      "Price": 1868
+    },
+    {
+      "Symbol": "2910",
+      "Price": 1579
+    },
+    {
+      "Symbol": "2929",
+      "Price": 1513
+    },
+    {
+      "Symbol": "2933",
+      "Price": 961
+    },
+    {
+      "Symbol": "2975",
+      "Price": 663
+    },
+    {
+      "Symbol": "3001",
+      "Price": 1746
+    },
+    {
+      "Symbol": "3031",
+      "Price": 1128
+    },
+    {
+      "Symbol": "3040",
+      "Price": 1013
+    },
+    {
+      "Symbol": "3110",
+      "Price": 2109
+    },
+    {
+      "Symbol": "3134",
+      "Price": 840
+    },
+    {
+      "Symbol": "3139",
+      "Price": 1992
+    },
+    {
+      "Symbol": "3151",
+      "Price": 866
+    },
+    {
+      "Symbol": "3159",
+      "Price": 350
+    },
+    {
+      "Symbol": "3180",
+      "Price": 3825
+    },
+    {
+      "Symbol": "3191",
+      "Price": 1766
+    },
+    {
+      "Symbol": "3201",
+      "Price": 958
+    },
+    {
+      "Symbol": "3221",
+      "Price": 2120
+    },
+    {
+      "Symbol": "3228",
+      "Price": 1493
+    },
+    {
+      "Symbol": "3232",
+      "Price": 499
+    },
+    {
+      "Symbol": "3252",
+      "Price": 1901
+    },
+    {
+      "Symbol": "3254",
+      "Price": 1677
+    },
+    {
+      "Symbol": "3284",
+      "Price": 827
+    },
+    {
+      "Symbol": "3302",
+      "Price": 1593
+    },
+    {
+      "Symbol": "3319",
+      "Price": 977
+    },
+    {
+      "Symbol": "3341",
+      "Price": 1173
+    },
+    {
+      "Symbol": "3433",
+      "Price": 1239
+    },
+    {
+      "Symbol": "3475",
+      "Price": 844
+    },
+    {
+      "Symbol": "3479",
+      "Price": 2984
+    },
+    {
+      "Symbol": "3491",
+      "Price": 1131
+    },
+    {
+      "Symbol": "3539",
+      "Price": 1872
+    },
+    {
+      "Symbol": "3546",
+      "Price": 1015
+    },
+    {
+      "Symbol": "3547",
+      "Price": 1603
+    },
+    {
+      "Symbol": "3558",
+      "Price": 996
+    },
+    {
+      "Symbol": "3565",
+      "Price": 521
+    },
+    {
+      "Symbol": "3608",
+      "Price": 568
+    },
+    {
+      "Symbol": "3612",
+      "Price": 1336
+    },
+    {
+      "Symbol": "3633",
+      "Price": 1850
+    },
+    {
+      "Symbol": "3649",
+      "Price": 607
+    },
+    {
+      "Symbol": "3655",
+      "Price": 654
+    },
+    {
+      "Symbol": "3656",
+      "Price": 394
+    },
+    {
+      "Symbol": "3657",
+      "Price": 851
+    },
+    {
+      "Symbol": "3661",
+      "Price": 1097
+    },
+    {
+      "Symbol": "3662",
+      "Price": 789
+    },
+    {
+      "Symbol": "3665",
+      "Price": 613
+    },
+    {
+      "Symbol": "3668",
+      "Price": 597
+    },
+    {
+      "Symbol": "3673",
+      "Price": 439
+    },
+    {
+      "Symbol": "3676",
+      "Price": 1535
+    },
+    {
+      "Symbol": "3677",
+      "Price": 804
+    },
+    {
+      "Symbol": "3678",
+      "Price": 1524
+    },
+    {
+      "Symbol": "3681",
+      "Price": 643
+    },
+    {
+      "Symbol": "3687",
+      "Price": 1392
+    },
+    {
+      "Symbol": "3688",
+      "Price": 1452
+    },
+    {
+      "Symbol": "3692",
+      "Price": 986
+    },
+    {
+      "Symbol": "3694",
+      "Price": 976
+    },
+    {
+      "Symbol": "3696",
+      "Price": 1108
+    },
+    {
+      "Symbol": "3723",
+      "Price": 1198
+    },
+    {
+      "Symbol": "3750",
+      "Price": 1160
+    },
+    {
+      "Symbol": "3762",
+      "Price": 1511
+    },
+    {
+      "Symbol": "3771",
+      "Price": 2207
+    },
+    {
+      "Symbol": "3784",
+      "Price": 1382
+    },
+    {
+      "Symbol": "3834",
+      "Price": 586
+    },
+    {
+      "Symbol": "3835",
+      "Price": 662
+    },
+    {
+      "Symbol": "3836",
+      "Price": 1353
+    },
+    {
+      "Symbol": "3837",
+      "Price": 1459
+    },
+    {
+      "Symbol": "3844",
+      "Price": 2224
+    },
+    {
+      "Symbol": "3852",
+      "Price": 1417
+    },
+    {
+      "Symbol": "3854",
+      "Price": 1912
+    },
+    {
+      "Symbol": "3857",
+      "Price": 720
+    },
+    {
+      "Symbol": "3865",
+      "Price": 786
+    },
+    {
+      "Symbol": "3891",
+      "Price": 1967
+    },
+    {
+      "Symbol": "3902",
+      "Price": 902
+    },
+    {
+      "Symbol": "3914",
+      "Price": 5820
+    },
+    {
+      "Symbol": "3915",
+      "Price": 1955
+    },
+    {
+      "Symbol": "3916",
+      "Price": 1640
+    },
+    {
+      "Symbol": "3921",
+      "Price": 956
+    },
+    {
+      "Symbol": "3922",
+      "Price": 1835
+    },
+    {
+      "Symbol": "3925",
+      "Price": 2015
+    },
+    {
+      "Symbol": "3926",
+      "Price": 1607
+    },
+    {
+      "Symbol": "3933",
+      "Price": 840
+    },
+    {
+      "Symbol": "3937",
+      "Price": 1924
+    },
+    {
+      "Symbol": "3939",
+      "Price": 525
+    },
+    {
+      "Symbol": "3964",
+      "Price": 1764
+    },
+    {
+      "Symbol": "3969",
+      "Price": 1492
+    },
+    {
+      "Symbol": "3978",
+      "Price": 1027
+    },
+    {
+      "Symbol": "3990",
+      "Price": 791
+    },
+    {
+      "Symbol": "3993",
+      "Price": 1923
+    },
+    {
+      "Symbol": "3996",
+      "Price": 582
+    },
+    {
+      "Symbol": "3998",
+      "Price": 819
+    },
+    {
+      "Symbol": "4017",
+      "Price": 525
+    },
+    {
+      "Symbol": "4026",
+      "Price": 1872
+    },
+    {
+      "Symbol": "4028",
+      "Price": 1065
+    },
+    {
+      "Symbol": "4047",
+      "Price": 1015
+    },
+    {
+      "Symbol": "4051",
+      "Price": 9090
+    },
+    {
+      "Symbol": "4053",
+      "Price": 1233
+    },
+    {
+      "Symbol": "4055",
+      "Price": 1545
+    },
+    {
+      "Symbol": "4056",
+      "Price": 963
+    },
+    {
+      "Symbol": "4058",
+      "Price": 1439
+    },
+    {
+      "Symbol": "4071",
+      "Price": 2772
+    },
+    {
+      "Symbol": "4072",
+      "Price": 2507
+    },
+    {
+      "Symbol": "4078",
+      "Price": 1801
+    },
+    {
+      "Symbol": "4080",
+      "Price": 1429
+    },
+    {
+      "Symbol": "4082",
+      "Price": 1022
+    },
+    {
+      "Symbol": "4092",
+      "Price": 1977
+    },
+    {
+      "Symbol": "4095",
+      "Price": 947
+    },
+    {
+      "Symbol": "4097",
+      "Price": 662
+    },
+    {
+      "Symbol": "4125",
+      "Price": 4060
+    },
+    {
+      "Symbol": "4167",
+      "Price": 622
+    },
+    {
+      "Symbol": "4170",
+      "Price": 402
+    },
+    {
+      "Symbol": "4175",
+      "Price": 1134
+    },
+    {
+      "Symbol": "4176",
+      "Price": 518
+    },
+    {
+      "Symbol": "4177",
+      "Price": 1130
+    },
+    {
+      "Symbol": "4192",
+      "Price": 623
+    },
+    {
+      "Symbol": "4193",
+      "Price": 3250
+    },
+    {
+      "Symbol": "4194",
+      "Price": 9070
+    },
+    {
+      "Symbol": "4212",
+      "Price": 1933
+    },
+    {
+      "Symbol": "4215",
+      "Price": 497
+    },
+    {
+      "Symbol": "4220",
+      "Price": 553
+    },
+    {
+      "Symbol": "4228",
+      "Price": 390
+    },
+    {
+      "Symbol": "4259",
+      "Price": 311
+    },
+    {
+      "Symbol": "4290",
+      "Price": 675
+    },
+    {
+      "Symbol": "4293",
+      "Price": 349
+    },
+    {
+      "Symbol": "4298",
+      "Price": 1246
+    },
+    {
+      "Symbol": "4301",
+      "Price": 1765
+    },
+    {
+      "Symbol": "4308",
+      "Price": 605
+    },
+    {
+      "Symbol": "4312",
+      "Price": 980
+    },
+    {
+      "Symbol": "4318",
+      "Price": 1834
+    },
+    {
+      "Symbol": "4326",
+      "Price": 1680
+    },
+    {
+      "Symbol": "4345",
+      "Price": 787
+    },
+    {
+      "Symbol": "4350",
+      "Price": 400
+    },
+    {
+      "Symbol": "4362",
+      "Price": 2468
+    },
+    {
+      "Symbol": "4371",
+      "Price": 3020
+    },
+    {
+      "Symbol": "4375",
+      "Price": 933
+    },
+    {
+      "Symbol": "4377",
+      "Price": 4435
+    },
+    {
+      "Symbol": "4388",
+      "Price": 593
+    },
+    {
+      "Symbol": "4396",
+      "Price": 1751
+    },
+    {
+      "Symbol": "4397",
+      "Price": 354
+    },
+    {
+      "Symbol": "4412",
+      "Price": 740
+    },
+    {
+      "Symbol": "4413",
+      "Price": 4035
+    },
+    {
+      "Symbol": "4419",
+      "Price": 631
+    },
+    {
+      "Symbol": "4420",
+      "Price": 723
+    },
+    {
+      "Symbol": "4424",
+      "Price": 621
+    },
+    {
+      "Symbol": "4425",
+      "Price": 2900
+    },
+    {
+      "Symbol": "4427",
+      "Price": 457
+    },
+    {
+      "Symbol": "4429",
+      "Price": 1632
+    },
+    {
+      "Symbol": "4431",
+      "Price": 2126
+    },
+    {
+      "Symbol": "4433",
+      "Price": 1568
+    },
+    {
+      "Symbol": "4434",
+      "Price": 2322
+    },
+    {
+      "Symbol": "4436",
+      "Price": 2277
+    },
+    {
+      "Symbol": "4438",
+      "Price": 454
+    },
+    {
+      "Symbol": "4441",
+      "Price": 864
+    },
+    {
+      "Symbol": "4442",
+      "Price": 3410
+    },
+    {
+      "Symbol": "4446",
+      "Price": 971
+    },
+    {
+      "Symbol": "4448",
+      "Price": 731
+    },
+    {
+      "Symbol": "4461",
+      "Price": 1950
+    },
+    {
+      "Symbol": "4475",
+      "Price": 812
+    },
+    {
+      "Symbol": "4477",
+      "Price": 273
+    },
+    {
+      "Symbol": "4478",
+      "Price": 3370
+    },
+    {
+      "Symbol": "4479",
+      "Price": 1341
+    },
+    {
+      "Symbol": "4481",
+      "Price": 4720
+    },
+    {
+      "Symbol": "4485",
+      "Price": 5690
+    },
+    {
+      "Symbol": "4490",
+      "Price": 1700
+    },
+    {
+      "Symbol": "4493",
+      "Price": 1772
+    },
+    {
+      "Symbol": "4495",
+      "Price": 1304
+    },
+    {
+      "Symbol": "4498",
+      "Price": 3290
+    },
+    {
+      "Symbol": "4499",
+      "Price": 1395
+    },
+    {
+      "Symbol": "4548",
+      "Price": 817
+    },
+    {
+      "Symbol": "4549",
+      "Price": 1566
+    },
+    {
+      "Symbol": "4553",
+      "Price": 1908
+    },
+    {
+      "Symbol": "4554",
+      "Price": 1056
+    },
+    {
+      "Symbol": "4563",
+      "Price": 131
+    },
+    {
+      "Symbol": "4565",
+      "Price": 2434
+    },
+    {
+      "Symbol": "4569",
+      "Price": 1690
+    },
+    {
+      "Symbol": "4572",
+      "Price": 499
+    },
+    {
+      "Symbol": "4574",
+      "Price": 425
+    },
+    {
+      "Symbol": "4579",
+      "Price": 899
+    },
+    {
+      "Symbol": "4582",
+      "Price": 521
+    },
+    {
+      "Symbol": "4588",
+      "Price": 836
+    },
+    {
+      "Symbol": "4592",
+      "Price": 675
+    },
+    {
+      "Symbol": "4593",
+      "Price": 351
+    },
+    {
+      "Symbol": "4595",
+      "Price": 2570
+    },
+    {
+      "Symbol": "4599",
+      "Price": 948
+    },
+    {
+      "Symbol": "4611",
+      "Price": 840
+    },
+    {
+      "Symbol": "4617",
+      "Price": 1087
+    },
+    {
+      "Symbol": "4633",
+      "Price": 1023
+    },
+    {
+      "Symbol": "4674",
+      "Price": 1743
+    },
+    {
+      "Symbol": "4722",
+      "Price": 1783
+    },
+    {
+      "Symbol": "4743",
+      "Price": 865
+    },
+    {
+      "Symbol": "4763",
+      "Price": 2268
+    },
+    {
+      "Symbol": "4813",
+      "Price": 990
+    },
+    {
+      "Symbol": "4816",
+      "Price": 12760
+    },
+    {
+      "Symbol": "4820",
+      "Price": 869
+    },
+    {
+      "Symbol": "4880",
+      "Price": 3660
+    },
+    {
+      "Symbol": "4883",
+      "Price": 317
+    },
+    {
+      "Symbol": "4886",
+      "Price": 1183
+    },
+    {
+      "Symbol": "4931",
+      "Price": 1424
+    },
+    {
+      "Symbol": "4933",
+      "Price": 3785
+    },
+    {
+      "Symbol": "4934",
+      "Price": 1406
+    },
+    {
+      "Symbol": "4936",
+      "Price": 1363
+    },
+    {
+      "Symbol": "4951",
+      "Price": 1548
+    },
+    {
+      "Symbol": "4963",
+      "Price": 540
+    },
+    {
+      "Symbol": "4970",
+      "Price": 8260
+    },
+    {
+      "Symbol": "4974",
+      "Price": 1772
+    },
+    {
+      "Symbol": "4978",
+      "Price": 266
+    },
+    {
+      "Symbol": "4992",
+      "Price": 823
+    },
+    {
+      "Symbol": "4996",
+      "Price": 872
+    },
+    {
+      "Symbol": "4997",
+      "Price": 696
+    },
+    {
+      "Symbol": "4998",
+      "Price": 1056
+    },
+    {
+      "Symbol": "5011",
+      "Price": 1386
+    },
+    {
+      "Symbol": "5032",
+      "Price": 5020
+    },
+    {
+      "Symbol": "5036",
+      "Price": 3450
+    },
+    {
+      "Symbol": "5074",
+      "Price": 1076
+    },
+    {
+      "Symbol": "5142",
+      "Price": 1244
+    },
+    {
+      "Symbol": "5186",
+      "Price": 2929
+    },
+    {
+      "Symbol": "5191",
+      "Price": 710
+    },
+    {
+      "Symbol": "5195",
+      "Price": 1015
+    },
+    {
+      "Symbol": "5202",
+      "Price": 696
+    },
+    {
+      "Symbol": "5218",
+      "Price": 1195
+    },
+    {
+      "Symbol": "5290",
+      "Price": 1287
+    },
+    {
+      "Symbol": "5357",
+      "Price": 1495
+    },
+    {
+      "Symbol": "5440",
+      "Price": 1550
+    },
+    {
+      "Symbol": "5449",
+      "Price": 1325
+    },
+    {
+      "Symbol": "5541",
+      "Price": 1987
+    },
+    {
+      "Symbol": "5702",
+      "Price": 1416
+    },
+    {
+      "Symbol": "5707",
+      "Price": 2084
+    },
+    {
+      "Symbol": "5715",
+      "Price": 1378
+    },
+    {
+      "Symbol": "5759",
+      "Price": 1663
+    },
+    {
+      "Symbol": "5805",
+      "Price": 1903
+    },
+    {
+      "Symbol": "5851",
+      "Price": 1451
+    },
+    {
+      "Symbol": "5930",
+      "Price": 1145
+    },
+    {
+      "Symbol": "5932",
+      "Price": 648
+    },
+    {
+      "Symbol": "5943",
+      "Price": 1584
+    },
+    {
+      "Symbol": "5949",
+      "Price": 761
+    },
+    {
+      "Symbol": "5957",
+      "Price": 512
+    },
+    {
+      "Symbol": "5959",
+      "Price": 718
+    },
+    {
+      "Symbol": "5975",
+      "Price": 1192
+    },
+    {
+      "Symbol": "5976",
+      "Price": 671
+    },
+    {
+      "Symbol": "5989",
+      "Price": 623
+    },
+    {
+      "Symbol": "5992",
+      "Price": 706
+    },
+    {
+      "Symbol": "6013",
+      "Price": 1384
+    },
+    {
+      "Symbol": "6027",
+      "Price": 2716
+    },
+    {
+      "Symbol": "6049",
+      "Price": 280
+    },
+    {
+      "Symbol": "6070",
+      "Price": 2530
+    },
+    {
+      "Symbol": "6071",
+      "Price": 848
+    },
+    {
+      "Symbol": "6078",
+      "Price": 1590
+    },
+    {
+      "Symbol": "6082",
+      "Price": 1121
+    },
+    {
+      "Symbol": "6088",
+      "Price": 1102
+    },
+    {
+      "Symbol": "6089",
+      "Price": 1123
+    },
+    {
+      "Symbol": "6094",
+      "Price": 1501
+    },
+    {
+      "Symbol": "6096",
+      "Price": 999
+    },
+    {
+      "Symbol": "6099",
+      "Price": 1067
+    },
+    {
+      "Symbol": "6101",
+      "Price": 1468
+    },
+    {
+      "Symbol": "6118",
+      "Price": 790
+    },
+    {
+      "Symbol": "6125",
+      "Price": 4930
+    },
+    {
+      "Symbol": "6135",
+      "Price": 4770
+    },
+    {
+      "Symbol": "6140",
+      "Price": 765
+    },
+    {
+      "Symbol": "6143",
+      "Price": 740
+    },
+    {
+      "Symbol": "6145",
+      "Price": 2770
+    },
+    {
+      "Symbol": "6182",
+      "Price": 1122
+    },
+    {
+      "Symbol": "6183",
+      "Price": 1478
+    },
+    {
+      "Symbol": "6184",
+      "Price": 1091
+    },
+    {
+      "Symbol": "6194",
+      "Price": 995
+    },
+    {
+      "Symbol": "6197",
+      "Price": 679
+    },
+    {
+      "Symbol": "6199",
+      "Price": 1443
+    },
+    {
+      "Symbol": "6222",
+      "Price": 1851
+    },
+    {
+      "Symbol": "6226",
+      "Price": 888
+    },
+    {
+      "Symbol": "6232",
+      "Price": 1618
+    },
+    {
+      "Symbol": "6238",
+      "Price": 1216
+    },
+    {
+      "Symbol": "6245",
+      "Price": 2093
+    },
+    {
+      "Symbol": "6250",
+      "Price": 1275
+    },
+    {
+      "Symbol": "6264",
+      "Price": 1896
+    },
+    {
+      "Symbol": "6266",
+      "Price": 1674
+    },
+    {
+      "Symbol": "6269",
+      "Price": 1528
+    },
+    {
+      "Symbol": "6272",
+      "Price": 1212
+    },
+    {
+      "Symbol": "6282",
+      "Price": 1625
+    },
+    {
+      "Symbol": "6293",
+      "Price": 972
+    },
+    {
+      "Symbol": "6306",
+      "Price": 627
+    },
+    {
+      "Symbol": "6310",
+      "Price": 1182
+    },
+    {
+      "Symbol": "6324",
+      "Price": 4600
+    },
+    {
+      "Symbol": "6328",
+      "Price": 2924
+    },
+    {
+      "Symbol": "6330",
+      "Price": 584
+    },
+    {
+      "Symbol": "6339",
+      "Price": 754
+    },
+    {
+      "Symbol": "6340",
+      "Price": 2408
+    },
+    {
+      "Symbol": "6345",
+      "Price": 777
+    },
+    {
+      "Symbol": "6349",
+      "Price": 871
+    },
+    {
+      "Symbol": "6363",
+      "Price": 1535
+    },
+    {
+      "Symbol": "6366",
+      "Price": 418
+    },
+    {
+      "Symbol": "6376",
+      "Price": 944
+    },
+    {
+      "Symbol": "6379",
+      "Price": 1348
+    },
+    {
+      "Symbol": "6425",
+      "Price": 2468
+    },
+    {
+      "Symbol": "6440",
+      "Price": 634
+    },
+    {
+      "Symbol": "6444",
+      "Price": 224
+    },
+    {
+      "Symbol": "6455",
+      "Price": 1190
+    },
+    {
+      "Symbol": "6458",
+      "Price": 1553
+    },
+    {
+      "Symbol": "6459",
+      "Price": 1233
+    },
+    {
+      "Symbol": "6470",
+      "Price": 647
+    },
+    {
+      "Symbol": "6480",
+      "Price": 594
+    },
+    {
+      "Symbol": "6486",
+      "Price": 1173
+    },
+    {
+      "Symbol": "6498",
+      "Price": 857
+    },
+    {
+      "Symbol": "6507",
+      "Price": 1633
+    },
+    {
+      "Symbol": "6508",
+      "Price": 1914
+    },
+    {
+      "Symbol": "6521",
+      "Price": 8330
+    },
+    {
+      "Symbol": "6522",
+      "Price": 1155
+    },
+    {
+      "Symbol": "6523",
+      "Price": 1419
+    },
+    {
+      "Symbol": "6533",
+      "Price": 1875
+    },
+    {
+      "Symbol": "6535",
+      "Price": 1241
+    },
+    {
+      "Symbol": "6538",
+      "Price": 326
+    },
+    {
+      "Symbol": "6539",
+      "Price": 1118
+    },
+    {
+      "Symbol": "6556",
+      "Price": 659
+    },
+    {
+      "Symbol": "6560",
+      "Price": 2478
+    },
+    {
+      "Symbol": "6564",
+      "Price": 2779
+    },
+    {
+      "Symbol": "6569",
+      "Price": 661
+    },
+    {
+      "Symbol": "6571",
+      "Price": 1452
+    },
+    {
+      "Symbol": "6572",
+      "Price": 340
+    },
+    {
+      "Symbol": "6584",
+      "Price": 679
+    },
+    {
+      "Symbol": "6615",
+      "Price": 477
+    },
+    {
+      "Symbol": "6629",
+      "Price": 442
+    },
+    {
+      "Symbol": "6638",
+      "Price": 557
+    },
+    {
+      "Symbol": "6640",
+      "Price": 1215
+    },
+    {
+      "Symbol": "6644",
+      "Price": 526
+    },
+    {
+      "Symbol": "6653",
+      "Price": 1001
+    },
+    {
+      "Symbol": "6670",
+      "Price": 958
+    },
+    {
+      "Symbol": "6699",
+      "Price": 929
+    },
+    {
+      "Symbol": "6703",
+      "Price": 719
+    },
+    {
+      "Symbol": "6727",
+      "Price": 661
+    },
+    {
+      "Symbol": "6736",
+      "Price": 2416
+    },
+    {
+      "Symbol": "6741",
+      "Price": 1039
+    },
+    {
+      "Symbol": "6742",
+      "Price": 409
+    },
+    {
+      "Symbol": "6744",
+      "Price": 1656
+    },
+    {
+      "Symbol": "6750",
+      "Price": 1305
+    },
+    {
+      "Symbol": "6777",
+      "Price": 2577
+    },
+    {
+      "Symbol": "6778",
+      "Price": 967
+    },
+    {
+      "Symbol": "6794",
+      "Price": 947
+    },
+    {
+      "Symbol": "6804",
+      "Price": 1604
+    },
+    {
+      "Symbol": "6810",
+      "Price": 1464
+    },
+    {
+      "Symbol": "6814",
+      "Price": 944
+    },
+    {
+      "Symbol": "6823",
+      "Price": 1853
+    },
+    {
+      "Symbol": "6834",
+      "Price": 1750
+    },
+    {
+      "Symbol": "6855",
+      "Price": 1515
+    },
+    {
+      "Symbol": "6871",
+      "Price": 1299
+    },
+    {
+      "Symbol": "6890",
+      "Price": 3200
+    },
+    {
+      "Symbol": "6905",
+      "Price": 1085
+    },
+    {
+      "Symbol": "6937",
+      "Price": 1148
+    },
+    {
+      "Symbol": "6955",
+      "Price": 963
+    },
+    {
+      "Symbol": "6958",
+      "Price": 497
+    },
+    {
+      "Symbol": "6962",
+      "Price": 747
+    },
+    {
+      "Symbol": "6986",
+      "Price": 548
+    },
+    {
+      "Symbol": "6995",
+      "Price": 1533
+    },
+    {
+      "Symbol": "7003",
+      "Price": 427
+    },
+    {
+      "Symbol": "7034",
+      "Price": 545
+    },
+    {
+      "Symbol": "7038",
+      "Price": 1306
+    },
+    {
+      "Symbol": "7044",
+      "Price": 524
+    },
+    {
+      "Symbol": "7048",
+      "Price": 663
+    },
+    {
+      "Symbol": "7061",
+      "Price": 3450
+    },
+    {
+      "Symbol": "7065",
+      "Price": 1787
+    },
+    {
+      "Symbol": "7068",
+      "Price": 527
+    },
+    {
+      "Symbol": "7071",
+      "Price": 3530
+    },
+    {
+      "Symbol": "7085",
+      "Price": 782
+    },
+    {
+      "Symbol": "7088",
+      "Price": 888
+    },
+    {
+      "Symbol": "7092",
+      "Price": 1371
+    },
+    {
+      "Symbol": "7094",
+      "Price": 3925
+    },
+    {
+      "Symbol": "7095",
+      "Price": 12950
+    },
+    {
+      "Symbol": "7096",
+      "Price": 2629
+    },
+    {
+      "Symbol": "7105",
+      "Price": 838
+    },
+    {
+      "Symbol": "7133",
+      "Price": 4925
+    },
+    {
+      "Symbol": "7157",
+      "Price": 1278
+    },
+    {
+      "Symbol": "7172",
+      "Price": 1055
+    },
+    {
+      "Symbol": "7177",
+      "Price": 570
+    },
+    {
+      "Symbol": "7189",
+      "Price": 1129
+    },
+    {
+      "Symbol": "7192",
+      "Price": 881
+    },
+    {
+      "Symbol": "7198",
+      "Price": 1119
+    },
+    {
+      "Symbol": "7199",
+      "Price": 1556
+    },
+    {
+      "Symbol": "7220",
+      "Price": 1815
+    },
+    {
+      "Symbol": "7222",
+      "Price": 883
+    },
+    {
+      "Symbol": "7224",
+      "Price": 1095
+    },
+    {
+      "Symbol": "7226",
+      "Price": 1453
+    },
+    {
+      "Symbol": "7231",
+      "Price": 1862
+    },
+    {
+      "Symbol": "7236",
+      "Price": 2225
+    },
+    {
+      "Symbol": "7241",
+      "Price": 410
+    },
+    {
+      "Symbol": "7244",
+      "Price": 444
+    },
+    {
+      "Symbol": "7245",
+      "Price": 508
+    },
+    {
+      "Symbol": "7250",
+      "Price": 1135
+    },
+    {
+      "Symbol": "7279",
+      "Price": 1192
+    },
+    {
+      "Symbol": "7280",
+      "Price": 507
+    },
+    {
+      "Symbol": "7283",
+      "Price": 869
+    },
+    {
+      "Symbol": "7287",
+      "Price": 866
+    },
+    {
+      "Symbol": "7296",
+      "Price": 1471
+    },
+    {
+      "Symbol": "7315",
+      "Price": 531
+    },
+    {
+      "Symbol": "7322",
+      "Price": 1717
+    },
+    {
+      "Symbol": "7342",
+      "Price": 1294
+    },
+    {
+      "Symbol": "7354",
+      "Price": 1613
+    },
+    {
+      "Symbol": "7358",
+      "Price": 1860
+    },
+    {
+      "Symbol": "7370",
+      "Price": 1633
+    },
+    {
+      "Symbol": "7373",
+      "Price": 4525
+    },
+    {
+      "Symbol": "7379",
+      "Price": 1357
+    },
+    {
+      "Symbol": "7383",
+      "Price": 578
+    },
+    {
+      "Symbol": "7408",
+      "Price": 1794
+    },
+    {
+      "Symbol": "7412",
+      "Price": 806
+    },
+    {
+      "Symbol": "7419",
+      "Price": 1309
+    },
+    {
+      "Symbol": "7463",
+      "Price": 905
+    },
+    {
+      "Symbol": "7508",
+      "Price": 1436
+    },
+    {
+      "Symbol": "7522",
+      "Price": 900
+    },
+    {
+      "Symbol": "7554",
+      "Price": 1051
+    },
+    {
+      "Symbol": "7564",
+      "Price": 5630
+    },
+    {
+      "Symbol": "7575",
+      "Price": 914
+    },
+    {
+      "Symbol": "7593",
+      "Price": 503
+    },
+    {
+      "Symbol": "7599",
+      "Price": 870
+    },
+    {
+      "Symbol": "7600",
+      "Price": 1038
+    },
+    {
+      "Symbol": "7605",
+      "Price": 1251
+    },
+    {
+      "Symbol": "7613",
+      "Price": 1504
+    },
+    {
+      "Symbol": "7638",
+      "Price": 1762
+    },
+    {
+      "Symbol": "7679",
+      "Price": 2422
+    },
+    {
+      "Symbol": "7702",
+      "Price": 516
+    },
+    {
+      "Symbol": "7715",
+      "Price": 1207
+    },
+    {
+      "Symbol": "7716",
+      "Price": 2831
+    },
+    {
+      "Symbol": "7718",
+      "Price": 1639
+    },
+    {
+      "Symbol": "7725",
+      "Price": 1485
+    },
+    {
+      "Symbol": "7739",
+      "Price": 1738
+    },
+    {
+      "Symbol": "7745",
+      "Price": 1257
+    },
+    {
+      "Symbol": "7774",
+      "Price": 503
+    },
+    {
+      "Symbol": "7779",
+      "Price": 297
+    },
+    {
+      "Symbol": "7803",
+      "Price": 753
+    },
+    {
+      "Symbol": "7806",
+      "Price": 1366
+    },
+    {
+      "Symbol": "7818",
+      "Price": 1509
+    },
+    {
+      "Symbol": "7820",
+      "Price": 936
+    },
+    {
+      "Symbol": "7826",
+      "Price": 9780
+    },
+    {
+      "Symbol": "7840",
+      "Price": 998
+    },
+    {
+      "Symbol": "7844",
+      "Price": 720
+    },
+    {
+      "Symbol": "7856",
+      "Price": 1215
+    },
+    {
+      "Symbol": "7860",
+      "Price": 1613
+    },
+    {
+      "Symbol": "7864",
+      "Price": 1616
+    },
+    {
+      "Symbol": "7906",
+      "Price": 1289
+    },
+    {
+      "Symbol": "7915",
+      "Price": 1841
+    },
+    {
+      "Symbol": "7955",
+      "Price": 639
+    },
+    {
+      "Symbol": "7965",
+      "Price": 1635
+    },
+    {
+      "Symbol": "7981",
+      "Price": 1404
+    },
+    {
+      "Symbol": "7994",
+      "Price": 1348
+    },
+    {
+      "Symbol": "8051",
+      "Price": 1044
+    },
+    {
+      "Symbol": "8070",
+      "Price": 773
+    },
+    {
+      "Symbol": "8097",
+      "Price": 1402
+    },
+    {
+      "Symbol": "8125",
+      "Price": 1167
+    },
+    {
+      "Symbol": "8133",
+      "Price": 1102
+    },
+    {
+      "Symbol": "8141",
+      "Price": 1288
+    },
+    {
+      "Symbol": "8151",
+      "Price": 1299
+    },
+    {
+      "Symbol": "8157",
+      "Price": 1354
+    },
+    {
+      "Symbol": "8163",
+      "Price": 914
+    },
+    {
+      "Symbol": "8167",
+      "Price": 1307
+    },
+    {
+      "Symbol": "8168",
+      "Price": 896
+    },
+    {
+      "Symbol": "8182",
+      "Price": 1339
+    },
+    {
+      "Symbol": "8185",
+      "Price": 792
+    },
+    {
+      "Symbol": "8203",
+      "Price": 684
+    },
+    {
+      "Symbol": "8217",
+      "Price": 921
+    },
+    {
+      "Symbol": "8219",
+      "Price": 951
+    },
+    {
+      "Symbol": "8237",
+      "Price": 1138
+    },
+    {
+      "Symbol": "8283",
+      "Price": 4860
+    },
+    {
+      "Symbol": "8285",
+      "Price": 319
+    },
+    {
+      "Symbol": "8344",
+      "Price": 1277
+    },
+    {
+      "Symbol": "8358",
+      "Price": 423
+    },
+    {
+      "Symbol": "8360",
+      "Price": 1353
+    },
+    {
+      "Symbol": "8361",
+      "Price": 1998
+    },
+    {
+      "Symbol": "8368",
+      "Price": 417
+    },
+    {
+      "Symbol": "8370",
+      "Price": 1621
+    },
+    {
+      "Symbol": "8381",
+      "Price": 843
+    },
+    {
+      "Symbol": "8386",
+      "Price": 1997
+    },
+    {
+      "Symbol": "8387",
+      "Price": 952
+    },
+    {
+      "Symbol": "8399",
+      "Price": 1099
+    },
+    {
+      "Symbol": "8511",
+      "Price": 1033
+    },
+    {
+      "Symbol": "8515",
+      "Price": 369
+    },
+    {
+      "Symbol": "8541",
+      "Price": 959
+    },
+    {
+      "Symbol": "8544",
+      "Price": 651
+    },
+    {
+      "Symbol": "8624",
+      "Price": 651
+    },
+    {
+      "Symbol": "8628",
+      "Price": 805
+    },
+    {
+      "Symbol": "8699",
+      "Price": 1183
+    },
+    {
+      "Symbol": "8706",
+      "Price": 626
+    },
+    {
+      "Symbol": "8707",
+      "Price": 1383
+    },
+    {
+      "Symbol": "8715",
+      "Price": 567
+    },
+    {
+      "Symbol": "8798",
+      "Price": 1187
+    },
+    {
+      "Symbol": "8818",
+      "Price": 1219
+    },
+    {
+      "Symbol": "8841",
+      "Price": 629
+    },
+    {
+      "Symbol": "8860",
+      "Price": 676
+    },
+    {
+      "Symbol": "8864",
+      "Price": 518
+    },
+    {
+      "Symbol": "8871",
+      "Price": 1658
+    },
+    {
+      "Symbol": "8881",
+      "Price": 451
+    },
+    {
+      "Symbol": "8892",
+      "Price": 828
+    },
+    {
+      "Symbol": "8914",
+      "Price": 1908
+    },
+    {
+      "Symbol": "8920",
+      "Price": 1189
+    },
+    {
+      "Symbol": "8923",
+      "Price": 1442
+    },
+    {
+      "Symbol": "8929",
+      "Price": 1144
+    },
+    {
+      "Symbol": "8934",
+      "Price": 1221
+    },
+    {
+      "Symbol": "8935",
+      "Price": 985
+    },
+    {
+      "Symbol": "9025",
+      "Price": 1473
+    },
+    {
+      "Symbol": "9055",
+      "Price": 1283
+    },
+    {
+      "Symbol": "9072",
+      "Price": 2470
+    },
+    {
+      "Symbol": "9204",
+      "Price": 1243
+    },
+    {
+      "Symbol": "9229",
+      "Price": 8770
+    },
+    {
+      "Symbol": "9232",
+      "Price": 1412
+    },
+    {
+      "Symbol": "9246",
+      "Price": 6210
+    },
+    {
+      "Symbol": "9262",
+      "Price": 1830
+    },
+    {
+      "Symbol": "9270",
+      "Price": 1861
+    },
+    {
+      "Symbol": "9310",
+      "Price": 567
+    },
+    {
+      "Symbol": "9336",
+      "Price": 1751
+    },
+    {
+      "Symbol": "9347",
+      "Price": 2610
+    },
+    {
+      "Symbol": "9409",
+      "Price": 1402
+    },
+    {
+      "Symbol": "9412",
+      "Price": 487
+    },
+    {
+      "Symbol": "9416",
+      "Price": 1599
+    },
+    {
+      "Symbol": "9435",
+      "Price": 20230
+    },
+    {
+      "Symbol": "9438",
+      "Price": 510
+    },
+    {
+      "Symbol": "9450",
+      "Price": 889
+    },
+    {
+      "Symbol": "9467",
+      "Price": 2418
+    },
+    {
+      "Symbol": "9474",
+      "Price": 852
+    },
+    {
+      "Symbol": "9511",
+      "Price": 1070
+    },
+    {
+      "Symbol": "9514",
+      "Price": 592
+    },
+    {
+      "Symbol": "9522",
+      "Price": 420
+    },
+    {
+      "Symbol": "9543",
+      "Price": 1122
+    },
+    {
+      "Symbol": "9551",
+      "Price": 1645
+    },
+    {
+      "Symbol": "9552",
+      "Price": 8450
+    },
+    {
+      "Symbol": "9621",
+      "Price": 3480
+    },
+    {
+      "Symbol": "9629",
+      "Price": 1239
+    },
+    {
+      "Symbol": "9692",
+      "Price": 1506
+    },
+    {
+      "Symbol": "9702",
+      "Price": 1202
+    },
+    {
+      "Symbol": "9715",
+      "Price": 3385
+    },
+    {
+      "Symbol": "9716",
+      "Price": 898
+    },
+    {
+      "Symbol": "9722",
+      "Price": 3315
+    },
+    {
+      "Symbol": "9739",
+      "Price": 2104
+    },
+    {
+      "Symbol": "9740",
+      "Price": 2490
+    },
+    {
+      "Symbol": "9742",
+      "Price": 1331
+    },
+    {
+      "Symbol": "9743",
+      "Price": 712
+    },
+    {
+      "Symbol": "9749",
+      "Price": 7710
+    },
+    {
+      "Symbol": "9755",
+      "Price": 1998
+    },
+    {
+      "Symbol": "9768",
+      "Price": 1526
+    },
+    {
+      "Symbol": "9837",
+      "Price": 985
+    },
+    {
+      "Symbol": "9873",
+      "Price": 2815
+    },
+    {
+      "Symbol": "9889",
+      "Price": 1892
+    },
+    {
+      "Symbol": "9900",
+      "Price": 1273
+    },
+    {
+      "Symbol": "9928",
+      "Price": 1809
+    },
+    {
+      "Symbol": "9979",
+      "Price": 1038
+    },
+    {
+      "Symbol": "9997",
+      "Price": 685
+    }
+  ]
+}

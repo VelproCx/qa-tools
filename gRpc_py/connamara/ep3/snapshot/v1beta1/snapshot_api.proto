@@ -1,0 +1,70 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.snapshot.v1beta1;
+
+option go_package = "snapshotv1beta1";
+option java_package = "com.connamara.ep3.snapshot.v1beta1";
+option java_outer_classname = "SnapshotApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Snapshot.V1Beta1";
+option objc_class_prefix = "CES";
+
+import "connamara/ep3/books/v1beta1/books.proto";
+import "connamara/ep3/orders/v1beta1/orders.proto";
+import "connamara/ep3/wire/v1beta1/wire.proto";
+import "google/protobuf/timestamp.proto";
+
+// SnapshotAPI is the API surface for getting a point in time snapshot of the exchange markets and messaging system.
+service SnapshotAPI {
+    // GetSnapshot returns a snapshot of the requested partition offsets and working orders for 
+    // books at the time of those offsets.
+    rpc GetSnapshot(GetSnapshotRequest) returns (stream GetSnapshotResponse) {}
+
+    // GetUnAggregatedBook retrieves an unaggregated book from the exchange.
+    rpc GetUnAggregatedBook(GetUnAggregatedBookRequest) returns (GetUnAggregatedBookResponse) {}
+}
+
+message GetSnapshotRequest {
+    int32 partition = 1;
+    string symbol = 2;
+    google.protobuf.Timestamp as_of_time = 3;
+}
+
+message GetSnapshotResponse {
+    // Offsets are the current persisted offsets at the time the snapshot is requested.
+    repeated wire.v1beta1.TransactionEventOffset offsets = 1;
+
+    // BookInfo summarizes the persisted state of a book in the partition at the time the snapshot is requested.
+    message BookInfo {
+        // Symbol is the symbol for the book corresponding to this snapshot.
+        string symbol = 1;
+
+        // Status is the current state of the book.
+        books.v1beta1.BookStatus status = 2;
+    }
+
+    repeated BookInfo book_infos = 2;
+    repeated orders.v1beta1.Order orders = 3;
+}
+
+message GetUnAggregatedBookRequest {
+    // Symbol to request unaggregated book.
+    string symbol = 1;
+
+    // AsOfTime is an optional argument that can fetch the state of the book as of the last state transition prior to this time.
+    google.protobuf.Timestamp as_of_time = 2;
+}
+
+message GetUnAggregatedBookResponse {
+    // Symbol is the symbol for the book corresponding to this snapshot.
+    string symbol = 1;
+
+    // Snapshot is the current state of the book.
+    books.v1beta1.BookSnapshot snapshot = 2;
+}
