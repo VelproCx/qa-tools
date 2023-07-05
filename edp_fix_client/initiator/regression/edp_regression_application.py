@@ -58,7 +58,7 @@ class Application(fix.Application):
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
         self.Result = self.compare_field_values('case/EDP_Functional_Test_Matrix.json', 'logs/recv_data.json', 'ordstatus')
-        logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
+        # logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'P')
         # send_mail(['report/edp_report.xlsx', 'logs/edp_report.log'])
@@ -468,7 +468,7 @@ class Application(fix.Application):
         msg.setField(fix.Side(row["Side"]))
         msg.setField(fix.Symbol(row["Symbol"]))
         msg.setField(fix.HandlInst('1'))
-        msg.setField(fix.Price(row["Price"]))
+        # msg.setField(fix.Price(row["Price"]))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
 
@@ -544,7 +544,7 @@ class Application(fix.Application):
     def load_test_case(self):
         """Run"""
         with open('case/EDP_Functional_Test_Matrix.json', 'r') as f_json:
-            generation('case/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
+            # generation('case/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
