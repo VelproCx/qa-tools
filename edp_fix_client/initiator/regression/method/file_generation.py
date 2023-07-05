@@ -23,8 +23,8 @@ def generation(file_path,filename):
 
     # 选择要设置颜色的工作表
     sheet = workbook.active  # 使用默认的活动工作表
-    sheet['P1'] = 'Execution Result'
-    sheet['Q1'] = 'Remark'
+    sheet['S1'] = 'Execution Result'
+    sheet['T1'] = 'Remark'
     # 设置最合适的列宽
     for column in sheet.columns:
         max_length = 0
@@ -50,8 +50,8 @@ def generation(file_path,filename):
     row_number = 1
     column_start = 'A'
     column_end = 'O'
-    res_column_start = 'P'
-    res_column_end = 'Q'
+    res_column_start = 'S'
+    res_column_end = 'T'
 
     # 设置单元格背景颜色
     fill = PatternFill(fill_type='solid', fgColor='FFFF00')
