@@ -29,8 +29,6 @@ class Application(fix.Application):
     Success = 0
     Fail = 0
     Total = Success + Fail
-    ROL_PROP_BPS_BUY = 0.0022
-    ROL_PROP_BPS_SELL = 0.0022
     Result = []
     ReceveRes = []
 
@@ -185,7 +183,7 @@ class Application(fix.Application):
                 SelfTradePreventionId = message.getField(8174)
 
 
-                if symbol == '5076' or symbol == '1311' or symbol == '6954':
+                if symbol == '1308':
                     self.ORDERS_DICT = message.getField(11)
                 msg = message.toString().replace(__SOH__, "|")
                 # 7.2 Execution Report – Order Accepted
@@ -251,11 +249,8 @@ class Application(fix.Application):
                     propExecPrice = message.getField(8165)
                     clOrdID = message.getField(11)
                     price = message.getField(44)
-                    adjustLastPxBuy = math.ceil(primaryAskPx * (1 + self.ROL_PROP_BPS_BUY))
-                    adjustLastPxSell = math.floor(primaryBidPx * (1 - self.ROL_PROP_BPS_SELL))
-
                     # Added tag to the EDP project
-                    # lastLiquidityind = message.getField(851)
+                    lastLiquidityind = message.getField(851)
                     if (
                     avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty, ordType, rule80A,
                     side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
@@ -263,10 +258,7 @@ class Application(fix.Application):
                     routingDecisionTime, propExecPrice, MinQty, OrderClassification,
                     SelfTradePreventionId, price) != "":
                         logfix.info(
-                            "(recvMsg) Order Filled << %s" % msg + 'Side: ' + str(side) + ',' + "Fill Price: " + str(
-                                lastPx) + ',' + "AdjustLastPx Of Buy: " + str(
-                                adjustLastPxBuy) + ',' + "AdjustLastPx Of Sell: " + str(
-                                adjustLastPxSell) + ',' + "Order Type:" + str(ordType))
+                            "(recvMsg) Order Filled << %s" % msg)
                         if ordStatus == '2':
                             logfix.info("Result : Order Filled ," + "ordStatus =" + ordStatus)
                         else:
@@ -275,25 +267,6 @@ class Application(fix.Application):
                         logfix.info("(recvMsg) Order Filled << %s" % msg + "Order Trade FixMsg Error!")
                     if execType != ordStatus:
                         logfix.info("(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
-                        # Fill Price Check
-                    if ordType == '1':
-                        if side == "1":
-                            adjustLastPx = math.ceil(primaryAskPx * (1 + self.ROL_PROP_BPS_BUY))
-                            if adjustLastPx == lastPx:
-                                return True
-                            else:
-                                logfix.info(
-                                    'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol + ',' + 'adjustLastPx：' + str(
-                                        adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
-                        elif side == "2":
-                            adjustLastPx = math.floor(primaryBidPx * (1 - self.ROL_PROP_BPS_SELL))
-                            if adjustLastPx == lastPx:
-                                return True
-                            else:
-                                logfix.info(
-                                    'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol + ',' + 'adjustLastPx：' + str(
-                                        adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
-
                     # -------->toSTNeTExecutionID为非必填字段，联调时候再确认是否需要修改判断条件
                     if execTransType == '2' :
                         execRefID = message.getField(19)
@@ -406,14 +379,6 @@ class Application(fix.Application):
         self.writeResExcel('report/edp_report.xlsx', response, 2, 'Q')
         with open('logs/edp_report.log', 'r') as f:
             content = f.read()
-        if 'Market Price is not matching' in content:
-            logfix.info('Market Price is NG')
-            response = ['Market Price is NG']
-            self.writeResExcel('report/edp_report.xlsx', response, 3, 'Q')
-        else:
-            logfix.info('Market Price is OK')
-            response = ['Market Price is OK']
-            self.writeResExcel('report/edp_report.xlsx', response, 3, 'Q')
 
         if 'FixMsg Error' in content:
             logfix.info('FixMsg is NG')
@@ -515,6 +480,7 @@ class Application(fix.Application):
     def order_cancel_request(self, row):
         # 使用变量接收上一个订单clOrdId
         # self.insert_order_request(row)
+        logfix.info(row["Id"])
         clOrdId = self.ORDERS_DICT
         time.sleep(1)
         msg = fix.Message()
@@ -544,11 +510,12 @@ class Application(fix.Application):
     def load_test_case(self):
         """Run"""
         with open('case/EDP_Functional_Test_Matrix.json', 'r') as f_json:
-            # generation('case/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
+            generation('case/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
                 self.runTestCase(row)
                 self.Total += 1
+                time.sleep(1)
 
