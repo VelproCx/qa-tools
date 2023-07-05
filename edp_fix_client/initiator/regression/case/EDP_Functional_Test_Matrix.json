@@ -3,11 +3,11 @@
     {
       "Id": "27",
       "ScenarioName": "BBO Price Rounding Check",
-      "Account": "RSIT_ACCOUNT_3",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "EDP",
       "ActionType": "NewAck",
       "Comment": "ROLX_Market_NewAck",
-      "OrderQty": 10,
+      "OrderQty": 100,
       "OrdType": "2",
       "Price": 1400,
       "Side": "1",

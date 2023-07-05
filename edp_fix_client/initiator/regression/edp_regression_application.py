@@ -2,6 +2,7 @@
 # -*- coding: utf8 -*-
 """FIX Application"""
 import difflib
+import random
 
 import quickfix as fix
 import time
@@ -92,8 +93,7 @@ class Application(fix.Application):
 
             if (clOrdID, orderQty, ordType,
                 side, symbol, transactTime,
-                MinQty, OrderClassification, CrossingPriceType,
-                SelfTradePreventionId) != "":
+                CrossingPriceType,MinQty , OrderClassification ,SelfTradePreventionId) != "":
                 logfix.info("(sendMsg) New Ack >> {}".format(msg))
             else:
                 logfix.info("(sendMsg) New Ack >> {}".format(msg) + 'New Order Single FixMsg Error!')
@@ -259,7 +259,7 @@ class Application(fix.Application):
                     if (
                     avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty, ordType, rule80A,
                     side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
-                    crossingPriceType, fsxTransactTime , marginTransactionType, primaryLastPx, primaryBidPx, primaryAskPx,
+                    crossingPriceType, fsxTransactTime, marginTransactionType, primaryLastPx, primaryBidPx, primaryAskPx,
                     routingDecisionTime, propExecPrice, MinQty, OrderClassification,
                     SelfTradePreventionId, price) != "":
                         logfix.info(
@@ -453,7 +453,8 @@ class Application(fix.Application):
         self.execID += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
-        return '9002023' + str(t) + str(self.execID).zfill(8)
+        str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
+        return str(t) + str1 + str(self.execID).zfill(6)
 
     def insert_order_request(self, row):
         msg = fix.Message()
@@ -497,9 +498,6 @@ class Application(fix.Application):
 
         if row["SelfTradePreventionId"] != "":
             msg.setField(8174, row["SelfTradePreventionId"])
-
-
-
 
         # 获取TransactTime
         trstime = fix.TransactTime()
