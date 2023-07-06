@@ -106,6 +106,7 @@ def getOrderQty():
 
 
 def runCase():
+<<<<<<< HEAD
     # InsertOrderEntryFirst(2, 1, 1000, '5110.EDP', 1400,
     #                       str(genClOrdID()),
     #                       ACCOUNT_INFO[0], 1, "3")
@@ -114,6 +115,12 @@ def runCase():
                            str(genClOrdID()),
                            'firms/HRT-Clear-Member/accounts/HRT_SIT_ACCOUNT_2', 1, "0")
     # time.sleep(0.001)
+=======
+    InsertOrderEntry(2, 2, 1000, '5110.EDP', 1400,
+                     str(getClOrdID()),
+                     'firms/HRT-Clear-Member/accounts/HRT_SIT_ACCOUNT_1', 1)
+    time.sleep(0.001)
+>>>>>>> 9e8407a (add load_test Debug file)
 
 
 if __name__ == '__main__':
