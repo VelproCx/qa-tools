@@ -1,17 +1,226 @@
-{
-  "testCase": [
-    {"Id": "1",
-      "Account": "RSIT_ACCOUNT_1",
-      "ActionType": "NewAck",
-      "OrderQty": 5,
-      "OrdType": "1",
-      "Side": "1",
-      "Symbol": "5110",
-      "TimeInForce": "0",
-      "CrossingPriceType": "REX",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    }
-  ]
-}
+[
+  {
+    'clordId': '16885573976534000001',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885573987038000002',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885573987604000003',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885573996318000004',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885573997350000005',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574001704000006',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574004087000007',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574015617000008',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574014152000009',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574036387000011',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574052534000013',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574077682000015',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574094023000017',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574102405000018',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574105127000019',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574112756000020',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574111470000021',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574125142000022',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574121253000023',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574131632000024',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574136081000025',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574144721000026',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574145438000027',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574152418000028',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574154527000029',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574160615000030',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574166307000031',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574170638000032',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574170658000033',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574184703000034',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574184572000035',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574191382000036',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574194180000037',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574200752000038',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574208025000039',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574214180000040',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574218351000041',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574228657000042',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574232837000043',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574238613000044',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574243857000045',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574243756000046',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574258150000047',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574258346000048',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574266421000049',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574265846000050',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574274012000051',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574271270000052',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574280578000053',
+    'ordstatus': '8'
+  },
+  {
+    'clordId': '16885574294316000055',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574295312000056',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574307032000057',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574300741000058',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574312486000059',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574328541000061',
+    'ordstatus': 'C'
+  },
+  {
+    'clordId': '16885574320784000062',
+    'ordstatus': 'C'
+  }
+]
