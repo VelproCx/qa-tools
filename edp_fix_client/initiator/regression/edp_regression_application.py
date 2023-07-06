@@ -80,7 +80,6 @@ class Application(fix.Application):
         logfix.info("-------------------------------------------------------------------------------------------------")
         msgType = message.getHeader().getField(35)
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info(msg)
         # 7.1 New Order Single
         if msgType == "D":
             orderQty = message.getField(38)
@@ -258,7 +257,7 @@ class Application(fix.Application):
                     routingDecisionTime = message.getField(8051)
                     propExecPrice = message.getField(8165)
                     clOrdID = message.getField(11)
-                    price = message.getField(44)
+                    # price = message.getField(44)
                     # Added tag to the EDP project
                     lastLiquidityind = message.getField(851)
                     if (
@@ -269,7 +268,7 @@ class Application(fix.Application):
                             crossingPriceType, fsxTransactTime, marginTransactionType, primaryLastPx, primaryBidPx,
                             primaryAskPx,
                             routingDecisionTime, propExecPrice, MinQty, OrderClassification,
-                            SelfTradePreventionId, price) != "":
+                            SelfTradePreventionId) != "":
                         logfix.info(
                             "(recvMsg) Order Filled << %s" % msg)
                         if ordStatus == '2':
