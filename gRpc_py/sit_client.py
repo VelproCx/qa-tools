@@ -11,7 +11,6 @@ from model.logger import setup_logger
 
 AUTH_HOST = 'traderauth.sit.rsec.oddlotx.com:443'
 TRADE_HOST = 'traderapi.sit.rsec.oddlotx.com:443'
-_PORT = '443'
 
 setup_logger('logfix', 'report.log')
 logfix = logging.getLogger('logfix')
@@ -35,6 +34,10 @@ def login(username, password):
     response = stub.Login(basic_auth_api_pb2.LoginRequest(username=username, password=password))
     return response
 
+# 获取登陆的response
+res_login = login(USER_INFO[0][0], USER_INFO[0][1])
+# 定义变量接收token
+access_token = res_login.access_token
 
 def genClOrdID():
     execID = 0
@@ -46,12 +49,8 @@ def genClOrdID():
     return str1 + str(t) + str(execID).zfill(6)
 
 
-def InsertOrderEntryFirst(type, side, order_qty, symbol, price, clord_id, account, time_in_force,
-                          selfMatchPreventionId):
-    # 获取登陆的response
-    res_login = login(USER_INFO[0][0], USER_INFO[0][1])
-    # 定义变量接收token
-    access_token = res_login.access_token
+def InsertOrderEntryFirst(type, side, order_qty, symbol, price, clord_id, account, time_in_force):
+
     # 证书选择SSL类型
     creds = grpc.ssl_channel_credentials()
     conn = grpc.secure_channel(target=TRADE_HOST, credentials=creds,
@@ -66,8 +65,7 @@ def InsertOrderEntryFirst(type, side, order_qty, symbol, price, clord_id, accoun
                                                price=price,
                                                clord_id=clord_id,
                                                account=account,
-                                               time_in_force=time_in_force,
-                                               self_match_prevention_id=selfMatchPreventionId),
+                                               time_in_force=time_in_force),
         metadata=meta)
     logfix.info(response)
 
@@ -106,19 +104,22 @@ def getOrderQty():
 
 
 def runCase():
-    # InsertOrderEntryFirst(2, 1, 1000, '5110.EDP', 1400,
-    #                       str(genClOrdID()),
-    #                       ACCOUNT_INFO[0], 1, "3")
+    InsertOrderEntryFirst(2, 1, 1000, '5110.EDP', 13960,
+                          str(genClOrdID()),
+                          ACCOUNT_INFO[0], 1)
 
-    InsertOrderEntrySecond(2, 2, 1000, '5110.EDP', 1400,
+    InsertOrderEntryFirst(2, 2, 1000, '5110.EDP', 13980,
                            str(genClOrdID()),
-                           'firms/HRT-Clear-Member/accounts/HRT_SIT_ACCOUNT_2', 1, "0")
-    # time.sleep(0.001)
-    InsertOrderEntry(2, 2, 1000, '5110.EDP', 1400,
-                     str(getClOrdID()),
-                     'firms/HRT-Clear-Member/accounts/HRT_SIT_ACCOUNT_1', 1)
-    time.sleep(0.001)
-
+                          ACCOUNT_INFO[0], 1)
+    #
+    # InsertOrderEntryFirst(2, 1, 1000, '6028.EDP', 30650,
+    #                       str(genClOrdID()),
+    #                       ACCOUNT_INFO[0], 1)
+    #
+    # InsertOrderEntryFirst(2, 2, 1000, '6028.EDP', 30700,
+    #                        str(genClOrdID()),
+    #                        ACCOUNT_INFO[0], 1)
 
 if __name__ == '__main__':
+    res_login = login(USER_INFO[0][0], USER_INFO[0][1])
     runCase()
