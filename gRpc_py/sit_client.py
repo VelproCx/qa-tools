@@ -75,7 +75,7 @@ def getOrderQty():
 
 
 def runCase():
-    InsertOrderEntry(2, 2, 100, '5110.EDP', 1400,
+    InsertOrderEntry(2, 2, 1000, '5110.EDP', 1400,
                      str(getClOrdID()),
                      'firms/HRT-Clear-Member/accounts/HRT_SIT_ACCOUNT_1', 1)
     time.sleep(0.001)

@@ -1,8 +1,9 @@
 """FIX GATEWAY"""
 import sys
 import argparse
+from datetime import timedelta, datetime
 import quickfix
-from edp_regression_application import Application
+from edp_load_application import Application
 import time
 global initiator
 
@@ -17,12 +18,15 @@ def main(config_file):
 
         initiator.start()
         application.load_test_case()
-        time.sleep(800)
+        # sleep_duration = timedelta(minutes=30)
+        # end_time = datetime.now() + sleep_duration
+        # while datetime.now() < end_time:
+        #     time.sleep(1)
+        time.sleep(10)
         initiator.stop()
 
     except (quickfix.ConfigError, quickfix.RuntimeError) as e:
         print(e)
-        # initiator.stop()
         sys.exit()
 
 

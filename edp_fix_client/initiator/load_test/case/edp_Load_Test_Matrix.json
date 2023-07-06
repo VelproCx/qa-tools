@@ -1,26 +1,24 @@
 {
   "testCase": [
     {
-      "Id": "9",
-      "ScenarioName": "MinQty is none",
+      "Id": "1",
+      "ScenarioName": "test",
       "Account": "RSIT_ACCOUNT_3",
       "Market": "EDP",
       "ActionType": "NewAck",
       "Comment": "EDP_Market_NewAck",
-      "OrderQty": 500,
-      "OrdType": "2",
-      "Price": 50001,
+      "OrderQty": 100,
+      "OrdType": "1",
       "Side": "1",
-      "Symbol": "1624",
+      "Symbol": "1356",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "MinQty": 0,
-      "OrderClassification": "3",
-      "SelfTradePreventionId": "0",
-      "ordstatus": "C"
+      "MinQty": "",
+      "OrderClassification": "",
+      "SelfTradePreventionId": ""
     }
   ]
 }
