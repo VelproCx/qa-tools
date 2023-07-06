@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="14bb5a9c-befd-4ecb-bd3c-4fb69a7cc2c2" name="Changes" comment="增加load_test model file">
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/cgw101/edp_performance_start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/load_test/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/load_test/case/edp_Load_Test_Matrix.json" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/case/edp_Load_Test_Matrix.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/load_test/case/topix400_case.json" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/case/topix400_case.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/load_test/cgw101/edp_load_application.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/cgw101/edp_performance_application.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/load_test/cgw101/edp_load_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/cgw101/edp_performance_client.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/load_test/cgw101/edp_load_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/cgw101/edp_performance_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/load_test/cgw101/edp_load_start.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/load_test/cgw101/model/Field.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/cgw101/model/Field.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/load_test/cgw101/model/Message.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/cgw101/model/Message.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/load_test/cgw101/model/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/cgw101/model/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/load_test/cgw101/model/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/cgw101/model/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/case/EDP_Functional_Test_Matrix.json" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/case/EDP_Functional_Test_Matrix.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/case/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/case/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/case/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/case/test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/edp_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/edp_regression_client.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/edp_regression_application.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/edp_regression_application.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/edp_regression_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/edp_regression_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/edp_start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/edp_regression_start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/mail/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/mail/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/mail/run_email.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/mail/run_email.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/method/data_comparison.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/method/data_comparison.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/method/file_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/method/file_generation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/model/Field.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/model/Field.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/model/Message.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/model/Message.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/model/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/model/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/model/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/model/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/regression/report/edp_report.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/report/edp_report.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw101/rol_load_start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/load_test/cgw101/rol_load_start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rolx_fix_client/initiator/regression/mail/run_email.py" beforeDir="false" afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/regression/mail/run_email.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SWAP_SIDES_IN_COMPARE_BRANCHES" value="true" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2SBzrYcX3qzWIlwA9QzZ7W6W1iz" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/elevenchen/Desktop/qa-tools/edp_fix_client/initiator/load_test/cgw101/model",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/edp_fix_client/initiator/load_test/cgw101/model" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="14bb5a9c-befd-4ecb-bd3c-4fb69a7cc2c2" name="Changes" comment="增加EDP REGRESSION 调用gRpc脚本提前埋单" />
+      <created>1688634962178</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1688634962178</updated>
+      <workItem from="1688634963264" duration="393000" />
+      <workItem from="1688635364812" duration="212000" />
+      <workItem from="1688635586404" duration="2067000" />
+    </task>
+    <task id="LOCAL-00001" summary="解决冲突文件">
+      <created>1688635198827</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1688635198827</updated>
+    </task>
+    <task id="LOCAL-00002" summary="解决冲突文件">
+      <created>1688635292991</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1688635292991</updated>
+    </task>
+    <task id="LOCAL-00003" summary="增加EDP REGRESSION调用gRpc脚本埋单">
+      <created>1688636729968</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1688636729968</updated>
+    </task>
+    <task id="LOCAL-00004" summary="增加load_test model file">
+      <created>1688637263694</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1688637263694</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="解决冲突文件" />
+    <MESSAGE value="增加EDP REGRESSION调用gRpc脚本埋单" />
+    <MESSAGE value="增加load_test model file" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加load_test model file" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/qa_tools$edp_fullstock_client.coverage" NAME="edp_fullstock_client Coverage Results" MODIFIED="1688560448469" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/cgw101" />
+    <SUITE FILE_PATH="coverage/qa_tools$rol_load_application.coverage" NAME="rol_load_application Coverage Results" MODIFIED="1687168264774" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_full_stock_test/cgw101" />
+    <SUITE FILE_PATH="coverage/qa_tools$models.coverage" NAME="models Coverage Results" MODIFIED="1688116373524" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv/lib/python3.9/site-packages/requests" />
+    <SUITE FILE_PATH="coverage/qa_tools$server.coverage" NAME="server Coverage Results" MODIFIED="1688616114090" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gRpc_py" />
+    <SUITE FILE_PATH="coverage/qa_tools$.coverage" NAME=" Coverage Results" MODIFIED="1688096081364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rolx_admin_Interface" />
+    <SUITE FILE_PATH="coverage/qa_tools$uat_client.coverage" NAME="uat_client Coverage Results" MODIFIED="1688539105101" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gRpc_py" />
+    <SUITE FILE_PATH="coverage/qa_tools$sit_client.coverage" NAME="sit_client Coverage Results" MODIFIED="1688628472510" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gRpc_py" />
+    <SUITE FILE_PATH="coverage/qa_tools$api_list.coverage" NAME="api_list Coverage Results" MODIFIED="1688117186278" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rolx_admin_Interface/Api" />
+  </component>
+</project>

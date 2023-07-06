@@ -27,7 +27,7 @@ def send_mail(file_path=[]):
     # 构造邮件对象
     msg = MIMEMultipart('mixed')
     # 定义邮件的标题
-    subject = '【UAT】regression report'
+    subject = '【UAT】edp_regression_test report'
     # HTML邮件正文，定义成字典
     msg['Subject'] = Header(subject, "utf-8")
     msg['From'] = sender
