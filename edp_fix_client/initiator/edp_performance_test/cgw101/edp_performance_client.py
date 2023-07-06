@@ -3,7 +3,7 @@ import sys
 import argparse
 from datetime import timedelta, datetime
 import quickfix
-from edp_load_application import Application
+from edp_performance_application import Application
 import time
 global initiator
 
@@ -18,11 +18,10 @@ def main(config_file):
 
         initiator.start()
         application.load_test_case()
-        # sleep_duration = timedelta(minutes=30)
-        # end_time = datetime.now() + sleep_duration
-        # while datetime.now() < end_time:
-        #     time.sleep(1)
-        time.sleep(10)
+        sleep_duration = timedelta(minutes=1)
+        end_time = datetime.now() + sleep_duration
+        while datetime.now() < end_time:
+            time.sleep(1)
         initiator.stop()
 
     except (quickfix.ConfigError, quickfix.RuntimeError) as e:
