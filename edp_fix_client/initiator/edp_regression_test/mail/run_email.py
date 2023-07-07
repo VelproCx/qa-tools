@@ -61,3 +61,4 @@ def send_mail(file_path=[]):
     smtp.quit()
     print("已发送邮件")
     return
+send_mail(['../report/edp_report.xlsx', '../logs/edp_report.log'])
