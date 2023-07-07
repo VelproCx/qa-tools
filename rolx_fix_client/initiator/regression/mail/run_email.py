@@ -14,11 +14,11 @@ from email import encoders
 def send_mail(file_path=[]):
     assert isinstance(file_path, list)
 
-    smtpserver = 'smtp.163.com'
+    smtpserver = 'smtp.exmail.qq.com'
     # 设置登录邮箱的账号和授权密码
-    user = 'cy_9808@163.com'
-    password = "XMFKWZUEZNOUERKK"
-    sender = 'cy_9808@163.com'
+    user = 'xiang.chen@farsightedyu.com'
+    password = "qffbzdwNgCVBF83y"
+    sender = 'xiang.chen@farsightedyu.com'
     # 可添加多个收件人的邮箱
     receives = ['sophie.yang@finstadiumx.co.jp', 'osamu.tachibana@finstadiumx.co.jp',
                 'zhangtaotao@farsightedyu.com', 'zhenghuaimao@farsightedyu.com', 'xiang.chen@farsightedyu.com']
