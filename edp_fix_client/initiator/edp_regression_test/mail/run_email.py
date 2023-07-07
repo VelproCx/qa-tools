@@ -20,9 +20,8 @@ def send_mail(file_path=[]):
     password = "XMFKWZUEZNOUERKK"
     sender = 'cy_9808@163.com'
     # 可添加多个收件人的邮箱
-    receives = ['1009015490@qq.com','sophie.yang@finstadiumx.co.jp', 'osamu.tachibana@finstadiumx.co.jp',
-                        '873516470@qq.com', 'daixu1@qq.com']
-
+    receives = ['sophie.yang@finstadiumx.co.jp', 'osamu.tachibana@finstadiumx.co.jp',
+                'zhangtaotao@farsightedyu.com', 'zhenghuaimao@farsightedyu.com', 'xiang.chen@farsightedyu.com']
 
     # 构造邮件对象
     msg = MIMEMultipart('mixed')
