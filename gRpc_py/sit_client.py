@@ -34,10 +34,12 @@ def login(username, password):
     response = stub.Login(basic_auth_api_pb2.LoginRequest(username=username, password=password))
     return response
 
+
 # 获取登陆的response
 res_login = login(USER_INFO[0][0], USER_INFO[0][1])
 # 定义变量接收token
 access_token = res_login.access_token
+
 
 def genClOrdID():
     execID = 0
@@ -50,7 +52,6 @@ def genClOrdID():
 
 
 def InsertOrderEntryFirst(type, side, order_qty, symbol, price, clord_id, account, time_in_force):
-
     # 证书选择SSL类型
     creds = grpc.ssl_channel_credentials()
     conn = grpc.secure_channel(target=TRADE_HOST, credentials=creds,
@@ -70,8 +71,7 @@ def InsertOrderEntryFirst(type, side, order_qty, symbol, price, clord_id, accoun
     logfix.info(response)
 
 
-def InsertOrderEntrySecond(type, side, order_qty, symbol, price, clord_id, account, time_in_force,
-                          selfMatchPreventionId):
+def InsertOrderEntrySecond(type, side, order_qty, symbol, price, clord_id, account, time_in_force):
     # 获取登陆的response
     res_login = login(USER_INFO[1][0], USER_INFO[1][1])
     # 定义变量接收token
@@ -90,8 +90,7 @@ def InsertOrderEntrySecond(type, side, order_qty, symbol, price, clord_id, accou
                                                price=price,
                                                clord_id=clord_id,
                                                account=account,
-                                               time_in_force=time_in_force,
-                                               self_match_prevention_id=selfMatchPreventionId),
+                                               time_in_force=time_in_force),
         metadata=meta)
     logfix.info(response)
 
@@ -104,12 +103,12 @@ def getOrderQty():
 
 
 def runCase():
-    InsertOrderEntryFirst(2, 1, 1000, '5110.EDP', 13960,
+    InsertOrderEntryFirst(2, 1, 400, '5110.EDP', 13990,
                           str(genClOrdID()),
                           ACCOUNT_INFO[0], 1)
 
-    InsertOrderEntryFirst(2, 2, 1000, '5110.EDP', 13980,
-                           str(genClOrdID()),
+    InsertOrderEntryFirst(2, 2, 400, '5110.EDP', 14000,
+                          str(genClOrdID()),
                           ACCOUNT_INFO[0], 1)
     #
     # InsertOrderEntryFirst(2, 1, 1000, '6028.EDP', 30650,
@@ -119,6 +118,7 @@ def runCase():
     # InsertOrderEntryFirst(2, 2, 1000, '6028.EDP', 30700,
     #                        str(genClOrdID()),
     #                        ACCOUNT_INFO[0], 1)
+
 
 if __name__ == '__main__':
     res_login = login(USER_INFO[0][0], USER_INFO[0][1])
