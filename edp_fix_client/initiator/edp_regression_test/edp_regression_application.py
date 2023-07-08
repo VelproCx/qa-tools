@@ -21,7 +21,7 @@ from openpyxl import load_workbook
 import pandas as pd
 
 # report
-setup_logger('logfix', 'logs/edp_report.log')
+setup_logger('logfix', 'edp_report.log')
 logfix = logging.getLogger('logfix')
 
 
