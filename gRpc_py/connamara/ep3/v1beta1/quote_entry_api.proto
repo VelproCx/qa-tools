@@ -1,0 +1,131 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.v1beta1;
+
+option go_package = "ep3v1beta1";
+option java_package = "com.connamara.ep3.v1beta1";
+option java_outer_classname = "QuoteEntryApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.V1Beta1";
+option objc_class_prefix = "CEX";
+
+import "connamara/ep3/v1beta1/api.proto";
+
+// QuoteEntryAPI is the API Surface for connected clients to handle quotes and requests.
+service QuoteEntryAPI {
+    // CreateRequestForQuote inserts a request for quote into the exchange.
+    rpc CreateRequestForQuote(CreateRequestForQuoteRequest) returns (CreateRequestForQuoteResponse) {}
+
+    // CreateQuote inserts a quote into the exchange.
+    rpc CreateQuote(CreateQuoteRequest) returns (CreateQuoteResponse) {}
+
+    // DeleteQuote deletes a quote from the exchange.
+    rpc DeleteQuote(DeleteQuoteRequest) returns (DeleteQuoteResponse) {}
+
+    // PassQuote passes on a quote from the exchange.
+    rpc PassQuote(PassQuoteRequest) returns (PassQuoteResponse) {}
+
+    // ListDealers returns the whitelist of firms that are able to receive a request for quote that I send.
+    rpc ListDealers(ListDealersRequest) returns (ListDealersResponse) {}
+
+    // ListRequesters returns the whitelist of firms that are able to send a request for quote to my firm.
+    rpc ListRequesters(ListRequestersRequest) returns (ListRequestersResponse) {}
+
+    // CreateQuoteSubscription creates a subscription for working quotes and requests.
+    rpc CreateQuoteSubscription(CreateQuoteSubscriptionRequest) returns (stream CreateQuoteSubscriptionResponse) {}
+}
+
+// Request to insert a request for quote into the exchange.
+message CreateRequestForQuoteRequest {
+    // The RFQ to be generated.
+    RequestForQuote request_for_quote = 1;
+}
+
+message CreateRequestForQuoteResponse {}
+
+// Request to insert a quote into the exchange.
+message CreateQuoteRequest {
+    // Exchange assigned ID for the parent quote request that this quote references (required).
+    string parent = 1;
+
+    // The quote to be generated (required).
+    Quote quote = 2;
+}
+
+message CreateQuoteResponse {}
+
+// Request to delete a quote from the exchange.
+message DeleteQuoteRequest {
+    // Exchange assigned ID for the quote to be deleted.
+    string name = 1;
+}
+
+message DeleteQuoteResponse {}
+
+// Request to pass on a quote from the exchange.
+message PassQuoteRequest {
+    // Exchange assigned ID for the quote to pass on.
+    string name = 1;
+}
+
+message PassQuoteResponse {}
+
+// Request to get the whitelist of firms that are able to receive a request for quote that I send.
+message ListDealersRequest {}
+
+message ListDealersResponse {
+    // Fully qualified resource names for the whitelisted firms (ie: "firms/[firmid]").
+    repeated string firms = 1;
+
+    // List of display names for the whitelisted firms.
+    repeated string display_names = 2;
+}
+
+// Request to get the whitelist of firms that are able to send a request for quote to my firm.
+message ListRequestersRequest {}
+
+message ListRequestersResponse {
+    // Fully qualified resource names for the whitelisted firms (ie: "firms/[firmid]").
+    repeated string firms = 1;
+
+    // List of display names for the whitelisted firms.
+    repeated string display_names = 2;
+}
+
+//Request to start a quote subscription to get snapshots and updates for this session.
+message CreateQuoteSubscriptionRequest {}
+
+message CreateQuoteSubscriptionResponse {
+    // Snapshot is the current state of quotes and requests in the system that is returned on the initial subscription request.
+    message Snapshot {
+        // List of RFQs contained in the snapshot.
+        repeated RequestForQuote request_for_quotes = 1;
+
+        //List of quotes contained in the snapshot.
+        repeated Quote quotes = 2;
+    }
+
+    // Update(s) are the creation of new or modification of existing quotes and requests after subscription.
+    message Update {
+        // List of RFQs contained in the update.
+        repeated RequestForQuote request_for_quotes = 1;
+
+        // List of quotes contained in the update.
+        repeated Quote quotes = 2;
+
+        // List of quote rejects contained in the update.
+        repeated QuoteReject rejects = 4;
+    }
+
+    oneof event {
+        Heartbeat heartbeat = 1;
+        Snapshot snapshot = 2;
+        Update update = 3;
+    }
+}

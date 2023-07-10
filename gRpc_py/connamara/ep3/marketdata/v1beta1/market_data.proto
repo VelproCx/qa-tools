@@ -1,0 +1,84 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.marketdata.v1beta1;
+
+option go_package = "marketdatav1beta1";
+option java_package = "com.connamara.ep3.marketdata.v1beta1";
+option java_outer_classname = "MarketDataProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Marketdata.V1Beta1";
+option objc_class_prefix = "CEM";
+
+import "connamara/ep3/instruments/v1beta1/instruments.proto";
+import "google/protobuf/timestamp.proto";
+
+// SetSettlementPriceRequest is a request to set the settlement price on a book.
+message SetSettlementPriceRequest {
+    // The book symbol for the request.
+    string symbol = 1;
+
+    // The requested settlement price.
+    int64 settlement_price = 2;
+
+    // The time this request was inserted into the exchange.
+    google.protobuf.Timestamp transact_time = 3;
+
+    // If true, the settlement price is preliminary.
+    bool settlement_preliminary = 4;
+
+    // If true, clear the settlement price.
+    bool clear = 5;
+}
+
+// SetOpenInterestRequest is a request to set the open interest on a book.
+message SetOpenInterestRequest {
+    // The book symbol for the request.
+    string symbol = 1;
+
+    // The requested open interest.
+    int64 open_interest = 2;
+
+    // The time this request was inserted into the exchange.
+    google.protobuf.Timestamp transact_time = 3;
+
+    // If true, clear the open interest.
+    bool clear = 4;
+
+    // If true, change the open interest using the field as a delta rather than setting the value explicitly.
+    bool delta = 5;
+}
+
+// SetLastPriceRequest is a request to set the last price on a book.
+message SetLastPriceRequest {
+    // The book symbol for the request.
+    string symbol = 1;
+
+    // The requested last price.
+    int64 last_price = 2;
+
+    // The time this request was inserted into the exchange.
+    google.protobuf.Timestamp transact_time = 3;
+
+    // The requested last quantity.
+    int64 last_quantity = 4;
+
+    // If set, only update the total notional volume and shares traded as a result of this request
+    bool only_volume = 5;
+}
+
+// SetInstrumentStatsRequest is a request to set the instrument stats on a book.
+message SetInstrumentStatsRequest {
+    // The book symbol for the request.
+    string symbol = 1;
+
+    // The requested stats for the instrument.
+    instruments.v1beta1.InstrumentStats stats = 2;
+
+    // The time this request was inserted into the exchange.
+    google.protobuf.Timestamp transact_time = 3;
+}

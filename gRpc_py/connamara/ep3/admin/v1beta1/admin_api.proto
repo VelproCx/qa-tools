@@ -1,0 +1,2101 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.admin.v1beta1;
+
+option go_package = "adminv1beta1";
+option java_package = "com.connamara.ep3.admin.v1beta1";
+option java_outer_classname = "AdminApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Admin.V1Beta1";
+option objc_class_prefix = "CEA";
+
+import "connamara/ep3/admin/v1beta1/admin.proto";
+import "connamara/ep3/trades/v1beta1/trades.proto";
+import "connamara/ep3/instruments/v1beta1/instruments.proto";
+import "connamara/ep3/fpml/v1beta1/fpml.proto";
+import "connamara/ep3/firms/v1beta1/firms.proto";
+import "connamara/ep3/orders/v1beta1/orders.proto";
+import "connamara/ep3/quotes/v1beta1/quotes.proto";
+import "connamara/ep3/positions/v1beta1/positions.proto";
+import "connamara/ep3/risk/v1beta1/risk.proto";
+import "connamara/ep3/v1beta1/api.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+
+// AdminAPI is the Admin API Surface for connected clients.
+service AdminAPI {
+    // GetUnAggregatedBook retrieves an unaggregated book from the exchange.
+    rpc GetUnAggregatedBook(GetUnAggregatedBookRequest) returns (GetUnAggregatedBookResponse) {}
+
+    // SearchOrders retrieves latest order states within provided bounds from the exchange.
+    rpc SearchOrders(SearchOrdersRequest) returns (SearchOrdersResponse) {}
+
+    // SearchExecutions retrieves executions specified by criteria in request.
+    rpc SearchExecutions(SearchExecutionsRequest) returns (SearchExecutionsResponse) {}
+
+    // StreamExecutions streams executions specified by criteria in request.
+    rpc StreamExecutions(StreamExecutionsRequest) returns (stream StreamExecutionsResponse) {}
+
+    // SearchInstrumentStats retrieves instrument stats entries specified by criteria in request.
+    rpc SearchInstrumentStats(SearchInstrumentStatsRequest) returns (SearchInstrumentStatsResponse) {}
+
+    // CreateParticipant creates a new participant.
+    rpc CreateParticipant(CreateParticipantRequest) returns (CreateParticipantResponse) {}
+
+    // UpdateParticipant updates an existing participant.
+    rpc UpdateParticipant(UpdateParticipantRequest) returns (UpdateParticipantResponse) {}
+
+    // DeleteParticipant deletes the participant matching the request.
+    rpc DeleteParticipant(DeleteParticipantRequest) returns (DeleteParticipantResponse) {}
+
+    // GetParticipant gets the participant matching the request.
+    rpc GetParticipant(GetParticipantRequest) returns (GetParticipantResponse) {}
+
+    // SetParticipantSuspendState sets the participant suspension state.
+    rpc SetParticipantSuspendState(SetParticipantSuspendStateRequest) returns (SetParticipantSuspendStateResponse) {}
+
+    // SetParticipantRole sets the participant role.
+    rpc SetParticipantRole(SetParticipantRoleRequest) returns (SetParticipantRoleResponse) {}
+
+    // AddParticipantToGroup adds a participant group to an existing participant.
+    rpc AddParticipantToGroup(AddParticipantToGroupRequest) returns (AddParticipantToGroupResponse) {}
+
+    // RemoveParticipantFromGroup removes a participant group from an existing participant.
+    rpc RemoveParticipantFromGroup(RemoveParticipantFromGroupRequest) returns (RemoveParticipantFromGroupResponse) {}
+
+    // CreateParticipantGroup creates a new participant group.
+    rpc CreateParticipantGroup(CreateParticipantGroupRequest) returns (CreateParticipantGroupResponse) {}
+
+    // SetParticipantGroupSuspendState sets the participant group suspension state.
+    rpc SetParticipantGroupSuspendState(SetParticipantGroupSuspendStateRequest) returns (SetParticipantGroupSuspendStateResponse) {}
+
+    // DeleteParticipantGroup deletes the participant group matching the request.
+    rpc DeleteParticipantGroup(DeleteParticipantGroupRequest) returns (DeleteParticipantGroupResponse) {}
+
+    // GetParticipantGroup gets the participant group matching the request.
+    rpc GetParticipantGroup(GetParticipantGroupRequest) returns (GetParticipantGroupResponse) {}
+
+    // AddUserToAccount adds an account to an existing participant.
+    rpc AddUserToAccount(AddUserToAccountRequest) returns (AddUserToAccountResponse) {}
+
+    // RemoveUserFromAccount removes an account from an existing participant.
+    rpc RemoveUserFromAccount(RemoveUserFromAccountRequest) returns (RemoveUserFromAccountResponse) {}
+
+    // CreateAccount creates a new account.
+    rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {}
+
+    // UpdateAccount updates an existing account.
+    rpc UpdateAccount(UpdateAccountRequest) returns (UpdateAccountResponse) {}
+
+    // SetAccountSuspendState sets the account suspension state.
+    rpc SetAccountSuspendState(SetAccountSuspendStateRequest) returns (SetAccountSuspendStateResponse) {}
+
+    // DeleteAccount deletes the account matching the request.
+    rpc DeleteAccount(DeleteAccountRequest) returns (DeleteAccountResponse) {}
+
+    // GetAccount gets the account matching the request.
+    rpc GetAccount(GetAccountRequest) returns (GetAccountResponse) {}
+
+    // CreateFirm creates a new firm.
+    rpc CreateFirm(CreateFirmRequest) returns (CreateFirmResponse) {}
+
+    // SetFirmSuspendState sets the firm suspension state.
+    rpc SetFirmSuspendState(SetFirmSuspendStateRequest) returns (SetFirmSuspendStateResponse) {}
+
+    // SetAssociatedClearingMemberFirms sets the clearing member associations for a given firm.
+    rpc SetAssociatedClearingMemberFirms(SetAssociatedClearingMemberFirmsRequest) returns (SetAssociatedClearingMemberFirmsResponse) {}
+
+    // GetAssociatedClearingMemberFirms gets the clearing member associations for a given firm.
+    rpc GetAssociatedClearingMemberFirms(GetAssociatedClearingMemberFirmsRequest) returns (GetAssociatedClearingMemberFirmsResponse) {}
+
+    // SetAssociatedClearingHouseFirms sets the clearing house associations for a given firm.
+    rpc SetAssociatedClearingHouseFirms(SetAssociatedClearingHouseFirmsRequest) returns (SetAssociatedClearingHouseFirmsResponse) {}
+
+    // GetAssociatedClearingHouseFirms gets the clearing house associations for a given firm.
+    rpc GetAssociatedClearingHouseFirms(GetAssociatedClearingHouseFirmsRequest) returns (GetAssociatedClearingHouseFirmsResponse) {}
+
+    // SetAffiliatedFirms sets the participant firm affiliates for a given firm.
+    rpc SetAffiliatedFirms(SetAffiliatedFirmsRequest) returns (SetAffiliatedFirmsResponse) {}
+
+    // GetAffiliatedFirms gets the participant firm affiliates for a given firm.
+    rpc GetAffiliatedFirms(GetAffiliatedFirmsRequest) returns (GetAffiliatedFirmsResponse) {}
+
+    // SetAssociatedRFQFirms sets the RFQ firm associations for a given firm.
+    rpc SetAssociatedRFQFirms(SetAssociatedRFQFirmsRequest) returns (SetAssociatedRFQFirmsResponse) {}
+
+    // GetAssociatedRFQFirms gets the RFQ firm associations for a given firm.
+    rpc GetAssociatedRFQFirms(GetAssociatedRFQFirmsRequest) returns (GetAssociatedRFQFirmsResponse) {}
+
+    // SetAssociatedAgentFirms sets the agent firm associations for a given firm.
+    rpc SetAssociatedAgentFirms(SetAssociatedAgentFirmsRequest) returns (SetAssociatedAgentFirmsResponse) {}
+
+    // GetAssociatedAgentFirms gets the agent firm associations for a given firm.
+    rpc GetAssociatedAgentFirms(GetAssociatedAgentFirmsRequest) returns (GetAssociatedAgentFirmsResponse) {}
+
+    // UpdateUserAttributes sets the user attributes.
+    rpc UpdateUserAttributes(UpdateUserAttributesRequest) returns (UpdateUserAttributesResponse) {}
+
+    // GetUserAttributes gets the user attributes.
+    rpc GetUserAttributes(GetUserAttributesRequest) returns (GetUserAttributesResponse) {}
+
+    // UpdateFirmAttributes sets the firm attributes.
+    rpc UpdateFirmAttributes(UpdateFirmAttributesRequest) returns (UpdateFirmAttributesResponse) {}
+
+    // GetFirmAttributes gets the firm attributes.
+    rpc GetFirmAttributes(GetFirmAttributesRequest) returns (GetFirmAttributesResponse) {}
+
+    // DeleteFirm deletes the firm matching the request.
+    rpc DeleteFirm(DeleteFirmRequest) returns (DeleteFirmResponse) {}
+
+    // GetFirm gets the firm matching the request.
+    rpc GetFirm(GetFirmRequest) returns (GetFirmResponse) {}
+
+    // ListFirms lists all known firms.
+    rpc ListFirms(ListFirmsRequest) returns (ListFirmsResponse) {}
+
+    // ListFirmAttributes lists the firm attributes.
+    rpc ListFirmAttributes(ListFirmAttributesRequest) returns (ListFirmAttributesResponse) {}
+
+    // ListParticipantGroups lists all known participant groups.
+    rpc ListParticipantGroups(ListParticipantGroupsRequest) returns (ListParticipantGroupsResponse) {}
+
+    // ListAccounts lists all known accounts.
+    rpc ListAccounts(ListAccountsRequest) returns (ListAccountsResponse) {}
+
+    // ListPositions lists positions matching the request.
+    rpc ListPositions(ListPositionsRequest) returns (ListPositionsResponse) {}
+
+    // AdjustPosition adjusts position in an account matching the request.
+    rpc AdjustPosition(AdjustPositionRequest) returns (AdjustPositionResponse) {}
+
+    //GetAccountBalance gets the balance for currency in an account.
+    rpc GetAccountBalance(GetAccountBalanceRequest) returns (GetAccountBalanceResponse) {}
+
+    //GetAccountBalanceLedger gets the balance ledger for a currency in an account.
+    rpc GetAccountBalanceLedger(GetAccountBalanceLedgerRequest) returns (GetAccountBalanceLedgerResponse) {}
+
+    //ListAccountBalances lists the currency balances in an account.
+    rpc ListAccountBalances(ListAccountBalancesRequest) returns (ListAccountBalancesResponse) {}
+
+    //AdjustAccountBalance updates the balance for currency in an account.
+    rpc AdjustAccountBalance(AdjustAccountBalanceRequest) returns (AdjustAccountBalanceResponse) {}
+
+    //SetAccountBalance sets the balance for currency in an account.
+    rpc SetAccountBalance(SetAccountBalanceRequest) returns (SetAccountBalanceResponse) {}
+
+    //SetAccountCapitalRequirement sets the capital requirement for a currency in an account.
+    rpc SetAccountCapitalRequirement(SetAccountCapitalRequirementRequest) returns (SetAccountCapitalRequirementResponse) {}
+
+    //SetAccountSecurityBalance sets the security balance to back the collateral for a base currency in an account.
+    rpc SetAccountSecurityBalance(SetAccountSecurityBalanceRequest) returns (SetAccountSecurityBalanceResponse) {}
+
+    //SetAccountSecurityMarketValue sets the security market value to back the collateral for a base currency in an account.
+    rpc SetAccountSecurityMarketValue(SetAccountSecurityMarketValueRequest) returns (SetAccountSecurityMarketValueResponse) {}
+
+    //ListSecurityDefinitions fetches security descriptions and types for each known identifier on the system.
+    rpc ListSecurityDefinitions(ListSecurityDefinitionsRequest) returns (ListSecurityDefinitionsResponse) {}
+
+    //SetSecurityDefinition assigns a description and type to a known identifier on the system for later reference.
+    rpc SetSecurityDefinition(SetSecurityDefinitionRequest) returns (SetSecurityDefinitionResponse) {}
+
+    //CreatePendingWithdrawal creates a request to withdraw currency from an account.
+    rpc CreatePendingWithdrawal(CreatePendingWithdrawalRequest) returns (CreatePendingWithdrawalResponse) {}
+
+    //ListPendingWithdrawals lists the pending withdrawals of an account.
+    rpc ListPendingWithdrawals(ListPendingWithdrawalsRequest) returns (ListPendingWithdrawalsResponse) {}
+
+    //DeletePendingWithdrawal deletes a pending withdrawal of an account.
+    rpc DeletePendingWithdrawal(DeletePendingWithdrawalRequest) returns (DeletePendingWithdrawalResponse) {}
+
+    //ApprovePendingWithdrawal approves a pending withdrawal of an account and applies the balance adjustment.
+    rpc ApprovePendingWithdrawal(ApprovePendingWithdrawalRequest) returns (ApprovePendingWithdrawalResponse) {}
+
+    // ListParticipants lists known participants.
+    rpc ListParticipants(ListParticipantsRequest) returns (ListParticipantsResponse) {}
+
+    // ListTradeCaptureReports lists trade capture reports given request filters.
+    rpc ListTradeCaptureReports(ListTradeCaptureReportsRequest) returns (ListTradeCaptureReportsResponse) {}
+
+    // StreamTradeCaptureReports streams trade capture reports specified by criteria in request.
+    rpc StreamTradeCaptureReports(StreamTradeCaptureReportsRequest) returns (stream StreamTradeCaptureReportsResponse) {}
+
+    // GetTradeCaptureReport gets a TCR.
+    rpc GetTradeCaptureReport(GetTradeCaptureReportRequest) returns (GetTradeCaptureReportResponse) {}
+
+    // ListTrades lists trades given request filters.
+    rpc ListTrades(ListTradesRequest) returns (ListTradesResponse) {}
+
+    //StreamTrades streams trades specified by criteria in request.
+    rpc StreamTrades(StreamTradesRequest) returns (stream StreamTradesResponse) {}
+
+    // GetTradeStats gets aggregated trade data for a given period of time.
+    rpc GetTradeStats(GetTradeStatsRequest) returns (GetTradeStatsResponse) {}
+
+    // BustTradeCaptureReport busts a pending TCR. This rpc is deprecated, see BustTrade for an alternative call.
+    rpc BustTradeCaptureReport(BustTradeCaptureReportRequest) returns (BustTradeCaptureReportResponse) {
+        option deprecated = true;
+    }
+
+    //BustTrade busts a trade.
+    rpc BustTrade(BustTradeRequest) returns (BustTradeResponse) {}
+
+    // CorrectTradeCaptureReport corrects a pending TCR.
+    rpc CorrectTradeCaptureReport(CorrectTradeCaptureReportRequest) returns (CorrectTradeCaptureReportResponse) {
+        option deprecated = true;
+    }
+
+    //UpdateTradeState sets a trade state.
+    rpc UpdateTradeState(UpdateTradeStateRequest) returns (UpdateTradeStateResponse) {}
+
+    // AcknowledgeTrade acknowledges receipt and the acceptance or rejection of the passive or aggressor side of the trade.
+    rpc AcknowledgeTrade(AcknowledgeTradeRequest) returns (AcknowledgeTradeResponse) {}
+
+    // GetFpmlTradeCaptureReport generates an fpml from a given trade capture report.
+    rpc GetFpmlTradeCaptureReport(GetFpmlTradeCaptureReportRequest) returns (GetFpmlTradeCaptureReportResponse) {}
+
+    // GetFpmlOrder generates an fpml from a given order.
+    rpc GetFpmlOrder(GetFpmlOrderRequest) returns (GetFpmlOrderResponse) {}
+
+    // GetFpmlQuote generates an fpml from a given quote.
+    rpc GetFpmlQuote(GetFpmlQuoteRequest) returns (GetFpmlQuoteResponse) {}
+
+    // CancelOrder requests cancellation of a working order.
+    rpc CancelOrder(CancelOrderRequest) returns (CancelOrderResponse) {}
+
+    // FindAndCancelOrders locates orders matching the given constraints and requests cancel.
+    rpc FindAndCancelOrders(FindAndCancelOrdersRequest) returns (FindAndCancelOrdersResponse) {}
+
+    // CreateParticipantAPIToken creates a signed token that can be used by participants to access API methods.
+    rpc CreateParticipantAPIToken(CreateParticipantAPITokenRequest) returns (CreateParticipantAPITokenResponse) {}
+
+    // CreateParticipantAdminToken creates a signed token that can be used by participants to access the Admin methods.
+    rpc CreateParticipantAdminToken(CreateParticipantAdminTokenRequest) returns (CreateParticipantAdminTokenResponse) {}
+
+    // RevokeTokens revokes all tokens that match the request.
+    rpc RevokeTokens(RevokeTokensRequest) returns (RevokeTokensResponse) {}
+
+    // CreateUserKey creates a new user key.
+    rpc CreateUserKey(CreateUserKeyRequest) returns (CreateUserKeyResponse) {}
+
+    // GetUserKey fetches a user key matching the request.
+    rpc GetUserKey(GetUserKeyRequest) returns (GetUserKeyResponse) {}
+
+    // ListUserKeys lists all user keys matching the request.
+    rpc ListUserKeys(ListUserKeysRequest) returns (ListUserKeysResponse) {}
+
+    // SetUserKeyRole sets the role of the user key matching the request.
+    rpc SetUserKeyRole(SetUserKeyRoleRequest) returns (SetUserKeyRoleResponse) {}
+
+    // RevokeUserKeyJti revokes the jti of the user key matching the request.
+    rpc RevokeUserKeyJti(RevokeUserKeyJtiRequest) returns (RevokeUserKeyJtiResponse) {}
+
+    // DeleteUserKey revokes a user key matching the request.
+    rpc DeleteUserKey(DeleteUserKeyRequest) returns (DeleteUserKeyResponse) {}
+
+    // ListRequestForQuotes lists all request for quotes matching the request.
+    rpc ListRequestForQuotes(ListRequestForQuotesRequest) returns (ListRequestForQuotesResponse) {}
+
+    // ListQuotes lists all quotes matching the request.
+    rpc ListQuotes(ListQuotesRequest) returns (ListQuotesResponse) {}
+
+    // UndeleteFirm restores a deleted firm.
+    rpc UndeleteFirm(UndeleteFirmRequest) returns (UndeleteFirmResponse) {}
+
+    // ListQuoteHistory retuns the list of quote history items.
+    rpc ListQuoteHistory(ListQuoteHistoryRequest) returns (ListQuoteHistoryResponse) {}
+
+    // ListRfqHistory retuns the list of RFQ history items.
+    rpc ListRfqHistory(ListRfqHistoryRequest) returns (ListRfqHistoryResponse) {}
+
+    // UndeleteAccount restores a deleted account.
+    rpc UndeleteAccount(UndeleteAccountRequest) returns (UndeleteAccountResponse) {}
+
+    // UndeleteParticipant restores a deleted user.
+    rpc UndeleteParticipant(UndeleteParticipantRequest) returns (UndeleteParticipantResponse) {}
+
+    // UpdateFirm updates an existing firm.
+    rpc UpdateFirm(UpdateFirmRequest) returns (UpdateFirmResponse) {}
+
+    // UpdateReportingCounterparty updates the reporting counterparty for an existing trade.
+    rpc UpdateReportingCounterparty(UpdateReportingCounterpartyRequest) returns (UpdateReportingCounterpartyResponse) {}
+
+    // SetCommission sets the commission assignment.
+    rpc SetCommission(SetCommissionRequest) returns (SetCommissionResponse) {}
+
+    // DeleteCommission deletes the commission assignment.
+    rpc DeleteCommission(DeleteCommissionRequest) returns (DeleteCommissionResponse) {}
+
+    // ListCommissions lists all known commissions.
+    rpc ListCommissions(ListCommissionsRequest) returns (ListCommissionsResponse) {}
+
+    // Download trades as csv.
+    rpc DownloadTrades(DownloadTradesRequest) returns (stream DownloadTradesResponse){}
+
+    // Download executions as csv.
+    rpc DownloadExecutions(DownloadExecutionsRequest) returns (stream DownloadExecutionsResponse){}
+
+    // Download orders as csv.
+    rpc DownloadOrders(DownloadOrdersRequest) returns (stream DownloadOrdersResponse){}
+
+    // GetLicense fetches the platform license information.
+    rpc GetLicense(GetLicenseRequest) returns (GetLicenseResponse) {}
+}
+
+message GetLicenseRequest {}
+
+message GetLicenseResponse {
+    // Client identifier for which the license has been issued.
+    string client_identifier = 1;
+
+    // Range of versions for which the license is valid.
+    string version_range = 2;
+
+    // Time at which the license will expire.
+    google.protobuf.Timestamp expiration_time = 3;
+}
+
+message DownloadTradesRequest {
+    // TradesRequest is a request parameter that contains query parameters to fetch trades.
+    ListTradesRequest trades_request = 1;
+}
+
+message DownloadTradesResponse {
+    // bytes array of file stream.
+    string filechunk = 1;
+}
+
+message DownloadExecutionsRequest {
+    // SearchExecutionsRequest is a request parameter that contains query parameters to fetch executions.
+    SearchExecutionsRequest search_executions_request = 1;
+}
+
+message DownloadExecutionsResponse {
+    // bytes array of file stream.
+    string filechunk = 1;
+}
+
+message DownloadOrdersRequest {
+    // SearchOrdersRequest is a request parameter that contains query parameters to fetch orders.
+    SearchOrdersRequest search_orders_request = 1;
+}
+
+message DownloadOrdersResponse {
+    // bytes array of file stream.
+    string filechunk = 1;
+}
+
+message GetUnAggregatedBookRequest {
+    // Symbol to request unaggregated book.
+    string symbol = 1;
+
+    // AsOfTime is an optional argument that can fetch the state of the book as of the last state transition prior to this time.
+    google.protobuf.Timestamp as_of_time = 2;
+}
+
+message GetUnAggregatedBookResponse {
+    // Symbol is the symbol for the book corresponding to this snapshot.
+    string symbol = 1;
+
+    // Snapshot is the current state of the book.
+    BookSnapshot snapshot = 2;
+}
+
+message SearchOrdersRequest {
+    // The maximum number of Orders to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // Exchange assigned Order ID.
+    string order_id = 3;
+
+    // Start time for the orders to be fetched.
+    google.protobuf.Timestamp start_time = 4;
+
+    // End time for the orders to be fetched.
+    google.protobuf.Timestamp end_time = 5;
+
+    // Participant to filter upon.
+    string participant = 6;
+
+    // Account to filter upon.
+    string account = 7;
+
+    // Side to filter upon.
+    orders.v1beta1.Side side = 8;
+
+    // Order Qty to filter upon.
+    int64 order_qty = 9;
+
+    // Symbol to filter upon.
+    string symbol = 10;
+
+    // Type to filter upon.
+    orders.v1beta1.OrderType type = 11;
+
+    // Client order ID to filter upon.
+    string clord_id = 12;
+
+    // Open or closed status of the order to filter upon.
+    orders.v1beta1.OrderStateFilter order_state_filter = 13;
+
+    // Client assigned Order Cross ID.
+    string cross_id = 14;
+
+    // Exchange generated Host Cross ID.
+    string host_cross_id = 15;
+
+    // Submitting participant to filter upon.
+    string submitting_participant = 16;
+
+    // Client account ID to filter upon.
+    string client_account_id = 17;
+
+    // Client participant ID to filter upon.
+    string client_participant_id = 18;
+
+    // Parent order ID to filter upon.
+    string parent_order_id = 19;
+
+    // Symbol sub type to filter upon.
+    string symbol_sub_type = 20;
+}
+
+message SearchOrdersResponse {
+    // A pagination token returned from a previous call to `SearchOrders`
+    // that indicates from where listing should continue.
+    string next_page_token = 1;
+
+    // The list of Orders returned.
+    repeated  ep3.v1beta1.Order orders = 2;
+}
+
+message SearchExecutionsRequest {
+    // The maximum number of Executions to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // Exchange assigned Order ID.
+    string order_id = 3;
+
+    // Order by earliest start time first.
+    bool newest_first = 4;
+
+    // Start time for the executions to be fetched.
+    google.protobuf.Timestamp start_time = 5;
+
+    // End time for the executions to be fetched.
+    google.protobuf.Timestamp end_time = 6;
+
+    // Participant to filter upon.
+    string participant = 7;
+
+    // Client order ID to filter upon.
+    string clord_id = 8;
+
+    // Symbol to filter upon.
+    string symbol = 9;
+
+    // Execution types to filter upon.
+    repeated orders.v1beta1.ExecutionType exec_types = 10;
+
+    // Submitting participant to filter upon.
+    string submitting_participant = 11;
+
+    // Accounts to filter upon.
+    repeated string accounts = 12;
+
+    // Client account ID to filter upon.
+    string client_account_id = 13;
+
+    // Client participant ID to filter upon.
+    string client_participant_id = 14;
+
+    // Parent order ID to filter upon.
+    string parent_order_id = 15;
+
+    // Symbol sub type to filter upon.
+    string symbol_sub_type = 16;
+}
+
+message SearchExecutionsResponse {
+    // A pagination token returned from a previous call to `SearchExecutions`
+    // that indicates from where listing should continue.
+    string next_page_token = 1;
+
+    // Executions found.
+    repeated ep3.v1beta1.Execution executions = 2;
+
+    // End of file indicating that the last page of results was searched so no more results are available.
+    bool eof = 3;
+}
+
+message StreamExecutionsRequest {
+    // A request parameter that contains query parameters to fetch executions.
+    SearchExecutionsRequest request = 1;
+
+    // If true, keep the connection open to capture new executions as they are inserted into the database.
+    bool stay_open = 2;
+}
+
+message StreamExecutionsResponse {
+    // A request parameter that contains query parameters to fetch executions.
+    SearchExecutionsResponse response = 1;
+}
+
+message SearchInstrumentStatsRequest {
+    // Symbol to filter upon.
+    string symbol = 1;
+
+    // Start time for the entries to be fetched.
+    google.protobuf.Timestamp start_time = 2;
+
+    // End time for the entries to be fetched.
+    google.protobuf.Timestamp end_time = 3;
+
+    // The maximum number of instrument stats entries to return in a response.
+    // This field is optional.
+    int32 page_size = 4;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 5;
+
+    // Order by earliest start time first.
+    bool newest_first = 6;
+}
+
+message SearchInstrumentStatsResponse {
+    // A list of instrument stats entries.
+    repeated instruments.v1beta1.InstrumentStats stats = 1;
+
+    // A list of corresponding transact times associated with each entry at the equivalent index.
+    repeated google.protobuf.Timestamp transact_time = 2;
+
+    // A pagination token returned from a previous call to `SearchInstrumentStats`
+    // that indicates from where listing should continue.
+    string next_page_token = 3;
+
+    // End of file indicating that the last page of results was searched so no more results are available.
+    bool eof = 4;
+}
+
+message CreateParticipantRequest {
+    // Participant is an entity that can place orders into the exchange.
+    Participant participant = 1;
+
+    // The parent resource where the User is to be created, a Firm name.
+    string parent = 2;
+}
+
+message CreateParticipantResponse {
+    // Participant is an entity that can place orders into the exchange.
+    Participant participant = 2;
+}
+
+message UpdateParticipantRequest {
+    // Participant is an entity that can place orders into the exchange.
+    Participant participant = 1;
+}
+
+message UpdateParticipantResponse {
+    // Participant is an entity that can place orders into the exchange.
+    Participant participant = 1;
+}
+
+message DeleteParticipantRequest {
+    // Participant is an entity that can place orders into the exchange.
+    string participant_id = 1;
+}
+
+message DeleteParticipantResponse {}
+
+message GetParticipantRequest {
+    // Participant is an entity that can place orders into the exchange.
+    string participant_id = 1;
+}
+
+message GetParticipantResponse {
+    // Participant is an entity that can place orders into the exchange.
+    Participant participant = 1;
+}
+
+message SetParticipantSuspendStateRequest {
+    // Participant is an entity that can place orders into the exchange.
+    string participant_id = 1;
+
+    // The new suspend state of the participant.
+    bool is_suspended = 2;
+}
+
+message SetParticipantSuspendStateResponse {
+    // Participant is an entity that can place orders into the exchange.
+    Participant participant = 1;
+}
+
+message SetParticipantRoleRequest {
+    // Participant is an entity that can place orders into the exchange.
+    string participant_id = 1;
+
+    // The role to assign to the participant.
+    ParticipantRole role = 2;
+}
+
+message SetParticipantRoleResponse {
+    // Participant is an entity that can place orders into the exchange.
+    Participant participant = 1;
+}
+
+message AddParticipantToGroupRequest {
+    // A list of Participants that can place orders into the exchange.
+    repeated string participant_ids = 1;
+
+    // The group id for the particpants to be added to.
+    string group_id = 2;
+}
+
+message AddParticipantToGroupResponse {}
+
+message RemoveParticipantFromGroupRequest {
+    // A list of Participants that can place orders into the exchange.
+    repeated string participant_ids = 1;
+
+    // The group id for the particpants to be removed from.
+    string group_id = 2;
+}
+
+message RemoveParticipantFromGroupResponse {}
+
+message AddUserToAccountRequest {
+    // A list of users to add to the account.
+    repeated string users = 1;
+
+    // The account for the users to be added to.
+    string account = 2;
+
+    // If provided, determines the customer order capacities of the users that shall be added to the account. Length must equal the users array.
+    repeated firms.v1beta1.CustomerOrderCapacity customer_order_capacities = 3;
+}
+
+message AddUserToAccountResponse {}
+
+message RemoveUserFromAccountRequest {
+    // A list of users to remove from the account.
+    repeated string users = 1;
+
+    // The account for the users to be removed from.
+    string account = 2;
+}
+
+message RemoveUserFromAccountResponse {}
+
+message ListParticipantsRequest {
+    // The maximum number of Participants to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // if set, filter returned participants belonging to a group.
+    string participant_group_id = 3;
+
+    // if set, filter returned participants belonging to a firm.
+    string firm = 4;
+
+    // if set, filter returned participants by their role.
+    ParticipantRole role = 5;
+
+    // if set, filter returned participants if they are a service user, otherwise filter as only standard participants.
+    bool service_user = 6;
+
+    // if set, filter returned users belonging to an account.
+    string account = 7;
+
+    // if set, filter returned deleted participants only.
+    bool show_deleted = 8;
+}
+
+message ListParticipantsResponse {
+    // A list of Participants that can place orders into the exchange.
+    repeated Participant participants = 1;
+
+    // A pagination token returned from a previous call to `ListParticipants`
+    // that indicates from where listing should continue.
+    string next_page_token = 2;
+}
+
+message CreateUserKeyRequest {
+    // UserKey is an entity that represents an API Key that can be used to access the exchange.
+    UserKey key = 1;
+}
+
+message CreateUserKeyResponse {
+    // UserKey is an entity that represents an API Key that can be used to access the exchange.
+    UserKey key = 1;
+}
+
+message GetUserKeyRequest {
+    // A unique identifier for the UserKey.
+    string jti = 1;
+}
+
+message GetUserKeyResponse {
+    // UserKey is an entity that represents an API Key that can be used to access the exchange.
+    UserKey key = 1;
+}
+
+message SetUserKeyRoleRequest {
+    // Common name for this UserKey to match to update the role.
+    string name = 1;
+
+    // User to match to update the role.
+    string user = 2;
+
+    // The role to assign to the UserKey.
+    ParticipantRole role = 3;
+
+    // Description of the UserKey.
+    string description = 4;
+}
+
+message SetUserKeyRoleResponse {
+    // UserKey is an entity that represents an API Key that can be used to access the exchange.
+    UserKey key = 1;
+}
+
+message RevokeUserKeyJtiRequest {
+    // Common name for this UserKey to revoke.
+    string name = 1;
+
+    // User of the UserKey to revoke.
+    string user = 2;
+}
+
+message RevokeUserKeyJtiResponse {
+    // UserKey is an entity that represents an API Key that can be used to access the exchange.
+    UserKey key = 1;
+}
+
+message ListUserKeysRequest {
+    // User to match to list the UserKeys.
+    string user = 1;
+}
+
+message ListUserKeysResponse {
+    // A list that represents API Keys that can be used to access the exchange.
+    repeated UserKey keys = 1;
+}
+
+message DeleteUserKeyRequest {
+    // Common name for this UserKey to delete.
+    string name = 1;
+
+    // User of the UserKey to delete.
+    string user = 2;
+}
+
+message DeleteUserKeyResponse {}
+
+message GetParticipantGroupRequest {
+    // The id for the participant group requested.
+    string participant_group_id = 1;
+}
+
+message GetParticipantGroupResponse {
+    // The participant group requested.
+    ParticipantGroup participant_group = 1;
+}
+
+message GetAccountRequest {
+    // The name uniquely identifies this account requested.
+    string name = 1;
+}
+
+message GetAccountResponse {
+    // The account requested.
+    Account account = 1;
+}
+
+message SetParticipantGroupSuspendStateRequest {
+    // The id for the participant group to set the suspend state of.
+    string participant_group_id = 1;
+
+    // The new suspend state of the participant group.
+    bool is_suspended = 2;
+}
+
+message SetParticipantGroupSuspendStateResponse {
+    // The participant group that was updated with a new suspend state.
+    ParticipantGroup participant_group = 1;
+}
+
+message SetAccountSuspendStateRequest {
+    // The name uniquely identifies this account to set the suspend state of.
+    string name = 1;
+
+    // The new suspend state of the account.
+    bool is_suspended = 2;
+}
+
+message SetAccountSuspendStateResponse {
+    // The account that was updated with a new suspend state.
+    Account account = 1;
+}
+
+message DeleteParticipantGroupRequest {
+    // The id for the participant group to delete.
+    string participant_group_id = 1;
+}
+
+message DeleteParticipantGroupResponse {}
+
+message DeleteAccountRequest {
+    // The name uniquely identifies this account to delete.
+    string name = 1;
+}
+
+message DeleteAccountResponse {}
+
+message ListParticipantGroupsRequest {
+    // The maximum number of Participants to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // if set, filter returned groups belonging to a firm.
+    string firm = 3;
+}
+
+message ListParticipantGroupsResponse {
+    // A list of ParticipantGroups that can place orders into the exchange that were requested.
+    repeated ParticipantGroup participant_groups = 1;
+}
+
+message ListAccountsRequest {
+    // The maximum number of Accounts to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // if set, filter returned accounts belonging to a firm.
+    string firm = 3;
+
+    // if true, filter returned only deleted accounts.
+    bool show_deleted = 4;
+}
+
+message ListAccountsResponse {
+    // A list of Accounts requested.
+    repeated Account accounts = 1;
+}
+
+message ListPositionsRequest {
+    // The maximum number of Positions to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // filter returned positions belonging to listed accounts.
+    repeated string accounts = 3;
+}
+
+message ListPositionsResponse {
+    // A list of Positions requested.
+    repeated ep3.v1beta1.Position positions = 1;
+
+    // A pagination token returned from a previous call to `ListPositions`
+    // that indicates where this listing should continue from.
+    string next_page_token = 2;
+
+    // End of file indicating that the last page of results was searched so no more results are available.
+    bool eof = 3;
+}
+
+message AdjustPositionRequest {
+    // An adjustment that represents a position update.
+    positions.v1beta1.PositionAdjustment adjustment = 1;
+}
+
+message AdjustPositionResponse {
+}
+
+message GetAccountBalanceRequest {
+    // Name uniquely identifies this account to get the balance.
+    string name = 1;
+
+    // Fiat currency.
+    string currency = 2;
+}
+
+message GetAccountBalanceResponse {
+    //Fixed point decimal fiat currency balance, not including any security values.
+    string balance = 1;
+
+    //Required amount of fiat currency balance that must be held in an account and cannot be used for trading.
+    string capital_requirement = 2;
+
+    //Amount of excess capital in the balance beyond the requirement, factoring in all security valuations.
+    string excess_capital = 3;
+
+    //Amount of unencumbered capital available for trading, factoring in all security valuations as well as any open orders. Set to empty string in the case of historical requests on the account ledger, otherwise represents the instantaneous buying power.
+    string buying_power = 4;
+
+    //SecurityEntry describes the detailed valuation of a security with respect to the market price and adjustments applied to augment a base currency's collateral.
+    message SecurityEntry {
+        // Amount of the security held in the account.
+        string balance = 1;
+
+        // The actual mark to market value of the security.
+        string market_value = 2;
+
+        // The haircut value of a single unit of the security ID in units of basis points (100 basis points is 1%).
+        int64 haircut = 3;
+
+        // Represents the notional value of the security, which is the balance multiplied by the market value.
+        string notional_value = 4;
+
+        // Represents the available collateral value of the security, which is the balance multiplied by the market value less the haircut percentage.
+        string available_value = 5;
+    }
+
+    //Securities mapped by ID to their detailed valuation with respect to the market price and adjustments applied.
+    map<string, SecurityEntry> securities = 5;
+
+    //Aggregate notional value of all securities.
+    string total_security_notional_value = 6;
+
+    //Aggregate available collateral value of all securities.
+    string total_security_available_value = 7;
+}
+
+message ListAccountBalancesRequest {
+    // Name uniquely identifies this account to get the list of balances.
+    string name = 1;
+}
+
+message ListAccountBalancesResponse {
+    // Balances mapped by currency key.
+    map<string, GetAccountBalanceResponse> balances = 1;
+}
+
+message GetAccountBalanceLedgerRequest {
+    // Account name.
+    string name = 1;
+
+    // Fiat currency.
+    string currency = 2;
+
+    // Description searches the eponymous field for the reason behind a change in the ledger, and supports Regexes.
+    string description = 3;
+
+    // Start of the time range.
+    google.protobuf.Timestamp start_time = 4;
+
+    // End of the time range.
+    google.protobuf.Timestamp end_time = 5;
+}
+
+message GetAccountBalanceLedgerResponse {
+    // BalanceChange holds a single change to account balance.
+    message BalanceChange {
+        // Balance before change.
+        GetAccountBalanceResponse before_balance = 1;
+
+        // Balance after change.
+        GetAccountBalanceResponse after_balance = 2;
+
+        // Description of why the balance change was made.
+        string description = 3;
+
+        // Time at which the balance change was made.
+        google.protobuf.Timestamp update_time = 4;
+
+        //ID of the security that was changed, if security was not changed, set to empty string.
+        string modified_security_id = 5;
+    }
+
+    // Ledger of all balance changes for a specific currency/account pair.
+    repeated BalanceChange ledger = 1;
+}
+
+message SetAccountBalanceRequest {
+    // Name uniquely identifies this account to set the balance.
+    string name = 1;
+
+    // Fiat currency.
+    string currency = 2;
+
+    // Balance to set.
+    string balance = 3;
+
+    // Description for why the balance was set.
+    string description = 4;
+}
+
+message SetAccountBalanceResponse {
+}
+
+message AdjustAccountBalanceRequest {
+    // Name uniquely identifies this account to adjust the balance.
+    string name = 1;
+
+    // Fiat currency.
+    string currency = 2;
+
+    // Adjustment amount.
+    string delta = 3;
+
+    //Description of why the balance adjustment was made.
+    string description = 4;
+
+    //Account name for the source of these funds, indicating a transfer of assets from one account to the next. This field is optional.
+    string source_account_name = 5;
+}
+
+message AdjustAccountBalanceResponse {
+}
+
+message SetAccountCapitalRequirementRequest {
+    //Account name.
+    string name = 1;
+
+    //Fiat currency.
+    string currency = 2;
+
+    //Capital requirement to set.
+    string capital_requirement = 3;
+
+    //Description for why the capital requirement was set.
+    string description = 4;
+}
+
+message SetAccountCapitalRequirementResponse {
+}
+
+message SetAccountSecurityBalanceRequest {
+    //Account name.
+    string name = 1;
+
+    //Fiat currency.
+    string currency = 2;
+
+    //Security ID, which may be a CUSIP, market symbol, or similar unique identifier.
+    string security_id = 3;
+
+    //Balance to set.
+    string balance = 4;
+
+    //Description for why the security balance was set.
+    string description = 5;
+}
+
+message SetAccountSecurityBalanceResponse {
+}
+
+message SetAccountSecurityMarketValueRequest {
+    //Account name.
+    string name = 1;
+
+    //Fiat currency.
+    string currency = 2;
+
+    //Security ID, which may be a CUSIP, market symbol, or similar unique identifier.
+    string security_id = 3;
+
+    //Market value of a single unit of the security ID in terms of the base currency.
+    string market_value = 4;
+
+    //Haircut value of a single unit of the security ID in units of basis points (100 basis points is 1%).
+    int64 haircut = 5;
+
+    //Description for why the security market value and haircut was set.
+    string description = 6;
+}
+
+message SetAccountSecurityMarketValueResponse {
+}
+
+message ListSecurityDefinitionsRequest {
+    //An optional subset of security identifiers to fetch for descriptions, returns all known values if left blank.
+    repeated string definitions = 1;
+}
+
+message ListSecurityDefinitionsResponse {
+    //A set of security definitions keyed by the security identifier.
+    map<string, risk.v1beta1.SecurityDefinition> definitions = 1;
+}
+
+message SetSecurityDefinitionRequest {
+    //The security definition to store.
+    risk.v1beta1.SecurityDefinition definition = 1;
+}
+
+message SetSecurityDefinitionResponse {}
+
+message CreatePendingWithdrawalRequest {
+    //Account name.
+    string name = 1;
+
+    //Fiat currency.
+    string currency = 2;
+
+    //Balance to withdraw.
+    string balance = 3;
+
+    //Description for the withdrawal request.
+    string description = 4;
+}
+
+message CreatePendingWithdrawalResponse {
+    //The newly created pending withdrawal.
+    risk.v1beta1.PendingWithdrawal withdrawal = 1;
+}
+
+message ListPendingWithdrawalsRequest {
+    //Account name.
+    string name = 1;
+}
+
+message ListPendingWithdrawalsResponse {
+    //List of pending withdrawals for the account.
+    repeated risk.v1beta1.PendingWithdrawal withdrawals = 1;
+}
+
+message DeletePendingWithdrawalRequest {
+    //Unique identifier for the withdrawal.
+    string id = 1;
+}
+
+message DeletePendingWithdrawalResponse {}
+
+message ApprovePendingWithdrawalRequest {
+    //Unique identifier for the withdrawal.
+    string id = 1;
+}
+
+message ApprovePendingWithdrawalResponse {}
+
+
+message CreateFirmRequest {
+    // Parameters for the new Firm to create.
+    Firm firm = 1;
+}
+
+message CreateFirmResponse {
+    // The newly created Firm.
+    Firm firm = 2;
+}
+
+message DeleteFirmRequest {
+    // The fully qualified resource name of the firm to delete.
+    string name = 1;
+}
+
+message DeleteFirmResponse {}
+
+message ListFirmsRequest {
+    // The type of firms to request a list of.
+    FirmType type = 1;
+
+    // Show deleted firms in the returned list.
+    bool show_deleted = 2;
+}
+
+message ListFirmsResponse {
+    // A list of Firms requested.
+    repeated Firm firms = 1;
+}
+
+message ListFirmAttributesRequest {
+    // The legal name of the firm attributes.
+    string legal_name = 1;
+
+    // The phone number of the firm attributes.
+    string phone_number = 2;
+
+    // The email address of the firm attributes.
+    string email = 3;
+
+    // The legal entity id of the firm attributes.
+    string legal_entity_identifier = 4;
+
+    // The type of participant firm attributes.
+    FirmParticipantType participant_type = 5;
+
+    // The business contact name of the firm attributes.
+    string business_contact_name = 6;
+}
+
+message ListFirmAttributesResponse {
+    // The list of parents requested.
+    repeated string parents = 1;
+
+    // The list of firm attributes requested.
+    repeated FirmAttributes attributes = 2;
+}
+
+message GetFirmRequest {
+    // The fully qualified resource name of the firm to request.
+    string name = 1;
+}
+
+message GetFirmResponse {
+    // The requested Firm.
+    Firm firm = 1;
+}
+
+message SetFirmSuspendStateRequest {
+    // The fully qualified resource name of the firm to set the suspend state of.
+    string name = 1;
+
+    // The new suspend state of the firm.
+    bool is_suspended = 2;
+}
+
+message SetFirmSuspendStateResponse {
+    // The Firm that was updated with a new suspend state.
+    Firm firm = 1;
+}
+
+message SetAssociatedClearingMemberFirmsRequest {
+    // The name of the firm to set the associated clearing member firms of.
+    string firm = 1;
+
+    // The list of associated clearing member firms to set associated to the firm.
+    repeated string associated_firms = 2;
+}
+
+message SetAssociatedClearingMemberFirmsResponse {
+    // The associated firms that were set to the requested firm.
+    repeated string associated_firms = 1;
+}
+
+message GetAssociatedClearingMemberFirmsRequest {
+    // The name of the firm to get the associated clearing member firms of.
+    string firm = 1;
+}
+
+message GetAssociatedClearingMemberFirmsResponse {
+    // The associated firms that were requested.
+    repeated string associated_firms = 1;
+}
+
+message SetAssociatedClearingHouseFirmsRequest {
+    // The name of the firm to set the associated clearing house firms of.
+    string firm = 1;
+
+    // The list of associated clearing house firms to set associated to the firm.
+    repeated string associated_firms = 2;
+}
+
+message SetAssociatedClearingHouseFirmsResponse {
+    // The associated firms that were set to the requested firm.
+    repeated string associated_firms = 1;
+}
+
+message GetAssociatedClearingHouseFirmsRequest {
+    // The name of the firm to get the associated clearing house firms of.
+    string firm = 1;
+}
+
+message GetAssociatedClearingHouseFirmsResponse {
+    // The associated firms that were requested.
+    repeated string associated_firms = 1;
+}
+
+message SetAffiliatedFirmsRequest {
+    // The name of the firm to set affiliated firms of.
+    string firm = 1;
+
+    // The list of affiliated firms to set affiliated to the firm.
+    repeated string affiliated_firms = 2;
+}
+
+message SetAffiliatedFirmsResponse {
+    // The affiliated firms that were set to the requested firm.
+    repeated string affiliated_firms = 1;
+}
+
+message GetAffiliatedFirmsRequest {
+    // The name of the firm to get affiliated firms of.
+    string firm = 1;
+}
+
+message GetAffiliatedFirmsResponse {
+    // The affiliated firms that were requested.
+    repeated string affiliated_firms = 1;
+}
+
+message SetAssociatedRFQFirmsRequest {
+    // The name of the firm to set the associated RFQ firms of.
+    string firm = 1;
+
+    // The list of associated RFQ firms to set associated to the firm.
+    repeated string associated_firms = 2;
+}
+
+message SetAssociatedRFQFirmsResponse {
+    // The associated firms that were set to the requested firm.
+    repeated string associated_firms = 1;
+}
+
+message GetAssociatedRFQFirmsRequest {
+    // The name of the firm to get the associated RFQ firms of.
+    string firm = 1;
+}
+
+message GetAssociatedRFQFirmsResponse {
+    // The associated firms that were requested.
+    repeated string associated_firms = 1;
+}
+
+message SetAssociatedAgentFirmsRequest {
+    // The name of the firm to set the associated agent firms of.
+    string firm = 1;
+
+    // The list of associated agent firms to set associated to the firm.
+    repeated string associated_firms = 2;
+}
+
+message SetAssociatedAgentFirmsResponse {
+    // The associated firms that were set to the requested firm.
+    repeated string associated_firms = 1;
+}
+
+message GetAssociatedAgentFirmsRequest {
+    // The name of the firm to get the associated agent firms of.
+    string firm = 1;
+}
+
+message GetAssociatedAgentFirmsResponse {
+    // The associated firms that were requested.
+    repeated string associated_firms = 1;
+}
+
+message UpdateUserAttributesRequest {
+    // The parent to identify which user attributes to update.
+    string parent = 1;
+
+    // The user attributes to update.
+    UserAttributes attributes = 2;
+}
+
+message UpdateUserAttributesResponse {
+    // The updated user attributes.
+    UserAttributes attributes = 1;
+}
+
+message GetUserAttributesRequest {
+    // The parent to identify which user attributes to get.
+    string parent = 1;
+}
+
+message GetUserAttributesResponse {
+    // The requested user attributes.
+    UserAttributes attributes = 1;
+}
+
+message UpdateFirmAttributesRequest {
+    // The parent to identify which firm attributes to update.
+    string parent = 1;
+
+    // The firm attributes to update.
+    FirmAttributes attributes = 2;
+}
+
+message UpdateFirmAttributesResponse {
+    // The updated firm attributes.
+    FirmAttributes attributes = 1;
+}
+
+message GetFirmAttributesRequest {
+    // The parent to identify which firm attributes to get.
+    string parent = 1;
+}
+
+message GetFirmAttributesResponse {
+    // The requested firm attributes.
+    FirmAttributes attributes = 1;
+}
+
+message ListTradeCaptureReportsRequest {
+    // The maximum number of TCR to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // Start time for the trades to be fetched as tcrs.
+    google.protobuf.Timestamp start_time = 3;
+
+    // End time for the trades to be fetched as tcrs.
+    google.protobuf.Timestamp end_time = 4;
+
+    // Participant to filter upon.
+    string participant = 5;
+
+    // Order ID to filter upon.
+    string order_id = 6;
+
+    // Trade ID to filter upon.
+    string trade_id = 7;
+
+    // Execution ID to filter upon.
+    string exec_id = 8;
+
+    // Symbol to filter upon.
+    string symbol = 9;
+
+    // Order by earliest start time first.
+    bool newest_first = 10;
+
+    // TradeType to filter upon.
+    trades.v1beta1.TradeType trade_type = 11;
+
+    // Accounts to filter upon.
+    repeated string accounts = 12;
+
+    // Client account ID to filter upon.
+    string client_account_id = 13;
+
+    // Client participant ID to filter upon.
+    string client_participant_id = 14;
+
+    // Trade states to filter upon.
+    repeated trades.v1beta1.TradeState states = 15;
+
+    // Parent order ID to filter upon.
+    string parent_order_id = 16;
+
+    // Symbol Sub Type to filter upon.
+    string symbol_sub_type = 17;
+}
+
+message ListTradeCaptureReportsResponse {
+    // The list of trade capture reports requested.
+    repeated TradeCaptureReport reports = 1;
+
+    // A pagination token returned from a previous call to `ListTradeCaptureReports`
+    // that indicates where this listing should continue from.
+    string next_page_token = 2;
+
+    // End of file indicating that the last page of results was searched so no more results are available.
+    bool eof = 3;
+}
+
+message GetTradeCaptureReportRequest {
+    // The id of the trade capture report to get.
+    string tcr_id = 1;
+}
+
+message GetTradeCaptureReportResponse {
+    // The requested trade capture report.
+    TradeCaptureReport trade_capture_report = 1;
+}
+
+message UpdateReportingCounterpartyRequest {
+    // The trade id of the reporting counterparty to update.
+    string trade_id = 1;
+
+    // The reporting counterparty to update.
+    orders.v1beta1.Side reporting_counterparty = 2;
+}
+
+message UpdateReportingCounterpartyResponse {
+}
+
+message ListTradesRequest {
+    // The maximum number of Trades to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call to `ListTrades`
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // Order by earliest start time first.
+    bool newest_first = 3;
+
+    // Start time for the trades to be fetched.
+    google.protobuf.Timestamp start_time = 4;
+
+    // End time for the trades to be fetched.
+    google.protobuf.Timestamp end_time = 5;
+
+    // Participant to filter upon.
+    string participant = 6;
+
+    // Order ID to filter upon.
+    string order_id = 7;
+
+    // Trade ID to filter upon.
+    string trade_id = 8;
+
+    // Symbol to filter upon.
+    string symbol = 9;
+
+    // TradeType to filter upon.
+    trades.v1beta1.TradeType trade_type = 10;
+
+    // Exec ID to filter upon.
+    string exec_id = 11;
+
+    // Accounts to filter upon.
+    repeated string accounts = 12;
+
+    // Client account ID to filter upon.
+    string client_account_id = 13;
+
+    // Client participant ID to filter upon.
+    string client_participant_id = 14;
+
+    // Trade states to filter upon.
+    repeated trades.v1beta1.TradeState states = 15;
+
+    // Parent order ID to filter upon.
+    string parent_order_id = 16;
+
+    // Symbol Sub Type to filter upon.
+    string symbol_sub_type = 17;
+}
+
+message ListTradesResponse {
+    // The list of trades requested.
+    repeated admin.v1beta1.Trade trades = 1;
+
+    // A pagination token returned from a previous call to `ListTrades`
+    // that indicates where this listing should continue from.
+    string next_page_token = 2;
+
+    // End of file indicating that the last page of results was searched so no more results are available.
+    bool eof = 3;
+}
+
+message StreamTradesRequest {
+    ListTradesRequest request = 1;
+
+    //If true, keep the connection open to capture new trades as they are inserted into the database.
+    bool stay_open = 2;
+}
+
+message StreamTradesResponse {
+    ListTradesResponse response = 1;
+}
+
+message StreamTradeCaptureReportsRequest {
+    ListTradeCaptureReportsRequest request = 1;
+
+    //If true, keep the connection open to capture new trade capture reports as they are inserted into the database.
+    bool stay_open = 2;
+}
+
+message StreamTradeCaptureReportsResponse {
+    ListTradeCaptureReportsResponse response = 1;
+}
+
+message GetTradeStatsRequest {
+    // Symbol to filter upon.
+    string symbol = 1;
+
+    // Start time for the trade data time window.
+    google.protobuf.Timestamp start_time = 2;
+
+    // End time for the trade data time window.
+    google.protobuf.Timestamp end_time = 3;
+}
+
+message GetTradeStatsResponse {
+    // The stats calculated in the given time window.
+    trades.v1beta1.TradeStats stats = 1;
+}
+
+message CreateParticipantGroupRequest {
+    // The participant group to create.
+    ParticipantGroup participant_group = 1;
+}
+
+message CreateParticipantGroupResponse {
+    // The created participant group.
+    ParticipantGroup participant_group = 1;
+}
+
+message CreateAccountRequest {
+    // The account to create.
+    Account account = 1;
+
+    // The parent resource where the User is to be created, a Firm name.
+    string parent = 2;
+}
+
+message CreateAccountResponse {
+    // The created account.
+    Account account = 1;
+}
+
+message UpdateAccountRequest {
+    // The account to update.
+    Account account = 1;
+}
+
+message UpdateAccountResponse {
+    // The updated account.
+    Account account = 1;
+}
+
+message BustTradeCaptureReportRequest {
+    // The id of the trade capture report to bust.
+    string tcr_id = 1;
+}
+
+message BustTradeCaptureReportResponse {
+    // The busted trade capture report.
+    TradeCaptureReport trade_capture_report = 1;
+}
+
+message BustTradeRequest {
+    // The id of the trade to bust.
+    string trade_id = 1;
+
+    // Additional detail regarding why the trade was busted. This field is optional.
+    string text = 2;
+}
+
+message BustTradeResponse {
+}
+
+message CorrectTradeCaptureReportRequest {
+    // The id of the trade capture report to correct.
+    string tcr_id = 1;
+
+    // The correct quantity to apply to the trade capture report.
+    int64 update_qty = 2;
+
+    // The correct price to apply to the trade capture report.
+    int64 update_price = 3;
+}
+
+message CorrectTradeCaptureReportResponse {
+    // The corrected trade capture report.
+    TradeCaptureReport trade_capture_report = 1;
+}
+
+message UpdateTradeStateRequest {
+    // The id of the trade state to update.
+    string trade_id = 1;
+
+    // The new trade state to apply.
+    trades.v1beta1.TradeState state = 2;
+
+    // Additional detail regarding the trade state update. This field is optional.
+    string text = 3;
+}
+
+message UpdateTradeStateResponse {}
+
+message AcknowledgeTradeRequest {
+    // The id of the trade to acknowledge.
+    string trade_id = 1;
+
+    // The aggressor or passive side of the trade to acknowledge.
+    trades.v1beta1.TradeSide trade_side = 2;
+
+    // If true, indicates acceptance of the trade.
+    bool accept = 3;
+
+    // If accept is false, contains detail regarding the rejection.
+    string reject_text = 4;
+}
+
+message AcknowledgeTradeResponse {}
+
+message GetFpmlTradeCaptureReportRequest {
+    // The config file that corresponds to the FPML Generator
+    fpml.v1beta1.GeneratorConfig fpml_generator_config = 1;
+
+    // The ID of the TCR
+    string trade_capture_report_id = 2;
+}
+
+message GetFpmlTradeCaptureReportResponse {
+    // The Trade received from the FPML TCR request
+    string fpml_trade = 1;
+}
+
+message GetFpmlOrderRequest {
+    // The config file that corresponds to the FPML Generator
+    fpml.v1beta1.GeneratorConfig fpml_generator_config = 1;
+
+    // The ID of the order
+    string order_id = 2;
+}
+
+message GetFpmlOrderResponse {
+    // The Trade received from the FPML order request
+    string fpml_trade = 1;
+}
+
+message GetFpmlQuoteRequest {
+    // The config file that corresponds to the FPML Generator
+    fpml.v1beta1.GeneratorConfig fpml_generator_config = 1;
+
+    // The name of the quote
+    string quote_name = 2;
+}
+
+message GetFpmlQuoteResponse {
+    // The Trade received from the FPML quote request
+    string fpml_trade = 1;
+}
+
+message CancelOrderRequest {
+    // Exchange assigned ID for the order to be cancelled.
+    string order_id = 1;
+
+    // Client assigned ID for the order cancel.
+    string clord_id = 2;
+
+    // Symbol of the order to be cancelled.
+    string symbol = 3;
+}
+
+message CancelOrderResponse {}
+
+message FindAndCancelOrdersRequest{
+    // if set, all orders matching the given symbol should be cancelled.
+    string symbol = 1;
+
+    // if set, all orders matching the given accounts should be cancelled.
+    repeated string accounts = 2;
+}
+
+message FindAndCancelOrdersResponse{}
+
+message CreateParticipantAPITokenRequest {
+    // Participant is an entity that can place orders into the exchange.
+    string participant_id = 1;
+
+    // The Duration of time to live for the token.
+    google.protobuf.Duration time_to_live_duration = 2;
+
+    // The permissions to assign to the token.
+    string service_user_token_name = 3;
+
+    // To determine if the API token is single use or not.
+    bool single_use = 4;
+}
+
+message CreateParticipantAPITokenResponse {
+    // The created API token.
+    string token = 1;
+
+    // The issue time of the token.
+    google.protobuf.Timestamp issue_time = 2;
+
+    // The expiration time of the token.
+    google.protobuf.Timestamp expiration_time = 3;
+}
+
+message CreateParticipantAdminTokenRequest {
+    // Participant is an entity that can place orders into the exchange.
+    string participant_id = 1;
+
+    // The Duration of time to live for the token.
+    google.protobuf.Duration time_to_live_duration = 2;
+
+    // The permissions to assign to the token.
+    string service_user_token_name = 3;
+
+    // To determine if the API token is single use or not.
+    bool single_use = 4;
+}
+
+message CreateParticipantAdminTokenResponse {
+    // The created API token.
+    string token = 1;
+
+    // The issue time of the token.
+    google.protobuf.Timestamp issue_time = 2;
+    
+    // The expiration time of the token.
+    google.protobuf.Timestamp expiration_time = 3;
+}
+
+message RevokeTokensRequest {
+    // The user to revoke tokens for.
+    string user = 1;
+
+    // The firm to revoke tokens for.
+    string firm = 2;
+}
+
+message RevokeTokensResponse {}
+
+message ListRequestForQuotesRequest {
+    // The maximum number of requests for quotes returned in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // The user for the list of requests for quotes to be fetched.
+    string user = 3;
+    
+    // The account for the list of requests for quotes to be fetched.
+    string account = 4;
+
+    // The symbol for the list of requests for quotes to be fetched.
+    string symbol = 5;
+    
+    // The quote request id for the list of requests for quotes to be fetched.
+    string quote_request_id = 6;
+
+    // The client id for the list of requests for quotes to be fetched.
+    string client_id = 7;
+
+    // The side of the order for the list of requests for quotes to be fetched.
+    orders.v1beta1.Side side = 8;
+
+    // The status of the order for the list of requests for quotes to be fetched.
+    repeated quotes.v1beta1.QuoteStatus statuses = 9;
+
+    // Start time for the list of requests for quotes to be fetched.
+    google.protobuf.Timestamp start_time = 10;
+
+    // End time for the list of requests for quotes to be fetched.
+    google.protobuf.Timestamp end_time = 11;
+
+    // The firms assigned to receive or that submitted an RFQ.
+    repeated string firms = 13;
+    string submitting_user = 14;
+
+    // If true, only return two sided request for quotes.
+    bool only_two_sided = 15;
+}
+
+message ListRequestForQuotesResponse {
+    // The list of requests for quotes.
+    repeated ep3.v1beta1.RequestForQuote request_for_quotes = 1;
+
+    // A pagination token returned from a previous call to `ListRequestForQuotes`
+    // that indicates from where listing should continue.
+    string next_page_token = 2;
+
+    // End of file indicating that the last page of results was searched so no more results are available.
+    bool eof = 3;
+}
+
+message ListQuotesRequest {
+    // The maximum number of objects to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // The user for the list of quotes to be fetched.
+    string user = 3;
+
+    // The account for the list of quotes to be fetched.
+    string account = 4;
+
+    // The symbol for the list of quotes to be fetched.
+    string symbol = 5;
+
+    // The quote request id for the list of quotes to be fetched.
+    string quote_request_id = 6;
+
+    // The quote id for the list of quotes to be fetched.
+    string quote_id = 7;
+
+    // The client id for the list of quotes to be fetched.
+    string client_id = 8;
+
+    // The side of the order for the list of quotes to be fetched.
+    orders.v1beta1.Side side = 9;
+
+    // The status of the order for the list of quotes to be fetched.
+    repeated quotes.v1beta1.QuoteStatus statuses = 10;
+
+    // Start time for the objects to be fetched.
+    google.protobuf.Timestamp start_time = 11;
+
+    // End time for the objects to be fetched.
+    google.protobuf.Timestamp end_time = 12;
+
+    // The firm for the list of quotes to be fetched.
+    string firm = 13;
+
+    // The submitting user for the list of quotes to be fetched.
+    string submitting_user = 14;
+}
+
+message ListQuotesResponse {
+    // The list of quotes.
+    repeated ep3.v1beta1.Quote quotes = 1;
+
+    // A pagination token returned from a previous call to `ListQuotes`
+    // that indicates from where listing should continue.
+    string next_page_token = 2;
+
+    // End of file indicating that the last page of results was searched so no more results are available.
+    bool eof = 3;
+}
+
+message UndeleteFirmRequest {
+    // The fully qualified resource name of the firm to be undeleted.
+    string name = 1;
+}
+
+message UndeleteFirmResponse {
+    // The undeleted firm.
+    Firm firm = 1;
+}
+
+message ListQuoteHistoryRequest {
+    // The maximum number of objects to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // The name of the request for quote.
+    string rfq_name = 3;
+}
+
+message ListQuoteHistoryResponse {
+    // The list of events quotes.
+    repeated quotes.v1beta1.Quote quotes = 1;
+
+    // A pagination token returned from a previous call to `ListQuoteHistory`
+    // that indicates from where listing should continue.
+    string next_page_token = 2;
+
+    // End of file indicating that the last page of results was searched so no more results are available.
+    bool eof = 3;
+}
+
+message ListRfqHistoryRequest {
+    // The maximum number of objects to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // The name of the request for quote.
+    string rfq_name = 3;
+}
+
+message ListRfqHistoryResponse {
+    // The list of events on RFQ.
+    repeated quotes.v1beta1.RequestForQuote request_for_quotes = 1;
+
+    // A pagination token returned from a previous call to `ListRfqHistory`
+    // that indicates from where listing should continue.
+    string next_page_token = 2;
+
+    // End of file indicating that the last page of results was searched so no more results are available.
+    bool eof = 3;
+}
+
+message UndeleteAccountRequest {
+    // The name uniquely identifies this account to be undeleted.
+    string name = 1;
+}
+
+message UndeleteAccountResponse {
+    // The undeleted account.
+    Account account = 1;
+}
+
+message UndeleteParticipantRequest {
+    // The name uniquely identifies this participant to be undeleted.
+    string name = 1;
+}
+
+message UndeleteParticipantResponse {
+    // The undeleted participant.
+    Participant participant = 1;
+}
+
+message UpdateFirmRequest {
+    // The firm to be updated.
+    Firm firm = 1;
+}
+
+message UpdateFirmResponse {
+    // The updated firm.
+    Firm firm = 1;
+}
+
+message SetCommissionRequest {
+    // The commission to be set.
+    firms.v1beta1.CommissionAssignment commission = 1;
+}
+
+message SetCommissionResponse {
+    // The set commission.
+    firms.v1beta1.CommissionAssignment commission = 1;
+}
+
+message DeleteCommissionRequest {
+    // The commission to be deleted.
+    firms.v1beta1.CommissionRule rule = 1;
+}
+
+message DeleteCommissionResponse {
+    // The deleted commission.
+    firms.v1beta1.CommissionAssignment commission = 1;
+}
+
+message ListCommissionsRequest {}
+
+message ListCommissionsResponse {
+    // The list of commissions requested.
+    repeated firms.v1beta1.CommissionAssignment commissions = 1;
+}

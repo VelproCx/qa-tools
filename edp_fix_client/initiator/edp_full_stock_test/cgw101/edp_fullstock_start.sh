@@ -5,8 +5,8 @@
 
 
 #!/bin/sh
-cd /initiator/rolx_full_stock_test/cgw101
+cd /initiator/edp_full_stock_test/cgw101
 sleep 5
-python3 rol_load_client.py rol_load_client.cfg
+python3 edp_fullstock_client.py edp_fullstock_client.cfg
 
 

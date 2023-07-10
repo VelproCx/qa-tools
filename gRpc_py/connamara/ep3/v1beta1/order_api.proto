@@ -1,0 +1,228 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.v1beta1;
+
+option go_package = "ep3v1beta1";
+option java_package = "com.connamara.ep3.v1beta1";
+option java_outer_classname = "OrderApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.V1Beta1";
+option objc_class_prefix = "CEX";
+
+import "connamara/ep3/v1beta1/api.proto";
+import "connamara/ep3/orders/v1beta1/orders.proto";
+import "connamara/ep3/trades/v1beta1/trades.proto";
+import "google/protobuf/timestamp.proto";
+
+// OrderAPI is the API Surface for connected clients to query order and order history.
+service OrderAPI {
+    // SearchOrders searches for exchange orders using the given details to filter and returns a list of the found orders.
+    rpc SearchOrders(SearchOrdersRequest) returns (SearchOrdersResponse) {}
+
+    // SearchExecutions searches for exchange executions using the given details to filter and returns a list of the found executions.
+    rpc SearchExecutions(SearchExecutionsRequest) returns (SearchExecutionsResponse) {}
+
+    // SearchTrades searches for exchange trades using the given details to filter and returns a list of the found trades.
+    rpc SearchTrades(SearchTradesRequest) returns (SearchTradesResponse) {}
+
+    // DownlaodTrades searches for exchange trades using the given details to filter and returns the trades as a csv file stream.
+    rpc DownloadTrades(DownloadTradesRequest) returns (stream DownloadTradesResponse){}
+
+    // DownloadExecutions searches for exchange executions using the given details to filter and returns the executions as a csv file stream.
+    rpc DownloadExecutions(DownloadExecutionsRequest) returns (stream DownloadExecutionsResponse){}
+
+    // DownloadOrders searches for exchange orders using the given details to filter and returns the orders as a csv file stream.
+    rpc DownloadOrders(DownloadOrdersRequest) returns (stream DownloadOrdersResponse){}
+}
+
+// Request to download trades filtered using the given details as a csv.
+message DownloadTradesRequest {
+    // Start time for the trades to be fetched.
+    google.protobuf.Timestamp start_time = 1;
+
+    // End time for the trades to be fetched.
+    google.protobuf.Timestamp end_time = 2;
+
+    // Fully qualified resource account names to filter upon (ie: "firms/[firmid]/accounts/[accountid]").
+    repeated string accounts = 3;
+}
+
+message DownloadTradesResponse {
+    // bytes array of file stream.
+    string filechunk = 1;
+}
+
+// Request to download executions filtered using the given details as a csv.
+message DownloadExecutionsRequest {
+    // Start time for the executions to be fetched.
+    google.protobuf.Timestamp start_time = 1;
+
+    // End time for the executions to be fetched.
+    google.protobuf.Timestamp end_time = 2;
+
+    // Fully qualified resource account names to filter upon (ie: "firms/[firmid]/accounts/[accountid]").
+    repeated string accounts = 3;
+}
+
+message DownloadExecutionsResponse {
+    // bytes array of file stream.
+    string filechunk = 1;
+}
+
+// Request to download orders filtered using the given details as a csv.
+message DownloadOrdersRequest {
+    // Start time for the orders to be fetched.
+    google.protobuf.Timestamp start_time = 1;
+
+    // End time for the orders to be fetched.
+    google.protobuf.Timestamp end_time = 2;
+
+    // Fully qualified resource account names to filter upon (ie: "firms/[firmid]/accounts/[accountid]").
+    repeated string accounts = 3;
+}
+
+message DownloadOrdersResponse {
+    // bytes array of file stream.
+    string filechunk = 1;
+}
+
+// Request to search for orders filtered using the given details.
+message SearchOrdersRequest {
+    // The maximum number of orders to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call to `SearchOrdersRequest`.
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // Exchange assigned order ID of the order to filter upon.
+    string order_id = 3;
+
+    // Client assigned order ID to filter upon.
+    string clord_id = 4;
+
+    // Start time for the orders to be fetched.
+    google.protobuf.Timestamp start_time = 5;
+
+    // End time for the orders to be fetched.
+    google.protobuf.Timestamp end_time = 6;
+
+    // Instrument symbol to filter upon.
+    string symbol = 7;
+
+    // Fully qualified resource account names to filter upon (ie: "firms/[firmid]/accounts/[accountid]").
+    repeated string accounts = 8;
+}
+
+message SearchOrdersResponse {
+    // List of orders found.
+    repeated Order order = 1;
+
+    // A pagination token returned from a previous call to `SearchOrders`.
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 2;
+}
+
+// Request to search for executions filtered using the given details.
+message SearchExecutionsRequest {
+    // The maximum number of fills to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call to `SearchExecutionsRequest`.
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // Exchange assigned order ID of the order to filter upon.
+    string order_id = 3;
+
+    // Client assigned order ID to filter upon.
+    string clord_id = 4;
+
+    // Start time for the orders to be fetched.
+    google.protobuf.Timestamp start_time = 5;
+
+    // End time for the orders to be fetched.
+    google.protobuf.Timestamp end_time = 6;
+
+    // Instrument symbol to filter upon.
+    string symbol = 7;
+
+    // Execution types to filter upon.
+    repeated orders.v1beta1.ExecutionType types = 8;
+
+    // A flag that if set indicates that executions found should be sorted from most recent to oldest.
+    bool newest_first = 9;
+
+    // Fully qualified resource account names to filter upon (ie: "firms/[firmid]/accounts/[accountid]").
+    repeated string accounts = 10;
+}
+
+message SearchExecutionsResponse {
+    // List of executions found.
+    repeated Execution executions = 1;
+
+    // A pagination token returned from a previous call to `SearchExecutions`.
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 2;
+
+    // A flag that if set indicates the end of file has been reached and there are no further pages.
+    bool eof = 3;
+}
+
+// Request to search for trades filtered using the given details.
+message SearchTradesRequest {
+    // The maximum number of orders to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call to `SearchTradesRequest`.
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // Exchange assigned order ID of the order to filter upon.
+    string order_id = 3;
+
+    // Exchange assigned trade ID to filter upon.
+    string trade_id = 4;
+
+    // Exchange assigned execution ID to filter upon.
+    string exec_id = 5;
+
+    // Start time for the orders to be fetched.
+    google.protobuf.Timestamp start_time = 6;
+
+    // End time for the orders to be fetched.
+    google.protobuf.Timestamp end_time = 7;
+
+    // Instrument symbol to filter upon.
+    string symbol = 8;
+
+    // Fully qualified resource account names to filter upon (ie: "firms/[firmid]/accounts/[accountid]").
+    repeated string accounts = 9;
+
+    // Trade states to filter upon.
+    repeated trades.v1beta1.TradeState states = 10;
+}
+
+message SearchTradesResponse {
+    // List of trades found.
+    repeated Trade trade = 1;
+
+    // A pagination token returned from a previous call to `SearchTrades`.
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 2;
+}

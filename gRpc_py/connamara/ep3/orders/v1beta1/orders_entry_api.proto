@@ -1,0 +1,157 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.orders.v1beta1;
+
+option go_package = "ordersv1beta1";
+option java_package = "com.connamara.ep3.orders.v1beta1";
+option java_outer_classname = "OrdersEntryApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Orders.V1Beta1";
+option objc_class_prefix = "CEO";
+
+import "connamara/ep3/orders/v1beta1/orders.proto";
+import "connamara/ep3/orders/v1beta1/orders_context.proto";
+
+
+// OrdersEntryAPI is the API surface for managing orders on the exchange.
+service OrdersEntryAPI {
+    // CreateOrder creates a new order.
+    rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {}
+
+    // UpdateOrder updates an order.
+    rpc UpdateOrder(UpdateOrderRequest) returns (UpdateOrderResponse) {}
+
+    // CancelOrder cancels an order.
+    rpc CancelOrder(CancelOrderRequest) returns (CancelOrderResponse) {}
+
+    // BatchCreateOrder creates orders in a batch request.
+    rpc BatchCreateOrder(BatchCreateOrderRequest) returns(BatchCreateOrderResponse) {}
+
+    // BatchUpdateOrder updates an order.
+    rpc BatchUpdateOrder(BatchUpdateOrderRequest) returns (BatchUpdateOrderResponse) {}
+
+    // BatchCancelOrder cancels orders in a batch request.
+    rpc BatchCancelOrder(BatchCancelOrderRequest) returns (BatchCancelOrderResponse) {}
+
+    // FindAndCancelOrders locates orders matching the given constraints and requests cancel.
+    rpc FindAndCancelOrders(FindAndCancelOrdersRequest) returns (FindAndCancelOrdersResponse) {}
+
+    // CreateOrderCross creates a new order cross.
+    rpc CreateOrderCross(CreateOrderCrossRequest) returns (CreateOrderCrossResponse) {}
+
+    // CreateReleaseOrder creates an order release for matching if being held in a pending state in the matching engine.
+    rpc CreateReleaseOrder(CreateReleaseOrderRequest) returns (CreateReleaseOrderResponse) {}
+}
+    
+message CreateOrderRequest {
+    Order order = 1;
+}
+
+message CreateOrderResponse {
+    string order_id = 1;
+}
+
+message UpdateOrderRequest {
+    CancelReplaceOrderRequest request = 1;
+}
+
+message UpdateOrderResponse {
+    
+}
+
+message CancelOrderRequest {
+    // Exchange assigned ID for the order to be cancelled
+    string order_id = 1;
+
+    // Client assigned ID for the order cancel
+    string clord_id = 2;
+
+    // Symbol here is for the book the order to be cancel rests, which may differ from the symbol representation for the
+    // instrument traded in the book
+    string symbol = 3;
+
+    // The market participant that requested the order cancelation
+    string participant = 4;
+
+    // Indicator if the cancel is unsolicited
+    // FIXME: unsolicited may be a misnomer here, this really indicates if the cancel should go through
+    // regardless of the book state
+    bool unsolicited = 5;
+
+    // Context is caller defined and will over-write the context of the order to be cancelled
+    OrderContext context = 6;
+
+    // The sub type of the instrument symbol
+    string symbol_sub_type = 7;
+
+    // Indicator if the cancel should show as an expiration
+    bool show_as_expiration = 8;
+}
+
+message CancelOrderResponse {
+
+}
+
+message BatchCreateOrderRequest {
+    repeated Order orders = 1;
+}
+
+message BatchCreateOrderResponse {
+    repeated string order_ids = 1;
+}
+
+message BatchUpdateOrderRequest {
+    repeated CancelReplaceOrderRequest requests = 1;
+}
+
+message BatchUpdateOrderResponse {
+}
+
+message BatchCancelOrderRequest {
+    repeated CancelOrderRequest requests = 1;
+}
+
+message BatchCancelOrderResponse {
+}  
+
+message FindAndCancelOrdersRequest{
+    // if set, all orders containing the given context should be cancelled
+    OrderContext context = 1;
+
+    // if set, all orders matching the given session should be cancelled
+    string session_id = 2;
+
+    // if set, all orders matching the given symbol should be cancelled
+    string symbol = 3;
+
+    // if set, all orders matching the given accounts should be cancelled
+    repeated string accounts = 4;
+}
+
+message FindAndCancelOrdersResponse{
+
+}
+
+message CreateOrderCrossRequest {
+    repeated Order orders = 1;
+}
+
+message CreateOrderCrossResponse {
+    repeated string order_ids = 1;
+}
+
+message CreateReleaseOrderRequest {
+    // Exchange assigned IDs for the orders to be released
+    repeated string order_ids = 1;
+
+    string symbol = 3;
+}
+
+message CreateReleaseOrderResponse {
+
+}

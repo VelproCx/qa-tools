@@ -1,0 +1,276 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.v1beta1;
+
+option go_package = "ep3v1beta1";
+option java_package = "com.connamara.ep3.v1beta1";
+option java_outer_classname = "OrderEntryApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.V1Beta1";
+option objc_class_prefix = "CEX";
+
+import "connamara/ep3/v1beta1/api.proto";
+import "connamara/ep3/orders/v1beta1/orders.proto";
+import "google/protobuf/timestamp.proto";
+
+// OrderEntryAPI is the API Surface for connected clients to send and modify orders.
+service OrderEntryAPI {
+    // InsertOrder inserts orders into the exchange and returns the exchange assigned order ID.
+    rpc InsertOrder(InsertOrderRequest) returns (InsertOrderResponse) {}
+
+    // InsertOrderCross creates a new order cross and returns the exchange assigned order IDs.
+    rpc InsertOrderCross(InsertOrderCrossRequest) returns (InsertOrderCrossResponse) {}
+
+    // InsertOrderList inserts a list of orders into the exchange and returns the exchange assigned order IDs.
+    rpc InsertOrderList(InsertOrderListRequest) returns (InsertOrderListResponse) {}
+
+    // CancelOrder requests cancellation of a working order.
+    rpc CancelOrder(CancelOrderRequest) returns (CancelOrderResponse) {}
+
+    // CancelOrderList requests cancellation of a list of working orders.
+    rpc CancelOrderList(CancelOrderListRequest) returns (CancelOrderListResponse) {}
+
+    // CancelReplaceOrder requests modification of a working order.
+    rpc CancelReplaceOrder(CancelReplaceOrderRequest) returns (CancelReplaceOrderResponse) {}
+
+    // CancelReplaceOrderList requests modification of a list of working orders.
+    rpc CancelReplaceOrderList(CancelReplaceOrderListRequest) returns (CancelReplaceOrderListResponse) {}
+
+    // CreateOrderSubscription creates a subscription for working orders and updates.
+    rpc CreateOrderSubscription(CreateOrderSubscriptionRequest) returns (stream CreateOrderSubscriptionResponse) {}
+}
+
+// Request to insert an order with the given details.
+message InsertOrderRequest {
+    // The type of the order (required).
+    orders.v1beta1.OrderType type = 1;
+
+    // The side of the order (required).
+    orders.v1beta1.Side side = 2;
+
+    // The quantity to be ordered (One of order_qty and cash_order_qty must be set. If set, must be > 0).
+    int64 order_qty = 3;
+
+    // The symbol of the instrument to be ordered (required for all orders).
+    string symbol = 4;
+
+    // Integer representation of limit price (required for limit and stop limit orders).
+    int64 price = 5;
+
+    // The time in force of the order. Absence of this field is interpreted as DAY.
+    orders.v1beta1.TimeInForce time_in_force = 6;
+
+    // Client assigned ID for the order.
+    string clord_id = 7;
+
+    // The trading account for this order.
+    string account = 8;
+
+    // Integer representation of stop price (required for stop and stop limit orders).
+    int64 stop_price = 9;
+
+    // Minimum order quantity to fill at once. Matches for fills under this amount will not be made (optional for IOC time in force).
+    int64 min_qty = 10;
+
+    // Client assigned Self Match Prevention ID (required to use the optional Self Match Prevention functionality).
+    string self_match_prevention_id = 14;
+
+    // If set, the quote to accept.
+    string quote = 15;
+
+    // A flag that if set indicates that either all of the order quantity should be filled, or none of it (partial fills will not be allowed).
+    bool all_or_none = 16;
+
+    // Client assigned Session ID (required to use the optional Cancel on Disconnect functionality).
+    string session_id = 17;
+
+    // The participant for which an agent is submitting the order (an agent must set this field, ignored otherwise).
+    string user = 18;
+
+    // Client assigned free-form account ID for the order.
+    string client_account_id = 19;
+
+    // Client assigned free-form participant ID for the order.
+    string client_participant_id = 20;
+
+    // A flag that if set indicates that immediate match is not desired.
+    bool participate_dont_initiate = 21;
+
+    // Fixed point decimal representation of the total cash order qty.
+    //(One of order_qty and cash_order_qty must be set. If set, must be > 0 and order_type must be MARKET_TO_LIMIT).
+    int64 cash_order_qty = 22;
+
+    // The sub type of the instrument symbol.
+    string symbol_sub_type = 23;
+
+    // A flag that if set indicates this particular order must be filled at the exact limit price specified without price improvement.
+    bool strict_limit = 24;
+
+    // The time at which this order shall expire (required for time_in_force of GOOD_TILL_TIME, ignored otherwise).
+    google.protobuf.Timestamp good_till_time = 25;
+
+    // A flag that if set indicates that the price of a limit order shall be set to the price at the top of the book on the same side as this order.
+    bool best_limit = 26;
+
+    // A flag that if set indicates that the price of a limit order shall be set to the price at the top of the book on the opposing side as this order, thus able to immediately match.
+    bool immediately_executable_limit = 27;
+}
+
+message InsertOrderResponse {
+    // The exchange assigned ID for the order.
+    string order_id = 1;
+}
+
+// Request to insert orders for a cross with the given details.
+message InsertOrderCrossRequest {
+    // A list of orders to insert (Only supports 2 orders at a time).
+    repeated InsertOrderRequest requests = 1;
+
+    // The cross type of the order (required).
+    orders.v1beta1.CrossType cross_type = 2;
+
+    // Client assigned free-form ID for the cross (required).
+    string cross_id = 3;
+
+    // The side of the cross which is prioritized. The order with side specified must not have IOC time in force (required).
+    orders.v1beta1.Side cross_prioritized_side = 4;
+}
+
+message InsertOrderCrossResponse {
+    // A list of responses to inserted orders.
+    repeated InsertOrderResponse responses = 1;
+}
+
+// Request to insert multiple orders with the given details.
+message InsertOrderListRequest {
+    // A list of orders to insert.
+    repeated InsertOrderRequest requests = 1;
+}
+
+message InsertOrderListResponse {
+    // A list of responses to inserted orders.
+    repeated InsertOrderResponse responses = 1;
+}
+
+// Request to cancel an existing order with the given details.
+message CancelOrderRequest {
+    // Exchange assigned ID for the order to be cancelled (required).
+    string order_id = 1;
+
+    // Client assigned ID for the order cancel.
+    string clord_id = 2;
+
+    // The instrument symbol for the order (required).
+    string symbol = 3;
+
+    // The sub type of the instrument symbol.
+    string symbol_sub_type = 4;
+}
+
+message CancelOrderResponse {}
+
+// Request to cancel multiple existing orders with the given details.
+message CancelOrderListRequest {
+    // A list of requests to cancel orders.
+    repeated CancelOrderRequest requests = 1;
+}
+
+message CancelOrderListResponse {
+    // A list of responses to cancelled orders.
+    repeated CancelOrderResponse responses = 1;
+}
+
+// Request to update an existing order with the given details.
+message CancelReplaceOrderRequest {
+    // Exchange assigned ID for the order to be replaced (required).
+    string order_id = 1;
+
+    // Client assigned ID for the cancel replace order.
+    string clord_id = 2;
+
+    // Desired instrument's symbol (required).
+    string symbol = 3;
+
+    // Desired limit price for the replaced order (required for limit and stop limit orders).
+    int64 price = 4;
+
+    // Desired order quantity for the replaced order.
+    int64 order_qty = 5;
+
+    // Desired Time in Force for the replaced order.
+    orders.v1beta1.TimeInForce time_in_force = 6;
+
+    // Desired stop price for the replaced order (required for stop and stop limit orders).
+    int64 stop_price = 7;
+
+    // Desired minimum quantity for the replaced order (optional for IOC time in force).
+    int64 min_qty = 8;
+    
+    // A flag that if set indicates that either all of the order quantity should be filled, or none of it (partial fills will not be allowed).
+    bool all_or_none = 9;
+
+    // A flag that if set indicates that immediate match is not desired.
+    bool participate_dont_initiate = 10;
+
+    // The sub type of the instrument symbol.
+    string symbol_sub_type = 11;
+
+    // A flag that if set indicates this particular order must be filled at the exact limit price specified without price improvement.
+    bool strict_limit = 12;
+
+    // The time at which this order shall expire if the time in force is set as good till time.
+    google.protobuf.Timestamp good_till_time = 13;
+
+    // A flag that if set indicates that the price of a limit order shall be set to the price at the top of the book on the same side as this order.
+    bool best_limit = 14;
+
+    // A flag that if set indicates that the price of a limit order shall be set to the price at the top of the book on the opposing side as this order, thus able to immediately match.
+    bool immediately_executable_limit = 15;
+}
+
+message CancelReplaceOrderResponse {}
+
+// Request to update multiple existing orders with the given details.
+message CancelReplaceOrderListRequest {
+    // A list of requests to update orders.
+    repeated CancelReplaceOrderRequest requests = 1;
+}
+
+message CancelReplaceOrderListResponse {
+    // A list of responses to updated orders.
+    repeated CancelReplaceOrderResponse responses = 1;
+}
+
+//Request to start an order subscription to get snapshots and updates for this session.
+message CreateOrderSubscriptionRequest {}
+
+message CreateOrderSubscriptionResponse {
+    // Snapshot is the current state of working orders.
+    message Snapshot {
+        // A list of orders contained in the snapshot.
+        repeated Order orders = 1;
+    }
+
+    // Update(s) are modifications to working orders, or new orders after subscription.
+    message Update {
+        // A list of executions involving working orders, or new orders after subscription.
+        repeated Execution executions = 1;
+        // A rejection response when the event triggering the update was rejected.
+        CancelReject cancel_reject = 2;
+    }
+
+    oneof event {
+        Heartbeat heartbeat = 1;
+        Snapshot snapshot = 2;
+        Update update = 3;
+    }
+    
+    // ID of the session this subscription belongs to.
+    string session_id = 4;
+}

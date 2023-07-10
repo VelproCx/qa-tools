@@ -1,0 +1,332 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+package connamara.ep3.risk.v1beta1;
+
+option go_package = "riskv1beta1";
+option java_package = "com.connamara.ep3.risk.v1beta1";
+option java_outer_classname = "RiskCurrencyApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Risk.V1Beta1";
+option objc_class_prefix = "CER";
+
+import "connamara/ep3/risk/v1beta1/risk.proto";
+import "google/protobuf/timestamp.proto";
+
+//RiskCurrencyAPI is the API for managing currency balances for risk engines.
+service RiskCurrencyAPI {
+    //GetAccountBalance gets the balance for currency in an account.
+    rpc GetAccountBalance(GetAccountBalanceRequest) returns (GetAccountBalanceResponse) {}
+
+    //GetAccountBalanceLedger gets the balance ledger for a currency in an account.
+    rpc GetAccountBalanceLedger(GetAccountBalanceLedgerRequest) returns (GetAccountBalanceLedgerResponse) {}
+
+    //ListAccountBalances lists the currency balances in an account.
+    rpc ListAccountBalances(ListAccountBalancesRequest) returns (ListAccountBalancesResponse) {}
+
+    //AdjustAccountBalance updates the balance for currency in an account.
+    rpc AdjustAccountBalance(AdjustAccountBalanceRequest) returns (AdjustAccountBalanceResponse) {}
+
+    //SetAccountBalance sets the balance for currency in an account.
+    rpc SetAccountBalance(SetAccountBalanceRequest) returns (SetAccountBalanceResponse) {}
+
+    //SetAccountCapitalRequirement sets the capital requirement for a currency in an account.
+    rpc SetAccountCapitalRequirement(SetAccountCapitalRequirementRequest) returns (SetAccountCapitalRequirementResponse) {}
+
+    //SetAccountSecurityBalance sets the security balance to back the collateral for a base currency in an account.
+    rpc SetAccountSecurityBalance(SetAccountSecurityBalanceRequest) returns (SetAccountSecurityBalanceResponse) {}
+
+    //SetAccountSecurityMarketValue sets the security market value to back the collateral for a base currency in an account.
+    rpc SetAccountSecurityMarketValue(SetAccountSecurityMarketValueRequest) returns (SetAccountSecurityMarketValueResponse) {}
+
+    //ListSecurityDefinitions fetches security descriptions and types for each known identifier on the system.
+    rpc ListSecurityDefinitions(ListSecurityDefinitionsRequest) returns (ListSecurityDefinitionsResponse) {}
+
+    //SetSecurityDefinition assigns a description and type to a known identifier on the system for later reference.
+    rpc SetSecurityDefinition(SetSecurityDefinitionRequest) returns (SetSecurityDefinitionResponse) {}
+
+    //CreatePendingWithdrawal creates a request to withdraw currency from an account.
+    rpc CreatePendingWithdrawal(CreatePendingWithdrawalRequest) returns (CreatePendingWithdrawalResponse) {}
+
+    //ListPendingWithdrawals lists the pending withdrawals of an account.
+    rpc ListPendingWithdrawals(ListPendingWithdrawalsRequest) returns (ListPendingWithdrawalsResponse) {}
+
+    //GetPendingWithdrawal gets a pending withdrawal by unique identifier.
+    rpc GetPendingWithdrawal(GetPendingWithdrawalRequest) returns (GetPendingWithdrawalResponse) {}
+
+    //DeletePendingWithdrawal deletes a pending withdrawal of an account.
+    rpc DeletePendingWithdrawal(DeletePendingWithdrawalRequest) returns (DeletePendingWithdrawalResponse) {}
+
+    //ApprovePendingWithdrawal approves a pending withdrawal of an account and applies the balance adjustment.
+    rpc ApprovePendingWithdrawal(ApprovePendingWithdrawalRequest) returns (ApprovePendingWithdrawalResponse) {}
+}
+
+message GetAccountBalanceRequest {
+    //Account name
+    string name = 1;
+
+    //Fiat currency
+    string currency = 2;
+}
+
+message GetAccountBalanceResponse {
+    //Fixed point decimal fiat currency balance, not including any security values
+    string balance = 1;
+
+    //Required amount of fiat currency balance that must be held in an account and cannot be used for trading
+    string capital_requirement = 2;
+
+    //Amount of excess capital in the balance beyond the requirement, factoring in all security valuations
+    string excess_capital = 3;
+
+    //Amount of unencumbered capital available for trading, factoring in all security valuations as well as any open orders. Set to empty string in the case of historical requests on the account ledger, otherwise represents the instantaneous buying power
+    string buying_power = 4;
+
+    //SecurityEntry describes the detailed valuation of a security with respect to the market price and adjustments applied to augment a base currency's collateral.
+    message SecurityEntry {
+        // Amount of the security held in the account
+        string balance = 1;
+
+        // The actual mark to market value of the security
+        string market_value = 2;
+
+        // The haircut value of a single unit of the security ID in units of basis points (100 basis points is 1%)
+        int64 haircut = 3;
+
+        // Represents the notional value of the security, which is the balance multiplied by the market value
+        string notional_value = 4;
+
+        // Represents the available collateral value of the security, which is the balance multiplied by the market value less the haircut percentage
+        string available_value = 5;
+    }
+
+    //Securities mapped by ID to their detailed valuation with respect to the market price and adjustments applied
+    map<string, SecurityEntry> securities = 5;
+    
+    //Aggregate notional value of all securities
+    string total_security_notional_value = 6;
+    
+    //Aggregate available collateral value of all securities
+    string total_security_available_value = 7;
+}
+
+message ListAccountBalancesRequest {
+    //Account name
+    string name = 1;
+}
+
+message ListAccountBalancesResponse {
+    //Balances mapped by currency key
+    map<string, GetAccountBalanceResponse> balances = 1;
+}
+
+message GetAccountBalanceLedgerRequest {
+    //Account name
+    string name = 1;
+
+    //Fiat currency
+    string currency = 2;
+
+    //Description searches the eponymous field for the reason behind a change in the ledger, and supports Regexes
+    string description = 3;
+
+    //Start of the time range
+    google.protobuf.Timestamp start_time = 4;
+
+    //End of the time range
+    google.protobuf.Timestamp end_time = 5;
+}
+
+message GetAccountBalanceLedgerResponse {
+    //BalanceChange holds a single change to account balance.
+    message BalanceChange {
+        //Balance before change
+        GetAccountBalanceResponse before_balance = 1;
+
+        //Balance after change
+        GetAccountBalanceResponse after_balance = 2;
+
+        //Description of why the balance change was made
+        string description = 3;
+
+        //Time at which the balance change was made
+        google.protobuf.Timestamp update_time = 4;
+
+        //ID of the security that was changed, if security was not changed, set to empty string
+        string modified_security_id = 5;
+    }
+
+    //Ledger of all balance changes for a specific currency/account pair
+    repeated BalanceChange ledger = 1;
+}
+
+message AdjustAccountBalanceRequest {
+    //Account name
+    string name = 1;
+
+    //Fiat currency
+    string currency = 2;
+
+    //Adjustment amount
+    string delta = 3;
+
+    //Description of why the balance adjustment was made
+    string description = 4;
+
+    //Optional account name for the source of these funds, indicating a transfer of assets from one account to the next
+    string source_account_name = 5;
+}
+
+message AdjustAccountBalanceResponse {
+}
+
+message SetAccountBalanceRequest {
+    //Account name
+    string name = 1;
+
+    //Fiat currency
+    string currency = 2;
+
+    //Balance to set
+    string balance = 3;
+
+    //Description for why the balance was set
+    string description = 4;
+}
+
+message SetAccountBalanceResponse {
+}
+
+message SetAccountCapitalRequirementRequest {
+    //Account name
+    string name = 1;
+
+    //Fiat currency
+    string currency = 2;
+
+    //Capital requirement to set
+    string capital_requirement = 3;
+
+    //Description for why the capital requirement was set
+    string description = 4;
+}
+
+message SetAccountCapitalRequirementResponse {
+}
+
+message SetAccountSecurityBalanceRequest {
+    //Account name
+    string name = 1;
+
+    //Fiat currency
+    string currency = 2;
+
+    //Security ID, which may be a CUSIP, market symbol, or similar unique identifier
+    string security_id = 3;
+
+    //Balance to set
+    string balance = 4;
+
+    //Description for why the security balance was set
+    string description = 5;
+}
+
+message SetAccountSecurityBalanceResponse {
+}
+
+message SetAccountSecurityMarketValueRequest {
+    //Account name
+    string name = 1;
+
+    //Fiat currency
+    string currency = 2;
+
+    //Security ID, which may be a CUSIP, market symbol, or similar unique identifier
+    string security_id = 3;
+
+    //Market value of a single unit of the security ID in terms of the base currency
+    string market_value = 4;
+
+    //Haircut value of a single unit of the security ID in units of basis points (100 basis points is 1%)
+    int64 haircut = 5;
+
+    //Description for why the security market value and haircut was set
+    string description = 6;
+}
+
+message SetAccountSecurityMarketValueResponse {
+}
+
+message ListSecurityDefinitionsRequest {
+    //An optional subset of security identifiers to fetch for descriptions, returns all known values if left blank
+    repeated string definitions = 1;
+}
+
+message ListSecurityDefinitionsResponse {
+    //A set of security definitions keyed by the security identifier
+    map<string, SecurityDefinition> definitions = 1;
+}
+
+message SetSecurityDefinitionRequest {
+    //The security definition to store
+    SecurityDefinition definition = 1;
+}
+
+message SetSecurityDefinitionResponse {}
+
+message CreatePendingWithdrawalRequest {
+    //Account name.
+    string name = 1;
+
+    //Fiat currency.
+    string currency = 2;
+
+    //Balance to withdraw.
+    string balance = 3;
+
+    //Description for the withdrawal request.
+    string description = 4;
+}
+
+message CreatePendingWithdrawalResponse {
+    //The newly created pending withdrawal.
+    PendingWithdrawal withdrawal = 1;
+}
+
+message ListPendingWithdrawalsRequest {
+    //Account name.
+    string name = 1;
+}
+
+message ListPendingWithdrawalsResponse {
+    //List of pending withdrawals for the account.
+    repeated PendingWithdrawal withdrawals = 1;
+}
+
+message GetPendingWithdrawalRequest {
+    //Unique identifier for the withdrawal.
+    string id = 1;
+}
+
+message GetPendingWithdrawalResponse {
+    //The newly created pending withdrawal.
+    PendingWithdrawal withdrawal = 1;
+}
+
+message DeletePendingWithdrawalRequest {
+    //Unique identifier for the withdrawal.
+    string id = 1;
+}
+
+message DeletePendingWithdrawalResponse {}
+
+message ApprovePendingWithdrawalRequest {
+    //Unique identifier for the withdrawal.
+    string id = 1;
+}
+
+message ApprovePendingWithdrawalResponse {}

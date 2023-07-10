@@ -1,0 +1,149 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.alert.v1beta1;
+
+option go_package = "alertv1beta1";
+option java_package = "com.connamara.ep3.alert.v1beta1";
+option java_outer_classname = "AlertApiProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Alert.V1Beta1";
+option objc_class_prefix = "CEA";
+
+import "google/protobuf/timestamp.proto";
+import "connamara/ep3/alert/v1beta1/alert.proto";
+
+//AlertAPI is an API for managing Alerts.
+service AlertAPI {
+    // RaiseAlert notifies the exchange of an alert.
+    rpc RaiseAlert(RaiseAlertRequest) returns (RaiseAlertResponse) {}
+
+    // UpdateAlert notifies the exchange that an alert has changed.
+    rpc UpdateAlert(UpdateAlertRequest) returns (UpdateAlertResponse) {}
+
+    // ListAlerts queries the exchange for a set of alerts given the search criteria.
+    rpc ListAlerts(ListAlertsRequest) returns (ListAlertsResponse) {}
+
+    // StreamAlerts streams a list of alerts given request criteria.
+    rpc StreamAlerts(StreamAlertsRequest) returns (stream StreamAlertsResponse) {}
+}
+
+message RaiseAlertRequest {
+    // The ID of the trade.
+    string trade_id = 1;
+
+    // The source venue of the alert, such as CME, LCH, DTCC, CFTC, etc.
+    string venue = 2;
+
+    // A detailed description regarding the alert.
+    string description = 3;
+
+    // Optional time at which the alert was raised, defaults to current time if left blank.
+    google.protobuf.Timestamp alert_time = 4;
+
+    // The symbol of the trade alert. Must match Trade ID if populated.
+    string symbol = 5;
+
+    // The fully qualified resource name of the account associated with the alert. Must exist at the time of creation.
+    string account = 6;
+
+    // The fully qualified resource name of the firm associated with the alert. Must exist at the time of creation.
+    string firm = 7;
+
+    // The name of the alert, such as Front Running, Clearing Refused, Manipulative Activity, etc.
+    string alert_name = 8;
+
+    // The fully qualified resource name of the firm targeted by the alert. Must exist at the time of creation.
+    string target_firm = 9;
+}
+
+message RaiseAlertResponse {
+    Alert alert = 1;
+}
+
+message UpdateAlertRequest {
+    // The unique identifier of the alert to update.
+    string id = 1;
+
+    // The updated status of the alert.
+    AlertStatus status = 2;
+}
+
+message UpdateAlertResponse {
+    Alert alert = 1;
+}
+
+message ListAlertsRequest {
+    // The maximum number of Alerts to return in a response.
+    // This field is optional.
+    int32 page_size = 1;
+
+    // A pagination token returned from a previous call to `ListAlerts`
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 2;
+
+    // The unique identifier of the alert to filter upon that also supports regexes.
+    string id = 3;
+
+    // The statuses of alerts to filter upon.
+    repeated AlertStatus statuses = 4;
+
+    // The ID of the trade associated with the alert to filter upon that also supports regexes.
+    string trade_id = 5;
+
+    // The source venue filter of the alert, such as CME, LCH, DTCC, CFTC, etc.
+    string venue = 6;
+
+    // A filter for the detailed description of the alert. It is useful to use a regex to query on this field.
+    string description = 7;
+
+    // Start time filter for the alert time field.
+    google.protobuf.Timestamp start_time = 8;
+
+    // End time filter for the alert time field.
+    google.protobuf.Timestamp end_time = 9;
+
+    // The symbol of the alert. Also accepts regexes.
+    string symbol = 10;
+
+    // The filter for the resource name of the account associated with the alert. Also accepts regexes.
+    string account = 11;
+
+    // The filter for the resource name of the firm associated with the alert. Also accepts regexes.
+    string firm = 12;
+
+    // The filter for the name of the alert, such as Front Running, Clearing Refused, Manipulative Activity, etc. Also accepts regexes.
+    string alert_name = 13;
+
+    // The filter for the resource name of the firm targeted by the alert. Also accepts regexes. Overridden to be equivalent to the FCM firm making the request if the administrator is limited to a specific firm.
+    string target_firm = 14;
+}
+
+message ListAlertsResponse {
+    // The set of alerts returned by the given query filter.
+    repeated Alert alerts = 1;
+
+    // A pagination token returned from a previous call to `ListAlerts`
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 2;
+
+    //Eof is true if no more alerts given the filtering criteria are available at this time.
+    bool eof = 3;
+}
+
+message StreamAlertsRequest {
+    // The filter request to begin the stream. Pagination filters are ignored for streams.
+    ListAlertsRequest request = 1;
+}
+
+message StreamAlertsResponse {
+    // An alert entry returned by the given query filter. If not populated, this message is a heartbeat.
+    Alert alert = 1;
+}

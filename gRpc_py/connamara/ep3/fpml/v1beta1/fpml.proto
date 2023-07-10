@@ -1,0 +1,119 @@
+// Copyright (c) 2022 Connamara Technologies, Inc.
+//
+// This file is distributed under the terms of the Connamara EP3 Software License Agreement.
+//
+// The above copyright notice and license notice shall be included in all copies or substantial portions of the Software.
+
+syntax = "proto3";
+
+package connamara.ep3.fpml.v1beta1;
+
+option go_package = "fpmlv1beta1";
+option java_package = "com.connamara.ep3.fpml.v1beta1";
+option java_outer_classname = "FpmlProto";
+option java_multiple_files = true;
+option csharp_namespace = "Connamara.Ep3.Fpml.V1Beta1";
+option objc_class_prefix = "CEF";
+
+// GeneratorConfig is the configuration settings when generating an fpml.
+message GeneratorConfig {
+    InterestRateSwapConfig interest_rate_swap_config = 1;
+    ForwardStartingInterestRateSwapConfig forward_starting_interest_rate_swap_config = 2;
+    BasisSwapConfig basis_swap_config = 3;
+    ForwardRateAgreementConfig forward_rate_agreement_config = 4;
+    OvernightIndexSwapConfig overnight_index_swap_config = 5;
+    SinglePeriodSwapConfig single_period_swap_config = 6;
+}
+
+// InterestRateSwapConfig is the configuration settings when generating an fpml for interest rate swaps.
+message InterestRateSwapConfig {
+    string product_type = 1;
+    string fixed_leg_id = 2;
+    string float_leg_id = 3;
+    string buyer_party_id = 4;
+    string seller_party_id = 5;
+    string fixed_leg_calculation_period_dates_id = 6;
+    string float_leg_calculation_period_dates_id = 7;
+    string fixed_leg_payment_dates_id = 8;
+    string float_leg_payment_dates_id = 9;
+    string float_leg_reset_dates_id = 10;
+    string float_fixing_dates_offset_period = 11;
+    string currency_scheme = 12;
+}
+
+// ForwardStartingInterestRateSwapConfig is the configuration settings when generating an fpml for forward starting interest rate swaps.
+message ForwardStartingInterestRateSwapConfig {
+    string product_type = 1;
+    string fixed_leg_id = 2;
+    string float_leg_id = 3;
+    string buyer_party_id = 4;
+    string seller_party_id = 5;
+    string fixed_leg_calculation_period_dates_id = 6;
+    string float_leg_calculation_period_dates_id = 7;
+    string fixed_leg_payment_dates_id = 8;
+    string float_leg_payment_dates_id = 9;
+    string float_leg_reset_dates_id = 10;
+    string float_fixing_dates_offset_period = 11;
+    string currency_scheme = 12;
+}
+
+// BasisSwapConfig is the configuration settings when generating an fpml for basis swaps.
+message BasisSwapConfig {
+    string product_type = 1;
+    string float_leg1_id = 2;
+    string float_leg2_id = 3;
+    string buyer_party_id = 4;
+    string seller_party_id = 5;
+    string float_leg1_calculation_period_dates_id = 6;
+    string float_leg2_calculation_period_dates_id = 7;
+    string float_leg1_payment_dates_id = 8;
+    string float_leg2_payment_dates_id = 9;
+    string float_leg1_reset_dates_id = 10;
+    string float_leg2_reset_dates_id = 11;
+    string float_fixing_dates_offset_period = 12;
+    string currency_scheme = 13;
+}
+
+// ForwardRateAgreementConfig is the configuration settings when generating an fpml for forward rate agreements.
+message ForwardRateAgreementConfig {
+    string product_type = 1;
+    string buyer_party_id = 2;
+    string seller_party_id = 3;
+    string floating_leg_effective_date_id = 4;
+    string float_fixing_dates_offset_period = 5;
+    string fra_discounting = 6;
+}
+
+// OvernightIndexSwapConfig is the configuration settings when generating an fpml for overnight index swaps.
+message OvernightIndexSwapConfig {
+    string product_type = 1;
+    string fixed_leg_id = 2;
+    string float_leg_id = 3;
+    string buyer_party_id = 4;
+    string seller_party_id = 5;
+    string fixed_leg_calculation_period_dates_id = 6;
+    string float_leg_calculation_period_dates_id = 7;
+    string fixed_leg_payment_dates_id = 8;
+    string float_leg_payment_dates_id = 9;
+    string float_leg_reset_dates_id = 10;
+    string fixed_leg_payment_days_offset_period = 11;
+    string float_leg_payment_days_offset_period = 12;
+    string float_leg_fixing_dates_offset_period = 13;
+    string currency_scheme = 14;
+}
+
+// SinglePeriodSwapConfig is the configuration settings when generating an fpml for single period swaps.
+message SinglePeriodSwapConfig {
+    string product_type = 1;
+    string fixed_leg_id = 2;
+    string float_leg_id = 3;
+    string buyer_party_id = 4;
+    string seller_party_id = 5;
+    string fixed_leg_calculation_period_dates_id = 6;
+    string float_leg_calculation_period_dates_id = 7;
+    string fixed_leg_payment_dates_id = 8;
+    string float_leg_payment_dates_id = 9;
+    string float_leg_reset_dates_id = 10;
+    string float_fixing_dates_offset_period = 11;
+    string currency_scheme = 12;
+}
