@@ -1,0 +1,25 @@
+{
+  "testCase": [
+    {
+      "Id": "1",
+      "ScenarioName": "test",
+      "Account": "RSIT_ACCOUNT_3",
+      "Market": "EDP",
+      "ActionType": "NewAck",
+      "Comment": "EDP_Market_NewAck",
+      "OrderQty": 100,
+      "OrdType": "2",
+      "Price": 510,
+      "Side": "1",
+      "Symbol": "1356",
+      "TimeInForce": "3",
+      "CrossingPriceType": "EDP",
+      "Rule80A": "P",
+      "CashMargin": "1",
+      "MarginTransactionType": "0",
+      "MinQty": "",
+      "OrderClassification": "",
+      "SelfTradePreventionId": ""
+    }
+  ]
+}
