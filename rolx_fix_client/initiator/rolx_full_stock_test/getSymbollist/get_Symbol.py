@@ -4,12 +4,10 @@ import json
 import warnings
 from datetime import datetime
 
-
 def post_main(url, headers, data=None):
     warnings.filterwarnings("ignore")
     response = requests.post(url=url, headers=headers, data=data, verify=False)
     return response
-
 
 def login_admin():
     url = 'https://adminui.sit.fsx.oddlotx.com//api/admin/auth/login'
@@ -26,8 +24,6 @@ def login_admin():
     get_token = post_main(url, headers, data).json()
     tokendate = get_token["accessToken"]
     token = "Bearer {}".format(tokendate)
-    print(
-        "-------------------------------login admin success-------------------------------")
     return token
 
 
@@ -47,7 +43,7 @@ def get_security_master_name(market):
     security_master_name = "/data/HRT/for_FSX/security_master/HRT_trading_universe_{}_{}.csv".format(market,
                                                                                                      date_staring)
 
-    print(security_master_name)
+    print("股票文件路径：" + security_master_name)
     return security_master_name
 
 
@@ -62,11 +58,13 @@ def get_Symbol_file(market):
     }
     get_Symbol_date = post_main(url, headers, data)
     date = get_Symbol_date.text
-    print(
-        "-------------------------------full stock symbols gen success-------------------------------")
+
     if date.strip() == "":
         print("接口返回的文本为空,请检查fsxadmin是否已经生成security_master文件")
+        return None
     else:
+        print(
+            "-------------------------------full stock symbols gen success-------------------------------")
         '''
         推导公式表达式：new_list = [expression for item in iterable if condition]
         new_list：生成的新列表，其中包含满足条件的经过表达式处理的元素。
@@ -84,6 +82,12 @@ def get_Symbol_file(market):
         try:
             response_json = json.loads(json_str)
             # response_json 是一个包含接口返回数据的 Python 字典或列表对象
-        except json.JSONDecodeError as e:
-            print("解析 JSON 出错:", e)
-        return response_json
+            if not response_json:
+                raise Exception("股票列表为空")
+        except (json.JSONDecodeError, Exception) as e:
+            print(e)
+    return response_json
+
+
+
+

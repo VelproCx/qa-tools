@@ -57,11 +57,12 @@ class Application(fix.Application):
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
         self.logsCheck()
+        print(self.ReceveRes)
         json_data = json.dumps(self.ReceveRes)
         # 将JSON数据写入文件
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = self.compare_field_values('case/ROL_Functional_Test_Matrix.json', 'logs/recv_data.json',
+        self.Result = self.compare_field_values('case/test2.json', 'logs/recv_data.json',
                                                 'ordstatus')
         logfix.info("Result : Total = %d,Success = %d,Fail = %d" % (self.Total, self.Success, self.Fail))
         print("Session (%s) logout !" % sessionID.toString())
@@ -164,10 +165,13 @@ class Application(fix.Application):
                     # 判断当前收到的消息体clordid是否在数组里
                     if item['clordId'] == matched_clordId:
                         # 更新该组数据的ordstatus
-                        item['ordstatus'] = str(ordStatus)
+                        # item['ordstatus'] = []
+                        print(ordStatus)
+                        item['ordstatus'].append(ordStatus)
             else:
                 # 添加新的数据到数组中
-                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': str(ordStatus)})
+                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
+                print(ordStatus)
             # 因CancelRej消息体与其他消息体共用字段少，为减少代码量，将msgType == '9'的消息体做单独处理
             if msgType != '9':
                 # 消息体共用tag
@@ -362,150 +366,156 @@ class Application(fix.Application):
                 logfix.info("Except:" + str(record1[field_name]) + " ，" + "ordStatus: " + str(record2[field_name]))
         return resList
 
-    # 判断log文件中是否存在 Market Price is not matching
-    def logsCheck(self):
-        response = ['ps: 若列表存在failed数据，请查看report.log文件']
-        self.writeResExcel('report/rolx_report.xlsx', response, 2, 'Q')
-        with open('logs/rolx_report.log', 'r') as f:
-            content = f.read()
-        if 'Market Price is not matching' in content:
-            logfix.info('Market Price is NG')
-            response = ['Market Price is NG']
-            self.writeResExcel('report/rolx_report.xlsx', response, 5, 'Q')
-        else:
-            logfix.info('Market Price is OK')
-            response = ['Market Price is OK']
-            self.writeResExcel('report/rolx_report.xlsx', response, 3, 'Q')
 
-        if 'FixMsg Error' in content:
-            logfix.info('FixMsg is NG')
-            response = ['FixMsg is NG']
-            self.writeResExcel('report/rolx_report.xlsx', response, 6, 'Q')
-        else:
-            logfix.info('FixMsg is OK')
-            response = ['FixMsg is OK']
-            self.writeResExcel('report/rolx_report.xlsx', response, 4, 'Q')
-        if 'Order execType error' in content:
-            logfix.info("execType is NG")
-            response = ['execType is NG']
-            self.writeResExcel('report/rolx_report.xlsx', response, 7, "Q")
-        else:
-            logfix.info("execType is OK")
-            response = ['execType is OK']
-            self.writeResExcel('report/rolx_report.xlsx', response, 8, "Q")
+# 判断log文件中是否存在 Market Price is not matching
+def logsCheck(self):
+    response = ['ps: 若列表存在failed数据，请查看report.log文件']
+    self.writeResExcel('report/rolx_report.xlsx', response, 2, 'Q')
+    with open('logs/rolx_report.log', 'r') as f:
+        content = f.read()
+    if 'Market Price is not matching' in content:
+        logfix.info('Market Price is NG')
+        response = ['Market Price is NG']
+        self.writeResExcel('report/rolx_report.xlsx', response, 5, 'Q')
+    else:
+        logfix.info('Market Price is OK')
+        response = ['Market Price is OK']
+        self.writeResExcel('report/rolx_report.xlsx', response, 3, 'Q')
 
-    def writeResExcel(self, filename, data, row, column):
-        # 打开现有的 Excel 文件或创建新的 Workbook
-        workbook = load_workbook(filename)
-        # 选择要写入数据的工作表
-        sheet = workbook.active
-        # 指定要写入的列号
-        start_row = row
-        start_column = column
+    if 'FixMsg Error' in content:
+        logfix.info('FixMsg is NG')
+        response = ['FixMsg is NG']
+        self.writeResExcel('report/rolx_report.xlsx', response, 6, 'Q')
+    else:
+        logfix.info('FixMsg is OK')
+        response = ['FixMsg is OK']
+        self.writeResExcel('report/rolx_report.xlsx', response, 4, 'Q')
+    if 'Order execType error' in content:
+        logfix.info("execType is NG")
+        response = ['execType is NG']
+        self.writeResExcel('report/rolx_report.xlsx', response, 7, "Q")
+    else:
+        logfix.info("execType is OK")
+        response = ['execType is OK']
+        self.writeResExcel('report/rolx_report.xlsx', response, 8, "Q")
 
-        # 写入数据到指定列
-        for row, value in enumerate(data, start=start_row):
-            sheet[start_column + str(row)] = value
 
-        # 保存修改并关闭工作簿
-        workbook.save(filename)
+def writeResExcel(self, filename, data, row, column):
+    # 打开现有的 Excel 文件或创建新的 Workbook
+    workbook = load_workbook(filename)
+    # 选择要写入数据的工作表
+    sheet = workbook.active
+    # 指定要写入的列号
+    start_row = row
+    start_column = column
 
-    def getClOrdID(self):
-        # "随机数生成ClOrdID"
-        self.execID += 1
-        # 获取当前时间并且进行格式转换
-        t = int(time.time())
-        str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
-        return str(t) + str1 + str(self.execID).zfill(6)
+    # 写入数据到指定列
+    for row, value in enumerate(data, start=start_row):
+        sheet[start_column + str(row)] = value
 
-    def insert_order_request(self, row):
-        msg = fix.Message()
-        header = msg.getHeader()
-        header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
-        header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account(row["Account"]))
-        msg.setField(fix.ClOrdID(self.getClOrdID()))
-        msg.setField(fix.OrderQty(row["OrderQty"]))
-        msg.setField(fix.OrdType(row["OrdType"]))
-        msg.setField(fix.Side(row["Side"]))
-        msg.setField(fix.Symbol(row["Symbol"]))
-        msg.setField(fix.HandlInst('1'))
-        ClientID = msg.getField(11)
-        msg.setField(fix.ClientID(ClientID))
+    # 保存修改并关闭工作簿
+    workbook.save(filename)
 
-        if row["TimeInForce"] != "":
-            msg.setField(fix.TimeInForce(row["TimeInForce"]))
 
-        if row["Rule80A"] != "":
-            msg.setField(fix.Rule80A(row["Rule80A"]))
+def getClOrdID(self):
+    # "随机数生成ClOrdID"
+    self.execID += 1
+    # 获取当前时间并且进行格式转换
+    t = int(time.time())
+    str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
+    return str(t) + str1 + str(self.execID).zfill(6)
 
-        if row["CashMargin"] != "":
-            msg.setField(fix.CashMargin(row["CashMargin"]))
 
-        # 自定义Tag
-        if row["CrossingPriceType"] != "":
-            msg.setField(8164, row["CrossingPriceType"])
+def insert_order_request(self, row):
+    msg = fix.Message()
+    header = msg.getHeader()
+    header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
+    header.setField(fix.MsgType("D"))
+    msg.setField(fix.Account(row["Account"]))
+    msg.setField(fix.ClOrdID(self.getClOrdID()))
+    msg.setField(fix.OrderQty(row["OrderQty"]))
+    msg.setField(fix.OrdType(row["OrdType"]))
+    msg.setField(fix.Side(row["Side"]))
+    msg.setField(fix.Symbol(row["Symbol"]))
+    msg.setField(fix.HandlInst('1'))
+    ClientID = msg.getField(11)
+    msg.setField(fix.ClientID(ClientID))
 
-        if row["MarginTransactionType"] != "":
-            msg.setField(8214, row["MarginTransactionType"])
+    if row["TimeInForce"] != "":
+        msg.setField(fix.TimeInForce(row["TimeInForce"]))
 
-        # if row["Expect"] != "":
+    if row["Rule80A"] != "":
+        msg.setField(fix.Rule80A(row["Rule80A"]))
 
-        # 获取TransactTime
-        trstime = fix.TransactTime()
-        trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
-        msg.setField(trstime)
+    if row["CashMargin"] != "":
+        msg.setField(fix.CashMargin(row["CashMargin"]))
 
-        # 判断订单类型
-        if row["OrdType"] == "2":
-            msg.setField(fix.Price(row["Price"]))
-        elif row["OrdType"] == fix.OrdType_STOP or row["OrdType"] == fix.OrdType_STOP_LIMIT:
-            msg.setField(fix.Price(row["Price" + 5]))
-        elif row["OrdType"] == "1":
-            print("")
+    # 自定义Tag
+    if row["CrossingPriceType"] != "":
+        msg.setField(8164, row["CrossingPriceType"])
 
-        fix.Session.sendToTarget(msg, self.sessionID)
-        return msg
+    if row["MarginTransactionType"] != "":
+        msg.setField(8214, row["MarginTransactionType"])
 
-    def order_cancel_request(self, row):
-        # 使用变量接收上一个订单clOrdId
-        # self.insert_order_request(row)
-        clOrdId = self.ORDERS_DICT
-        time.sleep(1)
-        msg = fix.Message()
-        header = msg.getHeader()
-        header.setField(fix.MsgType(fix.MsgType_OrderCancelRequest))
-        header.setField(fix.BeginString("FIX.4.2"))
-        header.setField(fix.MsgType("F"))
-        msg.setField(fix.OrigClOrdID(clOrdId))
-        msg.setField(fix.ClOrdID(self.getClOrdID()))
-        msg.setField(fix.Symbol(row["Symbol"]))
-        msg.setField(fix.Side(row["Side"]))
-        trstime = fix.TransactTime()
-        trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
-        msg.setField(trstime)
-        fix.Session.sendToTarget(msg, self.sessionID)
-        return msg
+    # if row["Expect"] != "":
 
-    def runTestCase(self, row):
+    # 获取TransactTime
+    trstime = fix.TransactTime()
+    trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
+    msg.setField(trstime)
 
-        action = row["ActionType"]
-        if action == 'NewAck':
-            self.insert_order_request(row)
-        elif action == 'CancelAck':
-            self.order_cancel_request(row)
+    # 判断订单类型
+    if row["OrdType"] == "2":
+        msg.setField(fix.Price(row["Price"]))
+    elif row["OrdType"] == fix.OrdType_STOP or row["OrdType"] == fix.OrdType_STOP_LIMIT:
+        msg.setField(fix.Price(row["Price" + 5]))
+    elif row["OrdType"] == "1":
+        print("")
 
-    def load_test_case(self):
-        """Run"""
-        with open('case/ROL_Functional_Test_Matrix.json', 'r') as f_json:
-            generation('case/ROL_Functional_Test_Matrix.json', 'report/rolx_report.xlsx')
-            case_data_list = json.load(f_json)
-            time.sleep(2)
-            # 循环所有用例，并把每条用例放入runTestCase方法中，
-            for row in case_data_list["testCase"]:
-                self.runTestCase(row)
-                # 增加判断条件，判断是否为需要cancel的symbol
-                if row["Symbol"] == "5076":
-                    time.sleep(3)
-                else:
-                    time.sleep(1)
+    fix.Session.sendToTarget(msg, self.sessionID)
+    return msg
+
+
+def order_cancel_request(self, row):
+    # 使用变量接收上一个订单clOrdId
+    # self.insert_order_request(row)
+    clOrdId = self.ORDERS_DICT
+    time.sleep(1)
+    msg = fix.Message()
+    header = msg.getHeader()
+    header.setField(fix.MsgType(fix.MsgType_OrderCancelRequest))
+    header.setField(fix.BeginString("FIX.4.2"))
+    header.setField(fix.MsgType("F"))
+    msg.setField(fix.OrigClOrdID(clOrdId))
+    msg.setField(fix.ClOrdID(self.getClOrdID()))
+    msg.setField(fix.Symbol(row["Symbol"]))
+    msg.setField(fix.Side(row["Side"]))
+    trstime = fix.TransactTime()
+    trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
+    msg.setField(trstime)
+    fix.Session.sendToTarget(msg, self.sessionID)
+    return msg
+
+
+def runTestCase(self, row):
+    action = row["ActionType"]
+    if action == 'NewAck':
+        self.insert_order_request(row)
+    elif action == 'CancelAck':
+        self.order_cancel_request(row)
+
+
+def load_test_case(self):
+    """Run"""
+    with open('case/test2.json', 'r') as f_json:
+        generation('case/test2.json', 'report/rolx_report.xlsx')
+        case_data_list = json.load(f_json)
+        time.sleep(2)
+        # 循环所有用例，并把每条用例放入runTestCase方法中，
+        for row in case_data_list["testCase"]:
+            self.runTestCase(row)
+            # 增加判断条件，判断是否为需要cancel的symbol
+            if row["Symbol"] == "5076":
+                time.sleep(3)
+            else:
+                time.sleep(1)

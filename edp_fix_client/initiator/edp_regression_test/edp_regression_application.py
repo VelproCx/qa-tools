@@ -3,7 +3,6 @@
 """FIX Application"""
 import difflib
 import random
-
 import quickfix as fix
 import time
 import logging
@@ -161,10 +160,10 @@ class Application(fix.Application):
                 for item in self.ReceveRes:
                     if item['clordId'] == matched_clordId:
                         # 更新该组数据的ordstatus
-                        item['ordstatus'] = str(ordStatus)
+                        item['ordstatus'].append(str(ordStatus))
             else:
                 # 添加新的数据到数组中
-                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': str(ordStatus)})
+                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': str([ordStatus])})
             if msgType != '9':
                 avgPx = message.getField(6)
                 CumQty = message.getField(14)
@@ -306,7 +305,7 @@ class Application(fix.Application):
                             else:
                                 logfix.info(
                                     "(recvMsg) EDP ToSTNeT Accepted << %s" % msg + 'EDP ToSTNeT Accepted FixMsg Error!')
-                        # Execution Report – Trade Correction (EDP ToSTNeT Confirmation)
+                        # 7.2 Execution Report – Trade Correction (EDP ToSTNeT Confirmation)
                         else:
                             if (
                                     avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID,
@@ -324,7 +323,7 @@ class Application(fix.Application):
                             else:
                                 logfix.info(
                                     "(recvMsg) EDP ToSTNeT Confirmation << %s" % msg + 'EDP ToSTNeT Confirmation FixMsg Error!')
-                    # Execution Report – Trade Cancel (EDP ToSTNeT Rejection)
+                    # 7.1 Execution Report – Trade Cancel (EDP ToSTNeT Rejection)
                     elif execTransType == '1':
                         lastLiquidityInd = message.getField(851)
                         toSTNeTTransactionTime = message.getField(8106)
@@ -399,6 +398,20 @@ class Application(fix.Application):
                 resList.append('failed')
                 logfix.info("Except:" + str(record1[field_name]) + " ，" + "ordStatus: " + str(record2[field_name]))
         return resList
+
+
+
+
+
+            # if record1[field_name] == record2[field_name]:
+            #     self.Success += 1
+            #     resList.append('success')
+            # else:
+            #     self.Fail += 1
+            #     logfix.info(f"第 {i} 条数据的指定字段值不相同" + "," + "clordId:" + str(record2['clordId']))
+            #     resList.append('failed')
+            #     logfix.info("Except:" + str(record1[field_name]) + " ，" + "ordStatus: " + str(record2[field_name]))
+        # return resList
 
     # 判断log文件中是否存在 Market Price is not matching
     def logsCheck(self):

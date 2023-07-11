@@ -179,10 +179,10 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                     # 判断当前收到的消息体clordid是否在数组里
                     if item['clordId'] == matched_clordId:
                         # 更新该组数据的ordstatus
-                        item['ordstatus'] = str(ordStatus)
+                        item['ordstatus'].append(str(ordStatus))
             else:
                 # 添加新的数据到数组中
-                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': str(ordStatus)})
+                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': str([ordStatus])})
             # 因CancelRej消息体与其他消息体共用字段少，为减少代码量，将msgType == '9'的消息体做单独处理
             if msgType != '9':
                 # 消息体共用tag

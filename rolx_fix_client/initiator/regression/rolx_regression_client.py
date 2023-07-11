@@ -17,7 +17,7 @@ def main(config_file):
 
         initiator.start()
         application.load_test_case()
-        time.sleep(80)
+        time.sleep(62)
         initiator.stop()
 
     except (quickfix.ConfigError, quickfix.RuntimeError) as e:

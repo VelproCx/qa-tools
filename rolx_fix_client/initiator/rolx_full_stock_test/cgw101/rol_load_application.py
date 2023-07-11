@@ -10,6 +10,10 @@ import json
 import random
 # from mail.run_email import send_mail
 import math
+import sys
+
+sys.path.append("../getSymbollist/")
+from get_Symbol import get_Symbol_file
 
 __SOH__ = chr(1)
 
@@ -23,7 +27,8 @@ class Application(fix.Application):
     execID = 0
     ORDERS_DICT = []
     LASTEST_ORDER = {}
-    sideNum = 0
+    Symbol_list = []
+    OrderNum = 0
     ROL_PROP_BPS_BUY = 0.0022
     ROL_PROP_BPS_SELL = 0.0022
     Rejected = 0
@@ -257,12 +262,12 @@ class Application(fix.Application):
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(self.getOrderQty()))
         msg.setField(fix.OrdType("1"))
-        msg.setField(fix.Symbol(row["Symbol"]))
+        msg.setField(fix.Symbol(row))
         msg.setField(fix.HandlInst('1'))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
 
-        if self.sideNum == 1:
+        if self.OrderNum % 2 == 1:
             msg.setField(fix.Side("1"))
         else:
             msg.setField(fix.Side("2"))
@@ -274,25 +279,24 @@ class Application(fix.Application):
 
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
-        time.sleep(1)
-
     def runTestCase(self, row):
         self.insert_order_request(row)
 
     # 加载用例文件
     def load_test_case(self):
         """Run"""
-        with open('../case/ROL_FOR_PROD.json', 'r') as f_json:
-            case_data_list = json.load(f_json)
-            time.sleep(1)
-            # 循环所有用例，并把每条用例放入runTestCase方法中，
-            num = 0
-            while num < 2:
-                num += 1
-                self.sideNum += 1
-                for row in case_data_list["testCase"]:
-                    self.runTestCase(row)
-                    time.sleep(0.04)
-            # for row in case_data_list["testCase"]:
-            #     self.runTestCase(row)
-            #     time.sleep(1)
+        time.sleep(2)
+        self.Symbol_list = get_Symbol_file('ROLX')
+        try:
+            if not self.Symbol_list:
+                raise Exception("股票列表为空")
+        except Exception as e:
+            print("捕获到异常：", e)
+            return None
+        time.sleep(10)
+        while self.OrderNum < 2:
+            self.OrderNum += 1
+            for row in self.Symbol_list:
+                print(row)
+                self.runTestCase(row)
+                time.sleep(1)
