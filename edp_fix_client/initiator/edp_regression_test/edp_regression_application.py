@@ -11,13 +11,9 @@ from model.logger import setup_logger
 import json
 from mail.run_email import send_mail
 from method.file_generation import generation
-import math
-
 __SOH__ = chr(1)
 
 from openpyxl import load_workbook
-
-import pandas as pd
 
 # report
 setup_logger('logfix', 'logs/edp_report.log')
@@ -551,8 +547,8 @@ class Application(fix.Application):
 
     def load_test_case(self):
         """Run"""
-        with open('case/test.json', 'r') as f_json:
-            generation('case/test.json', 'report/edp_report.xlsx')
+        with open('case/EDP_Functional_Test_Matrix.json', 'r') as f_json:
+            generation('case/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
