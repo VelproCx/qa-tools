@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 import logging
 import random
 import grpc
@@ -32,12 +33,15 @@ def login(username, password):
     channel = grpc.secure_channel(AUTH_HOST, credentials=creds)
     stub = basic_auth_api_pb2_grpc.BasicAuthAPIStub(channel)
     response = stub.Login(basic_auth_api_pb2.LoginRequest(username=username, password=password))
+    # print(basic_auth_api_pb2.LoginRequest(username=username, password=password))
     return response
+
 
 # 获取登陆的response
 res_login = login(USER_INFO[0][0], USER_INFO[0][1])
 # 定义变量接收token
 access_token = res_login.access_token
+
 
 def genClOrdID():
     execID = 0
@@ -50,7 +54,6 @@ def genClOrdID():
 
 
 def InsertOrderEntryFirst(type, side, order_qty, symbol, price, clord_id, account, time_in_force):
-
     # 证书选择SSL类型
     creds = grpc.ssl_channel_credentials()
     conn = grpc.secure_channel(target=TRADE_HOST, credentials=creds,
@@ -71,7 +74,7 @@ def InsertOrderEntryFirst(type, side, order_qty, symbol, price, clord_id, accoun
 
 
 def InsertOrderEntrySecond(type, side, order_qty, symbol, price, clord_id, account, time_in_force,
-                          selfMatchPreventionId):
+                           selfMatchPreventionId):
     # 获取登陆的response
     res_login = login(USER_INFO[1][0], USER_INFO[1][1])
     # 定义变量接收token
@@ -104,21 +107,18 @@ def getOrderQty():
 
 
 def runCase():
-    InsertOrderEntryFirst(2, 1, 1000, '5110.EDP', 13960,
-                          str(genClOrdID()),
-                          ACCOUNT_INFO[0], 1)
+    with open('full_stock_List.json', 'r') as f_json:
+        case_data_list = json.load(f_json)
+        time.sleep(1)
+        # 循环所有用例，并把每条用例放入runTestCase方法中
 
-    InsertOrderEntryFirst(2, 2, 1000, '5110.EDP', 13980,
-                           str(genClOrdID()),
-                          ACCOUNT_INFO[0], 1)
-    #
-    # InsertOrderEntryFirst(2, 1, 1000, '6028.EDP', 30650,
-    #                       str(genClOrdID()),
-    #                       ACCOUNT_INFO[0], 1)
-    #
-    # InsertOrderEntryFirst(2, 2, 1000, '6028.EDP', 30700,
-    #                        str(genClOrdID()),
-    #                        ACCOUNT_INFO[0], 1)
+        for row in case_data_list["testCase"]:
+            price = float(row["Price"]) * 10
+            print(price)
+            InsertOrderEntryFirst(2, 1, 500, row['Symbol'], int(price),
+                                  str(genClOrdID()),
+                                  ACCOUNT_INFO[0], 1)
+            time.sleep(10)
 
 if __name__ == '__main__':
     res_login = login(USER_INFO[0][0], USER_INFO[0][1])
