@@ -3,7 +3,7 @@ import sys
 import argparse
 from datetime import timedelta, datetime
 import quickfix
-from rex_load_application import Application
+from rolx_full_stock_application import Application
 import time
 global initiator
 
@@ -19,7 +19,7 @@ def main(config_file):
         initiator.start()
         application.load_test_case()
         # 执行完所有测试用例后等待时间
-        sleep_duration = timedelta(minutes=5)
+        sleep_duration = timedelta(minutes=2)
         end_time = datetime.now() + sleep_duration
         while datetime.now() < end_time:
             time.sleep(1)
