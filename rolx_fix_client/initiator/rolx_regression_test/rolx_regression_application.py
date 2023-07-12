@@ -66,7 +66,6 @@ class Application(fix.Application):
         logfix.info("Result : Total = %d,Success = %d,Fail = %d" % (self.Total, self.Success, self.Fail))
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/rolx_report.xlsx', self.Result, 2, 'P')
-        send_mail(['report/rolx_report.xlsx', 'logs/rolx_report.log'])
         return
 
     def toAdmin(self, message, sessionID):
@@ -168,7 +167,6 @@ class Application(fix.Application):
             else:
                 # 添加新的数据到数组中
                 self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
-                print(ordStatus)
             # 因CancelRej消息体与其他消息体共用字段少，为减少代码量，将msgType == '9'的消息体做单独处理
             if msgType != '9':
                 # 消息体共用tag
@@ -437,6 +435,9 @@ class Application(fix.Application):
         msg.setField(fix.HandlInst('1'))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
+        # 判断订单类型
+        if row["OrdType"] == "2":
+            msg.setField(fix.Price(row["Price"]))
 
         if row["TimeInForce"] != "":
             msg.setField(fix.TimeInForce(row["TimeInForce"]))
@@ -454,18 +455,10 @@ class Application(fix.Application):
         if row["MarginTransactionType"] != "":
             msg.setField(8214, row["MarginTransactionType"])
 
-        # if row["Expect"] != "":
-
         # 获取TransactTime
         trstime = fix.TransactTime()
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
         msg.setField(trstime)
-
-        # 判断订单类型
-        if row["OrdType"] == "2":
-            msg.setField(fix.Price(row["Price"]))
-        elif row["OrdType"] == "1":
-            print("")
 
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
