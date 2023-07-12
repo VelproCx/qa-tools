@@ -9,14 +9,12 @@ import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
-from mail.run_email import send_mail
+# from mail.run_email import send_mail
 from method.file_generation import generation
-
+from openpyxl import load_workbook
 __SOH__ = chr(1)
 
-from openpyxl import load_workbook
-
-# report
+# log
 setup_logger('logfix', 'logs/edp_report.log')
 logfix = logging.getLogger('logfix')
 
@@ -445,7 +443,6 @@ class Application(fix.Application):
         msg.setField(fix.Side(row["Side"]))
         msg.setField(fix.Symbol(row["Symbol"]))
         msg.setField(fix.HandlInst('1'))
-        # msg.setField(fix.Price(row["Price"]))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
 
@@ -528,5 +525,4 @@ class Application(fix.Application):
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
                 self.runTestCase(row)
-                self.Total += 1
-                time.sleep(0.5)
+                time.sleep(1)
