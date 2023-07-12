@@ -61,7 +61,7 @@ class Application(fix.Application):
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'S')
         logfix.info(self.Result)
         logfix.info(self.ReceveRes)
-        send_mail(['../report/edp_report.xlsx', '../logs/edp_report.log'])
+        send_mail(['report/edp_report.xlsx', 'logs/edp_report.log'])
         return
 
     def toAdmin(self, message, sessionID):
