@@ -61,7 +61,7 @@ class Application(fix.Application):
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'S')
         logfix.info(self.Result)
         logfix.info(self.ReceveRes)
-        send_mail(['report/edp_report.xlsx', 'logs/edp_report.log'])
+        # send_mail(['report/edp_report.xlsx', 'logs/edp_report.log'])
         return
 
     def toAdmin(self, message, sessionID):
@@ -438,7 +438,6 @@ class Application(fix.Application):
 
     def insert_order_request(self, row):
         msg = fix.Message()
-        logfix.info(row["Id"])
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
@@ -497,7 +496,6 @@ class Application(fix.Application):
     def order_cancel_request(self, row):
         # 使用变量接收上一个订单clOrdId
         # self.insert_order_request(row)
-        logfix.info(row["Id"])
         clOrdId = self.ORDERS_DICT
         time.sleep(1)
         msg = fix.Message()
