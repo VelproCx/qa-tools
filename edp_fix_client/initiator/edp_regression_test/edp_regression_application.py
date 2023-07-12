@@ -446,6 +446,10 @@ class Application(fix.Application):
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
 
+        # 判断订单类型
+        if row["OrdType"] == "2":
+            msg.setField(fix.Price(row["Price"]))
+
         if row["TimeInForce"] != "":
             msg.setField(fix.TimeInForce(row["TimeInForce"]))
 
@@ -478,11 +482,6 @@ class Application(fix.Application):
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
         msg.setField(trstime)
 
-        # 判断订单类型
-        if row["OrdType"] == "2":
-            msg.setField(fix.Price(row["Price"]))
-        elif row["OrdType"] == "1":
-            print("")
         fix.Session.sendToTarget(msg, self.sessionID)
 
         return msg
