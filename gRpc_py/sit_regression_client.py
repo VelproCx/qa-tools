@@ -114,7 +114,7 @@ def runCase():
 
         for row in case_data_list["testCase"]:
             symbol = row["symbol"]
-            print(symbol)
+            # print(symbol)
             InsertOrderEntryFirst(2, row['side'], row['order_qty'], row['symbol'], row["price"],
                                   str(genClOrdID()),
                                   ACCOUNT_INFO[0], 1)
