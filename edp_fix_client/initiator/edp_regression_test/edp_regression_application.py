@@ -11,6 +11,7 @@ from model.logger import setup_logger
 import json
 from mail.run_email import send_mail
 from method.file_generation import generation
+
 __SOH__ = chr(1)
 
 from openpyxl import load_workbook
@@ -56,12 +57,8 @@ class Application(fix.Application):
             file.write(json_data)
         self.Result = self.compare_field_values('case/EDP_Functional_Test_Matrix.json', 'logs/recv_data.json',
                                                 'ordstatus')
-        # logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'S')
-        logfix.info(self.Result)
-        logfix.info(self.ReceveRes)
-        send_mail(['report/edp_report.xlsx', 'logs/edp_report.log'])
         return
 
     def toAdmin(self, message, sessionID):
@@ -438,7 +435,6 @@ class Application(fix.Application):
 
     def insert_order_request(self, row):
         msg = fix.Message()
-        logfix.info(row["Id"])
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
@@ -497,7 +493,6 @@ class Application(fix.Application):
     def order_cancel_request(self, row):
         # 使用变量接收上一个订单clOrdId
         # self.insert_order_request(row)
-        logfix.info(row["Id"])
         clOrdId = self.ORDERS_DICT
         time.sleep(1)
         msg = fix.Message()
