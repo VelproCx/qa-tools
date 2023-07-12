@@ -61,7 +61,7 @@ class Application(fix.Application):
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'S')
         logfix.info(self.Result)
         logfix.info(self.ReceveRes)
-        # send_mail(['report/edp_report.xlsx', 'logs/edp_report.log'])
+        send_mail(['../report/edp_report.xlsx', '../logs/edp_report.log'])
         return
 
     def toAdmin(self, message, sessionID):
@@ -83,13 +83,6 @@ class Application(fix.Application):
             side = message.getField(54)
             symbol = message.getField(55)
             transactTime = message.getField(60)
-
-            # Added tag to the EDP project
-
-            # MinQty = message.getField(110)
-            # OrderClassification = message.getField(8060)
-            # CrossingPriceType = message.getField(8164)
-            # SelfTradePreventionId = message.getField(8174)
 
             if (clOrdID, orderQty, ordType, side, symbol, transactTime,) != "":
                 logfix.info("(sendMsg) New Ack >> {}".format(msg))
@@ -159,7 +152,7 @@ class Application(fix.Application):
                         item['ordstatus'].append(str(ordStatus))
             else:
                 # 添加新的数据到数组中
-                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': str([ordStatus])})
+                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': ([ordStatus])})
             if msgType != '9':
                 avgPx = message.getField(6)
                 CumQty = message.getField(14)
@@ -183,7 +176,7 @@ class Application(fix.Application):
                 OrderClassification = message.getField(8060)
                 SelfTradePreventionId = message.getField(8174)
 
-                if symbol == '1308':
+                if symbol == '1320' or symbol == '1321' or symbol == '1308':
                     self.ORDERS_DICT = message.getField(11)
                 msg = message.toString().replace(__SOH__, "|")
                 # 7.2 Execution Report – Order Accepted
@@ -394,20 +387,6 @@ class Application(fix.Application):
                 resList.append('failed')
                 logfix.info("Except:" + str(record1[field_name]) + " ，" + "ordStatus: " + str(record2[field_name]))
         return resList
-
-
-
-
-
-            # if record1[field_name] == record2[field_name]:
-            #     self.Success += 1
-            #     resList.append('success')
-            # else:
-            #     self.Fail += 1
-            #     logfix.info(f"第 {i} 条数据的指定字段值不相同" + "," + "clordId:" + str(record2['clordId']))
-            #     resList.append('failed')
-            #     logfix.info("Except:" + str(record1[field_name]) + " ，" + "ordStatus: " + str(record2[field_name]))
-        # return resList
 
     # 判断log文件中是否存在 Market Price is not matching
     def logsCheck(self):
