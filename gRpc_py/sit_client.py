@@ -3,6 +3,8 @@ import json
 import logging
 import random
 import grpc
+import pandas as pd
+
 from gen.connamara.ep3.v1beta1 import order_entry_api_pb2, order_entry_api_pb2_grpc
 from gen.connamara.ep3.auth.v1beta1 import basic_auth_api_pb2
 from gen.connamara.ep3.auth.v1beta1 import basic_auth_api_pb2_grpc
@@ -26,6 +28,7 @@ ACCOUNT_INFO = [
     'firms/HRT-Clear-Member/accounts/HRT_SIT_ACCOUNT_2'
 ]
 
+ordernum = 0
 
 def login(username, password):
     # 证书选择SSL类型
@@ -107,18 +110,41 @@ def getOrderQty():
 
 
 def runCase():
-    with open('full_stock_List.json', 'r') as f_json:
-        case_data_list = json.load(f_json)
-        time.sleep(1)
-        # 循环所有用例，并把每条用例放入runTestCase方法中
-
-        for row in case_data_list["testCase"]:
-            price = float(row["Price"]) * 10
-            print(price)
-            InsertOrderEntryFirst(2, 1, 500, row['Symbol'], int(price),
-                                  str(genClOrdID()),
-                                  ACCOUNT_INFO[0], 1)
-            time.sleep(10)
+    # with open('fullStockSymbol.xlsx', 'r') as f_json:
+    #     case_data_list = json.load(f_json)
+    #     time.sleep(1)
+    #     # 循环所有用例，并把每条用例放入runTestCase方法中
+    #
+    #     for row in case_data_list["testCase"]:
+    #         price = float(row["Price"]) * 10
+    #         InsertOrderEntryFirst(2, 1, 500, row['Symbol'], int(price),
+    #                               str(genClOrdID()),
+    #                               ACCOUNT_INFO[0], 1)
+    #         time.sleep(10)
+    global ordernum
+    while ordernum < 2:
+        ordernum += 1
+        if ordernum == 1:
+            df = pd.read_excel("fullStockSymbol.xlsx")
+            time.sleep(2)
+            for value in df.iterrows():
+                symbol = (str(value[1]["instrument_id"]) + ".EDP")
+                print(symbol)
+                price = float(value[1]["price_limit_low"]) * 10
+                print(price)
+                InsertOrderEntryFirst(2, 1, 500, symbol, int(price),
+                                      str(genClOrdID()),
+                                      ACCOUNT_INFO[0], 1)
+                pass
+        else:
+            for value in df.iterrows():
+                symbol = (str(value[1]["instrument_id"]) + ".EDP")
+                # print(symbol)
+                price = float(value[1]["price_limit_high"]) * 10
+                # print(price)
+                InsertOrderEntryFirst(2, 2, 500, symbol, int(price),
+                                      str(genClOrdID()),
+                                      ACCOUNT_INFO[0], 1)
 
 if __name__ == '__main__':
     res_login = login(USER_INFO[0][0], USER_INFO[0][1])

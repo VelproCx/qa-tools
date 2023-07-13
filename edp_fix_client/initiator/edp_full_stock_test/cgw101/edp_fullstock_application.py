@@ -53,7 +53,6 @@ class Application(fix.Application):
         self.logsCheck()
         # logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
         print("Session ({}) logout !".format(sessionID.toString()))
-        # send_mail(['report/edp_report.xlsx', 'logs/edp_report.log'])
         return
 
     def toAdmin(self, message, sessionID):

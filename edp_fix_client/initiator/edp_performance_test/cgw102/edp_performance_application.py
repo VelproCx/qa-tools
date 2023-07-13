@@ -12,7 +12,7 @@ import random
 __SOH__ = chr(1)
 
 # report
-setup_logger('logfix', 'report.log')
+setup_logger('logfix', 'logs/report.log')
 logfix = logging.getLogger('logfix')
 
 
