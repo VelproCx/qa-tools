@@ -9,16 +9,11 @@ import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
-from mail.run_email import send_mail
 from method.file_generation import generation
 import math
 import random
-
 __SOH__ = chr(1)
-
 from openpyxl import Workbook, load_workbook
-
-import pandas as pd
 
 # report
 setup_logger('logfix', 'logs/rolx_report.log')
@@ -79,14 +74,15 @@ class Application(fix.Application):
         logfix.info("-------------------------------------------------------------------------------------------------")
         msgType = message.getHeader().getField(35)
         msg = message.toString().replace(__SOH__, "|")
+        clOrdID = message.getField(11)
+        side = message.getField(54)
+        symbol = message.getField(55)
+        transactTime = message.getField(60)
+
         # 7.1 New Order Single
         if msgType == "D":
             orderQty = message.getField(38)
             ordType = message.getField(40)
-            clOrdID = message.getField(11)
-            side = message.getField(54)
-            symbol = message.getField(55)
-            transactTime = message.getField(60)
             if (clOrdID, orderQty, ordType,
                 side, symbol, transactTime,
                 ) != "":
@@ -95,10 +91,6 @@ class Application(fix.Application):
                 logfix.info("(sendMsg) New Ack >> %s" % msg + 'New Order Single FixMsg Error!')
         # 7.4 Order Cancel Request
         elif msgType == "F":
-            clOrdID = message.getField(11)
-            side = message.getField(54)
-            symbol = message.getField(55)
-            transactTime = message.getField(60)
             if (clOrdID, side, symbol, transactTime) != "":
                 logfix.info("(sendMsg) Cancel Ack >> %s" % msg)
             else:
@@ -163,10 +155,10 @@ class Application(fix.Application):
                     # 判断当前收到的消息体clordid是否在数组里
                     if item['clordId'] == matched_clordId:
                         # 更新该组数据的ordstatus
-                        item['ordstatus'] = str(ordStatus)
+                        item['ordstatus'].append(ordStatus)
             else:
                 # 添加新的数据到数组中
-                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': str(ordStatus)})
+                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
             # 因CancelRej消息体与其他消息体共用字段少，为减少代码量，将msgType == '9'的消息体做单独处理
             if msgType != '9':
                 # 消息体共用tag
@@ -361,7 +353,8 @@ class Application(fix.Application):
                 logfix.info("Except:" + str(record1[field_name]) + " ，" + "ordStatus: " + str(record2[field_name]))
         return resList
 
-    # 判断log文件中是否存在 Market Price is not matching
+
+# 判断log文件中是否存在 Market Price is not matching
     def logsCheck(self):
         response = ['ps: 若列表存在failed数据，请查看report.log文件']
         self.writeResExcel('report/rolx_report.xlsx', response, 2, 'Q')
@@ -393,6 +386,7 @@ class Application(fix.Application):
             response = ['execType is OK']
             self.writeResExcel('report/rolx_report.xlsx', response, 8, "Q")
 
+
     def writeResExcel(self, filename, data, row, column):
         # 打开现有的 Excel 文件或创建新的 Workbook
         workbook = load_workbook(filename)
@@ -409,6 +403,7 @@ class Application(fix.Application):
         # 保存修改并关闭工作簿
         workbook.save(filename)
 
+
     def getClOrdID(self):
         # "随机数生成ClOrdID"
         self.execID += 1
@@ -416,6 +411,7 @@ class Application(fix.Application):
         t = int(time.time())
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
         return str(t) + str1 + str(self.execID).zfill(6)
+
 
     def insert_order_request(self, row):
         msg = fix.Message()
@@ -431,6 +427,9 @@ class Application(fix.Application):
         msg.setField(fix.HandlInst('1'))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
+        # 判断订单类型
+        if row["OrdType"] == "2":
+            msg.setField(fix.Price(row["Price"]))
 
         if row["TimeInForce"] != "":
             msg.setField(fix.TimeInForce(row["TimeInForce"]))
@@ -448,23 +447,14 @@ class Application(fix.Application):
         if row["MarginTransactionType"] != "":
             msg.setField(8214, row["MarginTransactionType"])
 
-        # if row["Expect"] != "":
-
         # 获取TransactTime
         trstime = fix.TransactTime()
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
         msg.setField(trstime)
 
-        # 判断订单类型
-        if row["OrdType"] == "2":
-            msg.setField(fix.Price(row["Price"]))
-        elif row["OrdType"] == fix.OrdType_STOP or row["OrdType"] == fix.OrdType_STOP_LIMIT:
-            msg.setField(fix.Price(row["Price" + 5]))
-        elif row["OrdType"] == "1":
-            print("")
-
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
+
 
     def order_cancel_request(self, row):
         # 使用变量接收上一个订单clOrdId
@@ -486,13 +476,14 @@ class Application(fix.Application):
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
 
-    def runTestCase(self, row):
 
+    def runTestCase(self, row):
         action = row["ActionType"]
         if action == 'NewAck':
             self.insert_order_request(row)
         elif action == 'CancelAck':
             self.order_cancel_request(row)
+
 
     def load_test_case(self):
         """Run"""

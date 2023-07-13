@@ -9,10 +9,11 @@ import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
+import get_Symbol
 __SOH__ = chr(1)
 
 # report
-setup_logger('logfix', 'edp_fullstock_report.log')
+setup_logger('logfix', 'logs/edp_fullstock_report.log')
 logfix = logging.getLogger('logfix')
 
 
@@ -21,18 +22,21 @@ class Application(fix.Application):
     execID = 0
     ORDERS_DICT = []
     LASTEST_ORDER = {}
+    Symbol_list = []
     Success = 0
     Fail = 0
     Total = Success + Fail
     Result = []
     ReceveRes = []
     OrderNum = 0
+    NewAck = 0
 
     def __init__(self):
         super().__init__()
         self.sessionID = None
 
     def onCreate(self, sessionID):
+
         # "服务器启动时候调用此方法创建"
         self.sessionID = sessionID
         print("onCreate : Session ({})".format(sessionID.toString()))
@@ -48,8 +52,7 @@ class Application(fix.Application):
         # "客户端断开连接时候调用此方法"
         self.logsCheck()
         # logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
-        print("Session (%s) logout !" % sessionID.toString())
-        # send_mail(['report/edp_report.xlsx', 'logs/edp_report.log'])
+        print("Session ({}) logout !".format(sessionID.toString()))
         return
 
     def toAdmin(self, message, sessionID):
@@ -353,7 +356,7 @@ class Application(fix.Application):
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(self.getOrderQty()))
         msg.setField(fix.OrdType("1"))
-        msg.setField(fix.Symbol(row["Symbol"]))
+        msg.setField(fix.Symbol(row))
         msg.setField(fix.HandlInst('1'))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
@@ -378,12 +381,22 @@ class Application(fix.Application):
     # 加载用例文件
     def load_test_case(self):
         """Run"""
-        with open('../case/full_stock_List.json', 'r') as f_json:
-            case_data_list = json.load(f_json)
-            time.sleep(1)
-            # 循环所有用例，并把每条用例放入runTestCase方法中
-            while self.OrderNum < 2:
-                self.OrderNum += 1
-                for row in case_data_list["testCase"]:
-                    self.runTestCase(row)
-                    time.sleep(0.04)
+        # with open('../case/full_stock_List.json', 'r') as f_json:
+        #     case_data_list = json.load(f_json)
+        #     time.sleep(1)
+        #     # 循环所有用例，并把每条用例放入runTestCase方法中
+        #     while self.OrderNum < 2:
+        #         self.OrderNum += 1
+        #         for row in case_data_list["testCase"]:
+        #             self.runTestCase(row)
+        #             time.sleep(0.04)
+        # 获取股票列表
+        time.sleep(1)
+        self.Symbol_list = get_Symbol.get_Symbol_file('REX')
+
+        while self.OrderNum < 2:
+            self.OrderNum += 1
+            for row in self.Symbol_list:
+                # print(row)
+                self.runTestCase(row)
+                time.sleep(10)
