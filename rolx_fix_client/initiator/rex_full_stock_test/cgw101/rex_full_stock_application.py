@@ -15,7 +15,7 @@ import math
 __SOH__ = chr(1)
 
 # report
-setup_logger('logfix', 'rex_report.log')
+setup_logger('logfix', 'logs/rex_report.log')
 logfix = logging.getLogger('logfix')
 
 
