@@ -73,7 +73,6 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         logfix.info("Result : Total = %d,Success = %d,Fail = %d" % (self.Total, self.Success, self.Fail))
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/rex_report.xlsx', self.Result, 2, 'P')  # 并写入文件
-        send_mail(['report/rex_report.xlsx', 'logs/rex_report.log'])
         return
 
     def toAdmin(self, message, sessionID):
