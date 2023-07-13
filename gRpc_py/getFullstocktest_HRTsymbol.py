@@ -5,6 +5,7 @@ import warnings
 from datetime import datetime
 import pandas as pd
 from io import StringIO
+import time
 
 
 def post_main(url, headers, data=None):
@@ -65,11 +66,11 @@ def get_Symbol_data():
     date = get_Symbol_date.text
     print(
         "-------------------------------full stock symbols gen success-------------------------------")
-    #
     df = pd.read_csv(StringIO(date))
-    df.to_excel("FullStockSymbol.xlsx", index=False)
+    df.to_excel("fullStockSymbol.xlsx", index=False)
+    # return
+    ordernum = 0
 
-    return
 
 
 get_Symbol_data()
