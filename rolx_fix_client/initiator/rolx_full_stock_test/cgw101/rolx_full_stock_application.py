@@ -8,7 +8,6 @@ from datetime import datetime
 from model.logger import setup_logger
 import json
 import random
-# from mail.run_email import send_mail
 import math
 import sys
 

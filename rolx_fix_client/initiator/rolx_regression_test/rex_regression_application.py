@@ -10,7 +10,6 @@ import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
-from mail.run_email import send_mail
 from method.file_generation import generation
 import threading
 import math
