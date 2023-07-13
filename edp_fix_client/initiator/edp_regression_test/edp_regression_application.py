@@ -9,13 +9,12 @@ import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
-from mail.run_email import send_mail
+# from mail.run_email import send_mail
 from method.file_generation import generation
+from openpyxl import load_workbook
 __SOH__ = chr(1)
 
-from openpyxl import load_workbook
-
-# report
+# log
 setup_logger('logfix', 'logs/edp_report.log')
 logfix = logging.getLogger('logfix')
 
@@ -56,12 +55,8 @@ class Application(fix.Application):
             file.write(json_data)
         self.Result = self.compare_field_values('case/EDP_Functional_Test_Matrix.json', 'logs/recv_data.json',
                                                 'ordstatus')
-        logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'S')
-        logfix.info(self.Result)
-        logfix.info(self.ReceveRes)
-        # send_mail(['report/edp_report.xlsx', 'logs/edp_report.log'])
         return
 
     def toAdmin(self, message, sessionID):
@@ -438,7 +433,6 @@ class Application(fix.Application):
 
     def insert_order_request(self, row):
         msg = fix.Message()
-        # logfix.info(row["Id"])
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
@@ -449,9 +443,12 @@ class Application(fix.Application):
         msg.setField(fix.Side(row["Side"]))
         msg.setField(fix.Symbol(row["Symbol"]))
         msg.setField(fix.HandlInst('1'))
-        # msg.setField(fix.Price(row["Price"]))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
+
+        # 判断订单类型
+        if row["OrdType"] == "2":
+            msg.setField(fix.Price(row["Price"]))
 
         if row["TimeInForce"] != "":
             msg.setField(fix.TimeInForce(row["TimeInForce"]))
@@ -485,11 +482,6 @@ class Application(fix.Application):
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
         msg.setField(trstime)
 
-        # 判断订单类型
-        if row["OrdType"] == "2":
-            msg.setField(fix.Price(row["Price"]))
-        elif row["OrdType"] == "1":
-            print("")
         fix.Session.sendToTarget(msg, self.sessionID)
 
         return msg
@@ -497,7 +489,6 @@ class Application(fix.Application):
     def order_cancel_request(self, row):
         # 使用变量接收上一个订单clOrdId
         # self.insert_order_request(row)
-        logfix.info(row["Id"])
         clOrdId = self.ORDERS_DICT
         time.sleep(1)
         msg = fix.Message()
@@ -533,5 +524,4 @@ class Application(fix.Application):
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
                 self.runTestCase(row)
-                self.Total += 1
-                time.sleep(0.5)
+                time.sleep(1)
