@@ -8,6 +8,7 @@ from io import StringIO
 import time
 
 
+# 封装登陆接口
 def post_main(url, headers, data=None):
     warnings.filterwarnings("ignore")
     response = requests.post(url=url, headers=headers, data=data, verify=False)
@@ -33,6 +34,7 @@ def login_admin():
         "-------------------------------login admin success-------------------------------")
     return token
 
+# 生成需要获取的股票文件名
 def get_security_master_name():
     daydate = datetime.now()
     day_year = daydate.year
@@ -66,10 +68,30 @@ def get_Symbol_data():
     date = get_Symbol_date.text
     print(
         "-------------------------------full stock symbols gen success-------------------------------")
+    # 将接口返回的csv文件进行数据转换
     df = pd.read_csv(StringIO(date))
+    # 将数据写入fullStockSymbol.xlsx文件中
     df.to_excel("fullStockSymbol.xlsx", index=False)
     # return
     ordernum = 0
+    while ordernum < 2:
+        ordernum += 1
+        df = pd.read_excel("fullStockSymbol.xlsx")
+        if ordernum == 1:
+            time.sleep(2)
+            for value in df.iterrows():
+                symbol = (str(value[1]["instrument_id"]) + ".EDP")
+                price = float(value[1]["price_limit_low"]) * 10
+                InsertOrderEntryFirst(2, 1, 500, symbol, int(price),
+                                      str(genClOrdID()),
+                                      ACCOUNT_INFO[0], 1)
+        else:
+            for value in df.iterrows():
+                symbol = (str(value[1]["instrument_id"]) + ".EDP")
+                price = float(value[1]["price_limit_high"]) * 10
+                InsertOrderEntryFirst(2, 2, 500, symbol, int(price),
+                                      str(genClOrdID()),
+                                      ACCOUNT_INFO[0], 1)
 
 
 

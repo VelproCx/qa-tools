@@ -124,24 +124,19 @@ def runCase():
     global ordernum
     while ordernum < 2:
         ordernum += 1
+        df = pd.read_excel("fullStockSymbol.xlsx")
         if ordernum == 1:
-            df = pd.read_excel("fullStockSymbol.xlsx")
             time.sleep(2)
             for value in df.iterrows():
                 symbol = (str(value[1]["instrument_id"]) + ".EDP")
-                print(symbol)
                 price = float(value[1]["price_limit_low"]) * 10
-                print(price)
                 InsertOrderEntryFirst(2, 1, 500, symbol, int(price),
                                       str(genClOrdID()),
                                       ACCOUNT_INFO[0], 1)
-                pass
         else:
             for value in df.iterrows():
                 symbol = (str(value[1]["instrument_id"]) + ".EDP")
-                # print(symbol)
                 price = float(value[1]["price_limit_high"]) * 10
-                # print(price)
                 InsertOrderEntryFirst(2, 2, 500, symbol, int(price),
                                       str(genClOrdID()),
                                       ACCOUNT_INFO[0], 1)
