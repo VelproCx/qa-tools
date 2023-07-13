@@ -179,10 +179,10 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                     # 判断当前收到的消息体clordid是否在数组里
                     if item['clordId'] == matched_clordId:
                         # 更新该组数据的ordstatus
-                        item['ordstatus'] = str(ordStatus)
+                        item['ordstatus'].append(str(ordStatus))
             else:
                 # 添加新的数据到数组中
-                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': str(ordStatus)})
+                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': str([ordStatus])})
             # 因CancelRej消息体与其他消息体共用字段少，为减少代码量，将msgType == '9'的消息体做单独处理
             if msgType != '9':
                 # 消息体共用tag
@@ -452,6 +452,9 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         msg.setField(fix.HandlInst('1'))  # 处理方式
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
+        # 判断订单类型,限价单读取case中的price并且设置，市价单则不设置价格
+        if row["OrdType"] == "2":
+            msg.setField(fix.Price(row["Price"]))  # 如果值是2，表示是限价单，要设置价格
 
         # 5个非必填的字段
         if row["TimeInForce"] != "":
@@ -474,12 +477,6 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         trstime = fix.TransactTime()
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
         msg.setField(trstime)
-
-        # 判断订单类型,限价单读取case中的price并且设置，市价单则不设置价格
-        if row["OrdType"] == "2":
-            msg.setField(fix.Price(row["Price"]))  # 如果值是2，表示是限价单，要设置价格
-        elif row["OrdType"] == "1":  # 如果值是1，表示是市价单，无需设置价格
-            print("")
 
         fix.Session.sendToTarget(msg, self.sessionID)  # 发送请求
         return msg  # 返回消息体
