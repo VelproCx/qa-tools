@@ -66,7 +66,6 @@ class Application(fix.Application):
         logfix.info("Result : Total = %d,Success = %d,Fail = %d" % (self.Total, self.Success, self.Fail))
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/rolx_report.xlsx', self.Result, 2, 'P')
-        send_mail(['report/rolx_report.xlsx', 'logs/rolx_report.log'])
         return
 
     def toAdmin(self, message, sessionID):
