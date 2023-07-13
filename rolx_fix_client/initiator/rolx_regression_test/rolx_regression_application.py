@@ -9,16 +9,11 @@ import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
-from mail.run_email import send_mail
 from method.file_generation import generation
 import math
 import random
-
 __SOH__ = chr(1)
-
 from openpyxl import Workbook, load_workbook
-
-import pandas as pd
 
 # report
 setup_logger('logfix', 'logs/rolx_report.log')
@@ -79,14 +74,15 @@ class Application(fix.Application):
         logfix.info("-------------------------------------------------------------------------------------------------")
         msgType = message.getHeader().getField(35)
         msg = message.toString().replace(__SOH__, "|")
+        clOrdID = message.getField(11)
+        side = message.getField(54)
+        symbol = message.getField(55)
+        transactTime = message.getField(60)
+
         # 7.1 New Order Single
         if msgType == "D":
             orderQty = message.getField(38)
             ordType = message.getField(40)
-            clOrdID = message.getField(11)
-            side = message.getField(54)
-            symbol = message.getField(55)
-            transactTime = message.getField(60)
             if (clOrdID, orderQty, ordType,
                 side, symbol, transactTime,
                 ) != "":
@@ -95,10 +91,6 @@ class Application(fix.Application):
                 logfix.info("(sendMsg) New Ack >> %s" % msg + 'New Order Single FixMsg Error!')
         # 7.4 Order Cancel Request
         elif msgType == "F":
-            clOrdID = message.getField(11)
-            side = message.getField(54)
-            symbol = message.getField(55)
-            transactTime = message.getField(60)
             if (clOrdID, side, symbol, transactTime) != "":
                 logfix.info("(sendMsg) Cancel Ack >> %s" % msg)
             else:
