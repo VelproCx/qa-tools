@@ -20,11 +20,11 @@ def send_mail(file_path=[]):
     password = "qffbzdwNgCVBF83y"
     sender = 'xiang.chen@farsightedyu.com'
     # 可添加多个收件人的邮箱
-    receives = ['sophie.yang@finstadiumx.co.jp', 'osamu.tachibana@finstadiumx.co.jp',
+    receives = ['sophie.yang@finstadiumx.co.jp', 'osamu.tachibana@finstadiumx.co.jp', 'daixu@farsightedyu.com',
                 'zhangtaotao@farsightedyu.com', 'zhenghuaimao@farsightedyu.com', 'xiang.chen@farsightedyu.com']
 
     # receives = [
-    #     'zhangtaotao@farsightedyu.com', 'zhenghuaimao@farsightedyu.com', 'xiang.chen@farsightedyu.com']
+    #     'zhangtaotao@farsightedyu.com', 'zhenghuaimao@farsightedyu.com', 'xiang.chen@farsightedyu.com', 'daixu@farsightedyu.com']
 
     # 构造邮件对象
     msg = MIMEMultipart('mixed')
@@ -61,3 +61,6 @@ def send_mail(file_path=[]):
     smtp.quit()
     print("已发送邮件")
     return
+
+
+# send_mail(['../report/edp_report.xlsx', '../logs/edp_report.log'])

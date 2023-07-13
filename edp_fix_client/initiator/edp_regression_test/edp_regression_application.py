@@ -3,20 +3,18 @@
 """FIX Application"""
 import difflib
 import random
-
 import quickfix as fix
 import time
 import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
-from mail.run_email import send_mail
+# from mail.run_email import send_mail
 from method.file_generation import generation
+from openpyxl import load_workbook
 __SOH__ = chr(1)
 
-from openpyxl import load_workbook
-
-# report
+# log
 setup_logger('logfix', 'logs/edp_report.log')
 logfix = logging.getLogger('logfix')
 
@@ -57,12 +55,8 @@ class Application(fix.Application):
             file.write(json_data)
         self.Result = self.compare_field_values('case/EDP_Functional_Test_Matrix.json', 'logs/recv_data.json',
                                                 'ordstatus')
-        # logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'S')
-        logfix.info(self.Result)
-        logfix.info(self.ReceveRes)
-        # send_mail(['report/edp_report.xlsx', 'logs/edp_report.log'])
         return
 
     def toAdmin(self, message, sessionID):
@@ -84,13 +78,6 @@ class Application(fix.Application):
             side = message.getField(54)
             symbol = message.getField(55)
             transactTime = message.getField(60)
-
-            # Added tag to the EDP project
-
-            # MinQty = message.getField(110)
-            # OrderClassification = message.getField(8060)
-            # CrossingPriceType = message.getField(8164)
-            # SelfTradePreventionId = message.getField(8174)
 
             if (clOrdID, orderQty, ordType, side, symbol, transactTime,) != "":
                 logfix.info("(sendMsg) New Ack >> {}".format(msg))
@@ -157,10 +144,10 @@ class Application(fix.Application):
                 for item in self.ReceveRes:
                     if item['clordId'] == matched_clordId:
                         # 更新该组数据的ordstatus
-                        item['ordstatus'] = str(ordStatus)
+                        item['ordstatus'].append(str(ordStatus))
             else:
                 # 添加新的数据到数组中
-                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': str(ordStatus)})
+                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': ([ordStatus])})
             if msgType != '9':
                 avgPx = message.getField(6)
                 CumQty = message.getField(14)
@@ -184,7 +171,7 @@ class Application(fix.Application):
                 OrderClassification = message.getField(8060)
                 SelfTradePreventionId = message.getField(8174)
 
-                if symbol == '1308':
+                if symbol == '1320' or symbol == '1321' or symbol == '1308':
                     self.ORDERS_DICT = message.getField(11)
                 msg = message.toString().replace(__SOH__, "|")
                 # 7.2 Execution Report – Order Accepted
@@ -302,7 +289,7 @@ class Application(fix.Application):
                             else:
                                 logfix.info(
                                     "(recvMsg) EDP ToSTNeT Accepted << %s" % msg + 'EDP ToSTNeT Accepted FixMsg Error!')
-                        # Execution Report – Trade Correction (EDP ToSTNeT Confirmation)
+                        # 7.2 Execution Report – Trade Correction (EDP ToSTNeT Confirmation)
                         else:
                             if (
                                     avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID,
@@ -320,7 +307,7 @@ class Application(fix.Application):
                             else:
                                 logfix.info(
                                     "(recvMsg) EDP ToSTNeT Confirmation << %s" % msg + 'EDP ToSTNeT Confirmation FixMsg Error!')
-                    # Execution Report – Trade Cancel (EDP ToSTNeT Rejection)
+                    # 7.1 Execution Report – Trade Cancel (EDP ToSTNeT Rejection)
                     elif execTransType == '1':
                         lastLiquidityInd = message.getField(851)
                         toSTNeTTransactionTime = message.getField(8106)
@@ -446,7 +433,6 @@ class Application(fix.Application):
 
     def insert_order_request(self, row):
         msg = fix.Message()
-        logfix.info(row["Id"])
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
@@ -457,9 +443,12 @@ class Application(fix.Application):
         msg.setField(fix.Side(row["Side"]))
         msg.setField(fix.Symbol(row["Symbol"]))
         msg.setField(fix.HandlInst('1'))
-        # msg.setField(fix.Price(row["Price"]))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
+
+        # 判断订单类型
+        if row["OrdType"] == "2":
+            msg.setField(fix.Price(row["Price"]))
 
         if row["TimeInForce"] != "":
             msg.setField(fix.TimeInForce(row["TimeInForce"]))
@@ -493,11 +482,6 @@ class Application(fix.Application):
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
         msg.setField(trstime)
 
-        # 判断订单类型
-        if row["OrdType"] == "2":
-            msg.setField(fix.Price(row["Price"]))
-        elif row["OrdType"] == "1":
-            print("")
         fix.Session.sendToTarget(msg, self.sessionID)
 
         return msg
@@ -505,7 +489,6 @@ class Application(fix.Application):
     def order_cancel_request(self, row):
         # 使用变量接收上一个订单clOrdId
         # self.insert_order_request(row)
-        logfix.info(row["Id"])
         clOrdId = self.ORDERS_DICT
         time.sleep(1)
         msg = fix.Message()
@@ -541,5 +524,4 @@ class Application(fix.Application):
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
                 self.runTestCase(row)
-                self.Total += 1
-                time.sleep(0.5)
+                time.sleep(1)
