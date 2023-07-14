@@ -144,6 +144,9 @@ class Application(fix.Application):
                 MinQty = message.getField(110)
                 OrderClassification = message.getField(8060)
                 SelfTradePreventionId = message.getField(8174)
+                SecondaryOrderID = message.getField(198)
+                ContraBroker = message.getField(375)
+                SecondaryExecID = message.getField(527)
 
                 if execType != ordStatus:
                     logfix.info(

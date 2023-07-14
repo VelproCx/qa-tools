@@ -169,6 +169,9 @@ class Application(fix.Application):
                 MinQty = message.getField(110)
                 OrderClassification = message.getField(8060)
                 SelfTradePreventionId = message.getField(8174)
+                SecondaryOrderID = message.getField(198)
+                ContraBroker = message.getField(375)
+                SecondaryExecID = message.getField(527)
 
                 if symbol == '1320' or symbol == '1321' or symbol == '1308':
                     self.ORDERS_DICT = message.getField(11)
