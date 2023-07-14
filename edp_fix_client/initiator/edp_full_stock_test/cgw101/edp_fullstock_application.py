@@ -355,7 +355,7 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account("RSIT_EDP_ACCOUNT_1"))
+        msg.setField(fix.Account("RSIT_EDP_ACCOUNT_2"))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(self.getOrderQty()))
         msg.setField(fix.OrdType("1"))
@@ -390,7 +390,7 @@ class Application(fix.Application):
                 self.OrderNum += 1
                 for row in case_data_list["testCase"]:
                     self.runTestCase(row)
-                    time.sleep(0.04)
+                    time.sleep(0.05)
         # 获取股票列表
         # time.sleep(1)
         # self.Symbol_list = get_Symbol.get_Symbol_file('REX')

@@ -17,7 +17,7 @@
 
 #JenKins
 cd /var/jenkins_home/workspace/edp_fullstock_test/edp_fix_client/initiator/edp_full_stock_test/cgw101
-sleep 5
+sleep 6
 python3 edp_fullstock_client.py edp_fullstock_client.cfg
 
 
