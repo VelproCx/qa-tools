@@ -45,13 +45,13 @@ class Application(fix.Application):
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
         self.sessionID = sessionID
-        print("onCreate : Session (%s)" % sessionID.toString())
+        print("onCreate : Session ({})" .format(sessionID.toString()))
         return
 
     def onLogon(self, sessionID):
         # "客户端登陆成功时候调用此方法"
         self.sessionID = sessionID
-        print("Successful Logon to session '%s'." % sessionID.toString())
+        print("Successful Logon to session '{}'." .format(sessionID.toString()))
         return
 
     def onLogout(self, sessionID):
@@ -63,15 +63,15 @@ class Application(fix.Application):
             file.write(json_data)
         self.Result = self.compare_field_values('case/ROL_Functional_Test_Matrix.json', 'logs/recv_data.json',
                                                 'ordstatus')
-        logfix.info("Result : Total = %d,Success = %d,Fail = %d" % (self.Total, self.Success, self.Fail))
-        print("Session (%s) logout !" % sessionID.toString())
+        logfix.info("Result : Total = {},Success = {},Fail = {}" .format(self.Total, self.Success, self.Fail))
+        print("Session ({}) logout !" .format(sessionID.toString()))
         self.writeResExcel('report/rolx_report.xlsx', self.Result, 2, 'P')
         return
 
     def toAdmin(self, message, sessionID):
         # "发送会话消息时候调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) S >> %s" % msg)
+        logfix.info("(Core) S >> {}" .format(msg))
         return
 
     def toApp(self, message, sessionID):
@@ -90,9 +90,9 @@ class Application(fix.Application):
             if (clOrdID, orderQty, ordType,
                 side, symbol, transactTime,
                 ) != "":
-                logfix.info("(sendMsg) New Ack >> %s" % msg)
+                logfix.info("(sendMsg) New Ack >> {}" .format(msg))
             else:
-                logfix.info("(sendMsg) New Ack >> %s" % msg + 'New Order Single FixMsg Error!')
+                logfix.info("(sendMsg) New Ack >> {}" .format(msg) + 'New Order Single FixMsg Error!')
         # 7.4 Order Cancel Request
         elif msgType == "F":
             clOrdID = message.getField(11)
@@ -100,15 +100,15 @@ class Application(fix.Application):
             symbol = message.getField(55)
             transactTime = message.getField(60)
             if (clOrdID, side, symbol, transactTime) != "":
-                logfix.info("(sendMsg) Cancel Ack >> %s" % msg)
+                logfix.info("(sendMsg) Cancel Ack >> {}" .format(msg))
             else:
-                logfix.info("(sendMsg) Cancel Ack >> %s" % msg + 'Order Cancel Request FixMsg Error!')
+                logfix.info("(sendMsg) Cancel Ack >> {}" .format(msg) + 'Order Cancel Request FixMsg Error!')
         return
 
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) R << %s" % msg)
+        logfix.info("(Core) R << {}" .format(msg))
         return
 
     def fromApp(self, message, sessionID):
@@ -203,10 +203,10 @@ class Application(fix.Application):
                             side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty,
                             cashMargin,
                             crossingPriceType, fsxTransactTime, marginTransactionType) != "":
-                        logfix.info("(recvMsg) Order Accepted << %s" % msg + "ordStatus = " + str(ordStatus))
+                        logfix.info("(recvMsg) Order Accepted << {}" .format(msg) + "ordStatus = " + str(ordStatus))
                         logfix.info("Result : Order Accepted ," + "ordStatus =" + ordStatus)
                     else:
-                        logfix.info("(recvMsg) Order Accepted << %s" % msg + 'Order Accepted FixMsg Error!')
+                        logfix.info("(recvMsg) Order Accepted << {}" .format(msg) + 'Order Accepted FixMsg Error!')
                     if execType != ordStatus:
                         logfix.info(
                             "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
@@ -225,9 +225,9 @@ class Application(fix.Application):
                             side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
                             crossingPriceType,
                             fsxTransactTime, marginTransactionType, text, ordRejReason) != "":
-                        logfix.info("(recvMsg) Order Rej << %s" % msg + "RejRes = " + str(text))
+                        logfix.info("(recvMsg) Order Rej << {}" .format(msg) + "RejRes = " + str(text))
                     else:
-                        logfix.info("(recvMsg) Order Rejected << %s" % msg + 'Order Rejected FixMsg Error!')
+                        logfix.info("(recvMsg) Order Rejected << {}" .format(msg) + 'Order Rejected FixMsg Error!')
                     if execType != ordStatus:
                         logfix.info(
                             "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
@@ -241,9 +241,9 @@ class Application(fix.Application):
                         side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
                         crossingPriceType,
                         fsxTransactTime, marginTransactionType, origClOrdID, execBroker) != "":
-                        logfix.info("(recvMsg) Order Canceled << %s" % msg + "ordStatus = " + str(ordStatus))
+                        logfix.info("(recvMsg) Order Canceled << {}" .format(msg) + "ordStatus = " + str(ordStatus))
                     else:
-                        logfix.info("(recvMsg) Order Canceled << %s" % msg + 'Order Canceled FixMsg Error!')
+                        logfix.info("(recvMsg) Order Canceled << {}" .format(msg) + 'Order Canceled FixMsg Error!')
                     if execType != ordStatus:
                         logfix.info(
                             "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
@@ -271,13 +271,13 @@ class Application(fix.Application):
                             routingDecisionTime,
                             propExecPrice, PropExecID) != "":
                         logfix.info(
-                            "(recvMsg) Order Filled << %s" % msg + 'Side: ' + str(side) + ',' + "Fill Price: " + str(
+                            "(recvMsg) Order Filled << {}" .format(msg) + 'Side: ' + str(side) + ',' + "Fill Price: " + str(
                                 lastPx) + ',' + "AdjustLastPx Of Buy: " + str(
                                 adjustLastPxBuy) + ',' + "AdjustLastPx Of Sell: " + str(
                                 adjustLastPxSell) + ',' + "Order Type:" + str(ordType))
                         logfix.info("Result : Order Filled ," + "ordStatus =" + ordStatus)
                     else:
-                        logfix.info("(recvMsg) Order Filled << %s" % msg + "Order Trade FixMsg Error!")
+                        logfix.info("(recvMsg) Order Filled << {}" .format(msg) + "Order Trade FixMsg Error!")
                     if execType != ordStatus:
                         logfix.info(
                             "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
@@ -311,10 +311,10 @@ class Application(fix.Application):
                     if (avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
                         side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
                         crossingPriceType, fsxTransactTime, marginTransactionType, execBroker, origClOrdID, text) != "":
-                        logfix.info("(recvMsg) Order Expired << %s" % msg + "ExpireRes = " + str(text))
+                        logfix.info("(recvMsg) Order Expired << {}" .format(msg) + "ExpireRes = " + str(text))
                         logfix.info("Result : Order Expired ," + "ordStatus =" + ordStatus)
                     else:
-                        logfix.info("(recvMsg) Order Expired << %s" % msg + "Order Expired FixMsg Error!")
+                        logfix.info("(recvMsg) Order Expired << {}" .format(msg) + "Order Expired FixMsg Error!")
                     if execType != ordStatus:
                         logfix.info(
                             "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
@@ -328,9 +328,9 @@ class Application(fix.Application):
                 # 判断tag是否存在
                 if (clOrdID, orderID, transactTime, fsxTransactTime, origClOrdID, text,
                     cxlRejReason, cxlRejResponseTo) != "":
-                    logfix.info("(recvMsg) Order Canceled << %s" % msg + "ordStatus = " + str(ordStatus))
+                    logfix.info("(recvMsg) Order Canceled << {}" .format(msg) + "ordStatus = " + str(ordStatus))
                 else:
-                    logfix.info("(recvMsg) Order Canceled << %s" % msg + 'Order Canceled FixMsg Error!')
+                    logfix.info("(recvMsg) Order Canceled << {}" .format(msg) + 'Order Canceled FixMsg Error!')
         self.onMessage(message, sessionID)
         return
 
