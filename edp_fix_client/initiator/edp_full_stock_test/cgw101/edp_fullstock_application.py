@@ -50,7 +50,7 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
-        self.logsCheck()
+        # self.logsCheck()
         # logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
         print("Session ({}) logout !".format(sessionID.toString()))
         return
@@ -144,9 +144,9 @@ class Application(fix.Application):
                 MinQty = message.getField(110)
                 OrderClassification = message.getField(8060)
                 SelfTradePreventionId = message.getField(8174)
-                SecondaryOrderID = message.getField(198)
-                ContraBroker = message.getField(375)
-                SecondaryExecID = message.getField(527)
+                # SecondaryOrderID = message.getField(198)
+                # ContraBroker = message.getField(375)
+                # SecondaryExecID = message.getField(527)
 
                 if execType != ordStatus:
                     logfix.info(
@@ -355,11 +355,11 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account("RSIT_ACCOUNT_1"))
+        msg.setField(fix.Account("RSIT_EDP_ACCOUNT_1"))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(self.getOrderQty()))
         msg.setField(fix.OrdType("1"))
-        msg.setField(fix.Symbol(row))
+        msg.setField(fix.Symbol(row["Symbol"] + ".EDP"))
         msg.setField(fix.HandlInst('1'))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
@@ -373,10 +373,8 @@ class Application(fix.Application):
         trstime = fix.TransactTime()
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
         msg.setField(trstime)
-
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
-        time.sleep(1)
 
     def runTestCase(self, row):
         self.insert_order_request(row)
@@ -384,22 +382,22 @@ class Application(fix.Application):
     # 加载用例文件
     def load_test_case(self):
         """Run"""
-        # with open('../case/full_stock_List.json', 'r') as f_json:
-        #     case_data_list = json.load(f_json)
-        #     time.sleep(1)
-        #     # 循环所有用例，并把每条用例放入runTestCase方法中
-        #     while self.OrderNum < 2:
-        #         self.OrderNum += 1
-        #         for row in case_data_list["testCase"]:
-        #             self.runTestCase(row)
-        #             time.sleep(0.04)
+        with open('../case/full_stock_List.json', 'r') as f_json:
+            case_data_list = json.load(f_json)
+            time.sleep(1)
+            # 循环所有用例，并把每条用例放入runTestCase方法中
+            while self.OrderNum < 2:
+                self.OrderNum += 1
+                for row in case_data_list["testCase"]:
+                    self.runTestCase(row)
+                    time.sleep(0.04)
         # 获取股票列表
-        time.sleep(1)
-        self.Symbol_list = get_Symbol.get_Symbol_file('REX')
-
-        while self.OrderNum < 2:
-            self.OrderNum += 1
-            for row in self.Symbol_list:
-                # print(row)
-                self.runTestCase(row)
-                time.sleep(10)
+        # time.sleep(1)
+        # self.Symbol_list = get_Symbol.get_Symbol_file('REX')
+        #
+        # while self.OrderNum < 2:
+        #     self.OrderNum += 1
+        #     for row in self.Symbol_list:
+        #         # print(row)
+        #         self.runTestCase(row)
+        #         time.sleep(10)
