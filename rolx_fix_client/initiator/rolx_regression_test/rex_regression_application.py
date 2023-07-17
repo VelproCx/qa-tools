@@ -10,13 +10,12 @@ import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
-from method.file_generation import generation
-import threading
+from rolx_fix_client.initiator.method.file_generation import generation
 import math
 
 __SOH__ = chr(1)
 
-from openpyxl import Workbook, load_workbook
+from openpyxl import load_workbook
 
 # report
 setup_logger('logfix', 'logs/rex_report.log')

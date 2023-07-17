@@ -2,7 +2,7 @@ import json
 
 file_path = "/Users/zhenghuaimao/Desktop/qa-tools/edp_fix_client/initiator/edp_regression_test/case/EDP_Functional_Test_Matrix.json"
 
-def updateCaseid1(case_file):
+def update_case_id(case_file):
     with open(case_file, "r") as f:
         date = json.load(f)
 
@@ -17,7 +17,5 @@ def updateCaseid1(case_file):
         json.dump(date, file)
         print("id更新完成，请打开{}文件更新显示样式".format(file_path))
 
-
-updateCaseid1(file_path)
 
 

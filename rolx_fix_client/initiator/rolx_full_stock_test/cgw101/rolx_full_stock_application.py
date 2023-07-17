@@ -11,7 +11,7 @@ import random
 import math
 import sys
 
-sys.path.append("../getSymbollist/")
+sys.path.append("../medhod/")
 from get_Symbol import get_Symbol_file
 
 __SOH__ = chr(1)
