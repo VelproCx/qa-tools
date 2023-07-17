@@ -442,8 +442,8 @@ class Application(fix.Application):
         msg.setField(fix.Side(row["Side"]))
         msg.setField(fix.Symbol(row["Symbol"]))
         msg.setField(fix.HandlInst('1'))
-        ClientID = msg.getField(11)
-        msg.setField(fix.ClientID(ClientID))
+        # ClientID = msg.getField(11)
+        msg.setField(fix.ClientID(101))
 
         # 判断订单类型
         if row["OrdType"] == "2":
@@ -486,8 +486,6 @@ class Application(fix.Application):
         return msg
 
     def order_cancel_request(self, row):
-        # 使用变量接收上一个订单clOrdId
-        # self.insert_order_request(row)
         clOrdId = self.ORDERS_DICT
         time.sleep(1)
         msg = fix.Message()
