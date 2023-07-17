@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf8 -*-
 """FIX Application"""
+import random
 import quickfix as fix
 import time
 import logging
@@ -155,25 +156,21 @@ class Application(fix.Application):
             case_data_list = json.load(f_json)
             time.sleep(0.04)
             start_Time = datetime.now()
-            if start_Time.hour < 22:
-                while start_Time.hour < 22:
-                    for row in case_data_list["testCase"]:
-                        time.sleep(1)
-                        endTime = datetime.now()
-                        if endTime.hour == 21 and endTime.minute == 5:
-                            return
-                        else:
-                            self.runTestCase(row)
-            # while start_Time.hour < 15:
-            #     runningTime = datetime.now()
-            #     if runningTime.hour < 15:
-            #         for row in case_data_list["testCase"]:
-            #             time.sleep(1)
-            #             self.runTestCase(row)
-            #     else:
-            #         time.sleep(2)
-            #         break
 
-
-
-
+            while start_Time.hour < 22:
+                for row in case_data_list["testCase"]:
+                    time.sleep(1)
+                    endTime = datetime.now()
+                    if endTime.hour == 21 and endTime.minute == 5:
+                        return
+                    else:
+                        self.runTestCase(row)
+        # while start_Time.hour < 15:
+        #     runningTime = datetime.now()
+        #     if runningTime.hour < 15:
+        #         for row in case_data_list["testCase"]:
+        #             time.sleep(1)
+        #             self.runTestCase(row)
+        #     else:
+        #         time.sleep(2)
+        #         break
