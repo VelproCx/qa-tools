@@ -3,6 +3,8 @@
 """FIX Application"""
 import difflib
 import random
+
+import pandas as pd
 import quickfix as fix
 import time
 import logging
@@ -10,6 +12,7 @@ from datetime import datetime
 from model.logger import setup_logger
 import json
 import get_Symbol
+
 __SOH__ = chr(1)
 
 # report
@@ -50,7 +53,7 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
-        self.logsCheck()
+        # self.logsCheck()
         # logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
         print("Session ({}) logout !".format(sessionID.toString()))
         return
@@ -144,6 +147,9 @@ class Application(fix.Application):
                 MinQty = message.getField(110)
                 OrderClassification = message.getField(8060)
                 SelfTradePreventionId = message.getField(8174)
+                # SecondaryOrderID = message.getField(198)
+                # ContraBroker = message.getField(375)
+                # SecondaryExecID = message.getField(527)
 
                 if execType != ordStatus:
                     logfix.info(
@@ -346,17 +352,18 @@ class Application(fix.Application):
         # 随机生成Qty1-5
         orderQty = random.randint(1, 5)
         return orderQty
+
     def insert_order_request(self, row):
         global orderNum
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account("RSIT_ACCOUNT_1"))
+        msg.setField(fix.Account("RSIT_EDP_ACCOUNT_2"))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
-        msg.setField(fix.OrderQty(self.getOrderQty()))
+        msg.setField(fix.OrderQty(int(row["lot_size"])))
         msg.setField(fix.OrdType("1"))
-        msg.setField(fix.Symbol(row))
+        msg.setField(fix.Symbol(row["Symbol"]))
         msg.setField(fix.HandlInst('1'))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
@@ -370,10 +377,8 @@ class Application(fix.Application):
         trstime = fix.TransactTime()
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
         msg.setField(trstime)
-
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
-        time.sleep(1)
 
     def runTestCase(self, row):
         self.insert_order_request(row)
@@ -389,14 +394,21 @@ class Application(fix.Application):
         #         self.OrderNum += 1
         #         for row in case_data_list["testCase"]:
         #             self.runTestCase(row)
-        #             time.sleep(0.04)
+        #             time.sleep(0.05)
         # 获取股票列表
-        time.sleep(1)
-        self.Symbol_list = get_Symbol.get_Symbol_file('REX')
+        # time.sleep(1)
+        # self.Symbol_list = get_Symbol.get_Symbol_file('REX')
+        #
+        # while self.OrderNum < 2:
+        #     self.OrderNum += 1
+        #     for row in self.Symbol_list:
+        #         # print(row)
+        #         self.runTestCase(row)
+        #         time.sleep(10)
 
-        while self.OrderNum < 2:
-            self.OrderNum += 1
-            for row in self.Symbol_list:
-                # print(row)
+        with open('../case/symbolList.json', 'r') as j_son:
+            symbol_list = json.load(j_son)
+            for row in symbol_list["testCase"]:
                 self.runTestCase(row)
-                time.sleep(10)
+                # print(row['lot_size'])
+                time.sleep(0.05)
