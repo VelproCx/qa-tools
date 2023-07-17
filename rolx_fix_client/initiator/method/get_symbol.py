@@ -47,7 +47,7 @@ def get_security_master_name(market):
     return security_master_name
 
 
-def get_Symbol_file(market):
+def get_symbol_file(market):
     url = "https://adminui.sit.fsx.oddlotx.com//api/statistical-report/download-file"
     data = json.dumps({
         "route": get_security_master_name(market)
