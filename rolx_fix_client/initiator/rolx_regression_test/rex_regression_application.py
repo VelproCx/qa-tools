@@ -478,12 +478,12 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         fix.Session.sendToTarget(msg, self.sessionID)  # 发送请求
         return msg  # 返回消息体
 
-    def order_cancel_request(self, row):  # 取消部分订单
+    def order_cancel_request(self, row):
         # 判断caseID是否为57、58，因为case57、58为new - > partially fill - > cancel ,故只能在部分成交后进行cancel，
-        if row["Id"] == '57':
+        if row["Symbol"] == '5076' and row["OrderType"] == "1":
             # case 57的clordid为PTF_CANCEL_LIST[0]
             clOrdId = self.PTF_CANCEL_LIST[0]
-        elif row["Id"] == '58':
+        elif row["Symbol"] == '5076' and row["OrderType"] == "2":
             # case 58的clordid为PTF_CANCEL_LIST[1]
             clOrdId = self.PTF_CANCEL_LIST[1]
         else:
