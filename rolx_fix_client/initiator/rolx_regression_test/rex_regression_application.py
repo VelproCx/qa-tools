@@ -524,7 +524,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
                 # new - > partially fill - > cancel case，休眠2min再执行
-                if row["Id"] == "57":
+                if row["Symbol"] == '5076' and row["OrderType"] == "1":
                     time.sleep(120)
                     self.runTestCase(row)
                 else:
