@@ -21,16 +21,12 @@ logfix = logging.getLogger('logfix')
 
 
 class Application(fix.Application):
-    orderID = 0
     execID = 0
-    ORDERS_DICT = []
-    LASTEST_ORDER = {}
-    Symbol_list = []
+    symbol_list = []
     Success = 0
     Fail = 0
     Total = Success + Fail
     Result = []
-    ReceveRes = []
     OrderNum = 0
     NewAck = 0
 
@@ -397,11 +393,11 @@ class Application(fix.Application):
         #             time.sleep(0.05)
         # 获取股票列表
         # time.sleep(1)
-        # self.Symbol_list = get_Symbol.get_Symbol_file('REX')
+        # self.symbol_list = get_Symbol.get_Symbol_file('REX')
         #
         # while self.OrderNum < 2:
         #     self.OrderNum += 1
-        #     for row in self.Symbol_list:
+        #     for row in self.symbol_list:
         #         # print(row)
         #         self.runTestCase(row)
         #         time.sleep(10)

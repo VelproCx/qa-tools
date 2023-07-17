@@ -2,7 +2,6 @@
 # -*- coding: utf8 -*-
 """FIX Application"""
 import difflib
-
 import quickfix as fix
 import time
 import logging
@@ -21,10 +20,8 @@ logfix = logging.getLogger('logfix')
 
 
 class Application(fix.Application):
-    orderID = 0
     execID = 0
     ORDERS_DICT = []
-    LASTEST_ORDER = {}
     Success = 0
     Fail = 0
     Total = Success + Fail
@@ -455,12 +452,9 @@ class Application(fix.Application):
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
 
-
     def order_cancel_request(self, row):
         # 使用变量接收上一个订单clOrdId
-        # self.insert_order_request(row)
         clOrdId = self.ORDERS_DICT
-        time.sleep(1)
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_OrderCancelRequest))
@@ -476,15 +470,6 @@ class Application(fix.Application):
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
 
-
-    def runTestCase(self, row):
-        action = row["ActionType"]
-        if action == 'NewAck':
-            self.insert_order_request(row)
-        elif action == 'CancelAck':
-            self.order_cancel_request(row)
-
-
     def load_test_case(self):
         """Run"""
         with open('case/ROL_Functional_Test_Matrix.json', 'r') as f_json:
@@ -493,9 +478,13 @@ class Application(fix.Application):
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
-                self.runTestCase(row)
-                # 增加判断条件，判断是否为需要cancel的symbol
-                if row["Symbol"] == "5076":
-                    time.sleep(3)
-                else:
+                if row["ActionType"] == 'NewAck':
+                    self.insert_order_request(row)
                     time.sleep(1)
+                elif row["ActionType"] == 'CancelAck':
+                    # 增加判断条件，判断是否为需要cancel的symbol
+                    if row["Symbol"] == "5076":
+                        time.sleep(3)
+                    else:
+                        time.sleep(1)
+                    self.order_cancel_request(row)

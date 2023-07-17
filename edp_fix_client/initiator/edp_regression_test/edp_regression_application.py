@@ -22,10 +22,8 @@ class Application(fix.Application):
     orderID = 0
     execID = 0
     ORDERS_DICT = []
-    LASTEST_ORDER = {}
     Success = 0
     Fail = 0
-    Total = Success + Fail
     Result = []
     ReceveRes = []
 
