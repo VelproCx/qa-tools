@@ -157,11 +157,11 @@ class Application(fix.Application):
             time.sleep(0.04)
             start_Time = datetime.now()
 
-            while start_Time.hour < 22:
+            while start_Time.hour < 15:
                 for row in case_data_list["testCase"]:
                     time.sleep(1)
                     endTime = datetime.now()
-                    if endTime.hour == 21 and endTime.minute == 5:
+                    if endTime.hour == 11 and endTime.minute == 30:
                         return
                     else:
                         self.runTestCase(row)
