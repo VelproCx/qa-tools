@@ -247,8 +247,8 @@ class Application(fix.Application):
                     PropExecID = message.getField(8166)
                     clOrdID = message.getField(11)
                     # 公式计算期望值 FillPrice
-                    adjustLastPxBuy = math.ceil(primaryLastPx * (1 + self.REX_PROP_BPS_BUY))
-                    adjustLastPxSell = math.floor(primaryLastPx * (1 - self.REX_PROP_BPS_SELL))
+                    adjustLastPxBuy = math.ceil(primaryLastPx * (1 + self.ROL_PROP_BPS_BUY))
+                    adjustLastPxSell = math.floor(primaryLastPx * (1 - self.ROL_PROP_BPS_SELL))
                     # 判断tag是否存在
                     if (
                             avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty,
@@ -472,8 +472,8 @@ class Application(fix.Application):
 
     def load_test_case(self):
         """Run"""
-        with open('case/ROL_Functional_Test_Matrix.json', 'r') as f_json:
-            generation('case/ROL_Functional_Test_Matrix.json', 'report/rolx_report.xlsx')
+        with open('case/ROL_Create_Order.json', 'r') as f_json:
+            generation('case/ROL_Create_Order.json', 'report/rolx_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
