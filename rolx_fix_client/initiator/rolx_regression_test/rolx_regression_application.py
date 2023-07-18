@@ -250,8 +250,8 @@ class Application(fix.Application):
                     PropExecID = message.getField(8166)
                     clOrdID = message.getField(11)
                     # 公式计算期望值 FillPrice
-                    adjustLastPxBuy = math.ceil(primaryLastPx * (1 + self.REX_PROP_BPS_BUY))
-                    adjustLastPxSell = math.floor(primaryLastPx * (1 - self.REX_PROP_BPS_SELL))
+                    adjustLastPxBuy = math.ceil(primaryLastPx * (1 + self.ROL_PROP_BPS_BUY))
+                    adjustLastPxSell = math.floor(primaryLastPx * (1 - self.ROL_PROP_BPS_SELL))
                     # 判断tag是否存在
                     if (
                             avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty,
