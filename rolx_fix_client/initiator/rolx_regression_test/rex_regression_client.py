@@ -18,7 +18,6 @@ def main(config_file):
 
         initiator.start()
         application.load_test_case()
-        # time.sleep(300)
         sleep_duration = timedelta(minutes=5)
         end_time = datetime.now() + sleep_duration
         while datetime.now() < end_time:
