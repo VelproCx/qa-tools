@@ -9,8 +9,10 @@ import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
-from rolx_fix_client.initiator.method.file_generation import generation
 import math
+import sys
+sys.path.append("../method")
+from file_generation import generation
 
 __SOH__ = chr(1)
 
@@ -174,7 +176,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                         item['ordstatus'].append(str(ordStatus))
             else:
                 # 添加新的数据到数组中
-                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': str([ordStatus])})
+                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
             # 因CancelRej消息体与其他消息体共用字段少，为减少代码量，将msgType == '9'的消息体做单独处理
             if msgType != '9':
                 # 消息体共用tag
@@ -474,9 +476,9 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         return msg  # 返回消息体
 
     def order_cancel_request(self, row):
-        if row["Symbol"] == '5076' and row["OrderType"] == "1":
+        if row["Symbol"] == '5076' and row["OrdType"] == "1":
             clOrdId = self.PTF_CANCEL_LIST[0]
-        elif row["Symbol"] == '5076' and row["OrderType"] == "2":
+        elif row["Symbol"] == '5076' and row["OrdType"] == "2":
             clOrdId = self.PTF_CANCEL_LIST[1]
         else:
             clOrdId = self.ORDERS_DICT
@@ -515,7 +517,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
-                if row["Symbol"] == '5076' and row["OrderType"] == "1":
+                if row["Symbol"] == '5076' and row["OrdType"] == "1" and row["Comment"] == "CancelAck":
                     time.sleep(120)
                     self.runTestCase(row)
                 else:

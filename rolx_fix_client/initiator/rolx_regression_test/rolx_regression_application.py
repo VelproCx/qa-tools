@@ -8,11 +8,14 @@ import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
-from rolx_fix_client.initiator.method.file_generation import generation
+# from ..method.file_generation import generation
 import math
 import random
 __SOH__ = chr(1)
 from openpyxl import load_workbook
+import sys
+sys.path.append("../method")
+from file_generation import generation
 
 # report
 setup_logger('logfix', 'logs/rolx_report.log')
@@ -241,14 +244,15 @@ class Application(fix.Application):
                     lastPx = float(message.getField(31))
                     lastShares = message.getField(32)
                     execBroker = message.getField(76)
-                    primaryLastPx = float(message.getField(8031))
+                    primaryBidPx = float(message.getField(8032))
+                    primaryAskPx = float(message.getField(8033))
                     routingDecisionTime = message.getField(8051)
                     propExecPrice = message.getField(8165)
                     PropExecID = message.getField(8166)
                     clOrdID = message.getField(11)
                     # 公式计算期望值 FillPrice
-                    adjustLastPxBuy = math.ceil(primaryLastPx * (1 + self.REX_PROP_BPS_BUY))
-                    adjustLastPxSell = math.floor(primaryLastPx * (1 - self.REX_PROP_BPS_SELL))
+                    adjustLastPxBuy = math.ceil(primaryAskPx * (1 + self.ROL_PROP_BPS_BUY))
+                    adjustLastPxSell = math.floor(primaryBidPx * (1 - self.ROL_PROP_BPS_SELL))
                     # 判断tag是否存在
                     if (
                             avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty,
@@ -256,9 +260,8 @@ class Application(fix.Application):
                             rule80A,
                             side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty,
                             cashMargin,
-                            crossingPriceType, fsxTransactTime, marginTransactionType, primaryLastPx,
-                            routingDecisionTime,
-                            propExecPrice, PropExecID) != "":
+                            crossingPriceType, fsxTransactTime, marginTransactionType, primaryBidPx, primaryAskPx,
+                            routingDecisionTime, propExecPrice, PropExecID) != "":
                         logfix.info(
                             "(recvMsg) Order Filled << %s" % msg + 'Side: ' + str(side) + ',' + "Fill Price: " + str(
                                 lastPx) + ',' + "AdjustLastPx Of Buy: " + str(
@@ -273,7 +276,7 @@ class Application(fix.Application):
                         # Fill Price Check
                     if ordType == '1':
                         if side == "1":
-                            adjustLastPx = math.ceil(primaryLastPx * (1 + self.REX_PROP_BPS_BUY))
+                            adjustLastPx = math.ceil(primaryBidPx * (1 + self.ROL_PROP_BPS_BUY))
                             # 期望值与获取的fillPrice进行比对
                             if adjustLastPx == lastPx:
                                 return True
@@ -282,7 +285,7 @@ class Application(fix.Application):
                                     'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol + ',' + 'adjustLastPx：' + str(
                                         adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
                         elif side == "2":
-                            adjustLastPx = math.floor(primaryLastPx * (1 - self.REX_PROP_BPS_SELL))
+                            adjustLastPx = math.floor(primaryAskPx * (1 - self.ROL_PROP_BPS_SELL))
                             # 期望值与获取的fillPrice进行比对
                             if adjustLastPx == lastPx:
                                 return True
