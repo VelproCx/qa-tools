@@ -3,15 +3,13 @@
 """FIX Application"""
 import difflib
 import random
-
-import pandas as pd
 import quickfix as fix
 import time
 import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
-import get_Symbol
+import get_symbol
 
 __SOH__ = chr(1)
 
@@ -382,29 +380,11 @@ class Application(fix.Application):
     # 加载用例文件
     def load_test_case(self):
         """Run"""
-        # with open('../case/full_stock_List.json', 'r') as f_json:
-        #     case_data_list = json.load(f_json)
-        #     time.sleep(1)
-        #     # 循环所有用例，并把每条用例放入runTestCase方法中
-        #     while self.OrderNum < 2:
-        #         self.OrderNum += 1
-        #         for row in case_data_list["testCase"]:
-        #             self.runTestCase(row)
-        #             time.sleep(0.05)
-        # 获取股票列表
-        # time.sleep(1)
-        # self.symbol_list = get_Symbol.get_Symbol_file('REX')
-        #
-        # while self.OrderNum < 2:
-        #     self.OrderNum += 1
-        #     for row in self.symbol_list:
-        #         # print(row)
-        #         self.runTestCase(row)
-        #         time.sleep(10)
-
-        with open('../case/symbolList.json', 'r') as j_son:
-            symbol_list = json.load(j_son)
-            for row in symbol_list["testCase"]:
-                self.runTestCase(row)
-                # print(row['lot_size'])
-                time.sleep(0.05)
+        while self.OrderNum < 2:
+            self.OrderNum += 1
+            with open('../case/symbolList.json', 'r') as j_son:
+                symbol_list = json.load(j_son)
+                time.sleep(3)
+                for row in symbol_list["testCase"]:
+                    self.runTestCase(row)
+                    time.sleep(1)
