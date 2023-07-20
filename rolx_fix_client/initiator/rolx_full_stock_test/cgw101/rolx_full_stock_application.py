@@ -12,7 +12,7 @@ import math
 import sys
 
 sys.path.append("../medhod/")
-from get_Symbol import get_Symbol_file
+# from get_Symbol import get_Symbol_file
 
 __SOH__ = chr(1)
 
@@ -256,17 +256,19 @@ class Application(fix.Application):
         header.setField(fix.MsgType("D"))
         msg.setField(fix.Account("RUAT_ACCOUNT_1"))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
-        msg.setField(fix.OrderQty(self.getOrderQty()))
-        msg.setField(fix.OrdType("1"))
+        # msg.setField(fix.OrderQty(self.getOrderQty()))
+        msg.setField(fix.OrderQty(row['OrderQty']))
+        msg.setField(fix.OrdType("2"))
         msg.setField(fix.Symbol(row["Symbol"]))
         msg.setField(fix.HandlInst('1'))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
-
-        if self.OrderNum % 2 == 1:
-            msg.setField(fix.Side("1"))
-        else:
-            msg.setField(fix.Side("2"))
+        msg.setField(fix.Price(row["Price"]))
+        msg.setField(fix.Side(row["Side"]))
+        # if self.OrderNum % 2 == 1:
+        #     msg.setField(fix.Side("1"))
+        # else:
+        #     msg.setField(fix.Side("2"))
 
         # 获取TransactTime
         trstime = fix.TransactTime()
@@ -275,6 +277,7 @@ class Application(fix.Application):
 
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
+
     def runTestCase(self, row):
         self.insert_order_request(row)
 
@@ -296,12 +299,12 @@ class Application(fix.Application):
         #         print(row)
         #         self.runTestCase(row)
         #         time.sleep(1)
-        with open('../case/full_stock_List.json', 'r') as f_json:
+        with open('../case/test.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(1)
             # 循环所有用例，并把每条用例放入runTestCase方法中
-            while self.OrderNum < 2:
-                self.OrderNum += 1
-                for row in case_data_list["testCase"]:
-                    self.runTestCase(row)
-                    time.sleep(1)
+            # while self.OrderNum < 2:
+            #     self.OrderNum += 1
+            for row in case_data_list["testCase"]:
+                self.runTestCase(row)
+                time.sleep(1)
