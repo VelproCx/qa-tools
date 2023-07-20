@@ -49,7 +49,7 @@ def generation(file_path,filename):
     # 指定要设置颜色的行和列
     row_number = 1
     column_start = 'A'
-    column_end = 'O'
+    column_end = 'R'
     res_column_start = 'S'
     res_column_end = 'T'
 
