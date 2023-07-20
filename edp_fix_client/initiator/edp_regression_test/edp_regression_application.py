@@ -45,13 +45,14 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
+        print(self.ReceveRes)
         self.logsCheck()
         json_data = json.dumps(self.ReceveRes)
         # 将JSON数据写入文件
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = self.compare_field_values('case/EDP_Functional_Test_Matrix.json', 'logs/recv_data.json',
-                                                'ordstatus')
+        self.Result = self.compare_field_values('case/test.json', 'logs/recv_data.json',
+                                                'ordstatus', 'errorCode')
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'S')
         return
@@ -177,6 +178,7 @@ class Application(fix.Application):
 
                 if symbol == '1320' or symbol == '1321' or symbol == '1308':
                     self.ORDERS_DICT = message.getField(11)
+                    print(self.ORDERS_DICT)
                 msg = message.toString().replace(__SOH__, "|")
                 # 7.2 Execution Report – Order Accepted
                 if ordStatus == "0":
@@ -530,8 +532,8 @@ class Application(fix.Application):
 
     def load_test_case(self):
         """Run"""
-        with open('case/EDP_Functional_Test_Matrix.json', 'r') as f_json:
-            generation('case/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
+        with open('case/test.json', 'r') as f_json:
+            generation('case/test.json', 'report/edp_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
