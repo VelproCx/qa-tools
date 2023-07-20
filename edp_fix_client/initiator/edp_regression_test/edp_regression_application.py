@@ -539,4 +539,4 @@ class Application(fix.Application):
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
                 self.runTestCase(row)
-                time.sleep(2)
+                time.sleep(1)
