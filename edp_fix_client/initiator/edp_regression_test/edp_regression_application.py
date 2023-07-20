@@ -142,9 +142,14 @@ class Application(fix.Application):
                     if item['clordId'] == matched_clordId:
                         # 更新该组数据的ordstatus
                         item['ordstatus'].append(str(ordStatus))
+
             else:
                 # 添加新的数据到数组中
-                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': ([ordStatus])})
+                if ordStatus != "8":
+                    self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
+                else:
+                    text = message.getField(58)
+                    self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus], 'errorCode': text})
             if msgType != '9':
                 avgPx = message.getField(6)
                 CumQty = message.getField(14)
@@ -162,7 +167,6 @@ class Application(fix.Application):
                 cashMargin = message.getField(544)
                 crossingPriceType = message.getField(8164)
                 marginTransactionType = message.getField(8214)
-
                 # Added tag to the EDP project
                 MinQty = message.getField(110)
                 OrderClassification = message.getField(8060)
@@ -250,7 +254,7 @@ class Application(fix.Application):
                             cashMargin,
                             crossingPriceType, fsxTransactTime, marginTransactionType, primaryLastPx, primaryBidPx,
                             primaryAskPx,
-                            routingDecisionTime, propExecPrice, MinQty, OrderClassification,
+                            routingDecisionTime, propExecPrice, MinQty, OrderClassification, lastLiquidityind,
                             SelfTradePreventionId) != "":
                         logfix.info(
                             "(recvMsg) Order Filled << %s" % msg)
@@ -361,7 +365,7 @@ class Application(fix.Application):
         pass
 
     # 结果数据比对方法
-    def compare_field_values(self, json_file1, json_file2, field_name):
+    def compare_field_values(self, json_file1, json_file2, field_name1, field_name2):
         resList = []
         with open(json_file1, 'r') as f1, open(json_file2, 'r') as f2:
             data1 = json.load(f1)
@@ -369,18 +373,31 @@ class Application(fix.Application):
         records1 = data1['testCase']
         records2 = data2
         # 判断记录数量是否相同
-        if len(records1) != len(records2):
+        if len(records1) == len(records2):
+            # 逐组比较字段值并输出结果
+            for i, (record1, record2) in enumerate(zip(records1, records2), 1):
+                if record1[field_name1] == ['8']:
+                    if record1[field_name2] in records1[field_name2]:
+                        self.Success += 1
+                        resList.append('success')
+                    else:
+                        print("failed")
+                        self.Fail += 1
+                        logfix.info(f"第 {i} 条数据的指定字段值不相同" + "," + "errorCode:" + str(record2['errorCode']))
+                        resList.append('failed')
+                        logfix.info(
+                        "Except:" + str(record1[field_name1]) + " ，" + "ordStatus: " + str(record2[field_name1]))
+
+                elif record1[field_name1] == record2[field_name1]:
+                    self.Success += 1
+                    resList.append('success')
+                else:
+                    self.Fail += 1
+                    logfix.info(f"第 {i} 条数据的指定字段值不相同" + "," + "clordId:" + str(record2['clordId']))
+                    resList.append('failed')
+                    logfix.info("Except:" + str(record1[field_name1]) + " ，" + "ordStatus: " + str(record2[field_name1]))
+        else:
             logfix.info("两个文件记录数量不一致，比对结果不准确，请仔细核对数据，再次进行比对！")
-        # 逐组比较字段值并输出结果
-        for i, (record1, record2) in enumerate(zip(records1, records2), 1):
-            if record1[field_name] == record2[field_name]:
-                self.Success += 1
-                resList.append('success')
-            else:
-                self.Fail += 1
-                logfix.info(f"第 {i} 条数据的指定字段值不相同" + "," + "clordId:" + str(record2['clordId']))
-                resList.append('failed')
-                logfix.info("Except:" + str(record1[field_name]) + " ，" + "ordStatus: " + str(record2[field_name]))
         return resList
 
     # 判断log文件中是否存在 Market Price is not matching
@@ -443,8 +460,7 @@ class Application(fix.Application):
         msg.setField(fix.Side(row["Side"]))
         msg.setField(fix.Symbol(row["Symbol"]))
         msg.setField(fix.HandlInst('1'))
-        ClientID = msg.getField(11)
-        msg.setField(fix.ClientID(ClientID))
+        # ClientID = msg.getField(11)
 
         # 判断订单类型
         if row["OrdType"] == "2":
@@ -498,7 +514,6 @@ class Application(fix.Application):
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.Symbol(row["Symbol"]))
         msg.setField(fix.Side(row["Side"]))
-
         trstime = fix.TransactTime()
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
         msg.setField(trstime)
@@ -515,7 +530,7 @@ class Application(fix.Application):
 
     def load_test_case(self):
         """Run"""
-        with open('case/test.json', 'r') as f_json:
+        with open('case/EDP_Functional_Test_Matrix.json', 'r') as f_json:
             generation('case/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
