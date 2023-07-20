@@ -1,9 +1,8 @@
 """FIX GATEWAY"""
 import sys
 import argparse
-from datetime import timedelta, datetime
 import quickfix
-from rex_regression_application import Application
+from rolx_regression_application import Application
 import time
 global initiator
 
@@ -18,14 +17,12 @@ def main(config_file):
 
         initiator.start()
         application.load_test_case()
-        sleep_duration = timedelta(minutes=5)
-        end_time = datetime.now() + sleep_duration
-        while datetime.now() < end_time:
-            time.sleep(1)
+        time.sleep(80)
         initiator.stop()
 
     except (quickfix.ConfigError, quickfix.RuntimeError) as e:
         print(e)
+        # initiator.stop()
         sys.exit()
 
 

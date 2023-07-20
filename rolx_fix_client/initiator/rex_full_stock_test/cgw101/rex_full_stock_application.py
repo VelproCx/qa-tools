@@ -21,8 +21,6 @@ logfix = logging.getLogger('logfix')
 
 class Application(fix.Application):
     execID = 0
-    ORDERS_DICT = []
-    LASTEST_ORDER = {}
     sideNum = 0
     REX_PROP_BPS_BUY = 0.0022
     REX_PROP_BPS_SELL = 0.0022
@@ -107,7 +105,6 @@ class Application(fix.Application):
         # "接收业务消息时调用此方法"
         # 使用quickFix框架getField方法提取clOrdId、ordStatus
         logfix.info("-------------------------------------------------------------------------------------------------")
-        self.ORDERS_DICT = message.getField(11)
         avgPx = message.getField(6)
         CumQty = message.getField(14)
         execID = message.getField(17)

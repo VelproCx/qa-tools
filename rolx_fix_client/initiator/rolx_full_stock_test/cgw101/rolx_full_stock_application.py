@@ -11,8 +11,8 @@ import random
 import math
 import sys
 
-sys.path.append("../getSymbollist/")
-from get_Symbol import get_Symbol_file
+sys.path.append("../medhod/")
+# from get_Symbol import get_Symbol_file
 
 __SOH__ = chr(1)
 
@@ -24,8 +24,6 @@ logfix = logging.getLogger('logfix')
 class Application(fix.Application):
     Accepted = 0
     execID = 0
-    ORDERS_DICT = []
-    LASTEST_ORDER = {}
     Symbol_list = []
     OrderNum = 0
     ROL_PROP_BPS_BUY = 0.0022
@@ -110,7 +108,6 @@ class Application(fix.Application):
         # "接收业务消息时调用此方法"
         # 使用quickFix框架getField方法提取tag及value
         logfix.info("-------------------------------------------------------------------------------------------------")
-        self.ORDERS_DICT = message.getField(11)
         avgPx = message.getField(6)
         CumQty = message.getField(14)
         execID = message.getField(17)
@@ -257,19 +254,21 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account("RSIT_ACCOUNT_1"))
+        msg.setField(fix.Account("RUAT_ACCOUNT_1"))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
-        msg.setField(fix.OrderQty(self.getOrderQty()))
-        msg.setField(fix.OrdType("1"))
-        msg.setField(fix.Symbol(row))
+        # msg.setField(fix.OrderQty(self.getOrderQty()))
+        msg.setField(fix.OrderQty(row['OrderQty']))
+        msg.setField(fix.OrdType("2"))
+        msg.setField(fix.Symbol(row["Symbol"]))
         msg.setField(fix.HandlInst('1'))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
-
-        if self.OrderNum % 2 == 1:
-            msg.setField(fix.Side("1"))
-        else:
-            msg.setField(fix.Side("2"))
+        msg.setField(fix.Price(row["Price"]))
+        msg.setField(fix.Side(row["Side"]))
+        # if self.OrderNum % 2 == 1:
+        #     msg.setField(fix.Side("1"))
+        # else:
+        #     msg.setField(fix.Side("2"))
 
         # 获取TransactTime
         trstime = fix.TransactTime()
@@ -278,24 +277,34 @@ class Application(fix.Application):
 
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
+
     def runTestCase(self, row):
         self.insert_order_request(row)
 
     # 加载用例文件
     def load_test_case(self):
         """Run"""
-        time.sleep(2)
-        self.Symbol_list = get_Symbol_file('ROLX')
-        try:
-            if not self.Symbol_list:
-                raise Exception("股票列表为空")
-        except Exception as e:
-            print("捕获到异常：", e)
-            return None
-        time.sleep(10)
-        while self.OrderNum < 2:
-            self.OrderNum += 1
-            for row in self.Symbol_list:
-                print(row)
+        # time.sleep(2)
+        # self.Symbol_list = get_Symbol_file('ROLX')
+        # try:
+        #     if not self.Symbol_list:
+        #         raise Exception("股票列表为空")
+        # except Exception as e:
+        #     print("捕获到异常：", e)
+        #     return None
+        # time.sleep(10)
+        # while self.OrderNum < 2:
+        #     self.OrderNum += 1
+        #     for row in self.Symbol_list:
+        #         print(row)
+        #         self.runTestCase(row)
+        #         time.sleep(1)
+        with open('../case/test.json', 'r') as f_json:
+            case_data_list = json.load(f_json)
+            time.sleep(1)
+            # 循环所有用例，并把每条用例放入runTestCase方法中
+            # while self.OrderNum < 2:
+            #     self.OrderNum += 1
+            for row in case_data_list["testCase"]:
                 self.runTestCase(row)
                 time.sleep(1)

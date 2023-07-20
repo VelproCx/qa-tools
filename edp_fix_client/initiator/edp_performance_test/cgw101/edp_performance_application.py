@@ -17,10 +17,7 @@ logfix = logging.getLogger('logfix')
 
 
 class Application(fix.Application):
-    orderID = 0
     execID = 0
-    ORDERS_DICT = []
-    LASTEST_ORDER = {}
     Accepted = 0
     Rejected = 0
     Total = 0
@@ -75,7 +72,6 @@ class Application(fix.Application):
     def fromApp(self, message, sessionID):
         # "接收业务消息时调用此方法"
         # 使用quickFix框架getField方法提取clOrdId、ordStatus
-        self.ORDERS_DICT = message.getField(11)
         ordStatus = message.getField(39)
         msg = message.toString().replace(__SOH__, "|")
 

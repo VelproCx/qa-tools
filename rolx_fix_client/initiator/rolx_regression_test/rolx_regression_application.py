@@ -2,18 +2,20 @@
 # -*- coding: utf8 -*-
 """FIX Application"""
 import difflib
-
 import quickfix as fix
 import time
 import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
-from method.file_generation import generation
+# from ..method.file_generation import generation
 import math
 import random
 __SOH__ = chr(1)
-from openpyxl import Workbook, load_workbook
+from openpyxl import load_workbook
+import sys
+sys.path.append("../method")
+from file_generation import generation
 
 # report
 setup_logger('logfix', 'logs/rolx_report.log')
@@ -21,10 +23,8 @@ logfix = logging.getLogger('logfix')
 
 
 class Application(fix.Application):
-    orderID = 0
     execID = 0
     ORDERS_DICT = []
-    LASTEST_ORDER = {}
     Success = 0
     Fail = 0
     Total = Success + Fail
@@ -244,14 +244,15 @@ class Application(fix.Application):
                     lastPx = float(message.getField(31))
                     lastShares = message.getField(32)
                     execBroker = message.getField(76)
-                    primaryLastPx = float(message.getField(8031))
+                    primaryBidPx = float(message.getField(8032))
+                    primaryAskPx = float(message.getField(8033))
                     routingDecisionTime = message.getField(8051)
                     propExecPrice = message.getField(8165)
                     PropExecID = message.getField(8166)
                     clOrdID = message.getField(11)
                     # 公式计算期望值 FillPrice
-                    adjustLastPxBuy = math.ceil(primaryLastPx * (1 + self.REX_PROP_BPS_BUY))
-                    adjustLastPxSell = math.floor(primaryLastPx * (1 - self.REX_PROP_BPS_SELL))
+                    adjustLastPxBuy = math.ceil(primaryAskPx * (1 + self.ROL_PROP_BPS_BUY))
+                    adjustLastPxSell = math.floor(primaryBidPx * (1 - self.ROL_PROP_BPS_SELL))
                     # 判断tag是否存在
                     if (
                             avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty,
@@ -259,9 +260,8 @@ class Application(fix.Application):
                             rule80A,
                             side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty,
                             cashMargin,
-                            crossingPriceType, fsxTransactTime, marginTransactionType, primaryLastPx,
-                            routingDecisionTime,
-                            propExecPrice, PropExecID) != "":
+                            crossingPriceType, fsxTransactTime, marginTransactionType, primaryBidPx, primaryAskPx,
+                            routingDecisionTime, propExecPrice, PropExecID) != "":
                         logfix.info(
                             "(recvMsg) Order Filled << {}" .format(msg) + 'Side: ' + str(side) + ',' + "Fill Price: " + str(
                                 lastPx) + ',' + "AdjustLastPx Of Buy: " + str(
@@ -276,7 +276,7 @@ class Application(fix.Application):
                         # Fill Price Check
                     if ordType == '1':
                         if side == "1":
-                            adjustLastPx = math.ceil(primaryLastPx * (1 + self.REX_PROP_BPS_BUY))
+                            adjustLastPx = math.ceil(primaryBidPx * (1 + self.ROL_PROP_BPS_BUY))
                             # 期望值与获取的fillPrice进行比对
                             if adjustLastPx == lastPx:
                                 return True
@@ -285,7 +285,7 @@ class Application(fix.Application):
                                     'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol + ',' + 'adjustLastPx：' + str(
                                         adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
                         elif side == "2":
-                            adjustLastPx = math.floor(primaryLastPx * (1 - self.REX_PROP_BPS_SELL))
+                            adjustLastPx = math.floor(primaryAskPx * (1 - self.ROL_PROP_BPS_SELL))
                             # 期望值与获取的fillPrice进行比对
                             if adjustLastPx == lastPx:
                                 return True
@@ -455,12 +455,9 @@ class Application(fix.Application):
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
 
-
     def order_cancel_request(self, row):
         # 使用变量接收上一个订单clOrdId
-        # self.insert_order_request(row)
         clOrdId = self.ORDERS_DICT
-        time.sleep(1)
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_OrderCancelRequest))
@@ -476,15 +473,6 @@ class Application(fix.Application):
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
 
-
-    def runTestCase(self, row):
-        action = row["ActionType"]
-        if action == 'NewAck':
-            self.insert_order_request(row)
-        elif action == 'CancelAck':
-            self.order_cancel_request(row)
-
-
     def load_test_case(self):
         """Run"""
         with open('case/ROL_Functional_Test_Matrix.json', 'r') as f_json:
@@ -493,9 +481,13 @@ class Application(fix.Application):
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
-                self.runTestCase(row)
-                # 增加判断条件，判断是否为需要cancel的symbol
-                if row["Symbol"] == "5076":
-                    time.sleep(3)
-                else:
+                if row["ActionType"] == 'NewAck':
+                    self.insert_order_request(row)
                     time.sleep(1)
+                elif row["ActionType"] == 'CancelAck':
+                    # 增加判断条件，判断是否为需要cancel的symbol
+                    if row["Symbol"] == "5076":
+                        time.sleep(3)
+                    else:
+                        time.sleep(1)
+                    self.order_cancel_request(row)

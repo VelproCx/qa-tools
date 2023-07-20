@@ -3,20 +3,20 @@
 """FIX Application"""
 import difflib
 import random
-
 import quickfix as fix
 import time
 import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
-from method.file_generation import generation
-import threading
 import math
+import sys
+sys.path.append("../method")
+from file_generation import generation
 
 __SOH__ = chr(1)
 
-from openpyxl import Workbook, load_workbook
+from openpyxl import load_workbook
 
 # report
 setup_logger('logfix', 'logs/rex_report.log')
@@ -24,17 +24,14 @@ logfix = logging.getLogger('logfix')
 
 
 class Application(fix.Application):  # 定义一个类并继承‘fix.Application’类，主要用于处理收到的消息和事件
-    orderID = 0
     execID = 0
     ORDERS_DICT = []
     PTF_CANCEL_LIST = []
-    LASTEST_ORDER = {}
     Success = 0
     Fail = 0
     Total = 0
     REX_PROP_BPS_BUY = 0.0022
     REX_PROP_BPS_SELL = 0.0022
-    Except = []
     Result = []
     ReceveRes = []
 
@@ -160,7 +157,6 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                 print(symbol)
                 if symbol == '1311':  # 如果symbol字段的值为1311，则将clOrdID字段的值加1，并将其转换为字符串类型，赋值给变量new_clOrdID和clOrdID
                     new_clOrdID = int(clOrdID) + 1
-                    print(new_clOrdID)
                     clOrdID = str(new_clOrdID)
 
             # 模糊匹配方法，判断收到fix消息体中的clordId是否在列表中，true则更新status，false则新增一条数据
@@ -180,7 +176,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                         item['ordstatus'].append(str(ordStatus))
             else:
                 # 添加新的数据到数组中
-                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': str([ordStatus])})
+                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
             # 因CancelRej消息体与其他消息体共用字段少，为减少代码量，将msgType == '9'的消息体做单独处理
             if msgType != '9':
                 # 消息体共用tag
@@ -479,13 +475,10 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         fix.Session.sendToTarget(msg, self.sessionID)  # 发送请求
         return msg  # 返回消息体
 
-    def order_cancel_request(self, row):  # 取消部分订单
-        # 判断caseID是否为57、58，因为case57、58为new - > partially fill - > cancel ,故只能在部分成交后进行cancel，
-        if row["Id"] == '57':
-            # case 57的clordid为PTF_CANCEL_LIST[0]
+    def order_cancel_request(self, row):
+        if row["Symbol"] == '5076' and row["OrdType"] == "1":
             clOrdId = self.PTF_CANCEL_LIST[0]
-        elif row["Id"] == '58':
-            # case 58的clordid为PTF_CANCEL_LIST[1]
+        elif row["Symbol"] == '5076' and row["OrdType"] == "2":
             clOrdId = self.PTF_CANCEL_LIST[1]
         else:
             clOrdId = self.ORDERS_DICT
@@ -517,15 +510,14 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
 
     def load_test_case(self):
         """Run"""
-        with open('case/REX_Functional_Test_Matrix.json', 'r') as f_json:
+        with open('case/test2.json', 'r') as f_json:
             # 生成报告模版
             generation('case/REX_Functional_Test_Matrix.json', 'report/rex_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
-                # new - > partially fill - > cancel case，休眠2min再执行
-                if row["Id"] == "57":
+                if row["Symbol"] == '5076' and row["OrdType"] == "1" and row["Comment"] == "CancelAck":
                     time.sleep(120)
                     self.runTestCase(row)
                 else:
