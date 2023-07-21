@@ -2,6 +2,7 @@
 # -*- coding: utf8 -*-
 """FIX Application"""
 import difflib
+import os
 import random
 import quickfix as fix
 import time
@@ -9,9 +10,19 @@ import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
-from method.file_generation import generation
+# from edp_fix_client.method.file_generation import generation
 from openpyxl import load_workbook
 __SOH__ = chr(1)
+
+from importlib.machinery import SourceFileLoader
+
+# 获取当前所在目录绝对路径
+current_path = os.path.abspath(os.path.dirname(__file__))
+# 将当前目录的路径和上级目录的绝对路径拼接
+generation_parent_path = os.path.abspath(os.path.join(current_path, "../../method"))
+# 获取上级目录中一个文件的路径
+generation_path = os.path.join(generation_parent_path, "file_generation.py")
+print("generation_path")
 
 # log
 setup_logger('logfix', 'logs/edp_report.log')
@@ -531,6 +542,12 @@ class Application(fix.Application):
             self.order_cancel_request(row)
 
     def load_test_case(self):
+        module_name = "generation"
+        module_path = generation_path
+        # 导入具有完整文件路径的模块
+        module1 = SourceFileLoader(module_name, module_path).load_module()
+
+        generation = module1.generation
         """Run"""
         with open('case/test.json', 'r') as f_json:
             generation('case/test.json', 'report/edp_report.xlsx')
