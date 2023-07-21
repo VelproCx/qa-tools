@@ -932,7 +932,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Invalid Symbol"
     },
     {
       "Id": "38",
@@ -956,7 +957,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Price exceeds the high - low price range"
     },
     {
       "Id": "39",
@@ -980,7 +982,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Price exceeds the high - low price range"
     },
     {
       "Id": "40",
@@ -1004,7 +1007,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Tick-size is not matched with small tick"
     },
     {
       "Id": "41",
@@ -1028,7 +1032,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Tick-size is not matched with small tick"
     },
     {
       "Id": "42",
@@ -1052,7 +1057,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Tick-size is not matched with small tick"
     },
     {
       "Id": "43",
@@ -1076,7 +1082,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Tick-size is not matched with small tick"
     },
     {
       "Id": "44",
@@ -1100,7 +1107,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Tick-size is not matched with small tick"
     },
     {
       "Id": "45",
@@ -1124,7 +1132,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Tick-size is not matched with non-small tick"
     },
     {
       "Id": "46",
@@ -1148,7 +1157,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Tick-size is not matched with non-small tick"
     },
     {
       "Id": "47",
@@ -1172,7 +1182,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Tick-size is not matched with non-small tick"
     },
     {
       "Id": "48",
@@ -1196,7 +1207,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Tick-size is not matched with non-small tick"
     },
     {
       "Id": "49",
@@ -1220,7 +1232,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Tick-size is not matched with non-small tick"
     },
     {
       "Id": "50",
@@ -1244,7 +1257,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Tick-size is not matched with non-small tick"
     },
     {
       "Id": "51",
@@ -1267,7 +1281,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Invalid quantity or lot_size"
     },
     {
       "Id": "52",
@@ -1290,7 +1305,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Invalid quantity or lot_size"
     },
     {
       "Id": "53",
@@ -1361,7 +1377,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Invalid quantity or lot_size"
     },
     {
       "Id": "56",
@@ -1480,7 +1497,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Invalid quantity or lot_size"
     },
     {
       "Id": "61",
@@ -1503,7 +1521,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Notional limit is exceeded"
     },
     {
       "Id": "62",
@@ -1526,7 +1545,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"OrdType is not supported"
     },
     {
       "Id": "63",
@@ -1549,7 +1569,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"TimeInForce is not supported"
     },
     {
       "Id": "64",
@@ -1572,7 +1593,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Side is not supported"
     },
     {
       "Id": "65",
@@ -1595,7 +1617,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Invalid account"
     },
     {
       "Id": "66",
@@ -1618,7 +1641,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"Rule80A is not supported"
     },
     {
       "Id": "67",
@@ -1641,7 +1665,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"CashMargin is not supported"
     },
     {
       "Id": "68",
@@ -1664,7 +1689,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"MarginTransactionType is not supported"
     },
     {
       "Id": "69",
@@ -1687,7 +1713,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "erorrCode":"CrossingPriceType is not supported"
     },
     {
       "Id": "70",

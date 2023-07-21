@@ -8,14 +8,20 @@ import logging
 from datetime import datetime
 from model.logger import setup_logger
 import json
-# from ..method.file_generation import generation
+# from ..method1.file_generation import generation
 import math
 import random
 __SOH__ = chr(1)
 from openpyxl import load_workbook
-import sys
-sys.path.append("../method")
-from file_generation import generation
+from importlib.machinery import SourceFileLoader
+import os
+# 获取当前所在目录绝对路径
+current_path = os.path.abspath(os.path.dirname(__file__))
+# 将当前目录的路径，获取上级目录的绝对路径
+generation_parent_path = os.path.abspath(os.path.join(current_path, "../../method"))
+# 获取上级目录中一个文件的路径
+generation_path = os.path.join(generation_parent_path, "file_generation.py")
+
 
 # report
 setup_logger('logfix', 'logs/rolx_report.log')
@@ -474,6 +480,13 @@ class Application(fix.Application):
         return msg
 
     def load_test_case(self):
+        module_name = "generation"
+        module_path = generation_path
+        # 导入具有完整文件路径的模块
+        module1 = SourceFileLoader(module_name, module_path).load_module()
+
+        generation = module1.generation
+
         """Run"""
         with open('case/ROL_Functional_Test_Matrix.json', 'r') as f_json:
             generation('case/ROL_Functional_Test_Matrix.json', 'report/rolx_report.xlsx')
