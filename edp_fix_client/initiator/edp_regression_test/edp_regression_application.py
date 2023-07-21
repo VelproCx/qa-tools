@@ -378,7 +378,7 @@ class Application(fix.Application):
         if len(records1) == len(records2):
             # 逐组比较字段值并输出结果
             for i, (record1, record2) in enumerate(zip(records1, records2), 1):
-                if record1[field_name1] == ['8']:
+                if record1[field_name1] == ['8'] or record1[field_name1] == ['0', '2', '8']:
                     if record1[field_name2] in records1[field_name2]:
                         self.Success += 1
                         resList.append('success')
