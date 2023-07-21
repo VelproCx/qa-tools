@@ -1090,13 +1090,3 @@ for msg in consumer:
     msg_len = len(msg.topic)
     hd = Header_t.from_buffer_copy(msg.value)
     print("recv msg Msgtype : {}, Evttpype: {}, len : {}".format(hd.Msgtype, hd.Evttpype, msg_len))
-    if b'D' == hd.Msgtype and b'0' == hd.Rvttype:
-        if (sizeof(NewOrder_t)) + sizeof(Time_t) == msg_len:
-            neword = (NewOrder_t).from_buffer_copy(msg.value)
-            OrderDump(neword)
-        elif (sizeof(NewOrder_t)) + sizeof(Time_t) + sizeof(BBO_t) == msg_len:
-            neword = (NewOrder_with_BBO_t).from_buffer_copy(msg.value)
-            OrderDump(neword)
-        else:
-            print("new order msg length err, len : {}}".format(msg_len))
-            exit(0)
