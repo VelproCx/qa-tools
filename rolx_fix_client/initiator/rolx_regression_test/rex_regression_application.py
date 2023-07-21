@@ -18,7 +18,7 @@ import os
 # 获取当前所在目录绝对路径
 current_path = os.path.abspath(os.path.dirname(__file__))
 # 将当前目录的路径，获取上级目录的绝对路径
-generation_parent_path = os.path.abspath(os.path.join(current_path, "../method"))
+generation_parent_path = os.path.abspath(os.path.join(current_path, "../../method"))
 # 获取上级目录中一个文件的路径
 generation_path = os.path.join(generation_parent_path, "file_generation.py")
 
