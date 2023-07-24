@@ -549,11 +549,16 @@ class Application(fix.Application):
 
         generation = module1.generation
         """Run"""
-        with open('case/test.json', 'r') as f_json:
-            generation('case/test.json', 'report/edp_report.xlsx')
+        with open('case/EDP_Functional_Test_Matrix.json', 'r') as f_json:
+            generation('case/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
-                self.runTestCase(row)
-                time.sleep(1)
+                if row == case_data_list["testCase"][0]:
+                    self.insert_order_request(case_data_list["testCase"][0])
+                    time.sleep(60)
+
+                else:
+                    self.runTestCase(row)
+                    time.sleep(1)
