@@ -1,5 +1,31 @@
 {
   "testCase": [
+     {
+      "Id": "1",
+      "ScenarioName": "Trading Hours Check: Send order before Open(～9:00))",
+      "Account": "RSIT_EDP_ACCOUNT_1",
+      "Market": "EDP",
+      "ActionType": "NewAck",
+      "Comment": "EDP_Market_NewAck_Buy",
+      "OrderQty": 500,
+      "OrdType": "1",
+      "Side": "1",
+      "Symbol": "7203",
+      "TimeInForce": "3",
+      "CrossingPriceType": "EDP",
+      "Rule80A": "P",
+      "CashMargin": "1",
+      "MarginTransactionType": "0",
+      "MinQty": 0,
+      "OrderClassification": "3",
+      "SelfTradePreventionId": "0",
+      "ordstatus": [
+        "0",
+        "2",
+        "2",
+        "2"
+      ]
+    },
     {
       "Id": "1",
       "ScenarioName": "Regular Order Flow-A(New Order->EDP Fill Indicate->EDP ToSTNeT Confirmation)",
