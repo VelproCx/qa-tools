@@ -1,6 +1,24 @@
 {
   "testCase": [
     {
+      "Id": "63",
+      "ScenarioName": "New Order->Fill",
+      "Account": "RSIT_ACCOUNT_1",
+      "Market": "ROLX",
+      "ActionType": "NewAck",
+      "Comment": "ROLX_Market_NewAck",
+      "OrderQty": 5,
+      "OrdType": "1",
+      "Side": "1",
+      "Symbol": "1301",
+      "TimeInForce": "0",
+      "CrossingPriceType": "ROL",
+      "Rule80A": "P",
+      "CashMargin": "1",
+      "MarginTransactionType": "0",
+      "ordstatus": "2"
+    },
+    {
       "Id": "1",
       "ScenarioName": "New Order->Fill",
       "Account": "RSIT_ACCOUNT_1",

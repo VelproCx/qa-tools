@@ -451,7 +451,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         msg.setField(fix.OrdType(row["OrdType"]))
         msg.setField(fix.Side(row["Side"]))
         msg.setField(fix.Symbol(row["Symbol"]))
-        msg.setField(fix.HandlInst('1'))  # 处理方式
+        # msg.setField(fix.HandlInst('1'))  # 处理方式
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
         # 判断订单类型,限价单读取case中的price并且设置，市价单则不设置价格

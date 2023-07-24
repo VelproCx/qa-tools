@@ -434,7 +434,7 @@ class Application(fix.Application):
         msg.setField(fix.OrdType(row["OrdType"]))
         msg.setField(fix.Side(row["Side"]))
         msg.setField(fix.Symbol(row["Symbol"]))
-        msg.setField(fix.HandlInst('1'))
+        # msg.setField(fix.HandlInst('1'))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
         # 判断订单类型
@@ -490,16 +490,23 @@ class Application(fix.Application):
         module1 = SourceFileLoader(module_name, module_path).load_module()
 
         generation = module1.generation
+
         """Run"""
         with open('case/ROL_Functional_Test_Matrix.json', 'r') as f_json:
             generation('case/ROL_Functional_Test_Matrix.json', 'report/rolx_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
+
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
-                if row["ActionType"] == 'NewAck':
+                if row == case_data_list["testCase"][0]:
+                    self.insert_order_request(case_data_list["testCase"][0])
+                    time.sleep(60)
+
+                elif row["ActionType"] == 'NewAck':
                     self.insert_order_request(row)
                     time.sleep(1)
+
                 elif row["ActionType"] == 'CancelAck':
                     # 增加判断条件，判断是否为需要cancel的symbol
                     if row["Symbol"] == "5076":
