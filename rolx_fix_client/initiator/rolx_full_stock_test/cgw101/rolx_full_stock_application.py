@@ -254,21 +254,18 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account("RUAT_ACCOUNT_1"))
+        msg.setField(fix.Account("RSIT_ACCOUNT_1"))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
-        # msg.setField(fix.OrderQty(self.getOrderQty()))
-        msg.setField(fix.OrderQty(row['OrderQty']))
-        msg.setField(fix.OrdType("2"))
+        msg.setField(fix.OrderQty(self.getOrderQty()))
+        # msg.setField(fix.OrderQty(row['OrderQty']))
+        msg.setField(fix.OrdType("1"))
         msg.setField(fix.Symbol(row["Symbol"]))
-        msg.setField(fix.HandlInst('1'))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
-        msg.setField(fix.Price(row["Price"]))
-        msg.setField(fix.Side(row["Side"]))
-        # if self.OrderNum % 2 == 1:
-        #     msg.setField(fix.Side("1"))
-        # else:
-        #     msg.setField(fix.Side("2"))
+        if self.OrderNum % 2 == 1:
+            msg.setField(fix.Side("1"))
+        else:
+            msg.setField(fix.Side("2"))
 
         # 获取TransactTime
         trstime = fix.TransactTime()
@@ -284,27 +281,12 @@ class Application(fix.Application):
     # 加载用例文件
     def load_test_case(self):
         """Run"""
-        # time.sleep(2)
-        # self.Symbol_list = get_Symbol_file('ROLX')
-        # try:
-        #     if not self.Symbol_list:
-        #         raise Exception("股票列表为空")
-        # except Exception as e:
-        #     print("捕获到异常：", e)
-        #     return None
-        # time.sleep(10)
-        # while self.OrderNum < 2:
-        #     self.OrderNum += 1
-        #     for row in self.Symbol_list:
-        #         print(row)
-        #         self.runTestCase(row)
-        #         time.sleep(1)
         with open('../../../testcases/full_stock_List.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(1)
             # 循环所有用例，并把每条用例放入runTestCase方法中
-            # while self.OrderNum < 2:
-            #     self.OrderNum += 1
-            for row in case_data_list["testCase"]:
-                self.runTestCase(row)
-                time.sleep(1)
+            while self.OrderNum < 2:
+                self.OrderNum += 1
+                for row in case_data_list["testCase"]:
+                    self.runTestCase(row)
+                    time.sleep(0.004)

@@ -358,7 +358,6 @@ class Application(fix.Application):
         msg.setField(fix.OrderQty(int(row["lot_size"])))
         msg.setField(fix.OrdType("1"))
         msg.setField(fix.Symbol(row["Symbol"]))
-        msg.setField(fix.HandlInst('1'))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
 

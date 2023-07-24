@@ -129,7 +129,6 @@ class Application(fix.Application):
         msg.setField(fix.OrderQty(row["OrderQty"]))
         msg.setField(fix.OrdType(row["OrdType"]))
         msg.setField(fix.Symbol(row["Symbol"]))
-        msg.setField(fix.HandlInst('1'))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
         if row["OrdType"] == "2":
