@@ -72,7 +72,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         # 将JSON数据写入文件中
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = self.compare_field_values('case/REX_Functional_Test_Matrix.json', 'logs/recv_data.json',
+        self.Result = self.compare_field_values('../../testcases/REX_Functional_Test_Matrix.json', 'logs/recv_data.json',
                                                 'ordstatus')  # 为了比较ordstatus字段的值
         logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
         print("Session ({}) logout !".format(sessionID.toString()))
@@ -524,9 +524,9 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
 
         generation = module1.generation
         """Run"""
-        with open('case/test2.json', 'r') as f_json:
+        with open('../../testcases/REX_Functional_Test_Matrix.json', 'r') as f_json:
             # 生成报告模版
-            generation('case/REX_Functional_Test_Matrix.json', 'report/rex_report.xlsx')
+            generation('testcases/REX_Functional_Test_Matrix.json', 'report/rex_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，

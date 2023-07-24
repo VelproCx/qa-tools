@@ -1,6 +1,6 @@
 import json
 
-file_path = "/Users/zhenghuaimao/Desktop/qa-tools/edp_fix_client/initiator/edp_regression_test/case/EDP_Functional_Test_Matrix.json"
+file_path = "/Users/zhenghuaimao/Desktop/qa-tools/edp_fix_client/initiator/edp_regression_test/testcases/EDP_Functional_Test_Matrix.json"
 
 def update_case_id(case_file):
     with open(case_file, "r") as f:

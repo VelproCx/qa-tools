@@ -60,9 +60,9 @@ class Application(fix.Application):
              self.Book_is_closed,self.No_open_price)
         )
         # if self.Rejected == self.Book_is_closed:
-        #     logfix.info("case OK")
+        #     logfix.info("testcases OK")
         # else:
-        #     logfix.info("case NG")
+        #     logfix.info("testcases NG")
 
         print("Session (%s) logout !" % sessionID.toString())
         return
@@ -286,7 +286,7 @@ class Application(fix.Application):
 
     def load_test_case(self):
         """Run"""
-        with open('../case/rex_1602.json', 'r') as f_json:
+        with open('../../../testcases/rex_1602.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(1)
             # 循环所有用例，并把每条用例放入runTestCase方法中，

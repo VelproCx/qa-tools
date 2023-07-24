@@ -62,9 +62,9 @@ class Application(fix.Application):
         # logfix.info("Result : Total = %d,Success = %d,Fail = %d" % (self.Total, self.Success, self.Fail))
         # self.logsCheck()
         # if self.Rejected == self.Book_is_closed:
-        #     logfix.info("case OK")
+        #     logfix.info("testcases OK")
         # else:
-        #     logfix.info("case NG")
+        #     logfix.info("testcases NG")
 
         print("Session (%s) logout !" % sessionID.toString())
         # send_mail('./report.log')
@@ -299,7 +299,7 @@ class Application(fix.Application):
         #         print(row)
         #         self.runTestCase(row)
         #         time.sleep(1)
-        with open('../case/test.json', 'r') as f_json:
+        with open('../../../testcases/full_stock_List.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(1)
             # 循环所有用例，并把每条用例放入runTestCase方法中

@@ -382,7 +382,7 @@ class Application(fix.Application):
         """Run"""
         while self.OrderNum < 2:
             self.OrderNum += 1
-            with open('../case/symbolList.json', 'r') as j_son:
+            with open('../../../testcases/symbolList.json', 'r') as j_son:
                 symbol_list = json.load(j_son)
                 time.sleep(3)
                 for row in symbol_list["testCase"]:
