@@ -553,6 +553,7 @@ class Application(fix.Application):
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
+
             for row in case_data_list["testCase"]:
                 if row == case_data_list["testCase"][0]:
                     self.insert_order_request(case_data_list["testCase"][0])
