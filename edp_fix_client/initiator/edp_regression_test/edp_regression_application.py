@@ -62,7 +62,7 @@ class Application(fix.Application):
         # 将JSON数据写入文件
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = self.compare_field_values('case/test.json', 'logs/recv_data.json',
+        self.Result = self.compare_field_values('case/EDP_Functional_Test_Matrix.json', 'logs/recv_data.json',
                                                 'ordstatus', 'errorCode')
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'S')
