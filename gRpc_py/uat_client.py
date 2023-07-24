@@ -142,7 +142,7 @@ def getOrderQty():
 
 
 def runCase():
-    with open("case.json", "r") as f_json:
+    with open("symbol_list/case.json", "r") as f_json:
         case_data_list = json.load(f_json)
         time.sleep(2)
         num = 0
