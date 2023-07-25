@@ -66,7 +66,7 @@ class Application(fix.Application):
         # 将JSON数据写入文件
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = self.compare_field_values('testcases/ROL_Functional_Test_Matrix.json', 'logs/recv_data.json',
+        self.Result = self.compare_field_values('../../testcases/ROL_Functional_Test_Matrix.json', 'logs/recv_data.json',
                                                 'ordstatus')
         logfix.info("Result : Total = {},Success = {},Fail = {}" .format(self.Total, self.Success, self.Fail))
         print("Session ({}) logout !" .format(sessionID.toString()))

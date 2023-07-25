@@ -1,8 +1,8 @@
 {
   "testCase": [
     {
-      "Id": "63",
-      "ScenarioName": "New Order->Fill",
+      "Id": "1",
+      "ScenarioName": "Trading Hours Check: Send order before Open(～9:00)",
       "Account": "RSIT_ACCOUNT_1",
       "Market": "ROLX",
       "ActionType": "NewAck",
