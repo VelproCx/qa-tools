@@ -1141,7 +1141,7 @@ for msg in consumer:
             print("OrderCancelRejected msg length err, len : {}".format(msg_len))
             exit(0)
     elif b'8' == hd.Msgtype and b'D' == hd.Evttype:
-        if (sizeof(OrderCancelAccepted_t)) + sizeof(True) == msg_len:
+        if (sizeof(OrderCancelAccepted_t)) + sizeof(Time_t) == msg_len:
             ord = OrderCancelAccepted_t.from_buffer_copy(msg.value)
             OrderDump(ord)
         elif (sizeof(OrderAccepted_t)) + sizeof(BBO_t) + sizeof(Time_t):
