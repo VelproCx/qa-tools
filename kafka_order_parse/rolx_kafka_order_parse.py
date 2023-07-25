@@ -5,7 +5,7 @@ from ctypes import *
 # import ctypes
 import os, time
 
-test_env = {'version': "test_2"}
+# test_env = {'version': "test_2"}
 kafka_port = '192.168.0.72:9092'
 
 if "KAFKA_FSX" in os.environ:
