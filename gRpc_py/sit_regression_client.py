@@ -113,7 +113,7 @@ def runCase():
         # 循环所有用例，并把每条用例放入runTestCase方法中
 
         for row in case_data_list["testCase"]:
-            symbol = row["symbol"]
+            # symbol = row["symbol"]
             # print(symbol)
             InsertOrderEntryFirst(2, row['side'], row['order_qty'], row['symbol'], row["price"],
                                   str(genClOrdID()),

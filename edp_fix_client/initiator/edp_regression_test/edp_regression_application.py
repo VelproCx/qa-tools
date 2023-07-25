@@ -61,7 +61,7 @@ class Application(fix.Application):
         # 将JSON数据写入文件
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = self.compare_field_values('case/EDP_Functional_Test_Matrix.json', 'logs/recv_data.json',
+        self.Result = self.compare_field_values('../../testcases/test.json', 'logs/recv_data.json',
                                                 'ordstatus', 'errorCode')
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'S')
@@ -549,11 +549,15 @@ class Application(fix.Application):
 
         generation = module1.generation
         """Run"""
-        with open('case/EDP_Functional_Test_Matrix.json', 'r') as f_json:
-            generation('case/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
+        with open('../../testcases/test.json', 'r') as f_json:
+            generation('../../testcases/test.json', 'report/edp_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
-                self.runTestCase(row)
-                time.sleep(1)
+                if row['Id'] == '1':
+                    self.runTestCase(row)
+                    time.sleep(60)
+                else:
+                    self.runTestCase(row)
+                    time.sleep(1)
