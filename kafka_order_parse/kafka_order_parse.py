@@ -1090,7 +1090,7 @@ for msg in consumer:
     msg_len = len(msg.topic)
     hd = Header_t.from_buffer_copy(msg.value)
     print("recv msg Msgtype : {}, Evttpype: {}, len : {}".format(hd.Msgtype, hd.Evttpype, msg_len))
-    if b'D' == hd.Msgtype and b'0' == hd.Rvttype:
+    if b'D' == hd.Msgtype and b'0' == hd.Evttype:
         if (sizeof(NewOrder_t)) + sizeof(Time_t) == msg_len:
             neword = (NewOrder_t).from_buffer_copy(msg.value)
             OrderDump(neword)
@@ -1098,5 +1098,65 @@ for msg in consumer:
             neword = (NewOrder_with_BBO_t).from_buffer_copy(msg.value)
             OrderDump(neword)
         else:
-            print("new order msg length err, len : {}}".format(msg_len))
+            print("New order msg length err, len : {}}".format(msg_len))
+            exit(0)
+    elif b'8' == hd.Msgtype and b'B' == hd.Evttype:
+        if (sizeof(OrderAccepted_t)) + sizeof(Time_t) == msg_len:
+            ord = OrderAccepted_t.from_buffer_copy(msg.value)
+            OrderDump(ord)
+        elif (sizeof(OrderAccepted_t)) + sizeof(BBO_t) + sizeof(Time_t) == msg_len:
+            ord = OrderAccepted_with_BBO_t.from_buffer_copy(msg.value)
+            OrderDump(ord)
+        else:
+            print("OrderAccepted msg length err, len : {}".format(msg_len))
+            exit(0)
+    elif b'8' == hd.Msgtype and b'C' == hd.Evttype:
+        if (sizeof(OrderRejected_t)) + sizeof(Time_t) == msg_len:
+            ord = OrderRejected_t.from_buffer_copy(msg.value)
+            OrderDump(ord)
+        elif (sizeof(OrderRejected_t)) + sizeof(BBO_t) + sizeof(Time_t) == msg_len:
+            ord = OrderRejected_with_BBO_t.from_buffer_copy(msg.value)
+            OrderDump(ord)
+        else:
+            print("OrderRejected msg length err, len : {}".format(msg_len))
+            exit(0)
+    elif b'F' == hd.Msgtype and b'1' == hd.Evttype:
+        if (sizeof(CancelOrder_t)) + sizeof(Time_t) == msg_len:
+            ord = CancelOrder_t.from_buffer_copy(msg.value)
+            OrderDump(ord)
+        elif (sizeof(CancelOrder_t)) + sizeof(BBO_t) + sizeof(Time_t) == msg_len:
+            ord = CancelOrder_with_BBO_t.from_buffer_copy(msg.value)
+            OrderDump(ord)
+        else:
+            print("CancelOrder msg length err, len : {}".format(msg_len))
+            exit(0)
+    elif b'8' == hd.Msgtype and b'E' == hd.Evttype:
+        if (sizeof(OrderCancelRejected_t)) + sizeof(Time_t) ==msg_len:
+            ord = OrderCancelRejected_t.from_buffer_copy(msg.value)
+            OrderDump(ord)
+        elif (sizeof(OrderCancelRejected_t)) + sizeof(BBO_t) + sizeof(Time_t):
+            ord = OrderCancelRejected_with_BBO_t.from_buffer_copy(msg.value)
+            OrderDump(ord)
+        else:
+            print("OrderCancelRejected msg length err, len : {}".format(msg_len))
+            exit(0)
+    elif b'8' == hd.Msgtype and b'D' == hd.Evttype:
+        if (sizeof(OrderCancelAccepted_t)) + sizeof(True) == msg_len:
+            ord = OrderCancelAccepted_t.from_buffer_copy(msg.value)
+            OrderDump(ord)
+        elif (sizeof(OrderAccepted_t)) + sizeof(BBO_t) + sizeof(Time_t):
+            ord = OrderCancelAccepted_with_BBO_t.from_buffer_copy(msg.value)
+            OrderDump(ord)
+        else:
+            print("OrderCancelAccepted msg length err, len : {}".format(msg_len))
+            exit(0)
+    elif b'8' == hd.Msgtype and b'H' == hd.Evttype:
+        if (sizeof(Trade_t)) + sizeof(Time_t) == msg_len:
+            ord = Trade_t.from_buffer_copy(msg.value)
+            OrderDump(ord)
+        elif (sizeof(Trade_t)) + sizeof(BBO_t) + sizeof(Time_t) == msg_len:
+            ord = Trade_with_BBO_t.from_buffer_copy(msg.value)
+            OrderDump(ord)
+        else:
+            print("Trade msg length err, len : {}".format(msg_len))
             exit(0)
