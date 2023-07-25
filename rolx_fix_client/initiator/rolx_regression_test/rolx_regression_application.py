@@ -482,8 +482,8 @@ class Application(fix.Application):
 
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
-                if row == case_data_list["testCase"][0]:
-                    self.insert_order_request(case_data_list["testCase"][0])
+                if row['Id'] == "1":
+                    self.insert_order_request(row)
                     time.sleep(60)
 
                 elif row["ActionType"] == 'NewAck':

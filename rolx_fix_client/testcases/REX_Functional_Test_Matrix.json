@@ -2,6 +2,24 @@
   "testCase": [
     {
       "Id": "1",
+      "ScenarioName": "Trading Hours Check: Send order before Preopen(～8:45).",
+      "Account": "RSIT_ACCOUNT_2",
+      "Market": "REX",
+      "ActionType": "NewAck",
+      "Comment": "REX_Market_NewAck",
+      "OrderQty": 5,
+      "OrdType": "1",
+      "Side": "1",
+      "Symbol": "1301",
+      "TimeInForce": "0",
+      "CrossingPriceType": "REX",
+      "Rule80A": "P",
+      "CashMargin": "1",
+      "MarginTransactionType": "0",
+      "ordstatus": "2"
+    },
+    {
+      "Id": "2",
       "ScenarioName": "New Order->Fill",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -19,7 +37,7 @@
       "ordstatus": "2"
     },
     {
-      "Id": "2",
+      "Id": "3",
       "ScenarioName": "New Order->Fill",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -28,25 +46,6 @@
       "OrderQty": 5,
       "OrdType": "1",
       "Side": "2",
-      "Symbol": "5110",
-      "TimeInForce": "0",
-      "CrossingPriceType": "REX",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0",
-      "ordstatus": "2"
-    },
-    {
-      "Id": "3",
-      "ScenarioName": "New Order->Fill",
-      "Account": "RSIT_ACCOUNT_2",
-      "Market": "REX",
-      "ActionType": "NewAck",
-      "Comment": "REX_Limit_NewAck",
-      "OrderQty": 5,
-      "OrdType": "2",
-      "Price": 1230,
-      "Side": "1",
       "Symbol": "5110",
       "TimeInForce": "0",
       "CrossingPriceType": "REX",
@@ -65,7 +64,7 @@
       "OrderQty": 5,
       "OrdType": "2",
       "Price": 1230,
-      "Side": "2",
+      "Side": "1",
       "Symbol": "5110",
       "TimeInForce": "0",
       "CrossingPriceType": "REX",
@@ -76,6 +75,25 @@
     },
     {
       "Id": "5",
+      "ScenarioName": "New Order->Fill",
+      "Account": "RSIT_ACCOUNT_2",
+      "Market": "REX",
+      "ActionType": "NewAck",
+      "Comment": "REX_Limit_NewAck",
+      "OrderQty": 5,
+      "OrdType": "2",
+      "Price": 1230,
+      "Side": "2",
+      "Symbol": "5110",
+      "TimeInForce": "0",
+      "CrossingPriceType": "REX",
+      "Rule80A": "P",
+      "CashMargin": "1",
+      "MarginTransactionType": "0",
+      "ordstatus": "2"
+    },
+    {
+      "Id": "6",
       "ScenarioName": "New Order->Partial Fill->Fill",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -93,7 +111,7 @@
       "ordstatus": "2"
     },
     {
-      "Id": "6",
+      "Id": "7",
       "ScenarioName": "New Order->Partial Fill->Fill",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -102,25 +120,6 @@
       "OrderQty": 5,
       "OrdType": "1",
       "Side": "2",
-      "Symbol": "6028",
-      "TimeInForce": "0",
-      "CrossingPriceType": "REX",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0",
-      "ordstatus": "2"
-    },
-    {
-      "Id": "7",
-      "ScenarioName": "New Order->Partial Fill->Fill",
-      "Account": "RSIT_ACCOUNT_2",
-      "Market": "REX",
-      "ActionType": "NewAck",
-      "Comment": "REX_Limit_NewAck",
-      "OrderQty": 5,
-      "OrdType": "2",
-      "Price": 3470,
-      "Side": "1",
       "Symbol": "6028",
       "TimeInForce": "0",
       "CrossingPriceType": "REX",
@@ -139,7 +138,7 @@
       "OrderQty": 5,
       "OrdType": "2",
       "Price": 3470,
-      "Side": "2",
+      "Side": "1",
       "Symbol": "6028",
       "TimeInForce": "0",
       "CrossingPriceType": "REX",
@@ -150,6 +149,25 @@
     },
     {
       "Id": "9",
+      "ScenarioName": "New Order->Partial Fill->Fill",
+      "Account": "RSIT_ACCOUNT_2",
+      "Market": "REX",
+      "ActionType": "NewAck",
+      "Comment": "REX_Limit_NewAck",
+      "OrderQty": 5,
+      "OrdType": "2",
+      "Price": 3470,
+      "Side": "2",
+      "Symbol": "6028",
+      "TimeInForce": "0",
+      "CrossingPriceType": "REX",
+      "Rule80A": "P",
+      "CashMargin": "1",
+      "MarginTransactionType": "0",
+      "ordstatus": "2"
+    },
+    {
+      "Id": "10",
       "ScenarioName": "New Order->Partial Fill->Canceled",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -167,7 +185,7 @@
       "ordstatus": "1"
     },
     {
-      "Id": "10",
+      "Id": "11",
       "ScenarioName": "New Order->Partial Fill->Canceled",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -186,7 +204,7 @@
       "ordstatus": "1"
     },
     {
-      "Id": "11",
+      "Id": "12",
       "ScenarioName": "New Order->Partial Fill->Expired",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -204,7 +222,7 @@
       "ordstatus": "C"
     },
     {
-      "Id": "12",
+      "Id": "13",
       "ScenarioName": "New Order->Partial Fill->Expired",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -223,7 +241,7 @@
       "ordstatus": "C"
     },
     {
-      "Id": "13",
+      "Id": "14",
       "ScenarioName": "New Order->Canceled",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -239,50 +257,32 @@
       "CashMargin": "1",
       "MarginTransactionType": "0",
       "ordstatus": "0"
-    },
-    {
-      "Id": "14",
-      "ScenarioName": "New Order->Canceled",
-      "Account": "RSIT_ACCOUNT_2",
-      "Market": "REX",
-      "ActionType": "CancelAck",
-      "Comment": "CancelAck",
-      "OrderQty": 5,
-      "OrdType": "1",
-      "Side": "1",
-      "Symbol": "1311",
-      "TimeInForce": "0",
-      "CrossingPriceType": "REX",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0",
-      "ordstatus": "4"
     },
     {
       "Id": "15",
       "ScenarioName": "New Order->Canceled",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
-      "ActionType": "NewAck",
-      "Comment": "REX_Market_NewAck",
+      "ActionType": "CancelAck",
+      "Comment": "CancelAck",
       "OrderQty": 5,
       "OrdType": "1",
-      "Side": "2",
+      "Side": "1",
       "Symbol": "1311",
       "TimeInForce": "0",
       "CrossingPriceType": "REX",
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "0"
+      "ordstatus": "4"
     },
     {
       "Id": "16",
       "ScenarioName": "New Order->Canceled",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
-      "ActionType": "CancelAck",
-      "Comment": "CancelAck",
+      "ActionType": "NewAck",
+      "Comment": "REX_Market_NewAck",
       "OrderQty": 5,
       "OrdType": "1",
       "Side": "2",
@@ -292,32 +292,50 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "4"
+      "ordstatus": "0"
     },
     {
       "Id": "17",
       "ScenarioName": "New Order->Canceled",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
-      "ActionType": "NewAck",
-      "Comment": "REX_Limit_NewAck",
+      "ActionType": "CancelAck",
+      "Comment": "CancelAck",
       "OrderQty": 5,
-      "OrdType": "2",
-      "Price": 973,
-      "Side": "1",
+      "OrdType": "1",
+      "Side": "2",
       "Symbol": "1311",
       "TimeInForce": "0",
       "CrossingPriceType": "REX",
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "0"
+      "ordstatus": "4"
     },
     {
       "Id": "18",
       "ScenarioName": "New Order->Canceled",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
+      "ActionType": "NewAck",
+      "Comment": "REX_Limit_NewAck",
+      "OrderQty": 5,
+      "OrdType": "2",
+      "Price": 973,
+      "Side": "1",
+      "Symbol": "1311",
+      "TimeInForce": "0",
+      "CrossingPriceType": "REX",
+      "Rule80A": "P",
+      "CashMargin": "1",
+      "MarginTransactionType": "0",
+      "ordstatus": "0"
+    },
+    {
+      "Id": "19",
+      "ScenarioName": "New Order->Canceled",
+      "Account": "RSIT_ACCOUNT_2",
+      "Market": "REX",
       "ActionType": "CancelAck",
       "Comment": "CancelAck",
       "OrderQty": 5,
@@ -333,7 +351,7 @@
       "ordstatus": "4"
     },
     {
-      "Id": "19",
+      "Id": "20",
       "ScenarioName": "New Order->Canceled",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -352,7 +370,7 @@
       "ordstatus": "0"
     },
     {
-      "Id": "20",
+      "Id": "21",
       "ScenarioName": "New Order->Canceled",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -369,24 +387,6 @@
       "CashMargin": "1",
       "MarginTransactionType": "0",
       "ordstatus": "4"
-    },
-    {
-      "Id": "21",
-      "ScenarioName": "New Order->Expired",
-      "Account": "RSIT_ACCOUNT_2",
-      "Market": "REX",
-      "ActionType": "NewAck",
-      "Comment": "REX_Market_NewAck",
-      "OrderQty": 5,
-      "OrdType": "1",
-      "Side": "1",
-      "Symbol": "1313",
-      "TimeInForce": "0",
-      "CrossingPriceType": "REX",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0",
-      "ordstatus": "C"
     },
     {
       "Id": "22",
@@ -394,10 +394,10 @@
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
       "ActionType": "NewAck",
-      "Comment": "ROLX_Market_NewAck",
+      "Comment": "REX_Market_NewAck",
       "OrderQty": 5,
       "OrdType": "1",
-      "Side": "2",
+      "Side": "1",
       "Symbol": "1313",
       "TimeInForce": "0",
       "CrossingPriceType": "REX",
@@ -412,11 +412,10 @@
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
       "ActionType": "NewAck",
-      "Comment": "REX_Limit_NewAck",
+      "Comment": "ROLX_Market_NewAck",
       "OrderQty": 5,
-      "OrdType": "2",
-      "Price": 3365,
-      "Side": "1",
+      "OrdType": "1",
+      "Side": "2",
       "Symbol": "1313",
       "TimeInForce": "0",
       "CrossingPriceType": "REX",
@@ -435,7 +434,7 @@
       "OrderQty": 5,
       "OrdType": "2",
       "Price": 3365,
-      "Side": "2",
+      "Side": "1",
       "Symbol": "1313",
       "TimeInForce": "0",
       "CrossingPriceType": "REX",
@@ -446,21 +445,22 @@
     },
     {
       "Id": "25",
-      "ScenarioName": "BBO Price Rounding Check",
+      "ScenarioName": "New Order->Expired",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
       "ActionType": "NewAck",
-      "Comment": "REX_Market_NewAck",
+      "Comment": "REX_Limit_NewAck",
       "OrderQty": 5,
-      "OrdType": "1",
-      "Side": "1",
-      "Symbol": "4689",
+      "OrdType": "2",
+      "Price": 3365,
+      "Side": "2",
+      "Symbol": "1313",
       "TimeInForce": "0",
       "CrossingPriceType": "REX",
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "2"
+      "ordstatus": "C"
     },
     {
       "Id": "26",
@@ -471,7 +471,7 @@
       "Comment": "REX_Market_NewAck",
       "OrderQty": 5,
       "OrdType": "1",
-      "Side": "2",
+      "Side": "1",
       "Symbol": "4689",
       "TimeInForce": "0",
       "CrossingPriceType": "REX",
@@ -486,11 +486,10 @@
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
       "ActionType": "NewAck",
-      "Comment": "REX_Limit_NewAck",
+      "Comment": "REX_Market_NewAck",
       "OrderQty": 5,
-      "OrdType": "2",
-      "Price": 369,
-      "Side": "1",
+      "OrdType": "1",
+      "Side": "2",
       "Symbol": "4689",
       "TimeInForce": "0",
       "CrossingPriceType": "REX",
@@ -509,7 +508,7 @@
       "OrderQty": 5,
       "OrdType": "2",
       "Price": 369,
-      "Side": "2",
+      "Side": "1",
       "Symbol": "4689",
       "TimeInForce": "0",
       "CrossingPriceType": "REX",
@@ -520,6 +519,25 @@
     },
     {
       "Id": "29",
+      "ScenarioName": "BBO Price Rounding Check",
+      "Account": "RSIT_ACCOUNT_2",
+      "Market": "REX",
+      "ActionType": "NewAck",
+      "Comment": "REX_Limit_NewAck",
+      "OrderQty": 5,
+      "OrdType": "2",
+      "Price": 369,
+      "Side": "2",
+      "Symbol": "4689",
+      "TimeInForce": "0",
+      "CrossingPriceType": "REX",
+      "Rule80A": "P",
+      "CashMargin": "1",
+      "MarginTransactionType": "0",
+      "ordstatus": "2"
+    },
+    {
+      "Id": "30",
       "ScenarioName": "Symbol Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -538,7 +556,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "30",
+      "Id": "31",
       "ScenarioName": "Price Limit Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -557,7 +575,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "31",
+      "Id": "32",
       "ScenarioName": "Price Limit Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -576,12 +594,12 @@
       "ordstatus": "8"
     },
     {
-      "Id": "32",
+      "Id": "33",
       "ScenarioName": "Tick Size Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
       "ActionType": "NewAck",
-      "Comment": "Price<1,000 Tick size ≠ 1",
+      "Comment": "Price<1,000 Tick size \u2260 1",
       "OrderQty": 5,
       "OrdType": "2",
       "Price": 371.5,
@@ -595,12 +613,12 @@
       "ordstatus": "8"
     },
     {
-      "Id": "33",
+      "Id": "34",
       "ScenarioName": "Tick Size Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
       "ActionType": "NewAck",
-      "Comment": "Price<3,000 Tick side ≠ 1",
+      "Comment": "Price<3,000 Tick side \u2260 1",
       "OrderQty": 5,
       "OrdType": "2",
       "Price": 2105.5,
@@ -614,12 +632,12 @@
       "ordstatus": "8"
     },
     {
-      "Id": "34",
+      "Id": "35",
       "ScenarioName": "Tick Size Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
       "ActionType": "NewAck",
-      "Comment": "Price<10,000 Tick side ≠ 1",
+      "Comment": "Price<10,000 Tick side \u2260 1",
       "OrderQty": 5,
       "OrdType": "2",
       "Price": 5000.5,
@@ -633,12 +651,12 @@
       "ordstatus": "8"
     },
     {
-      "Id": "35",
+      "Id": "36",
       "ScenarioName": "Tick Size Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
       "ActionType": "NewAck",
-      "Comment": "Price<30,000 Tick side ≠ 5",
+      "Comment": "Price<30,000 Tick side \u2260 5",
       "OrderQty": 5,
       "OrdType": "2",
       "Price": 26001,
@@ -652,12 +670,12 @@
       "ordstatus": "8"
     },
     {
-      "Id": "36",
+      "Id": "37",
       "ScenarioName": "Tick Size Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
       "ActionType": "NewAck",
-      "Comment": "Price<100,000 Tick side ≠ 10",
+      "Comment": "Price<100,000 Tick side \u2260 10",
       "OrderQty": 5,
       "OrdType": "2",
       "Price": 75001,
@@ -671,12 +689,12 @@
       "ordstatus": "8"
     },
     {
-      "Id": "37",
+      "Id": "38",
       "ScenarioName": "Tick Size Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
       "ActionType": "NewAck",
-      "Comment": "Price<3,000 Tick side ≠ 1",
+      "Comment": "Price<3,000 Tick side \u2260 1",
       "OrderQty": 5,
       "OrdType": "2",
       "Price": 2500.5,
@@ -690,12 +708,12 @@
       "ordstatus": "8"
     },
     {
-      "Id": "38",
+      "Id": "39",
       "ScenarioName": "Tick Size Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
       "ActionType": "NewAck",
-      "Comment": "Price<5,000  Tick side ≠ 5",
+      "Comment": "Price<5,000  Tick side \u2260 5",
       "OrderQty": 5,
       "OrdType": "2",
       "Price": 4000.5,
@@ -709,12 +727,12 @@
       "ordstatus": "8"
     },
     {
-      "Id": "39",
+      "Id": "40",
       "ScenarioName": "Tick Size Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
       "ActionType": "NewAck",
-      "Comment": "Price<30,000 Tick side ≠ 10",
+      "Comment": "Price<30,000 Tick side \u2260 10",
       "OrderQty": 5,
       "OrdType": "2",
       "Price": 15001,
@@ -728,7 +746,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "40",
+      "Id": "41",
       "ScenarioName": "Quantity Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -746,7 +764,7 @@
       "ordstatus": "C"
     },
     {
-      "Id": "41",
+      "Id": "42",
       "ScenarioName": "Quantity Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -764,7 +782,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "42",
+      "Id": "43",
       "ScenarioName": "Quantity Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -782,7 +800,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "43",
+      "Id": "44",
       "ScenarioName": "Quantity Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -800,7 +818,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "44",
+      "Id": "45",
       "ScenarioName": "Quantity Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -818,7 +836,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "45",
+      "Id": "46",
       "ScenarioName": "Quantity Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -836,7 +854,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "46",
+      "Id": "47",
       "ScenarioName": "Quantity Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -854,7 +872,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "47",
+      "Id": "48",
       "ScenarioName": "Order Type Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -872,7 +890,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "48",
+      "Id": "49",
       "ScenarioName": "TimeInForce Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -890,7 +908,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "49",
+      "Id": "50",
       "ScenarioName": "Order Side Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -908,7 +926,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "50",
+      "Id": "51",
       "ScenarioName": "Account Check",
       "Account": "RSIT_ACCOUNT_23",
       "Market": "REX",
@@ -926,7 +944,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "51",
+      "Id": "52",
       "ScenarioName": "Rule80A Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -944,7 +962,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "52",
+      "Id": "53",
       "ScenarioName": "CashMargin Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -962,7 +980,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "53",
+      "Id": "54",
       "ScenarioName": "MarginTransactionType Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -980,7 +998,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "54",
+      "Id": "55",
       "ScenarioName": "CrossingPriceType Check",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -998,7 +1016,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "55",
+      "Id": "56",
       "ScenarioName": "Cancel after Executed",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -1016,7 +1034,7 @@
       "ordstatus": "2"
     },
     {
-      "Id": "56",
+      "Id": "57",
       "ScenarioName": "Cancel after Executed",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -1034,7 +1052,7 @@
       "ordstatus": "8"
     },
     {
-      "Id": "57",
+      "Id": "58",
       "ScenarioName": "Canceled",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
@@ -1052,7 +1070,7 @@
       "ordstatus": "4"
     },
     {
-      "Id": "58",
+      "Id": "59",
       "ScenarioName": "Canceled",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",
