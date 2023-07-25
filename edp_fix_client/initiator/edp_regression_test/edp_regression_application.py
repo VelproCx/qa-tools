@@ -560,3 +560,4 @@ class Application(fix.Application):
                 else:
                     self.runTestCase(row)
                     time.sleep(1)
+
