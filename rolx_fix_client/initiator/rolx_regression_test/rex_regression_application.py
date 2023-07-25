@@ -531,6 +531,9 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
+                if row['Id'] == "1":
+                    self.insert_order_request(row)
+                    time.sleep(60)
                 if row["Symbol"] == '5076' and row["OrdType"] == "1" and row["Comment"] == "CancelAck":
                     time.sleep(120)
                     self.runTestCase(row)
