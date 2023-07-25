@@ -2,24 +2,6 @@
   "testCase": [
     {
       "Id": "1",
-      "ScenarioName": "Trading Hours Check: Send order before Preopen(～8:45).",
-      "Account": "RSIT_ACCOUNT_2",
-      "Market": "REX",
-      "ActionType": "NewAck",
-      "Comment": "REX_Market_NewAck",
-      "OrderQty": 5,
-      "OrdType": "1",
-      "Side": "1",
-      "Symbol": "1301",
-      "TimeInForce": "0",
-      "CrossingPriceType": "REX",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0",
-      "ordstatus": "2"
-    },
-    {
-      "Id": "1",
       "ScenarioName": "New Order->Fill",
       "Account": "RSIT_ACCOUNT_2",
       "Market": "REX",

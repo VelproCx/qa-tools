@@ -526,15 +526,11 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         """Run"""
         with open('../../testcases/REX_Functional_Test_Matrix.json', 'r') as f_json:
             # 生成报告模版
-            generation('../../testcases/REX_Functional_Test_Matrix.json', 'report/rex_report.xlsx')
+            generation('testcases/REX_Functional_Test_Matrix.json', 'report/rex_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
-                if row == case_data_list["testCase"][0]:
-                    self.insert_order_request(case_data_list["testCase"][0])
-                    time.sleep(60)
-
                 if row["Symbol"] == '5076' and row["OrdType"] == "1" and row["Comment"] == "CancelAck":
                     time.sleep(120)
                     self.runTestCase(row)
