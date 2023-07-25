@@ -17,7 +17,7 @@ sys.path.append("../medhod/")
 __SOH__ = chr(1)
 
 # report
-setup_logger('logfix', 'logs/rolx_report.log')
+setup_logger('logfix', '../logs/rolx_report.log')
 logfix = logging.getLogger('logfix')
 
 
