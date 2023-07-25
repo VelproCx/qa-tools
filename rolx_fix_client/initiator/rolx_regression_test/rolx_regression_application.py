@@ -11,7 +11,9 @@ import json
 # from ..method1.file_generation import generation
 import math
 import random
+
 __SOH__ = chr(1)
+
 from openpyxl import load_workbook
 # import sys
 # sys.path.append("../method")
@@ -22,10 +24,11 @@ import os
 # 获取当前所在目录绝对路径
 current_path = os.path.abspath(os.path.dirname(__file__))
 # 将当前目录的路径和上级目录的绝对路径拼接
-generation_parent_path = os.path.abspath(os.path.join(current_path, "../../method"))
+Parent_path = os.path.abspath(os.path.join(current_path, "../../method"))
 # 获取上级目录中一个文件的路径
-generation_path = os.path.join(generation_parent_path, "file_generation.py")
-
+generation_path = os.path.join(Parent_path, "file_generation.py")
+# 获取data_comparison
+data_comparison_path = os.path.join(Parent_path, "data_comparison.py")
 
 # report
 setup_logger('logfix', 'logs/rolx_report.log')
@@ -50,33 +53,40 @@ class Application(fix.Application):
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
         self.sessionID = sessionID
-        print("onCreate : Session ({})" .format(sessionID.toString()))
+        print("onCreate : Session ({})".format(sessionID.toString()))
         return
 
     def onLogon(self, sessionID):
         # "客户端登陆成功时候调用此方法"
         self.sessionID = sessionID
-        print("Successful Logon to session '{}'." .format(sessionID.toString()))
+        print("Successful Logon to session '{}'.".format(sessionID.toString()))
         return
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
+        print(self.logsCheck())
         self.logsCheck()
         json_data = json.dumps(self.ReceveRes)
+
+        module_name = "compare_field_values"
+        module_path = data_comparison_path
+        # 导入具有完整文件路径的模块
+        module1 = SourceFileLoader(module_name, module_path).load_module()
         # 将JSON数据写入文件
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = self.compare_field_values('testcases/ROL_Functional_Test_Matrix.json', 'logs/recv_data.json',
-                                                'ordstatus')
-        logfix.info("Result : Total = {},Success = {},Fail = {}" .format(self.Total, self.Success, self.Fail))
-        print("Session ({}) logout !" .format(sessionID.toString()))
+        self.Result = module1.compare_field_values(self, '../../testcases/ROL_Functional_Test_Matrix.json',
+                                                   'logs/recv_data.json',
+                                                   'ordstatus', 'errorCode')
+        logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
+        print("Session ({}) logout !".format(sessionID.toString()))
         self.writeResExcel('report/rolx_report.xlsx', self.Result, 2, 'P')
         return
 
     def toAdmin(self, message, sessionID):
         # "发送会话消息时候调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) S >> {}" .format(msg))
+        logfix.info("(Core) S >> {}".format(msg))
         return
 
     def toApp(self, message, sessionID):
@@ -96,21 +106,21 @@ class Application(fix.Application):
             if (clOrdID, orderQty, ordType,
                 side, symbol, transactTime,
                 ) != "":
-                logfix.info("(sendMsg) New Ack >> {}" .format(msg))
+                logfix.info("(sendMsg) New Ack >> {}".format(msg))
             else:
-                logfix.info("(sendMsg) New Ack >> {}" .format(msg) + 'New Order Single FixMsg Error!')
+                logfix.info("(sendMsg) New Ack >> {}".format(msg) + 'New Order Single FixMsg Error!')
         # 7.4 Order Cancel Request
         elif msgType == "F":
             if (clOrdID, side, symbol, transactTime) != "":
-                logfix.info("(sendMsg) Cancel Ack >> {}" .format(msg))
+                logfix.info("(sendMsg) Cancel Ack >> {}".format(msg))
             else:
-                logfix.info("(sendMsg) Cancel Ack >> {}" .format(msg) + 'Order Cancel Request FixMsg Error!')
+                logfix.info("(sendMsg) Cancel Ack >> {}".format(msg) + 'Order Cancel Request FixMsg Error!')
         return
 
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) R << {}" .format(msg))
+        logfix.info("(Core) R << {}".format(msg))
         return
 
     def fromApp(self, message, sessionID):
@@ -205,10 +215,10 @@ class Application(fix.Application):
                             side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty,
                             cashMargin,
                             crossingPriceType, fsxTransactTime, marginTransactionType) != "":
-                        logfix.info("(recvMsg) Order Accepted << {}" .format(msg) + "ordStatus = " + str(ordStatus))
+                        logfix.info("(recvMsg) Order Accepted << {}".format(msg) + "ordStatus = " + str(ordStatus))
                         logfix.info("Result : Order Accepted ," + "ordStatus =" + ordStatus)
                     else:
-                        logfix.info("(recvMsg) Order Accepted << {}" .format(msg) + 'Order Accepted FixMsg Error!')
+                        logfix.info("(recvMsg) Order Accepted << {}".format(msg) + 'Order Accepted FixMsg Error!')
                     if execType != ordStatus:
                         logfix.info(
                             "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
@@ -227,9 +237,9 @@ class Application(fix.Application):
                             side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
                             crossingPriceType,
                             fsxTransactTime, marginTransactionType, text, ordRejReason) != "":
-                        logfix.info("(recvMsg) Order Rej << {}" .format(msg) + "RejRes = " + str(text))
+                        logfix.info("(recvMsg) Order Rej << {}".format(msg) + "RejRes = " + str(text))
                     else:
-                        logfix.info("(recvMsg) Order Rejected << {}" .format(msg) + 'Order Rejected FixMsg Error!')
+                        logfix.info("(recvMsg) Order Rejected << {}".format(msg) + 'Order Rejected FixMsg Error!')
                     if execType != ordStatus:
                         logfix.info(
                             "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
@@ -243,9 +253,9 @@ class Application(fix.Application):
                         side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
                         crossingPriceType,
                         fsxTransactTime, marginTransactionType, origClOrdID, execBroker) != "":
-                        logfix.info("(recvMsg) Order Canceled << {}" .format(msg) + "ordStatus = " + str(ordStatus))
+                        logfix.info("(recvMsg) Order Canceled << {}".format(msg) + "ordStatus = " + str(ordStatus))
                     else:
-                        logfix.info("(recvMsg) Order Canceled << {}" .format(msg) + 'Order Canceled FixMsg Error!')
+                        logfix.info("(recvMsg) Order Canceled << {}".format(msg) + 'Order Canceled FixMsg Error!')
                     if execType != ordStatus:
                         logfix.info(
                             "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
@@ -273,13 +283,14 @@ class Application(fix.Application):
                             crossingPriceType, fsxTransactTime, marginTransactionType, primaryBidPx, primaryAskPx,
                             routingDecisionTime, propExecPrice, PropExecID) != "":
                         logfix.info(
-                            "(recvMsg) Order Filled << {}" .format(msg) + 'Side: ' + str(side) + ',' + "Fill Price: " + str(
+                            "(recvMsg) Order Filled << {}".format(msg) + 'Side: ' + str(
+                                side) + ',' + "Fill Price: " + str(
                                 lastPx) + ',' + "AdjustLastPx Of Buy: " + str(
                                 adjustLastPxBuy) + ',' + "AdjustLastPx Of Sell: " + str(
                                 adjustLastPxSell) + ',' + "Order Type:" + str(ordType))
                         logfix.info("Result : Order Filled ," + "ordStatus =" + ordStatus)
                     else:
-                        logfix.info("(recvMsg) Order Filled << {}" .format(msg) + "Order Trade FixMsg Error!")
+                        logfix.info("(recvMsg) Order Filled << {}".format(msg) + "Order Trade FixMsg Error!")
                     if execType != ordStatus:
                         logfix.info(
                             "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
@@ -313,10 +324,10 @@ class Application(fix.Application):
                     if (avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
                         side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
                         crossingPriceType, fsxTransactTime, marginTransactionType, execBroker, origClOrdID, text) != "":
-                        logfix.info("(recvMsg) Order Expired << {}" .format(msg) + "ExpireRes = " + str(text))
+                        logfix.info("(recvMsg) Order Expired << {}".format(msg) + "ExpireRes = " + str(text))
                         logfix.info("Result : Order Expired ," + "ordStatus =" + ordStatus)
                     else:
-                        logfix.info("(recvMsg) Order Expired << {}" .format(msg) + "Order Expired FixMsg Error!")
+                        logfix.info("(recvMsg) Order Expired << {}".format(msg) + "Order Expired FixMsg Error!")
                     if execType != ordStatus:
                         logfix.info(
                             "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
@@ -330,9 +341,9 @@ class Application(fix.Application):
                 # 判断tag是否存在
                 if (clOrdID, orderID, transactTime, fsxTransactTime, origClOrdID, text,
                     cxlRejReason, cxlRejResponseTo) != "":
-                    logfix.info("(recvMsg) Order Canceled << {}" .format(msg) + "ordStatus = " + str(ordStatus))
+                    logfix.info("(recvMsg) Order Canceled << {}".format(msg) + "ordStatus = " + str(ordStatus))
                 else:
-                    logfix.info("(recvMsg) Order Canceled << {}" .format(msg) + 'Order Canceled FixMsg Error!')
+                    logfix.info("(recvMsg) Order Canceled << {}".format(msg) + 'Order Canceled FixMsg Error!')
         self.onMessage(message, sessionID)
         return
 
@@ -341,30 +352,43 @@ class Application(fix.Application):
         pass
 
     # 结果数据比对方法
-    def compare_field_values(self, json_file1, json_file2, field_name):
-        resList = []
-        with open(json_file1, 'r') as f1, open(json_file2, 'r') as f2:
-            data1 = json.load(f1)
-            data2 = json.load(f2)
-        records1 = data1['testCase']
-        records2 = data2
-        # 判断记录数量是否相同
-        if len(records1) != len(records2):
-            logfix.info("两个文件记录数量不一致，比对结果不准确，请仔细核对数据，再次进行比对！")
-        # 逐组比较字段值并输出结果
-        for i, (record1, record2) in enumerate(zip(records1, records2), 1):
-            if record1[field_name] == record2[field_name]:
-                self.Success += 1
-                resList.append('success')
-            else:
-                self.Fail += 1
-                logfix.info(f"第 {i} 条数据的指定字段值不相同" + "," + "clordId:" + str(record2['clordId']))
-                resList.append('failed')
-                logfix.info("Except:" + str(record1[field_name]) + " ，" + "ordStatus: " + str(record2[field_name]))
-        return resList
+    # def compare_field_values(self, json_file1, json_file2, field_name1, field_name2):
+    #     resList = []
+    #     with open(json_file1, 'r') as f1, open(json_file2, 'r') as f2:
+    #         data1 = json.load(f1)
+    #         data2 = json.load(f2)
+    #     records1 = data1['testCase']
+    #     records2 = data2
+    #     # 判断记录数量是否相同
+    #     if len(records1) != len(records2):
+    #         # 逐组比较字段值并输出结果
+    #         for i, (record1, record2) in enumerate(zip(records1, records2), 1):
+    #             if record1[field_name1] == ["8"]:
+    #                 if record1[field_name2] in record1[field_name2]:
+    #                     self.Success += 1
+    #                     resList.append('success')
+    #                 else:
+    #                     print("failed")
+    #                     self.Fail += 1
+    #                     logfix.info(f"第 {i} 条数据的指定字段值不相同" + "," + "errorCode:" + str(record2['errorCode']))
+    #                     resList.append('failed')
+    #                     logfix.info(
+    #                         "Except:" + str(record1[field_name1]) + " ，" + "ordStatus: " + str(record2[field_name1]))
+    #             elif record1[field_name1] == record2[field_name1]:
+    #                 self.Success += 1
+    #                 resList.append("success")
+    #             else:
+    #                 self.Fail += 1
+    #                 logfix.info(f"第 {i} 条数据的指定字段值不相同" + "," + "clordId:" + str(record2['clordId']))
+    #                 resList.append("failed")
+    #                 logfix.info(
+    #                     "Except:" + str(record1[field_name1]) + " ，" + "ordStatus: " + str(record2[field_name1]))
 
+    # else:
+    #     logfix.info("两个文件记录数量不一致，比对结果不准确，请仔细核对数据，再次进行比对！")
+    # return resList
 
-# 判断log文件中是否存在 Market Price is not matching
+    # 判断log文件中是否存在 Market Price is not matching
     def logsCheck(self):
         response = ['ps: 若列表存在failed数据，请查看report.log文件']
         self.writeResExcel('report/rolx_report.xlsx', response, 2, 'Q')
@@ -396,7 +420,6 @@ class Application(fix.Application):
             response = ['execType is OK']
             self.writeResExcel('report/rolx_report.xlsx', response, 8, "Q")
 
-
     def writeResExcel(self, filename, data, row, column):
         # 打开现有的 Excel 文件或创建新的 Workbook
         workbook = load_workbook(filename)
@@ -413,7 +436,6 @@ class Application(fix.Application):
         # 保存修改并关闭工作簿
         workbook.save(filename)
 
-
     def getClOrdID(self):
         # "随机数生成ClOrdID"
         self.execID += 1
@@ -421,7 +443,6 @@ class Application(fix.Application):
         t = int(time.time())
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
         return str(t) + str1 + str(self.execID).zfill(6)
-
 
     def insert_order_request(self, row):
         msg = fix.Message()
