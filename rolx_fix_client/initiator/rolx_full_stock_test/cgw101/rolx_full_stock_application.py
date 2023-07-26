@@ -17,7 +17,7 @@ sys.path.append("../medhod/")
 __SOH__ = chr(1)
 
 # report
-setup_logger('logfix', 'logs/rolx_report.log')
+setup_logger('logfix', '../logs/rolx_report.log')
 logfix = logging.getLogger('logfix')
 
 
@@ -254,7 +254,7 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account("RSIT_ACCOUNT_1"))
+        msg.setField(fix.Account("RUAT_ACCOUNT_1"))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(self.getOrderQty()))
         # msg.setField(fix.OrderQty(row['OrderQty']))
