@@ -45,6 +45,12 @@ class Application(fix.Application):
     ROL_PROP_BPS_SELL = 0.0022
     Result = []
     ReceveRes = []
+    order_new = 0
+    order_expired = 0
+    order_accepted = 0
+    order_rejected = 0
+    order_filled = 0
+    order_partially_filled = 0
 
     def __init__(self):
         super().__init__()
@@ -75,10 +81,9 @@ class Application(fix.Application):
         # 将JSON数据写入文件
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = module1.compare_field_values(self, '../../testcases/ROL_Functional_Test_Matrix.json',
+        self.Result = module1.compare_field_values('../../testcases/ROL_Functional_Test_Matrix.json',
                                                    'logs/recv_data.json',
                                                    'ordstatus', 'errorCode')
-        logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
         print("Session ({}) logout !".format(sessionID.toString()))
         self.writeResExcel('report/rolx_report.xlsx', self.Result, 2, 'P')
         return
@@ -107,6 +112,7 @@ class Application(fix.Application):
                 side, symbol, transactTime,
                 ) != "":
                 logfix.info("(sendMsg) New Ack >> {}".format(msg))
+                self.order_new += 1
             else:
                 logfix.info("(sendMsg) New Ack >> {}".format(msg) + 'New Order Single FixMsg Error!')
         # 7.4 Order Cancel Request
@@ -217,6 +223,7 @@ class Application(fix.Application):
                             crossingPriceType, fsxTransactTime, marginTransactionType) != "":
                         logfix.info("(recvMsg) Order Accepted << {}".format(msg) + "ordStatus = " + str(ordStatus))
                         logfix.info("Result : Order Accepted ," + "ordStatus =" + ordStatus)
+                        self.order_accepted += 1
                     else:
                         logfix.info("(recvMsg) Order Accepted << {}".format(msg) + 'Order Accepted FixMsg Error!')
                     if execType != ordStatus:
@@ -238,6 +245,7 @@ class Application(fix.Application):
                             crossingPriceType,
                             fsxTransactTime, marginTransactionType, text, ordRejReason) != "":
                         logfix.info("(recvMsg) Order Rej << {}".format(msg) + "RejRes = " + str(text))
+                        self.order_rejected += 1
                     else:
                         logfix.info("(recvMsg) Order Rejected << {}".format(msg) + 'Order Rejected FixMsg Error!')
                     if execType != ordStatus:
@@ -273,6 +281,7 @@ class Application(fix.Application):
                     # 公式计算期望值 FillPrice
                     adjustLastPxBuy = math.ceil(primaryAskPx * (1 + self.ROL_PROP_BPS_BUY))
                     adjustLastPxSell = math.floor(primaryBidPx * (1 - self.ROL_PROP_BPS_SELL))
+
                     # 判断tag是否存在
                     if (
                             avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty,
@@ -289,6 +298,10 @@ class Application(fix.Application):
                                 adjustLastPxBuy) + ',' + "AdjustLastPx Of Sell: " + str(
                                 adjustLastPxSell) + ',' + "Order Type:" + str(ordType))
                         logfix.info("Result : Order Filled ," + "ordStatus =" + ordStatus)
+                        if ordStatus == "1":
+                            self.order_partially_filled += 1
+                        else:
+                            self.order_filled += 1
                     else:
                         logfix.info("(recvMsg) Order Filled << {}".format(msg) + "Order Trade FixMsg Error!")
                     if execType != ordStatus:
@@ -326,6 +339,7 @@ class Application(fix.Application):
                         crossingPriceType, fsxTransactTime, marginTransactionType, execBroker, origClOrdID, text) != "":
                         logfix.info("(recvMsg) Order Expired << {}".format(msg) + "ExpireRes = " + str(text))
                         logfix.info("Result : Order Expired ," + "ordStatus =" + ordStatus)
+                        self.order_expired += 1
                     else:
                         logfix.info("(recvMsg) Order Expired << {}".format(msg) + "Order Expired FixMsg Error!")
                     if execType != ordStatus:

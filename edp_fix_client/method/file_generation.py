@@ -6,7 +6,7 @@ from openpyxl.styles import Border, Side
 
 
 def generation(file_path, filename):
-    fields_to_remove = ['Account', 'ordstatus','errorCode']
+    fields_to_remove = ['Account', 'ordstatus']
     with open(file_path, 'r') as f_json:
         json_data = json.load(f_json)
     for row in json_data["testCase"]:
