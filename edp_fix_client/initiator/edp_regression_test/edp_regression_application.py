@@ -19,9 +19,12 @@ from importlib.machinery import SourceFileLoader
 # 获取当前所在目录绝对路径
 current_path = os.path.abspath(os.path.dirname(__file__))
 # 将当前目录的路径和上级目录的绝对路径拼接
-generation_parent_path = os.path.abspath(os.path.join(current_path, "../../method"))
+Parent_path = os.path.abspath(os.path.join(current_path, "../../method"))
 # 获取上级目录中一个文件的路径
-generation_path = os.path.join(generation_parent_path, "file_generation.py")
+generation_path = os.path.join(Parent_path, "file_generation.py")
+# 获取data_comparsion
+data_comparison_path = os.path.join(Parent_path, "data_comparison.py")
+
 # log
 setup_logger('logfix', 'logs/edp_report.log')
 logfix = logging.getLogger('logfix')
@@ -57,11 +60,16 @@ class Application(fix.Application):
         print(self.ReceveRes)
         self.logsCheck()
         json_data = json.dumps(self.ReceveRes)
+        module_name = "compare_field_values"
+        module_path = data_comparison_path
+        # 导入具有完整文件路径的模块
+        module1 = SourceFileLoader(module_name, module_path).load_module()
         # 将JSON数据写入文件
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = self.compare_field_values('../../testcases/EDP_Functional_Test_Matrix.json', 'logs/recv_data.json',
-                                                'ordstatus', 'errorCode')
+        self.Result = module1.compare_field_values('../../testcases/EDP_Functional_Test_Matrix.json',
+                                                   'logs/recv_data.json',
+                                                   'ordstatus', 'errorCode')
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'S')
         return
@@ -376,41 +384,41 @@ class Application(fix.Application):
         pass
 
     # 结果数据比对方法
-    def compare_field_values(self, json_file1, json_file2, field_name1, field_name2):
-        resList = []
-        with open(json_file1, 'r') as f1, open(json_file2, 'r') as f2:
-            data1 = json.load(f1)
-            data2 = json.load(f2)
-        records1 = data1['testCase']
-        records2 = data2
-        # 判断记录数量是否相同
-        if len(records1) == len(records2):
-            # 逐组比较字段值并输出结果
-            for i, (record1, record2) in enumerate(zip(records1, records2), 1):
-                if record1[field_name1] == ['8'] or record1[field_name1] == ['0', '2', '8']:
-                    if record1[field_name2] in records1[field_name2]:
-                        self.Success += 1
-                        resList.append('success')
-                    else:
-                        print("failed")
-                        self.Fail += 1
-                        logfix.info(f"第 {i} 条数据的指定字段值不相同" + "," + "errorCode:" + str(record2['errorCode']))
-                        resList.append('failed')
-                        logfix.info(
-                            "Except:" + str(record1[field_name1]) + " ，" + "ordStatus: " + str(record2[field_name1]))
-
-                elif record1[field_name1] == record2[field_name1]:
-                    self.Success += 1
-                    resList.append('success')
-                else:
-                    self.Fail += 1
-                    logfix.info(f"第 {i} 条数据的指定字段值不相同" + "," + "clordId:" + str(record2['clordId']))
-                    resList.append('failed')
-                    logfix.info(
-                        "Except:" + str(record1[field_name1]) + " ，" + "ordStatus: " + str(record2[field_name1]))
-        else:
-            logfix.info("两个文件记录数量不一致，比对结果不准确，请仔细核对数据，再次进行比对！")
-        return resList
+    # def compare_field_values(self, json_file1, json_file2, field_name1, field_name2):
+    #     resList = []
+    #     with open(json_file1, 'r') as f1, open(json_file2, 'r') as f2:
+    #         data1 = json.load(f1)
+    #         data2 = json.load(f2)
+    #     records1 = data1['testCase']
+    #     records2 = data2
+    #     # 判断记录数量是否相同
+    #     if len(records1) == len(records2):
+    #         # 逐组比较字段值并输出结果
+    #         for i, (record1, record2) in enumerate(zip(records1, records2), 1):
+    #             if record1[field_name1] == ['8'] and record2[field_name1] == ['8']:
+    #                 if record1[field_name2] in records2[field_name2]:
+    #                     self.Success += 1
+    #                     resList.append('success')
+    #                 else:
+    #                     print("failed")
+    #                     self.Fail += 1
+    #                     logfix.info(f"第 {i} 条数据的指定字段值不相同" + "," + "errorCode:" + str(record2['errorCode']))
+    #                     resList.append('failed')
+    #                     logfix.info(
+    #                         "Except:" + str(record1[field_name1]) + " ，" + "ordStatus: " + str(record2[field_name1]))
+    #
+    #             elif record1[field_name1] == record2[field_name1]:
+    #                 self.Success += 1
+    #                 resList.append('success')
+    #             else:
+    #                 self.Fail += 1
+    #                 logfix.info(f"第 {i} 条数据的指定字段值不相同" + "," + "clordId:" + str(record2['clordId']))
+    #                 resList.append('failed')
+    #                 logfix.info(
+    #                     "Except:" + str(record1[field_name1]) + " ，" + "ordStatus: " + str(record2[field_name1]))
+    #     else:
+    #         logfix.info("两个文件记录数量不一致，比对结果不准确，请仔细核对数据，再次进行比对！")
+    #     return resList
 
     # 判断log文件中是否存在 Market Price is not matching
     def logsCheck(self):
