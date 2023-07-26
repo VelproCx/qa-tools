@@ -28,8 +28,10 @@ def generation(file_path, filename):
 
     # 选择要设置颜色的工作表
     sheet = workbook.active  # 使用默认的活动工作表
-    sheet['H1'] = 'Execution Result'
-    sheet['I1'] = 'Remark'
+    sheet['J1'] = 'RecvOrdStatus'
+    sheet['K1'] = 'RecvErrorCode'
+    sheet['L1'] = 'Execution Result'
+    sheet['M1'] = 'Remark'
     # 设置最合适的列宽
     for column in sheet.columns:
         max_length = 0
@@ -54,9 +56,9 @@ def generation(file_path, filename):
     # 指定要设置颜色的行和列
     row_number = 1
     column_start = 'A'
-    column_end = 'G'
-    res_column_start = 'H'
-    res_column_end = 'I'
+    column_end = 'K'
+    res_column_start = 'L'
+    res_column_end = 'M'
 
     # 设置单元格背景颜色
     fill = PatternFill(fill_type='solid', fgColor='FFFF00')
@@ -72,4 +74,4 @@ def generation(file_path, filename):
     # 保存修改并关闭工作簿
     workbook.save(filename)
 
-generation("../testcases/ROL_Functional_Test_Matrix.json", "rolx_report.xlsx")
+# generation("../testcases/ROL_Functional_Test_Matrix.json", "rolx_report.xlsx")
