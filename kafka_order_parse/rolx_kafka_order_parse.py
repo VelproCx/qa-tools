@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+from logger import setup_logger
+
 from kafka import KafkaConsumer
 from ctypes import *
 # import ctypes
