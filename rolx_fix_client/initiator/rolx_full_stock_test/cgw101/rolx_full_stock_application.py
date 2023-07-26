@@ -34,6 +34,12 @@ class Application(fix.Application):
     PartiallyFilled = 0
     NewAck = 0
     Expired = 0
+    order_new = 0
+    order_expired = 0
+    order_accepted = 0
+    order_rejected = 0
+    order_filled = 0
+    order_partially_filled = 0
 
     def __init__(self):
         super().__init__()
@@ -93,6 +99,7 @@ class Application(fix.Application):
                 side, symbol, transactTime,
                 ) != "":
                 logfix.info("(sendMsg) New Ack >> %s" % msg)
+                self.order_new += 1
                 self.NewAck += 1
             else:
                 logfix.info("(sendMsg) New Ack >> %s" % msg + 'New Order Single FixMsg Error!')
@@ -140,6 +147,7 @@ class Application(fix.Application):
                 side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
                 crossingPriceType, fsxTransactTime, marginTransactionType) != "":
                 logfix.info("(recvMsg) Order Accepted << %s" % msg + "ordStatus = " + str(ordStatus))
+                self.order_accepted += 1
                 self.Accepted += 1
             else:
                 logfix.info("(recvMsg) Order Accepted << %s" % msg + 'Order Accepted FixMsg Error!')
@@ -155,6 +163,7 @@ class Application(fix.Application):
                 side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin, crossingPriceType,
                 fsxTransactTime, marginTransactionType, text, ordRejReason) != "":
                 logfix.info("(recvMsg) Order Rej << %s" % msg + "RejRes = " + str(text))
+                self.order_rejected += 1
                 self.Rejected += 1
                 if text == "Book is CLOSED":
                     self.Book_is_closed += 1
@@ -183,6 +192,10 @@ class Application(fix.Application):
                 logfix.info("(recvMsg) Order Filled << %s" % msg + 'Side: ' + str(side) + ',' + "Fill Price: " + str(
                     lastPx) + ',' + "AdjustLastPx Of Buy: " + str(
                     adjustLastPxBuy) + ',' + "AdjustLastPx Of Sell: " + str(adjustLastPxSell))
+                if ordStatus == "1":
+                    self.order_partially_filled += 1
+                else:
+                    self.order_filled += 1
             else:
                 logfix.info("(recvMsg) Order Filled << %s" % msg + "Trade FixMsg Error!")
             # Fill Price Check
@@ -214,6 +227,7 @@ class Application(fix.Application):
                 side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
                 crossingPriceType, fsxTransactTime, marginTransactionType, execBroker, origClOrdID, text) != "":
                 logfix.info("(recvMsg) Order Expired << %s" % msg + "ExpireRes = " + str(text))
+                self.order_expired += 1
                 self.Expired += 1
             else:
                 logfix.info("(recvMsg) Order Expired << %s" % msg + "Order Expired FixMsg Error!")

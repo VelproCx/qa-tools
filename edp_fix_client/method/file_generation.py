@@ -4,8 +4,9 @@ from openpyxl import Workbook, load_workbook
 from openpyxl.styles import PatternFill
 from openpyxl.styles import Border, Side
 
-def generation(file_path,filename):
-    fields_to_remove = ['Account', 'ordstatus', 'errorCode']
+
+def generation(file_path, filename):
+    fields_to_remove = ['Account', 'ordstatus']
     with open(file_path, 'r') as f_json:
         json_data = json.load(f_json)
     for row in json_data["testCase"]:
