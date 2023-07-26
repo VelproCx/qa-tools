@@ -24,7 +24,8 @@
         "2",
         "2",
         "2"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "1",
@@ -50,7 +51,8 @@
         "2",
         "2",
         "2"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "2",
@@ -76,7 +78,8 @@
         "2",
         "2",
         "2"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "3",
@@ -103,7 +106,8 @@
         "2",
         "2",
         "2"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "4",
@@ -130,7 +134,8 @@
         "2",
         "2",
         "2"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "5",
@@ -185,7 +190,8 @@
         "C",
         "1",
         "1"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "7",
@@ -238,7 +244,8 @@
         "1",
         "2",
         "2"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "9",
@@ -371,7 +378,8 @@
         "C",
         "2",
         "2"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "14",
@@ -423,7 +431,8 @@
         "C",
         "2",
         "2"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "16",
@@ -474,7 +483,8 @@
         "C",
         "1",
         "1"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "18",
@@ -527,7 +537,8 @@
         "C",
         "1",
         "1"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "20",
@@ -577,7 +588,8 @@
         "0",
         "2",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "22",
@@ -602,7 +614,8 @@
         "0",
         "2",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "23",
@@ -628,7 +641,8 @@
         "0",
         "2",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "24",
@@ -654,7 +668,8 @@
         "0",
         "2",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "25",
@@ -678,7 +693,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "26",
@@ -726,7 +742,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "28",
@@ -775,7 +792,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "30",
@@ -824,7 +842,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "32",
@@ -872,7 +891,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "34",
@@ -896,7 +916,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "35",
@@ -921,7 +942,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "36",
@@ -946,7 +968,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "37",
@@ -971,7 +994,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10021,Invalid Symbol"
+      "errorCode":"10021,Invalid Symbol"
     },
     {
       "Id": "38",
@@ -996,7 +1019,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10014,Price exceeds the high - low price range"
+      "errorCode":"10014,Price exceeds the high - low price range"
     },
     {
       "Id": "39",
@@ -1021,7 +1044,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10014,Price exceeds the high - low price range"
+      "errorCode":"10014,Price exceeds the high - low price range"
 
     },
     {
@@ -1047,7 +1070,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10015,Tick-size is not matched with small tick"
+      "errorCode":"10015,Tick-size is not matched with small tick"
     },
     {
       "Id": "41",
@@ -1072,7 +1095,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10015,Tick-size is not matched with small tick"
+      "errorCode":"10015,Tick-size is not matched with small tick"
     },
     {
       "Id": "42",
@@ -1097,7 +1120,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10015,Tick-size is not matched with small tick"
+      "errorCode":"10015,Tick-size is not matched with small tick"
     },
     {
       "Id": "43",
@@ -1122,7 +1145,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10015,Tick-size is not matched with small tick"
+      "errorCode":"10015,Tick-size is not matched with small tick"
     },
     {
       "Id": "44",
@@ -1147,7 +1170,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10015,Tick-size is not matched with small tick"
+      "errorCode":"10015,Tick-size is not matched with small tick"
     },
     {
       "Id": "45",
@@ -1172,7 +1195,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10016,Tick-size is not matched with non-small tick"
+      "errorCode":"10016,Tick-size is not matched with non-small tick"
     },
     {
       "Id": "46",
@@ -1197,7 +1220,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10016,Tick-size is not matched with non-small tick"
+      "errorCode":"10016,Tick-size is not matched with non-small tick"
     },
     {
       "Id": "47",
@@ -1222,7 +1245,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10016,Tick-size is not matched with non-small tick"
+      "errorCode":"10016,Tick-size is not matched with non-small tick"
     },
     {
       "Id": "48",
@@ -1247,7 +1270,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10016,Tick-size is not matched with non-small tick"
+      "errorCode":"10016,Tick-size is not matched with non-small tick"
     },
     {
       "Id": "49",
@@ -1272,7 +1295,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10016,Tick-size is not matched with non-small tick"
+      "errorCode":"10016,Tick-size is not matched with non-small tick"
     },
     {
       "Id": "50",
@@ -1297,7 +1320,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10016,Tick-size is not matched with non-small tick"
+      "errorCode":"10016,Tick-size is not matched with non-small tick"
     },
     {
       "Id": "51",
@@ -1321,7 +1344,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10018,Invalid quantity or lot_size"
+      "errorCode":"10018,Invalid quantity or lot_size"
     },
     {
       "Id": "52",
@@ -1345,7 +1368,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10018,Invalid quantity or lot_size"
+      "errorCode":"10018,Invalid quantity or lot_size"
     },
     {
       "Id": "53",
@@ -1369,7 +1392,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "54",
@@ -1393,7 +1417,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "55",
@@ -1417,7 +1442,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10018,Invalid quantity or lot_size"
+      "errorCode":"10018,Invalid quantity or lot_size"
     },
     {
       "Id": "56",
@@ -1441,7 +1466,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "57",
@@ -1465,7 +1491,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "58",
@@ -1489,7 +1516,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "59",
@@ -1513,7 +1541,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "60",
@@ -1537,7 +1566,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"Invalid quantity or lot_size"
+      "errorCode":"Invalid quantity or lot_size"
     },
     {
       "Id": "61",
@@ -1561,7 +1590,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10011,Notional limit is exceeded"
+      "errorCode":"10011,Notional limit is exceeded"
     },
     {
       "Id": "62",
@@ -1585,7 +1614,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10003,OrdType is not supported"
+      "errorCode":"10003,OrdType is not supported"
     },
     {
       "Id": "63",
@@ -1609,7 +1638,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10012,TimeInForce is not supported"
+      "errorCode":"10012,TimeInForce is not supported"
     },
     {
       "Id": "64",
@@ -1633,7 +1662,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10004,Side is not supported"
+      "errorCode":"10004,Side is not supported"
     },
     {
       "Id": "65",
@@ -1657,7 +1686,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10009,Invalid account"
+      "errorCode":"10009,Invalid account"
     },
     {
       "Id": "66",
@@ -1681,7 +1710,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10025,Rule80A is not supported"
+      "errorCode":"10025,Rule80A is not supported"
     },
     {
       "Id": "67",
@@ -1705,7 +1734,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10026,CashMargin is not supported"
+      "errorCode":"10026,CashMargin is not supported"
     },
     {
       "Id": "68",
@@ -1729,7 +1758,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10027,MarginTransactionType is not supported"
+      "errorCode":"10027,MarginTransactionType is not supported"
     },
     {
       "Id": "69",
@@ -1753,7 +1782,7 @@
       "ordstatus": [
         "8"
       ],
-      "erorrCode":"10028,CrossingPriceType is not supported"
+      "errorCode":"10028,CrossingPriceType is not supported"
     },
     {
       "Id": "70",
@@ -1777,7 +1806,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "71",
@@ -1801,7 +1831,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "72",
@@ -1825,7 +1856,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "73",
@@ -1849,7 +1881,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "74",
@@ -1873,7 +1906,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "75",
@@ -1897,7 +1931,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "76",
@@ -1921,7 +1956,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "77",
@@ -1945,7 +1981,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     },
     {
       "Id": "78",
@@ -1969,7 +2006,8 @@
       "ordstatus": [
         "0",
         "C"
-      ]
+      ],
+       "errorCode": ""
     }
   ]
 }
