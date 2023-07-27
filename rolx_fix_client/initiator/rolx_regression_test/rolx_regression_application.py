@@ -83,16 +83,21 @@ class Application(fix.Application):
             file.write(json_data)
         self.Result = module1.compare_field_values('../../testcases/ROL_Functional_Test_Matrix.json',
                                                    'logs/recv_data.json',
-                                                   'ordstatus', 'errorCode')
+                                                   'ordstatus')
         print("Session ({}) logout !".format(sessionID.toString()))
-        self.writeResExcel('report/rolx_report.xlsx', self.Result, 2, 'P')
+        self.writeResExcel('report/rolx_report.xlsx', self.Result, 2, 'L')
         ordstatus_list = []
-        # errorCode_list = []
+        errorCode_list = []
         for i in self.ReceveRes:
             ordstatus_list.append(str(i['ordstatus']))
-            # errorCode_list.append(str(i['errorCode']))
+            if 'errorCode' in i:
+                errorCode_list.append(str(i['errorCode']))
+
+            else:
+                errorCode_list.append(" ")
+
         self.writeResExcel('report/rolx_report.xlsx', ordstatus_list, 2, 'J')
-        # self.writeResExcel('report/rolx_report.xlsx', errorCode_list, 2, 'K')
+        self.writeResExcel('report/rolx_report.xlsx', errorCode_list, 2, 'K')
         return
 
     def toAdmin(self, message, sessionID):
@@ -190,8 +195,14 @@ class Application(fix.Application):
                         # 更新该组数据的ordstatus
                         item['ordstatus'].append(ordStatus)
             else:
-                # 添加新的数据到数组中
-                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
+                if ordStatus != '8':
+                    # 添加新的数据到数组中
+                    self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
+
+                else:
+                    text = message.getField(58)
+                    self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus], 'errorCode': text})
+
             # 因CancelRej消息体与其他消息体共用字段少，为减少代码量，将msgType == '9'的消息体做单独处理
             if msgType != '9':
                 # 消息体共用tag
@@ -505,7 +516,7 @@ class Application(fix.Application):
             for row in case_data_list["testCase"]:
                 if row['Id'] == "1":
                     self.insert_order_request(row)
-                    time.sleep(60)
+                    time.sleep(1)
 
                 elif row["ActionType"] == 'NewAck':
                     self.insert_order_request(row)
