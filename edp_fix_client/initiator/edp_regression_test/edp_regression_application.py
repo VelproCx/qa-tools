@@ -75,7 +75,7 @@ class Application(fix.Application):
             file.write(json_data)
         self.Result = module1.compare_field_values('../../testcases/EDP_Functional_Test_Matrix.json',
                                                    'logs/recv_data.json',
-                                                   'ordstatus', 'errorCode')
+                                                   'ordstatus')
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'S')
         return
