@@ -81,6 +81,13 @@ class Application(fix.Application):
         logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
         print("Session ({}) logout !".format(sessionID.toString()))
         self.writeResExcel('report/rolx_report.xlsx', self.Result, 2, 'P')
+        ordstatus_list = []
+        # errorCode_list = []
+        for i in self.ReceveRes:
+            ordstatus_list.append(str(i['ordstatus']))
+            # errorCode_list.append(str(i['errorCode']))
+        self.writeResExcel('report/rolx_report.xlsx', ordstatus_list, 2, 'J')
+        # self.writeResExcel('report/rolx_report.xlsx', errorCode_list, 2, 'K')
         return
 
     def toAdmin(self, message, sessionID):
@@ -353,34 +360,34 @@ class Application(fix.Application):
 
     def logsCheck(self):
         response = ['ps: 若列表存在failed数据，请查看report.log文件']
-        self.writeResExcel('report/rolx_report.xlsx', response, 2, 'Q')
+        self.writeResExcel('report/rolx_report.xlsx', response, 2, 'M')
         with open('logs/rolx_report.log', 'r') as f:
             content = f.read()
         if 'Market Price is not matching' in content:
             logfix.info('Market Price is NG')
             response = ['Market Price is NG']
-            self.writeResExcel('report/rolx_report.xlsx', response, 5, 'Q')
+            self.writeResExcel('report/rolx_report.xlsx', response, 5, 'M')
         else:
             logfix.info('Market Price is OK')
             response = ['Market Price is OK']
-            self.writeResExcel('report/rolx_report.xlsx', response, 3, 'Q')
+            self.writeResExcel('report/rolx_report.xlsx', response, 3, 'M')
 
         if 'FixMsg Error' in content:
             logfix.info('FixMsg is NG')
             response = ['FixMsg is NG']
-            self.writeResExcel('report/rolx_report.xlsx', response, 6, 'Q')
+            self.writeResExcel('report/rolx_report.xlsx', response, 6, 'M')
         else:
             logfix.info('FixMsg is OK')
             response = ['FixMsg is OK']
-            self.writeResExcel('report/rolx_report.xlsx', response, 4, 'Q')
+            self.writeResExcel('report/rolx_report.xlsx', response, 4, 'M')
         if 'Order execType error' in content:
             logfix.info("execType is NG")
             response = ['execType is NG']
-            self.writeResExcel('report/rolx_report.xlsx', response, 7, "Q")
+            self.writeResExcel('report/rolx_report.xlsx', response, 7, "M")
         else:
             logfix.info("execType is OK")
             response = ['execType is OK']
-            self.writeResExcel('report/rolx_report.xlsx', response, 8, "Q")
+            self.writeResExcel('report/rolx_report.xlsx', response, 8, "M")
 
     def writeResExcel(self, filename, data, row, column):
         # 打开现有的 Excel 文件或创建新的 Workbook
