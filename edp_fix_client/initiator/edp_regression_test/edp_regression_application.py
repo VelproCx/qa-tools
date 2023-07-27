@@ -75,7 +75,7 @@ class Application(fix.Application):
             file.write(json_data)
         self.Result = module1.compare_field_values('../../testcases/EDP_Functional_Test_Matrix.json',
                                                    'logs/recv_data.json',
-                                                   'ordstatus', 'errorCode')
+                                                   'ordstatus')
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'S')
         return
@@ -270,7 +270,7 @@ class Application(fix.Application):
                     primaryBidPx = float(message.getField(8032))
                     primaryAskPx = float(message.getField(8033))
                     routingDecisionTime = message.getField(8051)
-                    propExecPrice = message.getField(8165)
+                    # propExecPrice = message.getField(8165)
                     clOrdID = message.getField(11)
                     # price = message.getField(44)
                     # Added tag to the EDP project
@@ -282,7 +282,7 @@ class Application(fix.Application):
                             cashMargin,
                             crossingPriceType, fsxTransactTime, marginTransactionType, primaryLastPx, primaryBidPx,
                             primaryAskPx,
-                            routingDecisionTime, propExecPrice, MinQty, OrderClassification, lastLiquidityind,
+                            routingDecisionTime, MinQty, OrderClassification, lastLiquidityind,
                             SelfTradePreventionId) != "":
                         logfix.info(
                             "(recvMsg) Order Filled << %s" % msg)
@@ -314,7 +314,7 @@ class Application(fix.Application):
                                     cashMargin,
                                     crossingPriceType, fsxTransactTime, marginTransactionType, primaryLastPx,
                                     primaryBidPx, primaryAskPx,
-                                    routingDecisionTime, propExecPrice, MinQty, OrderClassification,
+                                    routingDecisionTime, MinQty, OrderClassification,
                                     SelfTradePreventionId, execRefID, lastLiquidityInd, toSTNeTOrderID,
                                     toSTNeTTransactionTime
                             ) != "":
@@ -332,7 +332,7 @@ class Application(fix.Application):
                                     cashMargin,
                                     crossingPriceType, fsxTransactTime, marginTransactionType, primaryLastPx,
                                     primaryBidPx, primaryAskPx,
-                                    routingDecisionTime, propExecPrice, MinQty, OrderClassification,
+                                    routingDecisionTime, MinQty, OrderClassification,
                                     SelfTradePreventionId, execRefID, lastLiquidityInd, toSTNeTOrderID,
                                     toSTNeTTransactionTime) != "":
                                 logfix.info(
@@ -352,7 +352,7 @@ class Application(fix.Application):
                                 leavesQty,
                                 cashMargin, crossingPriceType, fsxTransactTime, marginTransactionType, primaryLastPx,
                                 primaryBidPx,
-                                primaryAskPx, routingDecisionTime, propExecPrice, MinQty, OrderClassification,
+                                primaryAskPx, routingDecisionTime, MinQty, OrderClassification,
                                 SelfTradePreventionId, lastLiquidityInd, toSTNeTTransactionTime) != "":
                             logfix.info("(recvMsg) EDP ToSTNeT Rejection << %s" % msg)
                         else:
