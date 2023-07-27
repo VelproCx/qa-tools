@@ -32,6 +32,12 @@ class Application(fix.Application):
     NewAck = 0
     Expired = 0
     No_open_price = 0
+    order_new = 0
+    order_expired = 0
+    order_accepted = 0
+    order_rejected = 0
+    order_filled = 0
+    order_partially_filled = 0
 
     def __init__(self):
         super().__init__()
@@ -57,7 +63,7 @@ class Application(fix.Application):
             "Result : NewAck ={} Accepted = {} , Rejected= {}, Expired= {}, Filled = {}, PartiallyFilled = {}, "
             "Book_is_closed={},""No_open_price={}".format
             (self.NewAck, self.Accepted, self.Rejected, self.Expired, self.Filled, self.PartiallyFilled,
-             self.Book_is_closed,self.No_open_price)
+             self.Book_is_closed, self.No_open_price)
         )
         # if self.Rejected == self.Book_is_closed:
         #     logfix.info("testcases OK")
@@ -91,6 +97,7 @@ class Application(fix.Application):
                 ) != "":
                 logfix.info("(sendMsg) New Ack >> %s" % msg)
                 self.NewAck += 1
+                self.order_new += 1
             else:
                 logfix.info("(sendMsg) New Ack >> %s" % msg + 'New Order Single FixMsg Error!')
         return
@@ -138,6 +145,7 @@ class Application(fix.Application):
                 crossingPriceType, fsxTransactTime, marginTransactionType) != "":
                 logfix.info("(recvMsg) Order Accepted << %s" % msg + "ordStatus = " + str(ordStatus))
                 self.Accepted += 1
+                self.order_accepted += 1
             else:
                 logfix.info("(recvMsg) Order Accepted << %s" % msg + 'Order Accepted FixMsg Error!')
         # 7.3 Execution Report – Order Rejected
@@ -152,10 +160,10 @@ class Application(fix.Application):
                 side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin, crossingPriceType,
                 fsxTransactTime, marginTransactionType, text, ordRejReason) != "":
                 logfix.info("(recvMsg) Order Rej << %s" % msg + "RejRes = " + str(text))
+                self.order_rejected += 1
                 self.Rejected += 1
                 if text == "Book is CLOSED":
                     self.Book_is_closed += 1
-
                 # else:
                 #     logfix.info("ClOrdId = {} , Text = {}".format(clOrdID,text))
             else:
@@ -182,6 +190,10 @@ class Application(fix.Application):
                 logfix.info("(recvMsg) Order Filled << %s" % msg + 'Side: ' + str(side) + ',' + "Fill Price: " + str(
                     lastPx) + ',' + "AdjustLastPx Of Buy: " + str(
                     adjustLastPxBuy) + ',' + "AdjustLastPx Of Sell: " + str(adjustLastPxSell))
+                if ordStatus == "1":
+                    self.order_partially_filled += 1
+                else:
+                    self.order_filled += 1
             else:
                 logfix.info("(recvMsg) Order Filled << %s" % msg + "Trade FixMsg Error!")
             # Fill Price Check
@@ -213,6 +225,7 @@ class Application(fix.Application):
                 side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
                 crossingPriceType, fsxTransactTime, marginTransactionType, execBroker, origClOrdID, text) != "":
                 logfix.info("(recvMsg) Order Expired << %s" % msg + "ExpireRes = " + str(text))
+                self.order_expired += 1
                 self.Expired += 1
 
                 # if text == "ERROR_20010044,REX order expired due to no TSE_Open_Price":
