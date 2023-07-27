@@ -70,7 +70,6 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
-        print(self.logsCheck())
         self.logsCheck()
         json_data = json.dumps(self.ReceveRes)
 
@@ -516,7 +515,7 @@ class Application(fix.Application):
             for row in case_data_list["testCase"]:
                 if row['Id'] == "1":
                     self.insert_order_request(row)
-                    time.sleep(1)
+                    time.sleep(60)
 
                 elif row["ActionType"] == 'NewAck':
                     self.insert_order_request(row)
