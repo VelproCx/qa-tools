@@ -36,6 +36,8 @@ class Application(fix.Application):
     Fail = 0
     Result = []
     ReceveRes = []
+    order_filled = 0
+    order_partially_filled = 0
 
     def __init__(self):
         super().__init__()
@@ -61,7 +63,7 @@ class Application(fix.Application):
         # 将JSON数据写入文件
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = self.compare_field_values('../../testcases/EDP_Functional_Test_Matrix.json', 'logs/recv_data.json',
+        self.Result = self.compare_field_values('../../test.json', 'logs/recv_data.json',
                                                 'ordstatus', 'errorCode')
         print("Session (%s) logout !" % sessionID.toString())
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'S')
@@ -228,21 +230,53 @@ class Application(fix.Application):
                     if execType != ordStatus:
                         logfix.info(
                             "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
-                # 7.6 Execution Report – Order Canceled
                 elif ordStatus == "4":
-                    origClOrdID = message.getField(41)
-                    execBroker = message.getField(76)
-                    clOrdID = message.getField(11)
-                    if (avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
-                        side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
-                        crossingPriceType, fsxTransactTime, marginTransactionType, origClOrdID, execBroker,
-                        MinQty, OrderClassification, SelfTradePreventionId) != "":
-                        logfix.info("(recvMsg) Order Canceled << %s" % msg + "ordStatus = " + str(ordStatus))
-                    else:
-                        logfix.info("(recvMsg) Order Canceled << %s" % msg + 'Order Canceled FixMsg Error!')
-                    if execType != ordStatus:
-                        logfix.info(
-                            "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
+                    #  7.8 Execution Report – End of IOC Expired
+                    if execType == "C":
+                        text = message.getField(58)
+                        execBroker = message.getField(76)
+                        origClOrdID = message.getField(41)
+                        clOrdID = message.getField(11)
+                        if (avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
+                            side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty,
+                            cashMargin,
+                            crossingPriceType, fsxTransactTime, marginTransactionType, execBroker, origClOrdID,
+                            text) != "":
+                            logfix.info("(recvMsg) Order Expired << %s" % msg + "ExpireRes = " + str(text))
+                            logfix.info("Result : Order Expired ," + "ordStatus =" + ordStatus)
+                        else:
+                            logfix.info("(recvMsg) Order Expired << %s" % msg + "Order Expired FixMsg Error!")
+                    # 7.6 Execution Report – Order Canceled
+                    if execType == "4":
+                        origClOrdID = message.getField(41)
+                        execBroker = message.getField(76)
+                        clOrdID = message.getField(11)
+
+                        if (avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
+                            side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
+                            crossingPriceType, fsxTransactTime, marginTransactionType, origClOrdID, execBroker,
+                            MinQty, OrderClassification, SelfTradePreventionId) != "":
+                            logfix.info("(recvMsg) Order Canceled << %s" % msg + "ordStatus = " + str(ordStatus))
+                        else:
+                            logfix.info("(recvMsg) Order Canceled << %s" % msg + 'Order Canceled FixMsg Error!')
+                    # if execType == "1":
+                    #         lastLiquidityInd = message.getField(851)
+                    #         toSTNeTTransactionTime = message.getField(8106)
+                    #         if (
+                    #                 avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID,
+                    #                 orderQty,
+                    #                 ordType,
+                    #                 rule80A, side, symbol, timeInForce, transactTime, execBroker, clientID, execType,
+                    #                 leavesQty,
+                    #                 cashMargin, crossingPriceType, fsxTransactTime, marginTransactionType,
+                    #                 primaryLastPx,
+                    #                 primaryBidPx,
+                    #                 primaryAskPx, routingDecisionTime, MinQty, OrderClassification,
+                    #                 SelfTradePreventionId, lastLiquidityInd, toSTNeTTransactionTime) != "":
+                    #             logfix.info("(recvMsg) EDP ToSTNeT Rejection << %s" % msg)
+                    #         else:
+                    #             logfix.info(
+                    #                 "(recvMsg) EDP ToSTNeT Rejection << %s" % msg + 'EDP ToSTNeT Rejection FixMsg Error!')
                 # 7.7 Execution Report – Trade
                 elif ordStatus == "1" or ordStatus == "2":
                     lastPx = float(message.getField(31))
@@ -252,82 +286,67 @@ class Application(fix.Application):
                     primaryBidPx = float(message.getField(8032))
                     primaryAskPx = float(message.getField(8033))
                     routingDecisionTime = message.getField(8051)
-                    clOrdID = message.getField(11)
                     # price = message.getField(44)
                     # Added tag to the EDP project
                     lastLiquidityind = message.getField(851)
-                    if execTransType == '0':
-                        propExecPrice = message.getField(8165)
+                    if execTransType == "0":
                         if (
                                 avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty,
-                                ordType, rule80A, side, symbol, timeInForce, transactTime, execBroker, clientID,
-                                execType,
+                                ordType, rule80A, side, symbol, timeInForce, transactTime, execBroker, clientID, execType,
                                 leavesQty, cashMargin, crossingPriceType, fsxTransactTime, marginTransactionType,
-                                primaryLastPx, primaryBidPx, primaryAskPx, routingDecisionTime, propExecPrice, MinQty,
-                                OrderClassification, lastLiquidityind, SelfTradePreventionId) != "":
+                                primaryLastPx, primaryBidPx, primaryAskPx, routingDecisionTime, MinQty, OrderClassification,
+                                SelfTradePreventionId, lastLiquidityind) != "":
                             logfix.info(
                                 "(recvMsg) Order Filled << %s" % msg)
                             if ordStatus == '2':
                                 logfix.info("Result : Order Filled ," + "ordStatus =" + ordStatus)
                             else:
                                 logfix.info("Result : Order Partially Filled ," + "ordStatus =" + ordStatus)
+                                self.order_partially_filled += 1
+
                         else:
                             logfix.info("(recvMsg) Order Filled << %s" % msg + "Order Trade FixMsg Error!")
-                        if execType != ordStatus:
-                            logfix.info(
-                                "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus,
-                                                                                                       execType))
-                            # 7.2 Execution Report – Trade Correction (EDP ToSTNeT Confirmation)
-                    if execTransType == '2':
+
+                    elif execTransType == '2':
                         execRefID = message.getField(19)
+                        lastLiquidityInd = message.getField(851)
                         toSTNeTOrderID = message.getField(8101)
                         toSTNeTExecutionID = message.getField(8102)
                         toSTNeTTransactionTime = message.getField(8106)
                         SecondaryOrderID = message.getField(198)
                         ContraBroker = message.getField(375)
                         SecondaryExecID = message.getField(527)
-                        if (
-                                avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID,
-                                orderQty, ordType, rule80A, side, symbol, timeInForce, transactTime,
-                                execBroker, clientID, execType, leavesQty, cashMargin, crossingPriceType,
-                                fsxTransactTime, marginTransactionType, primaryLastPx, primaryBidPx,
-                                primaryAskPx, routingDecisionTime, MinQty, OrderClassification, toSTNeTExecutionID,
-                                SelfTradePreventionId, execRefID, toSTNeTOrderID, toSTNeTTransactionTime,
-                                SecondaryOrderID, ContraBroker, SecondaryExecID) != "":
-                            logfix.info(
-                                "(recvMsg) EDP ToSTNeT Confirmation << %s" % msg)
-                        else:
-                            logfix.info(
-                                "(recvMsg) EDP ToSTNeT Confirmation << %s" % msg + 'EDP ToSTNeT Confirmation FixMsg Error!')
-                        # 7.1 Execution Report – Trade Cancel (EDP ToSTNeT Rejection)
-                    elif execTransType == '1':
-                        toSTNeTTransactionTime = message.getField(8106)
+                        self.order_filled += 1
                         if (
                                 avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID,
                                 orderQty, ordType, rule80A, side, symbol, timeInForce, transactTime, execBroker,
                                 clientID, execType, leavesQty, cashMargin, crossingPriceType, fsxTransactTime,
                                 marginTransactionType, primaryLastPx, primaryBidPx, primaryAskPx, routingDecisionTime,
-                                MinQty, OrderClassification, SelfTradePreventionId, toSTNeTTransactionTime) != "":
+                                MinQty, OrderClassification, SelfTradePreventionId, execRefID, lastLiquidityInd,
+                                toSTNeTOrderID, toSTNeTTransactionTime, SecondaryOrderID, ContraBroker, SecondaryExecID,
+                                toSTNeTExecutionID) != "":
+                            logfix.info(
+                                "(recvMsg) EDP ToSTNeT Confirmation << %s" % msg)
+                        else:
+                            logfix.info(
+                                "(recvMsg) EDP ToSTNeT Confirmation << %s" % msg + 'EDP ToSTNeT Confirmation FixMsg Error!')
+                    # Execution Report – Trade Cancel (EDP ToSTNeT Rejection)
+                    elif execTransType == '1':
+                        lastLiquidityInd = message.getField(851)
+                        toSTNeTTransactionTime = message.getField(8106)
+                        if (
+                                avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty,
+                                ordType,
+                                rule80A, side, symbol, timeInForce, transactTime, execBroker, clientID, execType,
+                                leavesQty,
+                                cashMargin, crossingPriceType, fsxTransactTime, marginTransactionType, primaryLastPx,
+                                primaryBidPx,
+                                primaryAskPx, routingDecisionTime, MinQty, OrderClassification,
+                                SelfTradePreventionId, lastLiquidityInd, toSTNeTTransactionTime) != "":
                             logfix.info("(recvMsg) EDP ToSTNeT Rejection << %s" % msg)
                         else:
                             logfix.info(
                                 "(recvMsg) EDP ToSTNeT Rejection << %s" % msg + 'EDP ToSTNeT Rejection FixMsg Error!')
-                #  7.8 Execution Report – End of Day Expired
-                elif ordStatus == "C":
-                    text = message.getField(58)
-                    execBroker = message.getField(76)
-                    origClOrdID = message.getField(41)
-                    clOrdID = message.getField(11)
-                    if (avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
-                        side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
-                        crossingPriceType, fsxTransactTime, marginTransactionType, execBroker, origClOrdID, text) != "":
-                        logfix.info("(recvMsg) Order Expired << %s" % msg + "ExpireRes = " + str(text))
-                        logfix.info("Result : Order Expired ," + "ordStatus =" + ordStatus)
-                    else:
-                        logfix.info("(recvMsg) Order Expired << %s" % msg + "Order Expired FixMsg Error!")
-                    if execType != ordStatus:
-                        logfix.info(
-                            "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
             else:
                 origClOrdID = message.getField(41)
                 text = message.getField(58)
@@ -521,7 +540,7 @@ class Application(fix.Application):
 
         generation = module1.generation
         """Run"""
-        with open('../../testcases/EDP_Functional_Test_Matrix.json', 'r') as f_json:
+        with open('../../testcases/test.json', 'r') as f_json:
             # generation('../../testcases/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
