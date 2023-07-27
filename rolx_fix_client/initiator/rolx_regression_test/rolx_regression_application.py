@@ -84,19 +84,24 @@ class Application(fix.Application):
                                                    'logs/recv_data.json',
                                                    'ordstatus')
         print("Session ({}) logout !".format(sessionID.toString()))
-        self.writeResExcel('report/rolx_report.xlsx', self.Result, 2, 'L')
+
         ordstatus_list = []
         errorCode_list = []
+        # 循环ReceveRes并将value添加到列表里
         for i in self.ReceveRes:
             ordstatus_list.append(str(i['ordstatus']))
             if 'errorCode' in i:
                 errorCode_list.append(str(i['errorCode']))
 
+            # ReceveRes 没有'errorCode'字段时,添加空字符串到列表里
             else:
                 errorCode_list.append(" ")
 
+        # report文件里写入字段
         self.writeResExcel('report/rolx_report.xlsx', ordstatus_list, 2, 'J')
         self.writeResExcel('report/rolx_report.xlsx', errorCode_list, 2, 'K')
+        self.writeResExcel('report/rolx_report.xlsx', self.Result, 2, 'L')
+
         return
 
     def toAdmin(self, message, sessionID):
