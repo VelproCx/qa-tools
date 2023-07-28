@@ -70,7 +70,7 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
-        print(self.logsCheck())
+        print(self.ReceveRes)
         self.logsCheck()
         json_data = json.dumps(self.ReceveRes)
 
