@@ -1,35 +1,8 @@
 {
   "testCase": [
-     {
-      "Id": "1",
-      "ScenarioName": "Trading Hours Check: Send order before Open(～9:00))",
-      "Account": "RSIT_EDP_ACCOUNT_2",
-      "Market": "EDP",
-      "ActionType": "NewAck",
-      "Comment": "EDP_Market_NewAck_Buy",
-      "OrderQty": 500,
-      "OrdType": "1",
-      "Side": "1",
-      "Symbol": "7203",
-      "TimeInForce": "3",
-      "CrossingPriceType": "EDP",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0",
-      "MinQty": 0,
-      "OrderClassification": "3",
-      "SelfTradePreventionId": "0",
-      "ordstatus": [
-        "0",
-        "2",
-        "2",
-        "2"
-      ]
-
-    },
     {
       "Id": "1",
-      "ScenarioName": "Regular Order Flow-A(New Order->EDP Fill Indicate->EDP ToSTNeT Confirmation)",
+      "ScenarioName": "Trading Hours Check: Send order before Open(～9:00))",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
       "ActionType": "NewAck",
@@ -59,6 +32,32 @@
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
       "ActionType": "NewAck",
+      "Comment": "EDP_Market_NewAck_Buy",
+      "OrderQty": 500,
+      "OrdType": "1",
+      "Side": "1",
+      "Symbol": "7203",
+      "TimeInForce": "3",
+      "CrossingPriceType": "EDP",
+      "Rule80A": "P",
+      "CashMargin": "1",
+      "MarginTransactionType": "0",
+      "MinQty": 0,
+      "OrderClassification": "3",
+      "SelfTradePreventionId": "0",
+      "ordstatus": [
+        "0",
+        "2",
+        "2",
+        "2"
+      ]
+    },
+    {
+      "Id": "3",
+      "ScenarioName": "Regular Order Flow-A(New Order->EDP Fill Indicate->EDP ToSTNeT Confirmation)",
+      "Account": "RSIT_EDP_ACCOUNT_2",
+      "Market": "EDP",
+      "ActionType": "NewAck",
       "Comment": "EDP_Market_NewAck_Sell",
       "OrderQty": 500,
       "OrdType": "1",
@@ -80,7 +79,7 @@
       ]
     },
     {
-      "Id": "3",
+      "Id": "4",
       "ScenarioName": "Regular Order Flow-A(New Order->EDP Fill Indicate->EDP ToSTNeT Confirmation)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -107,7 +106,7 @@
       ]
     },
     {
-      "Id": "4",
+      "Id": "5",
       "ScenarioName": "Regular Order Flow-A(New Order->EDP Fill Indicate->EDP ToSTNeT Confirmation)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -134,7 +133,7 @@
       ]
     },
     {
-      "Id": "5",
+      "Id": "6",
       "ScenarioName": "Regular Order Flow-B(New Order->EDP Partially Fill Indicate->EDP ToSTNeT Confirmation)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -161,7 +160,7 @@
       ]
     },
     {
-      "Id": "6",
+      "Id": "7",
       "ScenarioName": "Regular Order Flow-B(New Order->EDP Partially Fill Indicate->EDP ToSTNeT Confirmation)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -189,7 +188,7 @@
       ]
     },
     {
-      "Id": "7",
+      "Id": "8",
       "ScenarioName": "Regular Order Flow-A(New Order->EDP Partially Fill Indicate->EDP Fill Indicate->EDP ToSTNeT Confirmation)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -215,7 +214,7 @@
       ]
     },
     {
-      "Id": "8",
+      "Id": "9",
       "ScenarioName": "Regular Order Flow-A(New Order->EDP Partially Fill Indicate->EDP Fill Indicate->EDP ToSTNeT Confirmation)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -242,7 +241,7 @@
       ]
     },
     {
-      "Id": "9",
+      "Id": "10",
       "ScenarioName": "Regular Order Flow-C(New Order->EDP Fill Indicate->EDP ToSTNeT Rejection)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -267,7 +266,7 @@
       ]
     },
     {
-      "Id": "10",
+      "Id": "11",
       "ScenarioName": "Regular Order Flow-C(New Order->EDP Fill Indicate->EDP ToSTNeT Rejection)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -292,7 +291,7 @@
       ]
     },
     {
-      "Id": "11",
+      "Id": "12",
       "ScenarioName": "Regular Order Flow-C(New Order->EDP Fill Indicate->EDP ToSTNeT Rejection)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -318,7 +317,7 @@
       ]
     },
     {
-      "Id": "12",
+      "Id": "13",
       "ScenarioName": "Regular Order Flow-C(New Order->EDP Fill Indicate->EDP ToSTNeT Rejection)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -344,7 +343,7 @@
       ]
     },
     {
-      "Id": "13",
+      "Id": "14",
       "ScenarioName": "Regular Order Flow-D(New Order->EDP Fill Indicate-> EDP ToSTNeT Accepted ->EDP ToSTNeT Confirmation -> Canceled)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -371,7 +370,7 @@
       ]
     },
     {
-      "Id": "14",
+      "Id": "15",
       "ScenarioName": "Regular Order Flow-D(New Order->EDP Fill Indicate-> EDP ToSTNeT Accepted ->EDP ToSTNeT Confirmation ->Cancel Rejected)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -395,7 +394,7 @@
       "errorCode":"Unknown order"
     },
     {
-      "Id": "15",
+      "Id": "16",
       "ScenarioName": "Regular Order Flow-D(New Order->EDP Fill Indicate-> EDP ToSTNeT Accepted ->EDP ToSTNeT Confirmation ->Canceled)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -423,7 +422,7 @@
       ]
     },
     {
-      "Id": "16",
+      "Id": "17",
       "ScenarioName": "Regular Order Flow-D(New Order->EDP Fill Indicate-> EDP ToSTNeT Accepted ->EDP ToSTNeT Confirmation ->Cancel Rejected)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -447,7 +446,7 @@
       "errorCode":"Unknown order"
     },
     {
-      "Id": "17",
+      "Id": "18",
       "ScenarioName": "Regular Order Flow-D(New Order->EDP Partially Fill Indicate-> EDP ToSTNeT Accepted ->EDP ToSTNeT Confirmation -> IOCExpired->Canceled)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -474,7 +473,7 @@
       ]
     },
     {
-      "Id": "18",
+      "Id": "19",
       "ScenarioName": "Regular Order Flow-D(New Order->EDP Partially Fill Indicate-> EDP ToSTNeT Accepted ->EDP ToSTNeT Confirmation -> IOCExpired->Cancel Rejected)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -499,7 +498,7 @@
       "errorCode":"Unknown order"
     },
     {
-      "Id": "19",
+      "Id": "20",
       "ScenarioName": "Regular Order Flow-D(New Order->EDP Partially Fill Indicate-> EDP ToSTNeT Accepted ->EDP ToSTNeT Confirmation -> IOCExpired->Canceled)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -527,7 +526,7 @@
       ]
     },
     {
-      "Id": "20",
+      "Id": "21",
       "ScenarioName": "Regular Order Flow-D(New Order->EDP Partially Fill Indicate-> EDP ToSTNeT Accepted ->EDP ToSTNeT Confirmation -> IOCExpired->Cancel Rejected)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -552,7 +551,7 @@
       "errorCode":"Unknown order"
     },
     {
-      "Id": "21",
+      "Id": "22",
       "ScenarioName": "Regular Order Flow-F(New Order->EDP Fill Indicate->EDP ToSTNeT Expired)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -577,7 +576,7 @@
       ]
     },
     {
-      "Id": "22",
+      "Id": "23",
       "ScenarioName": "Regular Order Flow-F(New Order->EDP Fill Indicate->EDP ToSTNeT Expired)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -602,7 +601,7 @@
       ]
     },
     {
-      "Id": "23",
+      "Id": "24",
       "ScenarioName": "Regular Order Flow-F(New Order->EDP Fill Indicate->EDP ToSTNeT Expired)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -628,7 +627,7 @@
       ]
     },
     {
-      "Id": "24",
+      "Id": "25",
       "ScenarioName": "Regular Order Flow-F(New Order->EDP Fill Indicate->EDP ToSTNeT Expired)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -654,7 +653,7 @@
       ]
     },
     {
-      "Id": "25",
+      "Id": "26",
       "ScenarioName": "Regular Order Flow-G(New Order-> IOCExpired-> Canceled)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -678,7 +677,7 @@
       ]
     },
     {
-      "Id": "26",
+      "Id": "27",
       "ScenarioName": "Regular Order Flow-G(New Order-> IOCExpired-> Cancel Rejected)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -702,7 +701,7 @@
       "errorCode":"Unknown order"
     },
     {
-      "Id": "27",
+      "Id": "28",
       "ScenarioName": "Regular Order Flow-G(New Order-> IOCExpired->Canceled)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -727,7 +726,7 @@
       "errorCode": ""
     },
     {
-      "Id": "28",
+      "Id": "29",
       "ScenarioName": "Regular Order Flow-G(New Order-> IOCExpired-> Cancel Rejected)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -751,7 +750,7 @@
       "errorCode":"Unknown order"
     },
     {
-      "Id": "29",
+      "Id": "30",
       "ScenarioName": "Regular Order Flow-G(New Order-> IOCExpired->Canceled)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -776,7 +775,7 @@
       ]
     },
     {
-      "Id": "30",
+      "Id": "31",
       "ScenarioName": "Regular Order Flow-G(New Order-> IOCExpired-> Cancel Rejected)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -800,7 +799,7 @@
       "errorCode":"Unknown order"
     },
     {
-      "Id": "31",
+      "Id": "32",
       "ScenarioName": "Regular Order Flow-G(New Order-> IOCExpired->Canceled)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -825,7 +824,7 @@
       ]
     },
     {
-      "Id": "32",
+      "Id": "33",
       "ScenarioName": "Regular Order Flow-G(New Order-> IOCExpired-> Cancel Rejected)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -849,7 +848,7 @@
       "errorCode":"Unknown order"
     },
     {
-      "Id": "33",
+      "Id": "34",
       "ScenarioName": "Regular Order Flow-H(New Order->IOCExpired)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -873,7 +872,7 @@
       ]
     },
     {
-      "Id": "34",
+      "Id": "35",
       "ScenarioName": "Regular Order Flow-H(New Order->IOCExpired)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -897,7 +896,7 @@
       ]
     },
     {
-      "Id": "35",
+      "Id": "36",
       "ScenarioName": "Regular Order Flow-H(New Order->IOCExpired)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -922,7 +921,7 @@
       ]
     },
     {
-      "Id": "36",
+      "Id": "37",
       "ScenarioName": "Regular Order Flow-H(New Order->IOCExpired)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -947,7 +946,7 @@
       ]
     },
     {
-      "Id": "37",
+      "Id": "38",
       "ScenarioName": "Symbol Check",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -972,7 +971,7 @@
       "errorCode":"ERROR_20010021,Invalid Symbol"
     },
     {
-      "Id": "38",
+      "Id": "39",
       "ScenarioName": "Price Limit Check",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -997,7 +996,7 @@
       "errorCode":"ERROR_10010014,Price exceeds the high - low price range"
     },
     {
-      "Id": "39",
+      "Id": "40",
       "ScenarioName": "Price Limit Check",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1020,10 +1019,9 @@
         "8"
       ],
       "errorCode":"ERROR_10010014,Price exceeds the high - low price range"
-
     },
     {
-      "Id": "40",
+      "Id": "41",
       "ScenarioName": "Tick Size Check(TOPIX400)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1048,7 +1046,7 @@
       "errorCode":"ERROR_10010015,Tick-size is not matched with small tick"
     },
     {
-      "Id": "41",
+      "Id": "42",
       "ScenarioName": "Tick Size Check(TOPIX400)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1073,7 +1071,7 @@
       "errorCode":"ERROR_10010015,Tick-size is not matched with small tick"
     },
     {
-      "Id": "42",
+      "Id": "43",
       "ScenarioName": "Tick Size Check(TOPIX400)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1098,7 +1096,7 @@
       "errorCode":"ERROR_10010015,Tick-size is not matched with small tick"
     },
     {
-      "Id": "43",
+      "Id": "44",
       "ScenarioName": "Tick Size Check(TOPIX400)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1123,7 +1121,7 @@
       "errorCode":"ERROR_10010015,Tick-size is not matched with small tick"
     },
     {
-      "Id": "44",
+      "Id": "45",
       "ScenarioName": "Tick Size Check(TOPIX400)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1148,7 +1146,7 @@
       "errorCode":"ERROR_10010015,Tick-size is not matched with small tick"
     },
     {
-      "Id": "45",
+      "Id": "46",
       "ScenarioName": "Tick Size Check(Non-TOPIX400)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1173,7 +1171,7 @@
       "errorCode":"ERROR_10010016,Tick-size is not matched with non-small tick"
     },
     {
-      "Id": "46",
+      "Id": "47",
       "ScenarioName": "Tick Size Check(Non-TOPIX400)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1198,7 +1196,7 @@
       "errorCode":"ERROR_10010016,Tick-size is not matched with non-small tick"
     },
     {
-      "Id": "47",
+      "Id": "48",
       "ScenarioName": "Tick Size Check(Non-TOPIX400)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1223,7 +1221,7 @@
       "errorCode":"ERROR_10010016,Tick-size is not matched with non-small tick"
     },
     {
-      "Id": "48",
+      "Id": "49",
       "ScenarioName": "Tick Size Check(Non-TOPIX400)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1248,7 +1246,7 @@
       "errorCode":"ERROR_10010016,Tick-size is not matched with non-small tick"
     },
     {
-      "Id": "49",
+      "Id": "50",
       "ScenarioName": "Tick Size Check(Non-TOPIX400)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1273,7 +1271,7 @@
       "errorCode":"ERROR_10010016,Tick-size is not matched with non-small tick"
     },
     {
-      "Id": "50",
+      "Id": "51",
       "ScenarioName": "Tick Size Check(Non-TOPIX400)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1298,7 +1296,7 @@
       "errorCode":"ERROR_10010016,Tick-size is not matched with non-small tick"
     },
     {
-      "Id": "51",
+      "Id": "52",
       "ScenarioName": "Quantity Check(Lot size=100,Quantity=99)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1322,7 +1320,7 @@
       "errorCode":"ERROR_10010018,Invalid quantity or lot_size"
     },
     {
-      "Id": "52",
+      "Id": "53",
       "ScenarioName": "Quantity Check(Lot size=100,Quantity=0)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1346,7 +1344,7 @@
       "errorCode":"ERROR_10010018,Invalid quantity or lot_size"
     },
     {
-      "Id": "53",
+      "Id": "54",
       "ScenarioName": "Quantity Check(Lot size=100,Quantity=100)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1370,7 +1368,7 @@
       ]
     },
     {
-      "Id": "54",
+      "Id": "55",
       "ScenarioName": "Quantity Check(Lot size=100,Quantity=200)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1394,7 +1392,7 @@
       ]
     },
     {
-      "Id": "55",
+      "Id": "56",
       "ScenarioName": "Quantity Check(Lot size=100,Quantity=101)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1418,7 +1416,7 @@
       "errorCode":"ERROR_10010018,Invalid quantity or lot_size"
     },
     {
-      "Id": "56",
+      "Id": "57",
       "ScenarioName": "Quantity Check(Lot size=1,Quantity=1)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1442,7 +1440,7 @@
       ]
     },
     {
-      "Id": "57",
+      "Id": "58",
       "ScenarioName": "Quantity Check(Lot size=1,Quantity=7)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1466,7 +1464,7 @@
       ]
     },
     {
-      "Id": "58",
+      "Id": "59",
       "ScenarioName": "Quantity Check(Lot size=1000,Quantity=1000)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1490,7 +1488,7 @@
       ]
     },
     {
-      "Id": "59",
+      "Id": "60",
       "ScenarioName": "Quantity Check(Lot size=1000,Quantity=2000)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1514,7 +1512,7 @@
       ]
     },
     {
-      "Id": "60",
+      "Id": "61",
       "ScenarioName": "Quantity Check(Lot size=1000,Quantity=1001)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1538,7 +1536,7 @@
       "errorCode":"ERROR_10010018,Invalid quantity or lot_size"
     },
     {
-      "Id": "61",
+      "Id": "62",
       "ScenarioName": "Notional Value>2million JPY",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1562,7 +1560,7 @@
       "errorCode":"ERROR_10010011,Notional limit is exceeded"
     },
     {
-      "Id": "62",
+      "Id": "63",
       "ScenarioName": "Order Type is not Limit/Market (Limit/Market Acceptable)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1586,7 +1584,7 @@
       "errorCode":"ERROR_10010003,OrdType is not supported"
     },
     {
-      "Id": "63",
+      "Id": "64",
       "ScenarioName": "TimeInForce is not 3:IOC",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1610,7 +1608,7 @@
       "errorCode":"ERROR_10010012,TimeInForce is not supported"
     },
     {
-      "Id": "64",
+      "Id": "65",
       "ScenarioName": "Order Side is not Buy/Sell (Buy/Sell Acceptable)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1634,7 +1632,7 @@
       "errorCode":"ERROR_10010004,Side is not supported"
     },
     {
-      "Id": "65",
+      "Id": "66",
       "ScenarioName": "Account is not the target test account",
       "Account": "RSIT_EDP_ACCOUNT_23",
       "Market": "EDP",
@@ -1658,7 +1656,7 @@
       "errorCode":"ERROR_10010009,Invalid account"
     },
     {
-      "Id": "66",
+      "Id": "67",
       "ScenarioName": "Rule80A is not Agency/Principal",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1682,7 +1680,7 @@
       "errorCode":"ERROR_10010025,Rule80A is not supported"
     },
     {
-      "Id": "67",
+      "Id": "68",
       "ScenarioName": "CashMargin is not Cash (Cash Acceptable)",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1706,7 +1704,7 @@
       "errorCode":"ERROR_10010026,CashMargin is not supported"
     },
     {
-      "Id": "68",
+      "Id": "69",
       "ScenarioName": "MarginTransactionType is not 0-None",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1730,7 +1728,7 @@
       "errorCode":"ERROR_10010027,MarginTransactionType is not supported"
     },
     {
-      "Id": "69",
+      "Id": "70",
       "ScenarioName": "CrossingPriceType is not EDP",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1754,7 +1752,7 @@
       "errorCode":"ERROR_10010028,CrossingPriceType is not supported"
     },
     {
-      "Id": "70",
+      "Id": "71",
       "ScenarioName": "Absense value for non-required tag - Rule80A",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1778,7 +1776,7 @@
       ]
     },
     {
-      "Id": "71",
+      "Id": "72",
       "ScenarioName": "Absense value for non-required tag - TimeInForce",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1802,7 +1800,7 @@
       ]
     },
     {
-      "Id": "72",
+      "Id": "73",
       "ScenarioName": "Absense value for non-required tag - CashMargin",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1826,7 +1824,7 @@
       ]
     },
     {
-      "Id": "73",
+      "Id": "74",
       "ScenarioName": "Absense value for non-required tag - CrossingPriceType",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1850,7 +1848,7 @@
       ]
     },
     {
-      "Id": "74",
+      "Id": "75",
       "ScenarioName": "Absense value for non-required tag - MarginTransactionType",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1874,7 +1872,7 @@
       ]
     },
     {
-      "Id": "75",
+      "Id": "76",
       "ScenarioName": "Absense value for non-required tag - MinQty",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1898,7 +1896,7 @@
       ]
     },
     {
-      "Id": "76",
+      "Id": "77",
       "ScenarioName": "Absense value for non-required tag - OrderClassification",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1922,7 +1920,7 @@
       ]
     },
     {
-      "Id": "77",
+      "Id": "78",
       "ScenarioName": "Absense value for non-required tag - SelfTradePreventionId",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -1946,7 +1944,7 @@
       ]
     },
     {
-      "Id": "78",
+      "Id": "79",
       "ScenarioName": "Absense value for all non-required tag",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
