@@ -532,7 +532,7 @@ class Application(fix.Application):
             for row in case_data_list["testCase"]:
                 if row['Id'] == "1":
                     self.insert_order_request(row)
-                    time.sleep(1)
+                    time.sleep(60)
 
                 elif row["ActionType"] == 'NewAck':
                     self.insert_order_request(row)
