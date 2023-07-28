@@ -313,13 +313,13 @@ class Application(fix.Application):
                             logfix.info(
                                 "(recvMsg) Order Filled << %s" % msg)
                             if ordStatus == '2':
-                                logfix.info("Result : Order Filled ," + "ordStatus =" + ordStatus)
+                                logfix.info("Result : EP3 Order Filled ," + "ordStatus =" + ordStatus)
                             else:
-                                logfix.info("Result : Order Partially Filled ," + "ordStatus =" + ordStatus)
+                                logfix.info("Result : EP3 Order Partially Filled ," + "ordStatus =" + ordStatus)
                                 self.order_partially_filled += 1
 
                         else:
-                            logfix.info("(recvMsg) Order Filled << %s" % msg + "Order Trade FixMsg Error!")
+                            logfix.info("(recvMsg) EP3 Order Filled << %s" % msg + "Order Trade FixMsg Error!")
 
                     elif execTransType == '2':
                         execRefID = message.getField(19)
