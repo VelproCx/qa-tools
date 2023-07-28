@@ -1045,7 +1045,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010015,Tick-size is not matched with small tick"
+      "errorCode":"ERROR_10010015,Small tick value is not supported in static file"
     },
     {
       "Id": "41",
@@ -1070,7 +1070,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010015,Tick-size is not matched with small tick"
+      "errorCode":"ERROR_10010015,Small tick value is not supported in static filek"
     },
     {
       "Id": "42",
@@ -1095,7 +1095,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010015,Tick-size is not matched with small tick"
+      "errorCode":"ERROR_10010015,Small tick value is not supported in static file"
     },
     {
       "Id": "43",
@@ -1120,7 +1120,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010015,Tick-size is not matched with small tick"
+      "errorCode":"ERROR_10010015,Small tick value is not supported in static file"
     },
     {
       "Id": "44",
@@ -1145,7 +1145,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010015,Tick-size is not matched with small tick"
+      "errorCode":"ERROR_10010015,Small tick value is not supported in static file"
     },
     {
       "Id": "45",
@@ -1170,7 +1170,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010016,Tick-size is not matched with non-small tick"
+      "errorCode":"ERROR_10010016,Small tick value is not supported in static filek"
     },
     {
       "Id": "46",
@@ -1195,7 +1195,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010016,Tick-size is not matched with non-small tick"
+      "errorCode":"ERROR_10010016,Small tick value is not supported in static file"
     },
     {
       "Id": "47",
@@ -1220,7 +1220,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010016,Tick-size is not matched with non-small tick"
+      "errorCode":"ERROR_10010016,Small tick value is not supported in static file"
     },
     {
       "Id": "48",
@@ -1245,7 +1245,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010016,Tick-size is not matched with non-small tick"
+      "errorCode":"ERROR_10010016,Small tick value is not supported in static file"
     },
     {
       "Id": "49",
@@ -1270,7 +1270,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010016,Tick-size is not matched with non-small tick"
+      "errorCode":"ERROR_10010016,Small tick value is not supported in static file"
     },
     {
       "Id": "50",
@@ -1295,7 +1295,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010016,Tick-size is not matched with non-small tick"
+      "errorCode":"ERROR_10010016,Small tick value is not supported in static file"
     },
     {
       "Id": "51",
