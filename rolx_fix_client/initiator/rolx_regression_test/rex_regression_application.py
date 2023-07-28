@@ -83,7 +83,23 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                                                 'ordstatus')  # 为了比较ordstatus字段的值
         logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
         print("Session ({}) logout !".format(sessionID.toString()))
-        self.writeResExcel('report/rex_report.xlsx', self.Result, 2, 'P')  # 并写入文件
+
+        ordstatus_list = []
+        errorCode_list = []
+        # 循环ReceveRes并将value添加到列表里
+        for i in self.ReceveRes:
+            ordstatus_list.append(str(i['ordstatus']))
+            if 'errorCode' in i:
+                errorCode_list.append(str(i['errorCode']))
+
+            # ReceveRes 没有'errorCode'字段时,添加空字符串到列表里
+            else:
+                errorCode_list.append(" ")
+
+        # report文件里写入字段
+        self.writeResExcel('report/rolx_report.xlsx', ordstatus_list, 2, 'J')
+        self.writeResExcel('report/rolx_report.xlsx', errorCode_list, 2, 'K')
+        self.writeResExcel('report/rex_report.xlsx', self.Result, 2, 'L')
         return
 
     def toAdmin(self, message, sessionID):
@@ -191,8 +207,14 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                         # 更新该组数据的ordstatus
                         item['ordstatus'].append(str(ordStatus))
             else:
-                # 添加新的数据到数组中
-                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
+                if ordStatus != '8':
+                    # 添加新的数据到数组中
+                    self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
+
+                else:
+                    text = message.getField(58)
+                    self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus], 'errorCode': text})
+
             # 因CancelRej消息体与其他消息体共用字段少，为减少代码量，将msgType == '9'的消息体做单独处理
             if msgType != '9':
                 # 消息体共用tag
@@ -404,33 +426,33 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
     # 在掉出登陆时调用logscheck方法，判断是否有这些错误打印，
     def logsCheck(self):
         response = ['ps:若列表存在failed数据，请查看report.log文件']
-        self.writeResExcel('report/rex_report.xlsx', response, 2, 'Q')
+        self.writeResExcel('report/rex_report.xlsx', response, 2, 'M')
         with open('logs/rex_report.log', 'r') as f:
             content = f.read()
         if 'Market Price is not matching' in content:
             logfix.info('Market Price is NG')
             response = ['Market Price is NG']
-            self.writeResExcel('report/rex_report.xlsx', response, 5, 'Q')
+            self.writeResExcel('report/rex_report.xlsx', response, 5, 'M')
         else:
             logfix.info('Market Price is OK')
             response = ['Market Price is OK']
-            self.writeResExcel('report/rex_report.xlsx', response, 3, 'Q')
+            self.writeResExcel('report/rex_report.xlsx', response, 3, 'M')
         if 'FixMsg Error' in content:
             logfix.info('FixMsg is NG')
             response = ['FixMsg is NG']
-            self.writeResExcel('report/rex_report.xlsx', response, 6, 'Q')
+            self.writeResExcel('report/rex_report.xlsx', response, 6, 'M')
         else:
             logfix.info('FixMsg is OK')
             response = ['FixMsg is OK']
-            self.writeResExcel('report/rex_report.xlsx', response, 4, 'Q')
+            self.writeResExcel('report/rex_report.xlsx', response, 4, 'M')
         if 'Order execType error' in content:
             logfix.info("execType is NG")
             response = ['execType is NG']
-            self.writeResExcel('report/rex_report.xlsx', response, 7, "Q")
+            self.writeResExcel('report/rex_report.xlsx', response, 7, "M")
         else:
             logfix.info("execType is OK")
             response = ['execType is OK']
-            self.writeResExcel('report/rex_report.xlsx', response, 8, "Q")
+            self.writeResExcel('report/rex_report.xlsx', response, 8, "M")
 
     def writeResExcel(self, filename, data, row, column):
         # 打开现有的Excel文件或者创建新的Workbook
