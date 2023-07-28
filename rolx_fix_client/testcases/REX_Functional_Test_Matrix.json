@@ -3,7 +3,7 @@
     {
       "Id": "1",
       "ScenarioName": "Trading Hours Check: Send order before Preopen(～8:45).",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Market_NewAck",
@@ -16,12 +16,17 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "2"
+      "ordstatus": [
+        "0",
+        "2",
+        "2",
+        "2"
+      ]
     },
     {
       "Id": "2",
       "ScenarioName": "New Order->Fill",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Market_NewAck",
@@ -34,12 +39,17 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "2"
+      "ordstatus": [
+        "0",
+        "2",
+        "2",
+        "2"
+      ]
     },
     {
       "Id": "3",
       "ScenarioName": "New Order->Fill",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "ROLX_Market_NewAck",
@@ -52,12 +62,17 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "2"
+      "ordstatus": [
+        "0",
+        "2",
+        "2",
+        "2"
+      ]
     },
     {
       "Id": "4",
       "ScenarioName": "New Order->Fill",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Limit_NewAck",
@@ -71,12 +86,17 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "2"
+      "ordstatus": [
+        "0",
+        "2",
+        "2",
+        "2"
+      ]
     },
     {
       "Id": "5",
       "ScenarioName": "New Order->Fill",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Limit_NewAck",
@@ -90,12 +110,17 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "2"
+      "ordstatus": [
+        "0",
+        "2",
+        "2",
+        "2"
+      ]
     },
     {
       "Id": "6",
       "ScenarioName": "New Order->Partial Fill->Fill",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Market_NewAck",
@@ -108,12 +133,17 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "2"
+      "ordstatus": [
+        "0",
+        "2",
+        "2",
+        "2"
+      ]
     },
     {
       "Id": "7",
       "ScenarioName": "New Order->Partial Fill->Fill",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "ROLX_Limit_NewAck",
@@ -126,12 +156,17 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "2"
+      "ordstatus": [
+        "0",
+        "2",
+        "2",
+        "2"
+      ]
     },
     {
       "Id": "8",
       "ScenarioName": "New Order->Partial Fill->Fill",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Limit_NewAck",
@@ -145,12 +180,17 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "2"
+      "ordstatus": [
+        "0",
+        "2",
+        "2",
+        "2"
+      ]
     },
     {
       "Id": "9",
       "ScenarioName": "New Order->Partial Fill->Fill",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Limit_NewAck",
@@ -164,12 +204,17 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "2"
+      "ordstatus": [
+        "0",
+        "2",
+        "2",
+        "2"
+      ]
     },
     {
       "Id": "10",
       "ScenarioName": "New Order->Partial Fill->Canceled",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Market_NewAck",
@@ -182,12 +227,15 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "1"
+      "ordstatus": [
+        "0",
+        "1"
+      ]
     },
     {
       "Id": "11",
       "ScenarioName": "New Order->Partial Fill->Canceled",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Limit_NewAck",
@@ -201,12 +249,16 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "1"
+      "ordstatus": [
+        "0",
+        "1",
+        "4"
+      ]
     },
     {
       "Id": "12",
       "ScenarioName": "New Order->Partial Fill->Expired",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Market_NewAck",
@@ -219,12 +271,12 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "C"
+      "ordstatus": ["C"]
     },
     {
       "Id": "13",
       "ScenarioName": "New Order->Partial Fill->Expired",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Limit_NewAck",
@@ -238,12 +290,12 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "C"
+      "ordstatus": ["C"]
     },
     {
       "Id": "14",
       "ScenarioName": "New Order->Canceled",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Market_NewAck",
@@ -256,12 +308,12 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "0"
+      "ordstatus": ["0"]
     },
     {
       "Id": "15",
       "ScenarioName": "New Order->Canceled",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "CancelAck",
       "Comment": "CancelAck",
@@ -274,12 +326,12 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "4"
+      "ordstatus": ["4"]
     },
     {
       "Id": "16",
       "ScenarioName": "New Order->Canceled",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Market_NewAck",
@@ -292,12 +344,12 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "0"
+      "ordstatus": ["0"]
     },
     {
       "Id": "17",
       "ScenarioName": "New Order->Canceled",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "CancelAck",
       "Comment": "CancelAck",
@@ -310,12 +362,12 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "4"
+      "ordstatus": ["4"]
     },
     {
       "Id": "18",
       "ScenarioName": "New Order->Canceled",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Limit_NewAck",
@@ -329,12 +381,12 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "0"
+      "ordstatus": ["0"]
     },
     {
       "Id": "19",
       "ScenarioName": "New Order->Canceled",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "CancelAck",
       "Comment": "CancelAck",
@@ -348,12 +400,12 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "4"
+      "ordstatus": ["4"]
     },
     {
       "Id": "20",
       "ScenarioName": "New Order->Canceled",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Limit_NewAck",
@@ -367,12 +419,12 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "0"
+      "ordstatus": ["0"]
     },
     {
       "Id": "21",
       "ScenarioName": "New Order->Canceled",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "CancelAck",
       "Comment": "CancelAck",
@@ -386,12 +438,12 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "4"
+      "ordstatus": ["4"]
     },
     {
       "Id": "22",
       "ScenarioName": "New Order->Expired",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Market_NewAck",
@@ -404,12 +456,12 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "C"
+      "ordstatus": ["0","C"]
     },
     {
       "Id": "23",
       "ScenarioName": "New Order->Expired",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "ROLX_Market_NewAck",
@@ -422,12 +474,12 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "C"
+      "ordstatus": ["0","C"]
     },
     {
       "Id": "24",
       "ScenarioName": "New Order->Expired",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Limit_NewAck",
@@ -441,12 +493,12 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "C"
+      "ordstatus": ["0","C"]
     },
     {
       "Id": "25",
       "ScenarioName": "New Order->Expired",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Limit_NewAck",
@@ -460,12 +512,12 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "C"
+      "ordstatus": ["0","C"]
     },
     {
       "Id": "26",
       "ScenarioName": "BBO Price Rounding Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Market_NewAck",
@@ -478,12 +530,15 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "2"
+      "ordstatus": [
+        "0",
+        "2"
+      ]
     },
     {
       "Id": "27",
       "ScenarioName": "BBO Price Rounding Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Market_NewAck",
@@ -496,12 +551,15 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "2"
+      "ordstatus": [
+        "0",
+        "2"
+      ]
     },
     {
       "Id": "28",
       "ScenarioName": "BBO Price Rounding Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Limit_NewAck",
@@ -515,12 +573,15 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "2"
+      "ordstatus": [
+        "0",
+        "2"
+      ]
     },
     {
       "Id": "29",
       "ScenarioName": "BBO Price Rounding Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "REX_Limit_NewAck",
@@ -534,12 +595,15 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "2"
+      "ordstatus": [
+        "0",
+        "2"
+      ]
     },
     {
       "Id": "30",
       "ScenarioName": "Symbol Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "ROLX_Limit_NewAck",
@@ -553,12 +617,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010013,No available instrument risk check data found"
     },
     {
       "Id": "31",
       "ScenarioName": "Price Limit Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Price=Low-limit-1",
@@ -572,12 +637,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010014,Price exceeds the high-low price range"
     },
     {
       "Id": "32",
       "ScenarioName": "Price Limit Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Price=High-limit+1",
@@ -591,12 +657,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010014,Price exceeds the high-low price range"
     },
     {
       "Id": "33",
       "ScenarioName": "Tick Size Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Price<1,000 Tick size \u2260 1",
@@ -610,12 +677,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010015,Tick-size is not matched with TOPIX100 tick"
     },
     {
       "Id": "34",
       "ScenarioName": "Tick Size Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Price<3,000 Tick side \u2260 1",
@@ -629,12 +697,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010015,Tick-size is not matched with TOPIX100 tick"
     },
     {
       "Id": "35",
       "ScenarioName": "Tick Size Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Price<10,000 Tick side \u2260 1",
@@ -648,12 +717,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010015,Tick-size is not matched with TOPIX100 tick"
     },
     {
       "Id": "36",
       "ScenarioName": "Tick Size Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Price<30,000 Tick side \u2260 5",
@@ -667,12 +737,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010015,Tick-size is not matched with TOPIX100 tick"
     },
     {
       "Id": "37",
       "ScenarioName": "Tick Size Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Price<100,000 Tick side \u2260 10",
@@ -686,12 +757,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010015,Tick-size is not matched with TOPIX100 tick"
     },
     {
       "Id": "38",
       "ScenarioName": "Tick Size Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Price<3,000 Tick side \u2260 1",
@@ -699,37 +771,39 @@
       "OrdType": "2",
       "Price": 2500.5,
       "Side": "2",
-      "Symbol": "1721",
+      "Symbol": "5078",
       "TimeInForce": "0",
       "CrossingPriceType": "REX",
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010016,Tick-size is not matched with non-TOPIX100 tick"
     },
     {
       "Id": "39",
       "ScenarioName": "Tick Size Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Price<5,000  Tick side \u2260 5",
       "OrderQty": 5,
       "OrdType": "2",
-      "Price": 4000.5,
+      "Price": 4100.5,
       "Side": "2",
-      "Symbol": "2282",
+      "Symbol": "9720",
       "TimeInForce": "0",
       "CrossingPriceType": "REX",
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010016,Tick-size is not matched with non-TOPIX100 tick"
     },
     {
       "Id": "40",
       "ScenarioName": "Tick Size Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Price<30,000 Tick side \u2260 10",
@@ -743,12 +817,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010016,Tick-size is not matched with non-TOPIX100 tick"
     },
     {
       "Id": "41",
       "ScenarioName": "Quantity Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Quantity=99 (no error)",
@@ -761,12 +836,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "C"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
     },
     {
       "Id": "42",
       "ScenarioName": "Quantity Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Quantity=0 ",
@@ -779,12 +855,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
     },
     {
       "Id": "43",
       "ScenarioName": "Quantity Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Quantity=100(Round-lot) ",
@@ -797,12 +874,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
     },
     {
       "Id": "44",
       "ScenarioName": "Quantity Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Quantity=101(Mixed-lot) ",
@@ -815,12 +893,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
     },
     {
       "Id": "45",
       "ScenarioName": "Quantity Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Quantity=1(Lot size=1)",
@@ -833,12 +912,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
     },
     {
       "Id": "46",
       "ScenarioName": "Quantity Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Quantity=10(Lot size=10)",
@@ -851,12 +931,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
     },
     {
       "Id": "47",
       "ScenarioName": "Quantity Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Quantity=1000(Lot size=1000)",
@@ -869,12 +950,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
     },
     {
       "Id": "48",
       "ScenarioName": "Order Type Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Order Type is not Limit/Market (Limit/Market Acceptable)",
@@ -887,12 +969,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010003,OrdType is not supported"
     },
     {
       "Id": "49",
       "ScenarioName": "TimeInForce Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "TimeInForce is not 0:Day",
@@ -905,12 +988,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010012,TimeInForce is not supported"
     },
     {
       "Id": "50",
       "ScenarioName": "Order Side Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Order Side is not Buy/Sell (Buy/Sell Acceptable)",
@@ -923,12 +1007,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010004,Side is not supported"
     },
     {
       "Id": "51",
       "ScenarioName": "Account Check",
-      "Account": "RSIT_ACCOUNT_23",
+      "Account": "RSIT_ACCOUNT_13",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Account is not the target test account",
@@ -941,12 +1026,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010009,Invalid account"
     },
     {
       "Id": "52",
       "ScenarioName": "Rule80A Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "Rule80A is not Agency/Principal",
@@ -959,12 +1045,13 @@
       "Rule80A": "S",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010025,Rule80A is not supported"
     },
     {
       "Id": "53",
       "ScenarioName": "CashMargin Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "CashMargin is not Cash (Cash Acceptable)",
@@ -977,12 +1064,13 @@
       "Rule80A": "P",
       "CashMargin": "2",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010026,CashMargin is not supported"
     },
     {
       "Id": "54",
       "ScenarioName": "MarginTransactionType Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "MarginTransactionType is not 0-None",
@@ -995,12 +1083,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "1",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010027,MarginTransactionType is not supported"
     },
     {
       "Id": "55",
       "ScenarioName": "CrossingPriceType Check",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "CrossingPriceType is not ROL/REX",
@@ -1013,12 +1102,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode": "ERROR_10010028,CrossingPriceType is not supported"
     },
     {
       "Id": "56",
       "ScenarioName": "Cancel after Executed",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "NewAck",
       "Comment": "New Order->Canceled",
@@ -1031,12 +1121,17 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "2"
+      "ordstatus": [
+        "0",
+        "2",
+        "2",
+        "2"
+      ]
     },
     {
       "Id": "57",
       "ScenarioName": "Cancel after Executed",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "CancelAck",
       "Comment": "New Order->Canceled",
@@ -1049,12 +1144,13 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "8"
+      "ordstatus": ["8"],
+      "errorCode":"ERROR_20010031,Requested order does not exist"
     },
     {
       "Id": "58",
       "ScenarioName": "Canceled",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "CancelAck",
       "Comment": "CancelAck",
@@ -1067,12 +1163,12 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "4"
+      "ordstatus":["4"]
     },
     {
       "Id": "59",
       "ScenarioName": "Canceled",
-      "Account": "RSIT_ACCOUNT_2",
+      "Account": "RSIT_ACCOUNT_1",
       "Market": "REX",
       "ActionType": "CancelAck",
       "Comment": "CancelAck",
@@ -1085,7 +1181,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": "4"
+      "ordstatus": ["4"]
     }
   ]
 }

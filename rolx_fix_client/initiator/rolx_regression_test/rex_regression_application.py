@@ -18,9 +18,12 @@ import os
 # 获取当前所在目录绝对路径
 current_path = os.path.abspath(os.path.dirname(__file__))
 # 将当前目录的路径，获取上级目录的绝对路径
-generation_parent_path = os.path.abspath(os.path.join(current_path, "../../method"))
+Parent_path = os.path.abspath(os.path.join(current_path, "../../method"))
 # 获取上级目录中一个文件的路径
-generation_path = os.path.join(generation_parent_path, "file_generation.py")
+generation_path = os.path.join(Parent_path, "file_generation.py")
+#获取data_comparison
+data_comparison_path = os.path.join(Parent_path, "data_comparison.py")
+
 
 __SOH__ = chr(1)
 
@@ -75,13 +78,17 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         # "客户端断开连接时候调用此方法"
         self.logsCheck()
         json_data = json.dumps(self.ReceveRes)
+
+        module_name = "compare_field_values"
+        module_path = data_comparison_path
+        # 导入具有完整文件路径的模块
+        module1 = SourceFileLoader(module_name, module_path).load_module()
         # 将JSON数据写入文件中
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = self.compare_field_values('../../testcases/REX_Functional_Test_Matrix.json',
+        self.Result = module1.compare_field_values('../../testcases/REX_Functional_Test_Matrix.json',
                                                 'logs/recv_data.json',
                                                 'ordstatus')  # 为了比较ordstatus字段的值
-        logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
         print("Session ({}) logout !".format(sessionID.toString()))
 
         ordstatus_list = []
@@ -397,31 +404,6 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         """Processing application message here"""
         pass
         # 数据比对的方法
-
-    # 数据比对的方法
-    def compare_field_values(self, json_file1, json_file2, field_name):
-        resList = []
-        with open(json_file1, 'r') as f1, open(json_file2, 'r') as f2:
-            data1 = json.load(f1)
-            data2 = json.load(f2)
-        records1 = data1['testCase']
-        records2 = data2
-        # 判断记录数量是否相同
-        if len(records1) != len(records2):
-            logfix.info("两个文件记录数量不一致，比对结果不准确，请仔细核对数据，再次进行比对！")
-        # 逐组比较字段值并输出结果s
-        for i, (record1, record2) in enumerate(zip(records1, records2), 1):  # enumerate打包成可迭代对象并设置起始下标为1
-            if record1[field_name] == record2[field_name]:
-                self.Success += 1
-                self.Total += 1
-                resList.append('success')
-            else:
-                self.Fail += 1
-                self.Total += 1
-                logfix.info(f"第 {i} 条数据的指定字段值不相同" + "," + "clordId:" + str(record2['clordId']))
-                resList.append('failed')
-                logfix.info("Except:" + str(record1[field_name]) + " ，" + "ordStatus: " + str(record2[field_name]))
-        return resList
 
     # 在掉出登陆时调用logscheck方法，判断是否有这些错误打印，
     def logsCheck(self):
