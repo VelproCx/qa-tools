@@ -500,14 +500,6 @@ class Application(fix.Application):
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
 
-    def runTestCase(self, row):
-
-        action = row["ActionType"]
-        if action == 'NewAck':
-            self.insert_order_request(row)
-        elif action == 'CancelAck':
-            self.order_cancel_request(row)
-
     def load_test_case(self):
         module_name = "generation"
         module_path = generation_path
@@ -523,6 +515,18 @@ class Application(fix.Application):
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
-                if row == case_data_list["testCase"][0]:
-                    self.insert_order_request(case_data_list["testCase"][0])
+                if row['Id'] == "1":
+                    self.insert_order_request(row)
+                    time.sleep(60)
+
+                elif row["ActionType"] == 'NewAck':
+                    self.insert_order_request(row)
                     time.sleep(1)
+
+                elif row["ActionType"] == 'CancelAck':
+                    # 增加判断条件，判断是否为需要cancel的symbol
+                    if row["Symbol"] == "5076":
+                        time.sleep(3)
+                    else:
+                        time.sleep(1)
+                    self.order_cancel_request(row)
