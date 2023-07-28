@@ -7,7 +7,7 @@ from ctypes import *
 # import ctypes
 import os, time
 
-from logger import setup_logger
+from gRpc_py.model.logger import setup_logger
 
 setup_logger('logfix', 'kafka_parse.log')
 logfix = logging.getLogger('logfix')

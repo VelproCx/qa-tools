@@ -104,8 +104,8 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                 errorCode_list.append(" ")
 
         # report文件里写入字段
-        self.writeResExcel('report/rolx_report.xlsx', ordstatus_list, 2, 'J')
-        self.writeResExcel('report/rolx_report.xlsx', errorCode_list, 2, 'K')
+        self.writeResExcel('report/rex_report.xlsx', ordstatus_list, 2, 'J')
+        self.writeResExcel('report/rex_report.xlsx', errorCode_list, 2, 'K')
         self.writeResExcel('report/rex_report.xlsx', self.Result, 2, 'L')
         return
 
