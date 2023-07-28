@@ -21,7 +21,7 @@ def compare_field_values(json_file1, json_file2, field_name):
                 else:
                     print("failed")
                     logfix.info(f"第 {i} 条数据的指定字段值不相同" + "," + "exc_errorCode:" + str(
-                        record1["'errorCode'"]) + "recv_errorCode:" + str(record2['errorCode']))
+                        record1['errorCode']) + "recv_errorCode:" + str(record2['errorCode']))
                     resList.append('failed')
                     logfix.info(
                         "Except:" + str(record1[field_name]) + " ，" + "ordStatus: " + str(record2[field_name]))
