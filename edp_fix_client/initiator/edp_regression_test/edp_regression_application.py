@@ -259,9 +259,9 @@ class Application(fix.Application):
                             "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
                 elif ordStatus == "4":
                     #  7.8 Execution Report – End of IOC Expired
+                    execBroker = message.getField(76)
                     if execType == "C":
                         text = message.getField(58)
-                        execBroker = message.getField(76)
                         origClOrdID = message.getField(41)
                         clOrdID = message.getField(11)
                         if (avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
@@ -275,7 +275,6 @@ class Application(fix.Application):
                     # 7.6 Execution Report – Order Canceled
                     if execType == "4":
                         origClOrdID = message.getField(41)
-                        execBroker = message.getField(76)
                         clOrdID = message.getField(11)
 
                         if (avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
