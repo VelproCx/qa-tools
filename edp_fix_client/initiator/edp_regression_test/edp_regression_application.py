@@ -77,6 +77,20 @@ class Application(fix.Application):
                                                    'logs/recv_data.json',
                                                    'ordstatus')
         print("Session (%s) logout !" % sessionID.toString())
+
+        ordstatus_list = []
+        errorCode_list = []
+
+        for i in self.ReceveRes:
+            ordstatus_list.append(str(i['ordstatus']))
+            if 'errorCode' in i:
+                errorCode_list.append(str(i['errorCode']))
+
+            else:
+                errorCode_list.append(" ")
+
+        self.writeResExcel('report/edp_report.xlsx', ordstatus_list, 2, 'J')
+        self.writeResExcel('report/edp_report.xlsx', errorCode_list, 2, 'K')
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'S')
         return
 
@@ -120,7 +134,7 @@ class Application(fix.Application):
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) R << %s" % msg)
+        logfix.info("(Core) R << {}".format(msg))
         return
 
     def fromApp(self, message, sessionID):
@@ -197,7 +211,6 @@ class Application(fix.Application):
                 OrderClassification = message.getField(8060)
                 SelfTradePreventionId = message.getField(8174)
 
-
                 if symbol == '1320' or symbol == '1321' or symbol == '1308':
                     self.ORDERS_DICT = message.getField(11)
                     print(self.ORDERS_DICT)
@@ -215,11 +228,11 @@ class Application(fix.Application):
                             cashMargin,
                             crossingPriceType, fsxTransactTime, marginTransactionType, MinQty, OrderClassification,
                             SelfTradePreventionId) != "":
-                        logfix.info("(recvMsg) Order Accepted << %s" % msg + "ordStatus = " + str(ordStatus))
+                        logfix.info("(recvMsg) Order Accepted << {}".format(msg) + "ordStatus = " + str(ordStatus))
                         logfix.info("Result : Order Accepted ," + "ordStatus =" + ordStatus)
                         self.order_accepted += 1
                     else:
-                        logfix.info("(recvMsg) Order Accepted << %s" % msg + 'Order Accepted FixMsg Error!')
+                        logfix.info("(recvMsg) Order Accepted << {}".format(msg) + 'Order Accepted FixMsg Error!')
                     if execType != ordStatus:
                         logfix.info(
                             "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
@@ -237,10 +250,10 @@ class Application(fix.Application):
                             crossingPriceType,
                             fsxTransactTime, marginTransactionType, text, ordRejReason, MinQty, OrderClassification,
                             SelfTradePreventionId) != "":
-                        logfix.info("(recvMsg) Order Rej << %s" % msg + "RejRes = " + str(text))
+                        logfix.info("(recvMsg) Order Rej << {}".format(msg) + "RejRes = " + str(text))
                         self.order_rejected += 1
                     else:
-                        logfix.info("(recvMsg) Order Rejected << %s" % msg + 'Order Rejected FixMsg Error!')
+                        logfix.info("(recvMsg) Order Rejected << {}".format(msg) + 'Order Rejected FixMsg Error!')
                     if execType != ordStatus:
                         logfix.info(
                             "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
@@ -256,10 +269,10 @@ class Application(fix.Application):
                             cashMargin,
                             crossingPriceType, fsxTransactTime, marginTransactionType, execBroker, origClOrdID,
                             text) != "":
-                            logfix.info("(recvMsg) Order Expired << %s" % msg + "ExpireRes = " + str(text))
+                            logfix.info("(recvMsg) Order Expired << {}".format(msg) + "ExpireRes = " + str(text))
                             logfix.info("Result : Order Expired ," + "ordStatus =" + ordStatus)
                         else:
-                            logfix.info("(recvMsg) Order Expired << %s" % msg + "Order Expired FixMsg Error!")
+                            logfix.info("(recvMsg) Order Expired << {}".format(msg) + "Order Expired FixMsg Error!")
                     # 7.6 Execution Report – Order Canceled
                     if execType == "4":
                         origClOrdID = message.getField(41)
@@ -270,9 +283,9 @@ class Application(fix.Application):
                             side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
                             crossingPriceType, fsxTransactTime, marginTransactionType, origClOrdID, execBroker,
                             MinQty, OrderClassification, SelfTradePreventionId) != "":
-                            logfix.info("(recvMsg) Order Canceled << %s" % msg + "ordStatus = " + str(ordStatus))
+                            logfix.info("(recvMsg) Order Canceled << {}".format(msg) + "ordStatus = " + str(ordStatus))
                         else:
-                            logfix.info("(recvMsg) Order Canceled << %s" % msg + 'Order Canceled FixMsg Error!')
+                            logfix.info("(recvMsg) Order Canceled << {}".format(msg) + 'Order Canceled FixMsg Error!')
                     # if execType == "1":
                     #         lastLiquidityInd = message.getField(851)
                     #         toSTNeTTransactionTime = message.getField(8106)
@@ -306,9 +319,11 @@ class Application(fix.Application):
                     if execTransType == "0":
                         if (
                                 avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID, orderQty,
-                                ordType, rule80A, side, symbol, timeInForce, transactTime, execBroker, clientID, execType,
+                                ordType, rule80A, side, symbol, timeInForce, transactTime, execBroker, clientID,
+                                execType,
                                 leavesQty, cashMargin, crossingPriceType, fsxTransactTime, marginTransactionType,
-                                primaryLastPx, primaryBidPx, primaryAskPx, routingDecisionTime, MinQty, OrderClassification,
+                                primaryLastPx, primaryBidPx, primaryAskPx, routingDecisionTime, MinQty,
+                                OrderClassification,
                                 SelfTradePreventionId, lastLiquidityind) != "":
                             logfix.info(
                                 "(recvMsg) Order Filled << %s" % msg)
@@ -517,7 +532,7 @@ class Application(fix.Application):
             for row in case_data_list["testCase"]:
                 if row['Id'] == "1":
                     self.insert_order_request(row)
-                    time.sleep(60)
+                    time.sleep(1)
 
                 elif row["ActionType"] == 'NewAck':
                     self.insert_order_request(row)
