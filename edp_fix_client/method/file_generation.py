@@ -6,14 +6,18 @@ from openpyxl.styles import Border, Side
 
 
 def generation(file_path, filename):
-    fields_to_remove = ['Account', 'ordstatus']
+    fields_to_remove = ['Account', 'OrderQty', 'Side', 'Price', 'TimeInForce', 'CrossingPriceType',
+                        'Rule80A', 'CashMargin', 'MarginTransactionType']
     with open(file_path, 'r') as f_json:
         json_data = json.load(f_json)
     for row in json_data["testCase"]:
         # 循环接收需要删除的字段
         for field in fields_to_remove:
-            # 删除字段
-            del row[field]
+            try:
+                # 删除字段
+                del row[field]
+            except KeyError:
+                pass
 
     df = pd.json_normalize(json_data["testCase"])
 
@@ -24,6 +28,8 @@ def generation(file_path, filename):
 
     # 选择要设置颜色的工作表
     sheet = workbook.active  # 使用默认的活动工作表
+    sheet['J1'] = 'RecvOrdStatus'
+    sheet['K1'] = 'RecvErrorCode'
     sheet['S1'] = 'Execution Result'
     sheet['T1'] = 'Remark'
     # 设置最合适的列宽
@@ -67,3 +73,5 @@ def generation(file_path, filename):
 
     # 保存修改并关闭工作簿
     workbook.save(filename)
+
+# generation("../testcases/EDP_Functional_Test_Matrix.json", "edp_report.xlsx")
