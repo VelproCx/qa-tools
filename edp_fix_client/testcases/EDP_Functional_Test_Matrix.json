@@ -1,7 +1,7 @@
 {
   "testCase": [
      {
-      "Id": "1",
+      "Id": "0",
       "ScenarioName": "Trading Hours Check: Send order before Open(～9:00))",
       "Account": "RSIT_EDP_ACCOUNT_2",
       "Market": "EDP",
@@ -10,7 +10,7 @@
       "OrderQty": 500,
       "OrdType": "1",
       "Side": "1",
-      "Symbol": "7203",
+      "Symbol": "9998",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
