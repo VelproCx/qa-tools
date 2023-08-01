@@ -29,10 +29,10 @@ data_comparison_path = os.path.join(Parent_path, "data_comparison.py")
 # 获取gRpc发单脚本路径
 sit_client_path = os.path.join(grpc_path, "sit_client.py")
 
-
 # log
 setup_logger('logfix', 'logs/edp_report.log')
 logfix = logging.getLogger('logfix')
+
 
 class Application(fix.Application):
     ACCOUNT_INFO = 'firms/HRT-Clear-Member/accounts/HRT_SIT_ACCOUNT_1'
