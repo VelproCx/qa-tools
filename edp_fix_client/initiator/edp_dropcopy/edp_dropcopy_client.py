@@ -3,7 +3,7 @@ import sys
 import argparse
 from datetime import timedelta, datetime
 import quickfix
-from edp_HRT_application import Application
+from edp_dropcopy_application import Application
 import time
 global initiator
 

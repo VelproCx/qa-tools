@@ -219,5 +219,4 @@ class Application(fix.Application):
                 price = float(row["Price"]) * 10
                 orderQty = int(row["lot_size"])
                 sit_client.InsertOrderEntryFirst()
-
         pass
