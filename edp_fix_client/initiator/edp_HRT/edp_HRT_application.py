@@ -11,7 +11,7 @@ from datetime import datetime
 from model.logger import setup_logger
 import json
 from openpyxl import load_workbook
-from gRpc_py import sit_client
+
 
 __SOH__ = chr(1)
 
@@ -29,12 +29,13 @@ data_comparison_path = os.path.join(Parent_path, "data_comparison.py")
 # 获取gRpc发单脚本路径
 sit_client_path = os.path.join(grpc_path, "sit_client.py")
 
-
 # log
 setup_logger('logfix', 'logs/edp_report.log')
 logfix = logging.getLogger('logfix')
 
+
 class Application(fix.Application):
+    ACCOUNT_INFO = 'firms/HRT-Clear-Member/accounts/HRT_SIT_ACCOUNT_1'
 
     def __init__(self):
         super().__init__()
@@ -184,7 +185,6 @@ class Application(fix.Application):
         """Processing application message here"""
         pass
 
-
     def getClOrdID(self):
         # "随机数生成ClOrdID"
         self.execID += 1
@@ -205,11 +205,16 @@ class Application(fix.Application):
         pass
 
     def load_test_case(self):
+        global ACCOUNT_INFO
         module_name = "generation"
         module_path = generation_path
         # 导入具有完整文件路径的模块
         module1 = SourceFileLoader(module_name, module_path).load_module()
         generation = module1.generation
+        module_name = "InsertOrderEntryFirst"
+        module_path = sit_client_path
+        insert_order_module = SourceFileLoader(module_name, module_path).load_module()
+        insert = insert_order_module.InsertOrderEntryFirst
         """Run"""
         with open("../../testcases/symbolList.json", "r") as f_json:
             case_list = json.load(f_json)
@@ -218,6 +223,7 @@ class Application(fix.Application):
                 symbol = row["symbol"]
                 price = float(row["Price"]) * 10
                 orderQty = int(row["lot_size"])
-                sit_client.InsertOrderEntryFirst()
+                insert(2, 1, orderQty, symbol, price, str(self.getClOrdID()), ACCOUNT_INFO, 1,
+                                                 "P.1.4")
 
-        pass
+        return

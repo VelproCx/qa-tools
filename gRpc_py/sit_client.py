@@ -56,7 +56,7 @@ def genClOrdID():
     return str1 + str(t) + str(execID).zfill(6)
 
 
-def InsertOrderEntryFirst(type, side, order_qty, symbol, price, clord_id, account, time_in_force):
+def InsertOrderEntryFirst(type, side, order_qty, symbol, price, clord_id, account, time_in_force, client_account_id):
     # 证书选择SSL类型
     creds = grpc.ssl_channel_credentials()
     conn = grpc.secure_channel(target=TRADE_HOST, credentials=creds,
@@ -71,13 +71,13 @@ def InsertOrderEntryFirst(type, side, order_qty, symbol, price, clord_id, accoun
                                                price=price,
                                                clord_id=clord_id,
                                                account=account,
-                                               time_in_force=time_in_force),
+                                               time_in_force=time_in_force, client_account_id=client_account_id),
         metadata=meta)
     logfix.info(response)
 
 
 def InsertOrderEntrySecond(type, side, order_qty, symbol, price, clord_id, account, time_in_force,
-                           selfMatchPreventionId):
+                           selfMatchPreventionId, client_account_id):
     # 获取登陆的response
     res_login = login(USER_INFO[1][0], USER_INFO[1][1])
     # 定义变量接收token
@@ -97,7 +97,8 @@ def InsertOrderEntrySecond(type, side, order_qty, symbol, price, clord_id, accou
                                                clord_id=clord_id,
                                                account=account,
                                                time_in_force=time_in_force,
-                                               self_match_prevention_id=selfMatchPreventionId),
+                                               self_match_prevention_id=selfMatchPreventionId,
+                                               client_account_id=client_account_id),
         metadata=meta)
     logfix.info(response)
 
