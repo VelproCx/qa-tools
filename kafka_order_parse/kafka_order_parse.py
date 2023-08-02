@@ -4,15 +4,17 @@ from kafka import KafkaConsumer
 import os, time
 from ctypes import *
 
-consumer = KafkaConsumer(
-    'KAFKA_FSX',
-    bootstrap_servers=['172.20.214.62:9092']
-)
+kafka_port = '172.20.214.62:9092'
+
+if "KAFKA_FSX" in os.environ:
+    kafka_port = os.environ["KAFKA_FSX"]
+
+print("KAFKA order parse server start, user kafka port : " + kafka_port)
 
 
 class Header_t(LittleEndianStructure):
     _pack_ = 1
-    _field_ = [
+    _fields_ = [
         ('Msgtype', c_char),
         ('Evttype', c_char)
     ]
@@ -20,7 +22,7 @@ class Header_t(LittleEndianStructure):
 
 class Time_t(LittleEndianStructure):
     _pack_ = 1
-    _field_ = [
+    _fields_ = [
         ('tv_sec', c_longlong),
         ('tv_usec', c_longlong)
     ]
@@ -28,7 +30,7 @@ class Time_t(LittleEndianStructure):
 
 class BBO_t(LittleEndianStructure):
     _pack_ = 1
-    _field_ = [
+    _fields_ = [
         # last
         ('LastTime', Time_t),
         ('LastPrice', c_double),
@@ -41,14 +43,13 @@ class BBO_t(LittleEndianStructure):
         ('AskTime', Time_t),
         ('AskPrice', c_double),
         ('AskQty', c_double),
-
         ('OpenPrice', c_double)
     ]
 
 
 class NewOrder_t(LittleEndianStructure):
     _pack_ = 1
-    _filed_ = [
+    _fields_ = [
         ('Msgtype', c_char),
         ('Evttype', c_char),
         ('SenderID', c_char * 39),
@@ -83,7 +84,7 @@ class NewOrder_t(LittleEndianStructure):
 
 class NewOrder_with_BBO_t(LittleEndianStructure):
     _pack_ = 1
-    _field_ = [
+    _fields_ = [
         ('NewOrder', NewOrder_t),
         ('RecvTime', Time_t),
         ('BBO', BBO_t)
@@ -91,8 +92,8 @@ class NewOrder_with_BBO_t(LittleEndianStructure):
 
 
 class OrderAccepted_t(LittleEndianStructure):
-    _pack = 1
-    _fields = [
+    _pack_ = 1
+    _fields_ = [
         ('Msgtype', c_char),
         ('Evttype', c_char),
         ('SenderID', c_char * 39),
@@ -100,7 +101,6 @@ class OrderAccepted_t(LittleEndianStructure):
         ('Msgseqnum', c_int),
         ('Trycount', c_int),
         ('ClientID', c_char * 20),
-
         ('AvgPx', c_double),
         ('ClOrdID', c_char * 32),
         ('CumQty', c_double),
@@ -128,7 +128,6 @@ class OrderAccepted_t(LittleEndianStructure):
         ('ParentClOrdID', c_char * 32),
         ('FsxOrderID', c_char * 32),
         ('FsxTransactTime', c_char * 28),
-
         ('MinQty', c_double),
         ('OrderClassification', c_char),
         ('SelfTradePreventionId', c_int)
@@ -136,8 +135,8 @@ class OrderAccepted_t(LittleEndianStructure):
 
 
 class OrderAccepted_with_BBO_t(LittleEndianStructure):
-    _pack = 1
-    _fields = [
+    _pack_ = 1
+    _fields_ = [
         ('OrderAccepted', OrderAccepted_t),
         ('RecvTime', Time_t),
         ('BBO', BBO_t)
@@ -145,8 +144,8 @@ class OrderAccepted_with_BBO_t(LittleEndianStructure):
 
 
 class OrderRejected_t(LittleEndianStructure):
-    _pack = 1
-    _fields = [
+    _pack_ = 1
+    _fields_ = [
         ('Msgtype', c_char),
         ('Evttype', c_char),
         ('SenderID', c_char * 39),
@@ -191,8 +190,8 @@ class OrderRejected_t(LittleEndianStructure):
 
 
 class OrderRejected_with_BBO_t(LittleEndianStructure):
-    _pack = 1
-    _fields = [
+    _pack_ = 1
+    _fields_ = [
         ('OrderRejected', OrderRejected_t),
         ('RecvTime', Time_t),
         ('BBO', BBO_t)
@@ -200,8 +199,8 @@ class OrderRejected_with_BBO_t(LittleEndianStructure):
 
 
 class CancelOrder_t(LittleEndianStructure):
-    _pack = 1
-    _fields = [
+    _pack_ = 1
+    _fields_ = [
         ('Msgtype', c_char),
         ('Evttype', c_char),
         ('SenderID', c_char * 39),
@@ -233,8 +232,8 @@ class CancelOrder_t(LittleEndianStructure):
 
 
 class CancelOrder_with_BBO_t(LittleEndianStructure):
-    _pack = 1
-    _fields = [
+    _pack_ = 1
+    _fields_ = [
         ('CancelOrder', CancelOrder_t),
         ('RecvTime', Time_t),
         ('BBO', BBO_t)
@@ -242,8 +241,8 @@ class CancelOrder_with_BBO_t(LittleEndianStructure):
 
 
 class OrderCancelRejected_t(LittleEndianStructure):
-    _pack = 1
-    _fields = [
+    _pack_ = 1
+    _fields_ = [
         ('Msgtype', c_char),
         ('Evttype', c_char),
         ('SenderID', c_char * 39),
@@ -274,8 +273,8 @@ class OrderCancelRejected_t(LittleEndianStructure):
 
 
 class OrderCancelRejected_with_BBO_t(LittleEndianStructure):
-    _pack = 1
-    _fields = [
+    _pack_ = 1
+    _fields_ = [
         ('OrderCancelRejected', OrderCancelRejected_t),
         ('RecvTime', Time_t),
         ('BBO', BBO_t)
@@ -328,8 +327,8 @@ class OrderCancelAccepted_t(LittleEndianStructure):
 
 
 class OrderCancelAccepted_with_BBO_t(LittleEndianStructure):
-    _pack = 1
-    _fields = [
+    _pack_ = 1
+    _fields_ = [
         ('OrderCancelAccepted', OrderCancelAccepted_t),
         ('RecvTime', Time_t),
         ('BBO', BBO_t)
@@ -346,7 +345,6 @@ class Trade_t(LittleEndianStructure):
         ('Msgseqnum', c_int),
         ('Trycount', c_int),
         ('ClientID', c_char * 20),
-
         ('AvgPx', c_double),
         ('ClOrdID', c_char * 32),
         ('CumQty', c_double),
@@ -383,7 +381,6 @@ class Trade_t(LittleEndianStructure):
         ('FsxTransactTime', c_char * 28),
         ('RoutingDecisionTime', c_char * 28),
         ('MarginTransactionType', c_char),
-
         ('MinQty', c_double),
         ('OrderClassification', c_char),
         ('SelfTradePreventionId', c_int),
@@ -392,8 +389,8 @@ class Trade_t(LittleEndianStructure):
 
 
 class Trade_with_BBO_t(LittleEndianStructure):
-    _pack = 1
-    _fields = [
+    _pack_ = 1
+    _fields_ = [
         ('Trade', Trade_t),
         ('RecvTime', Time_t),
         ('BBO', BBO_t)
@@ -447,8 +444,8 @@ class UnsolicitedCancelReplaceResponse_t(LittleEndianStructure):
 
 
 class UnsolicitedCancelReplaceResponse_with_BBO_t(LittleEndianStructure):
-    _pack = 1
-    _fields = [
+    _pack_ = 1
+    _fields_ = [
         ('UnsolicitedCancelReplaceResponse', UnsolicitedCancelReplaceResponse_t),
         ('RecvTime', Time_t),
         ('BBO', BBO_t)
@@ -547,8 +544,8 @@ class AmendOrder_with_BBO_t(LittleEndianStructure):
 
 
 class QueryOrder_t(LittleEndianStructure):
-    _pack = 1
-    _fields = [
+    _pack_ = 1
+    _fields_ = [
         ('Msgtype', c_char),
         ('Evttype', c_char),
         ('SenderID', c_char * 39),
@@ -648,7 +645,6 @@ class EdpCrossNewOrder_t(LittleEndianStructure):
         ('Msgseqnum', c_int),
         ('Trycount', c_int),
         ('ClientID', c_char * 20),
-
         ('SenderSubID', c_char * 39),
         ('TargetSubID', c_char * 39),
         ('CrossID', c_char * 39),
@@ -670,7 +666,7 @@ class EdpCrossNewOrder_t(LittleEndianStructure):
         ('DarkPool', c_char),
         ('OrdStatus', c_char),
         ('FsxOrderID', c_char * 32),
-        ('SecondaryExecID', c_char * 28)
+        ('FsxTransactTime', c_char * 28)
     ]
 
 
@@ -733,8 +729,8 @@ class EdpCrossAcceptance_with_BBO_t(LittleEndianStructure):
 
 
 class EdpCrossRejected_t(LittleEndianStructure):
-    _pack = 1
-    _fiels = [
+    _pack_ = 1
+    _fields_ = [
         ('Msgtype', c_char),
         ('Evttype', c_char),
         ('SenderID', c_char * 39),
@@ -830,8 +826,8 @@ class EdpCrossExecution_with_BBO_t(LittleEndianStructure):
 
 
 class EdpCrossExpired_t(LittleEndianStructure):
-    _pack = 1
-    _fiels = [
+    _pack_ = 1
+    _fields_ = [
         ('Msgtype', c_char),
         ('Evttype', c_char),
         ('SenderID', c_char * 39),
@@ -1083,20 +1079,21 @@ def OrderDump(ord, indent=None):
                 print((prifix + " {} : {}").format(attr_name, attr_val))
     print(prifix + "}")
 
+
+consumer = KafkaConsumer(bootstrap_servers=kafka_port)
 consumer.subscribe(['Order', 'SystemEvent'])
 
-
 for msg in consumer:
-    msg_len = len(msg.topic)
+    msg_len = len(msg.value)
     if 'Order' == msg.topic:
         hd = Header_t.from_buffer_copy(msg.value)
-        print("recv msg Msgtype : {}, Evttpype: {}, len : {}".format(hd.Msgtype, hd.Evttpype, msg_len))
+        print("recv msg Msgtype : {}, Evttpype: {}, len : {}".format(hd.Msgtype, hd.Evttype, msg_len))
         if b'D' == hd.Msgtype and b'0' == hd.Evttype:
             if (sizeof(NewOrder_t)) + sizeof(Time_t) == msg_len:
-                neword = (NewOrder_t).from_buffer_copy(msg.value)
+                neword = NewOrder_t.from_buffer_copy(msg.value)
                 OrderDump(neword)
             elif (sizeof(NewOrder_t)) + sizeof(Time_t) + sizeof(BBO_t) == msg_len:
-                neword = (NewOrder_with_BBO_t).from_buffer_copy(msg.value)
+                neword = NewOrder_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(neword)
             else:
                 print("New order msg length err, len : {}}".format(msg_len))
@@ -1152,7 +1149,8 @@ for msg in consumer:
                 print("OrderCancelAccepted msg length err, len : {}".format(msg_len))
                 exit(0)
         elif b'8' == hd.Msgtype and b'H' == hd.Evttype:
-            if (sizeof(Trade_t)) + sizeof(Time_t) == msg_len:
+            print(sizeof(Trade_t),sizeof(BBO_t),sizeof(Time_t),msg_len)
+            if sizeof(Trade_t) + sizeof(Time_t) == msg_len:
                 ord = Trade_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             elif (sizeof(Trade_t)) + sizeof(BBO_t) + sizeof(Time_t) == msg_len:
@@ -1192,10 +1190,11 @@ for msg in consumer:
                 print("TradeSessionStatus msg length err, len : {}".format(msg_len))
                 exit(0)
         elif b's' == hd.Msgtype and b'L' == hd.Evttype:
+            print(sizeof(EdpCrossNewOrder_t), sizeof(Time_t), msg_len)
             if (sizeof(EdpCrossNewOrder_t)) + sizeof(Time_t) == msg_len:
                 ord = EdpCrossNewOrder_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
-            elif(sizeof(EdpCrossNewOrder_t)) + sizeof(BBO_t) + sizeof(Time_t) == msg_len:
+            elif (sizeof(EdpCrossNewOrder_t)) + sizeof(BBO_t) + sizeof(Time_t) == msg_len:
                 ord = EdpCrossNewOrder_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
