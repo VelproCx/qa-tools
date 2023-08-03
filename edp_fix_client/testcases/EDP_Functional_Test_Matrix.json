@@ -233,12 +233,7 @@
       "MinQty": 0,
       "OrderClassification": "3",
       "SelfTradePreventionId": "0",
-      "ordstatus": [
-        "0",
-        "1",
-        "2",
-        "2"
-      ]
+      "ordstatus": ["8"]
     },
     {
       "Id": "10",
@@ -259,11 +254,8 @@
       "MinQty": 0,
       "OrderClassification": "3",
       "SelfTradePreventionId": "0",
-      "ordstatus": [
-        "0",
-        "2",
-        "8"
-      ]
+      "ordstatus": ["8"],
+      "errorCode":"ERROR_30010053,Order rejected due to TOSTNET Cross Reporting failure"
     },
     {
       "Id": "11",
@@ -284,11 +276,8 @@
       "MinQty": 0,
       "OrderClassification": "3",
       "SelfTradePreventionId": "0",
-      "ordstatus": [
-        "0",
-        "2",
-        "8"
-      ]
+      "ordstatus": ["8"],
+      "errorCode":"ERROR_30010053,Order rejected due to TOSTNET Cross Reporting failure"
     },
     {
       "Id": "12",
@@ -310,11 +299,8 @@
       "MinQty": 0,
       "OrderClassification": "3",
       "SelfTradePreventionId": "0",
-      "ordstatus": [
-        "0",
-        "2",
-        "8"
-      ]
+      "ordstatus": ["8"],
+      "errorCode":"ERROR_30010053,Order rejected due to TOSTNET Cross Reporting failure"
     },
     {
       "Id": "13",
@@ -336,11 +322,8 @@
       "MinQty": 0,
       "OrderClassification": "3",
       "SelfTradePreventionId": "0",
-      "ordstatus": [
-        "0",
-        "2",
-        "8"
-      ]
+      "ordstatus": ["8"],
+      "errorCode":"ERROR_30010053,Order rejected due to TOSTNET Cross Reporting failure"
     },
     {
       "Id": "14",
