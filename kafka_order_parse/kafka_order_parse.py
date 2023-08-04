@@ -384,7 +384,10 @@ class Trade_t(LittleEndianStructure):
         ('MinQty', c_double),
         ('OrderClassification', c_char),
         ('SelfTradePreventionId', c_int),
-        ('EdpLastLiquidityInd', c_char)
+        ('EdpLastLiquidityInd', c_char),
+        ('SecondaryOrderID', c_char * 32),
+        ('ContraBroker', c_char * 20),
+        ('SecondaryExecID', c_char * 32)
     ]
 
 
@@ -627,7 +630,7 @@ class Participant_t(LittleEndianStructure):
     _pack_ = 1
     _fields_ = [
         ('Side', c_char),
-        ('ClOrdID', c_char),
+        ('ClOrdID', c_char * 39),
         ('OrderQty', c_int),
         ('OrderCapacity', c_char),
         ('CashMargin', c_char),
@@ -647,7 +650,7 @@ class EdpCrossNewOrder_t(LittleEndianStructure):
         ('ClientID', c_char * 20),
         ('SenderSubID', c_char * 39),
         ('TargetSubID', c_char * 39),
-        ('CrossID', c_char * 39),
+        ('CrossID', c_char * 32),
         ('CrossType', c_int),
         ('CrossPrioritization', c_int),
         ('Buyer', Participant_t),
