@@ -11,11 +11,9 @@ from datetime import datetime
 from model.logger import setup_logger
 import json
 from openpyxl import load_workbook
-
+from importlib.machinery import SourceFileLoader
 
 __SOH__ = chr(1)
-
-from importlib.machinery import SourceFileLoader
 
 # 获取当前所在目录绝对路径
 current_path = os.path.abspath(os.path.dirname(__file__))
@@ -35,7 +33,11 @@ logfix = logging.getLogger('logfix')
 
 
 class Application(fix.Application):
-    ACCOUNT_INFO = 'firms/HRT-Clear-Member/accounts/HRT_SIT_ACCOUNT_1'
+    ACCOUNT_INFO = 'firms/HRT-Clear-Member/accounts/HRT_SIT_EDP_ACCOUNT_1'
+    USER_INFO = [
+        ('HRT_SIT_EDP_USER_1', 'hrtsitedpuser1'),
+    ]
+    execID = 0
 
     def __init__(self):
         super().__init__()
@@ -117,6 +119,7 @@ class Application(fix.Application):
             else:
                 logfix.info("(recvMsg) Business Message Error")
         elif msgType == "8":
+            account = message.getField(1)
             avgPx = message.getField(6)
             clOrdID = message.getField(11)
             CumQty = message.getField(14)
@@ -157,22 +160,27 @@ class Application(fix.Application):
                 lastLiquidityind = message.getField(851)
                 toSTNeTOrderID = message.getField(8101)
                 toSTNeTExecutionID = message.getField(8102)
-                if (avgPx, clOrdID, CumQty, execID, orderID, orderQty, ordStatus, ordType, price, rule80A, side, symbol,
-                    timeInForce, transactTime, execBroker, clientID, MinQty, execType, leavesQty, cashMargin,
-                    primaryLastPx, primaryBidPx, primaryAskPx, routingDecisionTime, OrderClassification,
-                    crossingPriceType, fsxTransactTime, SelfTradePreventionId, marginTransactionType, execRefID,
-                    lastPx, lastShares, SecondaryOrderID, ContraBroker, SecondaryExecID, lastLiquidityind,
-                    toSTNeTOrderID, toSTNeTExecutionID) != "":
+                if (
+                account, avgPx, clOrdID, CumQty, execID, orderID, orderQty, ordStatus, ordType, price, rule80A, side,
+                symbol,
+                timeInForce, transactTime, execBroker, clientID, MinQty, execType, leavesQty, cashMargin,
+                primaryLastPx, primaryBidPx, primaryAskPx, routingDecisionTime, OrderClassification,
+                crossingPriceType, fsxTransactTime, SelfTradePreventionId, marginTransactionType, execRefID,
+                lastPx, lastShares, SecondaryOrderID, ContraBroker, SecondaryExecID, lastLiquidityind,
+                toSTNeTOrderID, toSTNeTExecutionID) != "":
                     logfix.info("(recvMsg) EDP ToSTNeT Confirmation << {}".format(msg))
                 else:
                     logfix.info(
                         "(recvMsg) EDP ToSTNeT Confirmation << {},EDP ToSTNeT Confirmation FixMsg Error!".format(msg))
             else:
+                origClOrdId = message.getField(41)
                 text = message.getField(58)
-                if (avgPx, clOrdID, CumQty, execID, orderID, orderQty, ordStatus, ordType, price, rule80A, side, symbol,
-                    timeInForce, transactTime, execBroker, clientID, MinQty, execType, leavesQty, cashMargin,
-                    primaryLastPx, primaryBidPx, primaryAskPx, routingDecisionTime, OrderClassification,
-                    crossingPriceType, fsxTransactTime, SelfTradePreventionId, marginTransactionType, text) != "":
+                if (
+                account, avgPx, clOrdID, CumQty, execID, orderID, orderQty, ordStatus, ordType, price, rule80A, side,
+                symbol,
+                timeInForce, transactTime, execBroker, clientID, MinQty, execType, leavesQty, cashMargin,
+                primaryLastPx, primaryBidPx, primaryAskPx, routingDecisionTime, OrderClassification, origClOrdId,
+                crossingPriceType, fsxTransactTime, SelfTradePreventionId, marginTransactionType, text) != "":
                     logfix.info("(recvMsg) EDP ToSTNeT Rejection << {}".format(msg))
                 else:
                     logfix.info(
@@ -205,25 +213,35 @@ class Application(fix.Application):
         pass
 
     def load_test_case(self):
-        global ACCOUNT_INFO
-        module_name = "generation"
-        module_path = generation_path
-        # 导入具有完整文件路径的模块
-        module1 = SourceFileLoader(module_name, module_path).load_module()
-        generation = module1.generation
-        module_name = "InsertOrderEntryFirst"
+        global ACCOUNT_INFO, USER_INFO
+        # module_name = "generation"
+        # module_path = generation_path
+        # # 导入具有完整文件路径的模块
+        # module1 = SourceFileLoader(module_name, module_path).load_module()
+        # generation = module1.generation
+
         module_path = sit_client_path
-        insert_order_module = SourceFileLoader(module_name, module_path).load_module()
-        insert = insert_order_module.InsertOrderEntryFirst
+        login_module_name = "login"
+        login_module = SourceFileLoader(login_module_name, module_path).load_module()
+        login = login_module.login
+
+        insert_module_name = "InsertOrderEntry"
+        insert_order_module = SourceFileLoader(insert_module_name, module_path).load_module()
+        insert = insert_order_module.InsertOrderEntry
+
+        """Login"""
+        res_login = login[USER_INFO[0][0], USER_INFO[0][1]]
+        access_token = res_login.access_token
+
         """Run"""
         with open("../../testcases/symbolList.json", "r") as f_json:
             case_list = json.load(f_json)
             time.sleep(2)
             for row in case_list["testCase"]:
-                symbol = row["symbol"]
+                symbol = row["Symbol"]
                 price = float(row["Price"]) * 10
                 orderQty = int(row["lot_size"])
-                insert(2, 1, orderQty, symbol, price, str(self.getClOrdID()), ACCOUNT_INFO, 1,
-                                                 "P.1.4")
+                insert(access_token, 2, 1, orderQty, symbol, int(price), str(self.getClOrdID()), ACCOUNT_INFO, 1,
+                       "P.1.4")
 
         return
