@@ -73,7 +73,7 @@ class Application(fix.Application):
         # 将JSON数据写入文件
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = module1.compare_field_values('../../testcases/EDP_Functional_Test_Matrix.json',
+        self.Result = module1.compare_field_values('../../testcases/test.json',
                                                    'logs/recv_data.json',
                                                    'ordstatus')
         print("Session (%s) logout !" % sessionID.toString())
@@ -258,7 +258,7 @@ class Application(fix.Application):
                         logfix.info(
                             "(recvMsg) Order execType error,orderStatus = {},execType = {}".format(ordStatus, execType))
                 elif ordStatus == "4":
-                    #  7.8 Execution Report – End of IOC Expired
+                    #  7.8 Execution Report – Order Canceled / IOC Expired / ToSTNeT Rejection
                     execBroker = message.getField(76)
                     if execType == "C":
                         text = message.getField(58)
@@ -360,9 +360,9 @@ class Application(fix.Application):
                 msg = message.toString().replace(__SOH__, "|")
                 if (clOrdID, orderID, transactTime, fsxTransactTime, origClOrdID, text,
                     cxlRejReason, cxlRejResponseTo) != "":
-                    logfix.info("(recvMsg) Order Canceled << %s" % msg + "ordStatus = " + str(ordStatus))
+                    logfix.info("(recvMsg) Order Cancel Reject << %s" % msg + "ordStatus = " + str(ordStatus))
                 else:
-                    logfix.info("(recvMsg) Order Canceled << %s" % msg + 'Order Canceled FixMsg Error!')
+                    logfix.info("(recvMsg) Order Cancel Reject << %s" % msg + 'Order Cancel Reject FixMsg Error!')
 
             self.onMessage(message, sessionID)
         return
@@ -499,8 +499,8 @@ class Application(fix.Application):
         """Run"""
         # EDP_Functional_Test_Matrix.json
 
-        with open('../../testcases/EDP_Functional_Test_Matrix.json', 'r') as f_json:
-            generation('../../testcases/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
+        with open('../../testcases/test.json', 'r') as f_json:
+            # generation('../../testcases/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
@@ -518,5 +518,5 @@ class Application(fix.Application):
                     if row["Symbol"] == "5076":
                         time.sleep(3)
                     else:
-                        time.sleep(1)
+                        time.sleep(3)
                     self.order_cancel_request(row)
