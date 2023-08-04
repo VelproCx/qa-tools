@@ -30,7 +30,7 @@ class Application(fix.Application):
         return
 
     def onLogon(self, sessionID):
-        "客户端登陆成功时候调用此方法"
+        # "客户端登陆成功时候调用此方法"
         self.sessionID = sessionID
         print("Successful Logon to session '{}'.".format(sessionID.toString()))
         # return
