@@ -9,21 +9,8 @@ import time
 import logging
 from model.logger import setup_logger
 
-
 __SOH__ = chr(1)
 
-
-# 获取当前所在目录绝对路径
-current_path = os.path.abspath(os.path.dirname(__file__))
-# 将当前目录的路径和上级目录的绝对路径拼接
-Parent_path = os.path.abspath(os.path.join(current_path, "../../method"))
-grpc_path = os.path.abspath(os.path.join(current_path, "../../../gRpc_py"))
-# 获取上级目录中一个文件的路径
-generation_path = os.path.join(Parent_path, "file_generation.py")
-# 获取data_comparsion
-data_comparison_path = os.path.join(Parent_path, "data_comparison.py")
-# 获取gRpc发单脚本路径
-sit_client_path = os.path.join(grpc_path, "sit_client.py")
 
 # log
 setup_logger('logfix', 'logs/edp_report.log')
