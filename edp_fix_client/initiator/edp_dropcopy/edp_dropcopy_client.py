@@ -18,7 +18,6 @@ def main(config_file):
 
         initiator.start()
 
-        application.load_test_case()
         # 执行完所有测试用例后等待时间
         sleep_duration = timedelta(minutes=60)
         end_time = datetime.now() + sleep_duration
