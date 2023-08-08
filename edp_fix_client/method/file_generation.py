@@ -6,14 +6,19 @@ from openpyxl.styles import Border, Side
 
 
 def generation(file_path, filename):
-    fields_to_remove = ['Account', 'ordstatus']
+    fields_to_remove = ['Account', 'OrderQty', 'Side', 'Price', 'TimeInForce', 'CrossingPriceType',
+                        'Rule80A', 'CashMargin', 'MarginTransactionType', 'MinQty', 'OrderClassification',
+                        'SelfTradePreventionId']
     with open(file_path, 'r') as f_json:
         json_data = json.load(f_json)
     for row in json_data["testCase"]:
         # 循环接收需要删除的字段
         for field in fields_to_remove:
-            # 删除字段
-            del row[field]
+            try:
+                # 删除字段
+                del row[field]
+            except KeyError:
+                pass
 
     df = pd.json_normalize(json_data["testCase"])
 
@@ -24,8 +29,10 @@ def generation(file_path, filename):
 
     # 选择要设置颜色的工作表
     sheet = workbook.active  # 使用默认的活动工作表
-    sheet['S1'] = 'Execution Result'
-    sheet['T1'] = 'Remark'
+    sheet['J1'] = 'RecvOrdStatus'
+    sheet['K1'] = 'RecvErrorCode'
+    sheet['L1'] = 'Execution Result'
+    sheet['M1'] = 'Remark'
     # 设置最合适的列宽
     for column in sheet.columns:
         max_length = 0
@@ -50,9 +57,9 @@ def generation(file_path, filename):
     # 指定要设置颜色的行和列
     row_number = 1
     column_start = 'A'
-    column_end = 'R'
-    res_column_start = 'S'
-    res_column_end = 'T'
+    column_end = 'K'
+    res_column_start = 'L'
+    res_column_end = 'M'
 
     # 设置单元格背景颜色
     fill = PatternFill(fill_type='solid', fgColor='FFFF00')
@@ -67,3 +74,4 @@ def generation(file_path, filename):
 
     # 保存修改并关闭工作簿
     workbook.save(filename)
+

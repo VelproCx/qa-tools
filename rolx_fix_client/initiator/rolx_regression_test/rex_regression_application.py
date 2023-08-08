@@ -18,9 +18,12 @@ import os
 # 获取当前所在目录绝对路径
 current_path = os.path.abspath(os.path.dirname(__file__))
 # 将当前目录的路径，获取上级目录的绝对路径
-generation_parent_path = os.path.abspath(os.path.join(current_path, "../../method"))
+Parent_path = os.path.abspath(os.path.join(current_path, "../../method"))
 # 获取上级目录中一个文件的路径
-generation_path = os.path.join(generation_parent_path, "file_generation.py")
+generation_path = os.path.join(Parent_path, "file_generation.py")
+#获取data_comparison
+data_comparison_path = os.path.join(Parent_path, "data_comparison.py")
+
 
 __SOH__ = chr(1)
 
@@ -75,15 +78,35 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         # "客户端断开连接时候调用此方法"
         self.logsCheck()
         json_data = json.dumps(self.ReceveRes)
+
+        module_name = "compare_field_values"
+        module_path = data_comparison_path
+        # 导入具有完整文件路径的模块
+        module1 = SourceFileLoader(module_name, module_path).load_module()
         # 将JSON数据写入文件中
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = self.compare_field_values('../../testcases/REX_Functional_Test_Matrix.json',
+        self.Result = module1.compare_field_values('../../testcases/REX_Functional_Test_Matrix.json',
                                                 'logs/recv_data.json',
                                                 'ordstatus')  # 为了比较ordstatus字段的值
-        logfix.info("Result : Total = {},Success = {},Fail = {}".format(self.Total, self.Success, self.Fail))
         print("Session ({}) logout !".format(sessionID.toString()))
-        self.writeResExcel('report/rex_report.xlsx', self.Result, 2, 'P')  # 并写入文件
+
+        ordstatus_list = []
+        errorCode_list = []
+        # 循环ReceveRes并将value添加到列表里
+        for i in self.ReceveRes:
+            ordstatus_list.append(str(i['ordstatus']))
+            if 'errorCode' in i:
+                errorCode_list.append(str(i['errorCode']))
+
+            # ReceveRes 没有'errorCode'字段时,添加空字符串到列表里
+            else:
+                errorCode_list.append(" ")
+
+        # report文件里写入字段
+        self.writeResExcel('report/rex_report.xlsx', ordstatus_list, 2, 'J')
+        self.writeResExcel('report/rex_report.xlsx', errorCode_list, 2, 'K')
+        self.writeResExcel('report/rex_report.xlsx', self.Result, 2, 'L')
         return
 
     def toAdmin(self, message, sessionID):
@@ -191,8 +214,14 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                         # 更新该组数据的ordstatus
                         item['ordstatus'].append(str(ordStatus))
             else:
-                # 添加新的数据到数组中
-                self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
+                if ordStatus != '8':
+                    # 添加新的数据到数组中
+                    self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
+
+                else:
+                    text = message.getField(58)
+                    self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus], 'errorCode': text})
+
             # 因CancelRej消息体与其他消息体共用字段少，为减少代码量，将msgType == '9'的消息体做单独处理
             if msgType != '9':
                 # 消息体共用tag
@@ -376,61 +405,36 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         pass
         # 数据比对的方法
 
-    # 数据比对的方法
-    def compare_field_values(self, json_file1, json_file2, field_name):
-        resList = []
-        with open(json_file1, 'r') as f1, open(json_file2, 'r') as f2:
-            data1 = json.load(f1)
-            data2 = json.load(f2)
-        records1 = data1['testCase']
-        records2 = data2
-        # 判断记录数量是否相同
-        if len(records1) != len(records2):
-            logfix.info("两个文件记录数量不一致，比对结果不准确，请仔细核对数据，再次进行比对！")
-        # 逐组比较字段值并输出结果s
-        for i, (record1, record2) in enumerate(zip(records1, records2), 1):  # enumerate打包成可迭代对象并设置起始下标为1
-            if record1[field_name] == record2[field_name]:
-                self.Success += 1
-                self.Total += 1
-                resList.append('success')
-            else:
-                self.Fail += 1
-                self.Total += 1
-                logfix.info(f"第 {i} 条数据的指定字段值不相同" + "," + "clordId:" + str(record2['clordId']))
-                resList.append('failed')
-                logfix.info("Except:" + str(record1[field_name]) + " ，" + "ordStatus: " + str(record2[field_name]))
-        return resList
-
     # 在掉出登陆时调用logscheck方法，判断是否有这些错误打印，
     def logsCheck(self):
         response = ['ps:若列表存在failed数据，请查看report.log文件']
-        self.writeResExcel('report/rex_report.xlsx', response, 2, 'Q')
+        self.writeResExcel('report/rex_report.xlsx', response, 2, 'M')
         with open('logs/rex_report.log', 'r') as f:
             content = f.read()
         if 'Market Price is not matching' in content:
             logfix.info('Market Price is NG')
             response = ['Market Price is NG']
-            self.writeResExcel('report/rex_report.xlsx', response, 5, 'Q')
+            self.writeResExcel('report/rex_report.xlsx', response, 5, 'M')
         else:
             logfix.info('Market Price is OK')
             response = ['Market Price is OK']
-            self.writeResExcel('report/rex_report.xlsx', response, 3, 'Q')
+            self.writeResExcel('report/rex_report.xlsx', response, 3, 'M')
         if 'FixMsg Error' in content:
             logfix.info('FixMsg is NG')
             response = ['FixMsg is NG']
-            self.writeResExcel('report/rex_report.xlsx', response, 6, 'Q')
+            self.writeResExcel('report/rex_report.xlsx', response, 6, 'M')
         else:
             logfix.info('FixMsg is OK')
             response = ['FixMsg is OK']
-            self.writeResExcel('report/rex_report.xlsx', response, 4, 'Q')
+            self.writeResExcel('report/rex_report.xlsx', response, 4, 'M')
         if 'Order execType error' in content:
             logfix.info("execType is NG")
             response = ['execType is NG']
-            self.writeResExcel('report/rex_report.xlsx', response, 7, "Q")
+            self.writeResExcel('report/rex_report.xlsx', response, 7, "M")
         else:
             logfix.info("execType is OK")
             response = ['execType is OK']
-            self.writeResExcel('report/rex_report.xlsx', response, 8, "Q")
+            self.writeResExcel('report/rex_report.xlsx', response, 8, "M")
 
     def writeResExcel(self, filename, data, row, column):
         # 打开现有的Excel文件或者创建新的Workbook
@@ -547,6 +551,9 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
             for row in case_data_list["testCase"]:
+                if row['Id'] == "1":
+                    self.insert_order_request(row)
+                    time.sleep(60)
                 if row["Symbol"] == '5076' and row["OrdType"] == "1" and row["Comment"] == "CancelAck":
                     time.sleep(120)
                     self.runTestCase(row)

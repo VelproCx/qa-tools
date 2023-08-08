@@ -53,7 +53,7 @@ def genClOrdID():
     return str1 + str(t) + str(execID).zfill(6)
 
 
-def InsertOrderEntryFirst(type, side, order_qty, symbol, price, clord_id, account, time_in_force):
+def InsertOrderEntryFirst(type, side, order_qty, symbol, price, clord_id, account, time_in_force, client_account_id):
     # 证书选择SSL类型
     creds = grpc.ssl_channel_credentials()
     conn = grpc.secure_channel(target=TRADE_HOST, credentials=creds,
@@ -68,7 +68,7 @@ def InsertOrderEntryFirst(type, side, order_qty, symbol, price, clord_id, accoun
                                                price=price,
                                                clord_id=clord_id,
                                                account=account,
-                                               time_in_force=time_in_force),
+                                               time_in_force=time_in_force, client_account_id=client_account_id),
         metadata=meta)
     logfix.info(response)
 
