@@ -313,7 +313,8 @@ class OrderCancelAccepted_t(LittleEndianStructure):
         ('PrimaryLastPx', c_double),
         ('PrimaryBidPx', c_double),
         ('PrimaryAskPx', c_double),
-        ('RoutingDecisionTime', c_char * 28)
+        ('RoutingDecisionTime', c_char * 28),
+        ('Text', c_char * 150)
     ]
 
 
@@ -431,7 +432,10 @@ class UnsolicitedCancelReplaceResponse_t(LittleEndianStructure):
         ('PrimaryLastPx', c_double),
         ('PrimaryBidPx', c_double),
         ('PrimaryAskPx', c_double),
-        ('RoutingDecisionTime', c_char * 28)
+        ('RoutingDecisionTime', c_char * 28),
+        ('SecondaryOrderID', c_char * 32),
+        ('ContraBroker', c_char * 20),
+        ('SecondaryExecID', c_char * 32)
     ]
 
 
@@ -1153,10 +1157,12 @@ for msg in consumer:
             if (sizeof(UnsolicitedCancelReplaceResponse_t)) + sizeof(Time_t) == msg_len:
                 ord = UnsolicitedCancelReplaceResponse_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
-            elif (sizeof(UnsolicitedCancelReplaceResponse_t)) + sizeof(BBO_t) + sizeof(Time_t):
+            elif (sizeof(UnsolicitedCancelReplaceResponse_t)) + sizeof(BBO_t) + sizeof(Time_t) == msg_len:
+                print(sizeof(UnsolicitedCancelReplaceResponse_t), sizeof(BBO_t), sizeof(Time_t))
                 ord = UnsolicitedCancelReplaceResponse_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
+                print(sizeof(UnsolicitedCancelReplaceResponse_t), sizeof(BBO_t), sizeof(Time_t),msg_len)
                 print("UnsolicitedCancelReplaceResponse msg length err, len : {}".format(msg_len))
                 exit(0)
         elif b'j' == hd.Msgtype and b'J' == hd.Evttype:
