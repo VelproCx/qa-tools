@@ -21,7 +21,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "8"
-      ]
+      ],
+      "errorCode": "ERROR_10010062,EDP order rejected due to out of trading hours"
     },
     {
       "Id": "2",
