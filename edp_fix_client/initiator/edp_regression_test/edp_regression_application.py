@@ -91,7 +91,7 @@ class Application(fix.Application):
 
         self.writeResExcel('report/edp_report.xlsx', ordstatus_list, 2, 'J')
         self.writeResExcel('report/edp_report.xlsx', errorCode_list, 2, 'K')
-        self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'S')
+        self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'L')
         return
 
     def toAdmin(self, message, sessionID):
@@ -375,26 +375,26 @@ class Application(fix.Application):
     # 判断log文件中是否存在 Market Price is not matching
     def logsCheck(self):
         response = ['ps: 若列表存在failed数据，请查看report.log文件']
-        self.writeResExcel('report/edp_report.xlsx', response, 2, 'T')
+        self.writeResExcel('report/edp_report.xlsx', response, 2, 'M')
         with open('logs/edp_report.log', 'r') as f:
             content = f.read()
 
         if 'FixMsg Error' in content:
             logfix.info('FixMsg is NG')
             response = ['FixMsg is NG']
-            self.writeResExcel('report/edp_report.xlsx', response, 4, 'T')
+            self.writeResExcel('report/edp_report.xlsx', response, 4, 'M')
         else:
             logfix.info('FixMsg is OK')
             response = ['FixMsg is OK']
-            self.writeResExcel('report/edp_report.xlsx', response, 4, 'T')
+            self.writeResExcel('report/edp_report.xlsx', response, 4, 'M')
         if 'Order execType error' in content:
             logfix.info("execType is NG")
             response = ['execType is NG']
-            self.writeResExcel('report/edp_report.xlsx', response, 5, "T")
+            self.writeResExcel('report/edp_report.xlsx', response, 5, "M")
         else:
             logfix.info("execType is OK")
             response = ['execType is OK']
-            self.writeResExcel('report/edp_report.xlsx', response, 5, "T")
+            self.writeResExcel('report/edp_report.xlsx', response, 5, "M")
 
     def writeResExcel(self, filename, data, row, column):
         # 打开现有的 Excel 文件或创建新的 Workbook
@@ -500,8 +500,8 @@ class Application(fix.Application):
         """Run"""
         # EDP_Functional_Test_Matrix.json
 
-        with open('../../testcases/test.json', 'r') as f_json:
-            # generation('../../testcases/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
+        with open('../../testcases/EDP_Functional_Test_Matrix.json', 'r') as f_json:
+            generation('../../testcases/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
