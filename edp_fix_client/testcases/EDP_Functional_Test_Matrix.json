@@ -20,10 +20,7 @@
       "OrderClassification": "3",
       "SelfTradePreventionId": "0",
       "ordstatus": [
-        "0",
-        "2",
-        "2",
-        "2"
+        "8"
       ]
     },
     {
@@ -36,7 +33,7 @@
       "OrderQty": 500,
       "OrdType": "1",
       "Side": "1",
-      "Symbol": "7203",
+      "Symbol": "1721",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -47,7 +44,6 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "2",
         "2",
         "2"
       ]
@@ -62,7 +58,7 @@
       "OrderQty": 500,
       "OrdType": "1",
       "Side": "2",
-      "Symbol": "7203",
+      "Symbol": "1721",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -73,7 +69,6 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "2",
         "2",
         "2"
       ]
@@ -87,9 +82,9 @@
       "Comment": "EDP_Limit_NewAck_Buy",
       "OrderQty": 500,
       "OrdType": "2",
-      "Price": 2220,
+      "Price": 2986,
       "Side": "1",
-      "Symbol": "7203",
+      "Symbol": "1721",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -100,7 +95,6 @@
       "SelfTradePreventionId": "",
       "ordstatus": [
         "0",
-        "2",
         "2",
         "2"
       ]
@@ -114,9 +108,9 @@
       "Comment": "EDP_Limit_NewAck_Sell",
       "OrderQty": 500,
       "OrdType": "2",
-      "Price": 2450,
+      "Price": 2796,
       "Side": "2",
-      "Symbol": "7203",
+      "Symbol": "1721",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -128,13 +122,12 @@
       "ordstatus": [
         "0",
         "2",
-        "2",
         "2"
       ]
     },
     {
       "Id": "6",
-      "ScenarioName": "Regular Order Flow-B(New Order->EDP Partially Fill Indicate->EDP ToSTNeT Confirmation)",
+      "ScenarioName": "Regular Order Flow-B(New Order->EDP Partially Fill Indicate->EDP ToSTNeT Confirmation) -> IOC Expired ",
       "Account": "RSIT_EDP_ACCOUNT_1",
       "Market": "EDP",
       "ActionType": "NewAck",
@@ -154,14 +147,13 @@
       "ordstatus": [
         "0",
         "1",
-        "C",
         "1",
-        "1"
+        "4"
       ]
     },
     {
       "Id": "7",
-      "ScenarioName": "Regular Order Flow-B(New Order->EDP Partially Fill Indicate->EDP ToSTNeT Confirmation)",
+      "ScenarioName": "Regular Order Flow-B(New Order->EDP Partially Fill Indicate->EDP ToSTNeT Confirmation) -> IOC Expired ",
       "Account": "RSIT_EDP_ACCOUNT_1",
       "Market": "EDP",
       "ActionType": "NewAck",
@@ -182,9 +174,8 @@
       "ordstatus": [
         "0",
         "1",
-        "C",
         "1",
-        "1"
+        "4"
       ]
     },
     {
@@ -210,6 +201,7 @@
         "0",
         "1",
         "2",
+        "1",
         "2"
       ]
     },
@@ -233,7 +225,13 @@
       "MinQty": 0,
       "OrderClassification": "3",
       "SelfTradePreventionId": "0",
-      "ordstatus": ["8"]
+      "ordstatus": [
+        "0",
+        "1",
+        "2",
+        "1",
+        "2"
+      ]
     },
     {
       "Id": "10",
@@ -254,8 +252,12 @@
       "MinQty": 0,
       "OrderClassification": "3",
       "SelfTradePreventionId": "0",
-      "ordstatus": ["8"],
-      "errorCode":"ERROR_30010053,Order rejected due to TOSTNET Cross Reporting failure"
+      "ordstatus": [
+        "0",
+        "2",
+        "4"
+      ],
+      "errorCode": "ERROR_30010053,Order rejected due to TOSTNET Cross Reporting failure"
     },
     {
       "Id": "11",
@@ -276,8 +278,12 @@
       "MinQty": 0,
       "OrderClassification": "3",
       "SelfTradePreventionId": "0",
-      "ordstatus": ["8"],
-      "errorCode":"ERROR_30010053,Order rejected due to TOSTNET Cross Reporting failure"
+      "ordstatus": [
+        "0",
+        "2",
+        "4"
+      ],
+      "errorCode": "ERROR_30010053,Order rejected due to TOSTNET Cross Reporting failure"
     },
     {
       "Id": "12",
@@ -299,8 +305,12 @@
       "MinQty": 0,
       "OrderClassification": "3",
       "SelfTradePreventionId": "0",
-      "ordstatus": ["8"],
-      "errorCode":"ERROR_30010053,Order rejected due to TOSTNET Cross Reporting failure"
+      "ordstatus": [
+        "0",
+        "2",
+        "4"
+      ],
+      "errorCode": "ERROR_30010053,Order rejected due to TOSTNET Cross Reporting failure"
     },
     {
       "Id": "13",
@@ -322,8 +332,12 @@
       "MinQty": 0,
       "OrderClassification": "3",
       "SelfTradePreventionId": "0",
-      "ordstatus": ["8"],
-      "errorCode":"ERROR_30010053,Order rejected due to TOSTNET Cross Reporting failure"
+      "ordstatus": [
+        "0",
+        "2",
+        "4"
+      ],
+      "errorCode": "ERROR_30010053,Order rejected due to TOSTNET Cross Reporting failure"
     },
     {
       "Id": "14",
@@ -346,8 +360,6 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "2",
-        "C",
         "2",
         "2"
       ]
@@ -374,7 +386,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"Unknown order"
+      "errorCode": "Unknown order"
     },
     {
       "Id": "16",
@@ -398,8 +410,6 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "2",
-        "C",
         "2",
         "2"
       ]
@@ -426,7 +436,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"Unknown order"
+      "errorCode": "Unknown order"
     },
     {
       "Id": "18",
@@ -450,9 +460,8 @@
       "ordstatus": [
         "0",
         "1",
-        "C",
         "1",
-        "1"
+        "4"
       ]
     },
     {
@@ -478,7 +487,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"Unknown order"
+      "errorCode": "Unknown order"
     },
     {
       "Id": "20",
@@ -503,9 +512,8 @@
       "ordstatus": [
         "0",
         "1",
-        "C",
         "1",
-        "1"
+        "4"
       ]
     },
     {
@@ -531,7 +539,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"Unknown order"
+      "errorCode": "Unknown order"
     },
     {
       "Id": "22",
@@ -555,7 +563,7 @@
       "ordstatus": [
         "0",
         "2",
-        "C"
+        "4"
       ]
     },
     {
@@ -580,7 +588,7 @@
       "ordstatus": [
         "0",
         "2",
-        "C"
+        "4"
       ]
     },
     {
@@ -606,7 +614,7 @@
       "ordstatus": [
         "0",
         "2",
-        "C"
+        "4"
       ]
     },
     {
@@ -632,7 +640,7 @@
       "ordstatus": [
         "0",
         "2",
-        "C"
+        "4"
       ]
     },
     {
@@ -656,7 +664,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -681,7 +689,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"Unknown order"
+      "errorCode": "Unknown order"
     },
     {
       "Id": "28",
@@ -704,7 +712,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ],
       "errorCode": ""
     },
@@ -730,7 +738,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"Unknown order"
+      "errorCode": "Unknown order"
     },
     {
       "Id": "30",
@@ -754,7 +762,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -779,7 +787,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"Unknown order"
+      "errorCode": "Unknown order"
     },
     {
       "Id": "32",
@@ -803,7 +811,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -828,7 +836,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"Unknown order"
+      "errorCode": "Unknown order"
     },
     {
       "Id": "34",
@@ -851,7 +859,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -875,7 +883,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -900,7 +908,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -925,7 +933,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -951,7 +959,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_20010021,Invalid Symbol"
+      "errorCode": "ERROR_10010013,No available instrument risk check data found"
     },
     {
       "Id": "39",
@@ -976,7 +984,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010014,Price exceeds the high - low price range"
+      "errorCode": "ERROR_10010014,Price exceeds the high - low price range"
     },
     {
       "Id": "40",
@@ -1001,7 +1009,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010014,Price exceeds the high - low price range"
+      "errorCode": "ERROR_10010014,Price exceeds the high - low price range"
     },
     {
       "Id": "41",
@@ -1026,7 +1034,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010015,Small tick value is not supported in static file"
+      "errorCode": "ERROR_10010015,Tick-size is not matched with small tick"
     },
     {
       "Id": "42",
@@ -1051,7 +1059,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010015,Small tick value is not supported in static filek"
+      "errorCode": "ERROR_10010015,Tick-size is not matched with small tick"
     },
     {
       "Id": "43",
@@ -1076,7 +1084,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010015,Small tick value is not supported in static file"
+      "errorCode": "ERROR_10010015,Tick-size is not matched with small tick"
     },
     {
       "Id": "44",
@@ -1101,7 +1109,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010015,Small tick value is not supported in static file"
+      "errorCode": "ERROR_10010015,Tick-size is not matched with small tick"
     },
     {
       "Id": "45",
@@ -1126,7 +1134,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010015,Small tick value is not supported in static file"
+      "errorCode": "ERROR_10010015,Tick-size is not matched with small tick"
     },
     {
       "Id": "46",
@@ -1151,7 +1159,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010016,Small tick value is not supported in static filek"
+      "errorCode": "ERROR_10010016,Tick-size is not matched with non-small tick"
     },
     {
       "Id": "47",
@@ -1176,7 +1184,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010016,Small tick value is not supported in static file"
+      "errorCode": "ERROR_10010016,Tick-size is not matched with non-small tick"
     },
     {
       "Id": "48",
@@ -1201,7 +1209,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010016,Small tick value is not supported in static file"
+      "errorCode": "ERROR_10010016,Tick-size is not matched with non-small tick"
     },
     {
       "Id": "49",
@@ -1226,7 +1234,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010016,Small tick value is not supported in static file"
+      "errorCode": "ERROR_10010016,Tick-size is not matched with non-small tick"
     },
     {
       "Id": "50",
@@ -1237,9 +1245,9 @@
       "Comment": "Price<300,000 Tick side != 100",
       "OrderQty": 50,
       "OrdType": "2",
-      "Price": 52750,
+      "Price": 56555,
       "Side": "2",
-      "Symbol": "1489",
+      "Symbol": "8963",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -1251,7 +1259,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010016,Small tick value is not supported in static file"
+      "errorCode": "ERROR_10010016,Tick-size is not matched with non-small tick"
     },
     {
       "Id": "51",
@@ -1276,7 +1284,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010016,Small tick value is not supported in static file"
+      "errorCode": "ERROR_10010016,Tick-size is not matched with non-small tick"
     },
     {
       "Id": "52",
@@ -1300,7 +1308,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010018,Invalid quantity or lot_size"
+      "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
     },
     {
       "Id": "53",
@@ -1324,7 +1332,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010018,Invalid quantity or lot_size"
+      "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
     },
     {
       "Id": "54",
@@ -1347,7 +1355,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -1371,7 +1379,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -1396,7 +1404,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010018,Invalid quantity or lot_size"
+      "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
     },
     {
       "Id": "57",
@@ -1419,7 +1427,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -1443,7 +1451,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -1467,7 +1475,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -1491,7 +1499,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -1516,7 +1524,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010018,Invalid quantity or lot_size"
+      "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
     },
     {
       "Id": "62",
@@ -1540,7 +1548,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010011,Notional limit is exceeded"
+      "errorCode": "ERROR_10010011,Notional limit is exceeded"
     },
     {
       "Id": "63",
@@ -1564,7 +1572,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010003,OrdType is not supported"
+      "errorCode": "ERROR_10010003,OrdType is not supported"
     },
     {
       "Id": "64",
@@ -1588,7 +1596,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010012,TimeInForce is not supported"
+      "errorCode": "ERROR_10010012,TimeInForce is not supported"
     },
     {
       "Id": "65",
@@ -1612,7 +1620,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010004,Side is not supported"
+      "errorCode": "ERROR_10010004,Side is not supported"
     },
     {
       "Id": "66",
@@ -1636,7 +1644,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010009,Invalid account"
+      "errorCode": "ERROR_10010009,Invalid account"
     },
     {
       "Id": "67",
@@ -1660,7 +1668,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010025,Rule80A is not supported"
+      "errorCode": "ERROR_10010025,Rule80A is not supported"
     },
     {
       "Id": "68",
@@ -1684,7 +1692,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010026,CashMargin is not supported"
+      "errorCode": "ERROR_10010026,CashMargin is not supported"
     },
     {
       "Id": "69",
@@ -1708,7 +1716,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010027,MarginTransactionType is not supported"
+      "errorCode": "ERROR_10010027,MarginTransactionType is not supported"
     },
     {
       "Id": "70",
@@ -1732,7 +1740,7 @@
       "ordstatus": [
         "8"
       ],
-      "errorCode":"ERROR_10010028,CrossingPriceType is not supported"
+      "errorCode": "ERROR_10010028,CrossingPriceType is not supported"
     },
     {
       "Id": "71",
@@ -1755,7 +1763,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -1779,7 +1787,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -1803,7 +1811,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -1827,7 +1835,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -1851,7 +1859,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -1875,7 +1883,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -1899,7 +1907,7 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -1923,7 +1931,7 @@
       "SelfTradePreventionId": "",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     },
     {
@@ -1947,7 +1955,7 @@
       "SelfTradePreventionId": "",
       "ordstatus": [
         "0",
-        "C"
+        "4"
       ]
     }
   ]

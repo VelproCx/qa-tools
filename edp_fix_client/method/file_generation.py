@@ -7,7 +7,8 @@ from openpyxl.styles import Border, Side
 
 def generation(file_path, filename):
     fields_to_remove = ['Account', 'OrderQty', 'Side', 'Price', 'TimeInForce', 'CrossingPriceType',
-                        'Rule80A', 'CashMargin', 'MarginTransactionType']
+                        'Rule80A', 'CashMargin', 'MarginTransactionType', 'MinQty', 'OrderClassification',
+                        'SelfTradePreventionId']
     with open(file_path, 'r') as f_json:
         json_data = json.load(f_json)
     for row in json_data["testCase"]:
@@ -17,7 +18,7 @@ def generation(file_path, filename):
                 # 删除字段
                 del row[field]
             except KeyError:
-                        pass
+                pass
 
     df = pd.json_normalize(json_data["testCase"])
 
@@ -74,4 +75,3 @@ def generation(file_path, filename):
     # 保存修改并关闭工作簿
     workbook.save(filename)
 
-# generation("../testcases/ROL_Functional_Test_Matrix.json", "rolx_report.xlsx")
