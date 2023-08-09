@@ -313,7 +313,8 @@ class OrderCancelAccepted_t(LittleEndianStructure):
         ('PrimaryLastPx', c_double),
         ('PrimaryBidPx', c_double),
         ('PrimaryAskPx', c_double),
-        ('RoutingDecisionTime', c_char * 28)
+        ('RoutingDecisionTime', c_char * 28),
+        ('Text', c_char * 150)
     ]
 
 
@@ -431,7 +432,10 @@ class UnsolicitedCancelReplaceResponse_t(LittleEndianStructure):
         ('PrimaryLastPx', c_double),
         ('PrimaryBidPx', c_double),
         ('PrimaryAskPx', c_double),
-        ('RoutingDecisionTime', c_char * 28)
+        ('RoutingDecisionTime', c_char * 28),
+        ('SecondaryOrderID', c_char * 32),
+        ('ContraBroker', c_char * 20),
+        ('SecondaryExecID', c_char * 32)
     ]
 
 
@@ -440,7 +444,6 @@ class UnsolicitedCancelReplaceResponse_with_BBO_t(LittleEndianStructure):
     _fields_ = [
         ('UnsolicitedCancelReplaceResponse', UnsolicitedCancelReplaceResponse_t),
         ('RecvTime', Time_t),
-        ('BBO', BBO_t)
     ]
 
 
@@ -468,7 +471,7 @@ class BusinessMessageRejected_with_time_t(LittleEndianStructure):
     _pack_ = 1
     _fields_ = [
         ('BusinessMessageRejected', BusinessMessageRejected_t),
-        ('RecTime', Time_t)
+        ('RecTime', Time_t),
     ]
 
 
@@ -820,7 +823,6 @@ class EdpCrossExpired_t(LittleEndianStructure):
         ('Msgseqnum', c_int),
         ('Trycount', c_int),
         ('ClientID', c_char * 20),
-
         ('SenderSubID', c_char * 39),
         ('TargetSubID', c_char * 39),
         ('OrderID', c_char * 32),
@@ -1049,6 +1051,33 @@ class EdpToSTNetConfirmation_with_BBO_t(LittleEndianStructure):
     ]
 
 
+class Rejected_t(LittleEndianStructure):
+    _pack_ = 1
+    _fields_ = [
+        ('Msgtype', c_char),
+        ('Evttype', c_char),
+        ('SenderID', c_char * 39),
+        ('TargetID', c_char * 39),
+        ('Msgseqnum', c_int),
+        ('Trycount', c_int),
+        ('ClientID', c_char * 20),
+        ('RefSeqNum', c_int),
+        ('Text', c_char * 150),
+        ('RefTagID', c_int),
+        ('RefMsgType', c_char * 9),
+        ('SessionRejectReason', c_int)
+    ]
+
+
+class Rejected_with_BBO_t(LittleEndianStructure):
+    _pack_ = 1
+    _fields_ = [
+        ('Rejected', Rejected_t),
+        ('RecTime', Time_t),
+        ('BBO', BBO_t)
+    ]
+
+
 def OrderDump(ord, indent=None):
     if indent:
         prifix = indent
@@ -1150,15 +1179,25 @@ for msg in consumer:
                 print("Trade msg length err, len : {}".format(msg_len))
                 exit(0)
         elif b'8' == hd.Msgtype and b'F' == hd.Evttype:
-            if (sizeof(UnsolicitedCancelReplaceResponse_t)) + sizeof(Time_t) == msg_len:
-                ord = UnsolicitedCancelReplaceResponse_t.from_buffer_copy(msg.value)
-                OrderDump(ord)
-            elif (sizeof(UnsolicitedCancelReplaceResponse_t)) + sizeof(BBO_t) + sizeof(Time_t):
+            # if (sizeof(UnsolicitedCancelReplaceResponse_t)) + sizeof(Time_t) == msg_len:
+            #     ord = UnsolicitedCancelReplaceResponse_t.from_buffer_copy(msg.value)
+            #     OrderDump(ord)
+            # elif (sizeof(UnsolicitedCancelReplaceResponse_t)) + sizeof(BBO_t) + sizeof(Time_t) == msg_len:
+            #     print(sizeof(UnsolicitedCancelReplaceResponse_t), sizeof(BBO_t), sizeof(Time_t))
+            #     ord = UnsolicitedCancelReplaceResponse_with_BBO_t.from_buffer_copy(msg.value)
+            #     OrderDump(ord)
+            # else:
+            #     print(sizeof(UnsolicitedCancelReplaceResponse_t), sizeof(BBO_t), sizeof(Time_t), msg_len)
+            #     print("UnsolicitedCancelReplaceResponse msg length err, len : {}".format(msg_len))
+            #     exit(0)
+            if (sizeof(UnsolicitedCancelReplaceResponse_t)) + sizeof(BBO_t) + sizeof(Time_t) == msg_len:
+                print(sizeof(UnsolicitedCancelReplaceResponse_t), sizeof(BBO_t), sizeof(Time_t))
                 ord = UnsolicitedCancelReplaceResponse_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("UnsolicitedCancelReplaceResponse msg length err, len : {}".format(msg_len))
-                exit(0)
+                ord = UnsolicitedCancelReplaceResponse_t.from_buffer_copy(msg.value)
+                OrderDump(ord)
+
         elif b'j' == hd.Msgtype and b'J' == hd.Evttype:
             if (sizeof(BusinessMessageRejected_t)) == msg_len:
                 ord = BusinessMessageRejected_t.from_buffer_copy(msg.value)
@@ -1250,7 +1289,7 @@ for msg in consumer:
             else:
                 print("EdpToSTNetRejected msg length err, len : {}".format(msg_len))
                 exit(0)
-        elif b'8' == hd.Msgtype and b'S' == hd.Evttype:
+        elif b'8' == hd.Msgtype and b'V' == hd.Evttype:
             if (sizeof(EdpToSTNetConfirmation_t)) + sizeof(Time_t) == msg_len:
                 ord = EdpToSTNetConfirmation_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
@@ -1260,6 +1299,13 @@ for msg in consumer:
             else:
                 print("EdpToSTNetConfirmation msg length err, len : {}".format(msg_len))
                 exit(0)
+        elif b'3' == hd.Msgtype and b'I' == hd.Evttype:
+            if(sizeof(Rejected_t)) + sizeof(Time_t) == msg_len:
+                ord = Rejected_t.from_buffer_copy(msg.value)
+                OrderDump(ord)
+            elif (sizeof(Rejected_t)) + sizeof(BBO_t) + sizeof(Time_t) == msg_len:
+                ord = Rejected_with_BBO_t.from_buffer_copy(msg.value)
+                OrderDump(ord)
     elif 'SystemEvent' == msg.topic:
         print(msg.value)
     else:

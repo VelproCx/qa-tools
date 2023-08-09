@@ -73,7 +73,7 @@ class Application(fix.Application):
         # 将JSON数据写入文件
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = module1.compare_field_values('../../testcases/test.json',
+        self.Result = module1.compare_field_values('../../testcases/EDP_Functional_Test_Matrix.json',
                                                    'logs/recv_data.json',
                                                    'ordstatus')
         print("Session (%s) logout !" % sessionID.toString())
@@ -508,7 +508,7 @@ class Application(fix.Application):
             for row in case_data_list["testCase"]:
                 if row['Id'] == "1":
                     self.insert_order_request(row)
-                    time.sleep(6)
+                    time.sleep(60)
 
                 elif row["ActionType"] == 'NewAck':
                     self.insert_order_request(row)
