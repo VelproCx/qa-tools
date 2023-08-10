@@ -1,0 +1,8 @@
+20230810-04:07:19.000 : Created session
+20230810-04:07:19.000 : Connecting to 54.250.107.1 on port 5007
+20230810-04:07:20.000 : Initiated logon request
+20230810-04:07:20.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20230810-04:07:20.000 : Received logon response
+20230810-04:08:22.000 : Initiated logout request
+20230810-04:08:22.000 : Received logout response
+20230810-04:08:22.000 : Disconnecting

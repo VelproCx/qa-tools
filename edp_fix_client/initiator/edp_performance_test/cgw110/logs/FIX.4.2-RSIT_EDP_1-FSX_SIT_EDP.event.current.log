@@ -1,0 +1,19 @@
+20230810-04:00:41.000 : Created session
+20230810-04:00:41.000 : Connecting to 54.250.107.1 on port 5001
+20230810-04:00:41.000 : Initiated logon request
+20230810-04:00:42.000 : Socket Error: Connection reset by peer.
+20230810-04:00:42.000 : Disconnecting
+20230810-04:05:41.000 : Created session
+20230810-04:05:41.000 : Connecting to 54.250.107.1 on port 5001
+20230810-04:05:41.000 : Initiated logon request
+20230810-04:05:41.000 : Socket Error: Connection reset by peer.
+20230810-04:05:41.000 : Disconnecting
+20230810-04:06:19.000 : Created session
+20230810-04:06:19.000 : Connecting to 54.250.107.1 on port 5001
+20230810-04:06:19.000 : Initiated logon request
+20230810-04:06:19.000 : Socket Error: Connection reset by peer.
+20230810-04:06:19.000 : Disconnecting
+20230810-04:07:19.000 : Connecting to 54.250.107.1 on port 5001
+20230810-04:07:19.000 : Initiated logon request
+20230810-04:07:19.000 : Socket Error: Connection reset by peer.
+20230810-04:07:19.000 : Disconnecting

@@ -17,16 +17,16 @@ logfix = logging.getLogger('logfix')
 
 
 class Application(fix.Application):
-    orderID = 0
     execID = 0
-    ORDERS_DICT = []
-    LASTEST_ORDER = {}
-    Accepted = 0
-    Rejected = 0
     Total = 0
-    Filled = 0
     num = 1
-    Expired = 0
+    order_new = 0
+    order_expired = 0
+    order_accepted = 0
+    order_rejected = 0
+    order_TosTNeT_rejected = 0
+    order_filled = 0
+    order_comfirmation = 0
 
     def __init__(self):
         super().__init__()
@@ -47,10 +47,11 @@ class Application(fix.Application):
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
         logfix.info(
-            "Result : Total = {},Accepted = {},Filled = {},Rejected = {},Expired = {}".format(self.Total, self.Accepted,
-                                                                                              self.Filled,
-                                                                                              self.Rejected,
-                                                                                              self.Expired))
+            "Result : Total = {},Accepted = {},Filled = {},Rejected = {},Expired = {}, TosTNeT_rejected = {}, comfirmation = {}".format(
+                self.Total, self.order_accepted,
+                self.order_filled,
+                self.order_rejected,
+                self.order_expired, self.order_TosTNeT_rejected, self.order_comfirmation))
         print("Session (%s) logout !" % sessionID.toString())
         return
 
@@ -75,29 +76,39 @@ class Application(fix.Application):
     def fromApp(self, message, sessionID):
         # "接收业务消息时调用此方法"
         # 使用quickFix框架getField方法提取clOrdId、ordStatus
-        self.ORDERS_DICT = message.getField(11)
         ordStatus = message.getField(39)
         msg = message.toString().replace(__SOH__, "|")
 
         if ordStatus == "8":
             logfix.info("(recvMsg) R << %s" % msg)
-            self.Rejected = self.Rejected + 1
+            self.order_rejected = self.order_rejected + 1
             self.Total = self.Total + 1
             logfix.info("Result : Rejected ," + "ordStatus =" + ordStatus)
         elif ordStatus == "0":
             logfix.info("(recvMsg) R << %s" % msg)
             self.Total = self.Total + 1
-            self.Accepted = self.Accepted + 1
+            self.order_accepted = self.order_accepted + 1
             logfix.info("Result : Accepted ," + "ordStatus =" + ordStatus)
-        elif ordStatus == "C":
-            logfix.info("(recvMsg) R << %s" % msg)
-            self.Expired = self.Expired + 1
-            logfix.info("Result : Expired ," + "ordStatus =" + ordStatus)
-        elif ordStatus == "2":
-            logfix.info("(recvMsg) R << %s" % msg)
-            self.Filled = self.Filled + 1
-            logfix.info("Result : Filled ," + "ordStatus =" + ordStatus)
-
+        elif ordStatus == "4":
+            text = message.getField(58)
+            if 'ERROR_20010051,Order rejected due to IoC expired.' == text:
+                logfix.info("(recvMsg) R << %s" % msg)
+                self.order_expired = self.order_expired + 1
+                logfix.info("Result : Expired ," + "ErrorCode =" + text)
+            else:
+                logfix.info("(recvMsg) R << %s" % msg)
+                self.order_TosTNeT_rejected = self.order_TosTNeT_rejected + 1
+                logfix.info("Result : ToSTNeT Rejection ," + "ErrorCode =" + text)
+        elif ordStatus == "2" or ordStatus == "1":
+            execTransType = message.getField(20)
+            if execTransType == '0':
+                logfix.info("(recvMsg) R << %s" % msg)
+                self.order_filled = self.order_filled + 1
+                logfix.info("Result : Filled ," + "ordStatus =" + ordStatus)
+            else:
+                logfix.info("(recvMsg) R << %s" % msg)
+                self.order_comfirmation = self.order_comfirmation + 1
+                logfix.info("Result : comfirmation ," + "ordStatus =" + ordStatus)
         self.onMessage(message, sessionID)
         logfix.info("-------------------------------------------------------------------------------------------------")
         return
@@ -124,7 +135,7 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account(row["Account"]))
+        msg.setField(fix.Account('RSIT_EDP_ACCOUNT_9'))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(row["OrderQty"]))
         msg.setField(fix.OrdType(row["OrdType"]))
