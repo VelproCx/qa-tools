@@ -516,7 +516,7 @@ class Application(fix.Application):
 
                 elif row["ActionType"] == 'CancelAck':
                     # 增加判断条件，判断是否为需要cancel的symbol
-                    if row["Symbol"] == "5076":
+                    if row["Symbol"] == "1496" or row["Symbol"] == "2927" or row["Symbol"] == "3915" or row["Symbol"] == "3916":
                         time.sleep(3)
                     else:
                         time.sleep(3)
