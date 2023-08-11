@@ -8,6 +8,7 @@ from datetime import datetime
 from model.logger import setup_logger
 import json
 import random
+import threading
 
 __SOH__ = chr(1)
 
@@ -138,12 +139,12 @@ class Application(fix.Application):
         msg.setField(fix.Account('RSIT_EDP_ACCOUNT_1'))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(row["OrderQty"]))
-        msg.setField(fix.OrdType(row["OrdType"]))
+        msg.setField(fix.OrdType('1'))
         msg.setField(fix.Symbol(row["Symbol"]))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
-        if row["OrdType"] == "2":
-            msg.setField(fix.Price(row["Price"]))
+        # if row["OrdType"] == "2":
+        #     msg.setField(fix.Price(row["Price"]))
 
         if (self.num % 2) == 0:
             msg.setField(fix.Side("2"))
@@ -161,14 +162,20 @@ class Application(fix.Application):
     def runTestCase(self, row):
         self.insert_order_request(row)
 
+
     def load_test_case(self):
         """Run"""
-        with open('../../../testcases/edp_Load_Test_Matrix.json', 'r') as f_json:
+        with open('../../../testcases/full_stock_List.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while self.num < 6:
+            while self.num < 25:
                 self.num += 1
                 for row in case_data_list["testCase"]:
-                    self.runTestCase(row)
-                    time.sleep(0.004)
+                    # self.runTestCase(row)
+                    # time.sleep(0.004)
+                    thread = threading.Thread(target=self.runTestCase(row))
+                    # 启动线程
+                    thread.start()
+                    # 等待所有进程执行完毕
+                    thread.join()

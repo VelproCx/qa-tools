@@ -211,7 +211,7 @@ class Application(fix.Application):
                 OrderClassification = message.getField(8060)
                 SelfTradePreventionId = message.getField(8174)
 
-                if symbol == '1320' or symbol == '1321' or symbol == '1308':
+                if symbol == '1496' or symbol == '2927' or symbol == '3915' or symbol == '3916':
                     self.ORDERS_DICT = message.getField(11)
                     print(self.ORDERS_DICT)
                 msg = message.toString().replace(__SOH__, "|")
