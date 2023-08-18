@@ -138,17 +138,18 @@ class Application(fix.Application):
         msg.setField(fix.Account('RSIT_EDP_ACCOUNT_9'))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(row["OrderQty"]))
-        msg.setField(fix.OrdType(row["OrdType"]))
+        msg.setField(fix.OrdType('1'))
         msg.setField(fix.Symbol(row["Symbol"]))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
-        if row["OrdType"] == "2":
-            msg.setField(fix.Price(row["Price"]))
+        msg.setField(fix.Side("2"))
+        # if row["OrdType"] == "2":
+        #     msg.setField(fix.Price(row["Price"]))
 
-        if (self.num % 2) == 0:
-            msg.setField(fix.Side("2"))
-        else:
-            msg.setField(fix.Side("1"))
+        # if (self.num % 2) == 0:
+        #     msg.setField(fix.Side("2"))
+        # else:
+        #     msg.setField(fix.Side("1"))
 
         # 获取TransactTime
         trstime = fix.TransactTime()
@@ -163,7 +164,7 @@ class Application(fix.Application):
 
     def load_test_case(self):
         """Run"""
-        with open('../../../testcases/edp_Load_Test_Matrix.json', 'r') as f_json:
+        with open('../../../testcases/full_stock_List.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，

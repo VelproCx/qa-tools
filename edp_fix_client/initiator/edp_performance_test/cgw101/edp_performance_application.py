@@ -139,17 +139,18 @@ class Application(fix.Application):
         msg.setField(fix.Account('RSIT_EDP_ACCOUNT_1'))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(row["OrderQty"]))
-        msg.setField(fix.OrdType('1'))
         msg.setField(fix.Symbol(row["Symbol"]))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
+        msg.setField(fix.Side("2"))
+        msg.setField(fix.OrdType('1'))
         # if row["OrdType"] == "2":
         #     msg.setField(fix.Price(row["Price"]))
 
-        if (self.num % 2) == 0:
-            msg.setField(fix.Side("2"))
-        else:
-            msg.setField(fix.Side("1"))
+        # if (self.num % 2) == 0:
+        #     msg.setField(fix.Side("2"))
+        # else:
+        #     msg.setField(fix.Side("1"))
 
         # 获取TransactTime
         trstime = fix.TransactTime()
