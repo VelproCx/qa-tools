@@ -265,15 +265,20 @@ class Application(fix.Application):
                     clOrdID = message.getField(11)
                     # Execution Report – IOC Expired
                     if 'ERROR_20010051,Order rejected due to IoC expired.' == text:
+                        primaryLastPx = message.getField(8031)
+                        primaryBidPx = message.getField(8032)
+                        primaryAskPx = message.getField(8033)
+                        print(primaryLastPx, primaryBidPx, primaryAskPx)
+                        # routingDecisionTime = message.getField(8051)
                         if (
                                 avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
                                 side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty,
                                 cashMargin, crossingPriceType, fsxTransactTime, marginTransactionType, origClOrdID,
-                                text) != "":
+                                text) != "" and primaryLastPx != "0" or primaryBidPx != "0" or primaryAskPx != "0":
                             logfix.info("(recvMsg) Order Expired << {}".format(msg))
                             logfix.info("Result : Order Expired ," + "ordStatus =" + ordStatus)
                         else:
-                            logfix.info("(recvMsg) Order Expired << {}".format(msg) + "Order Expired FixMsg Error!")
+                            logfix.info("(recvMsg) Order Expired FixMsg Error! << {}".format(msg))
                     # Execution Report – Order Canceled
                     elif 'ERROR_20010052,Order canceled due to client cancel request.' == text:
                         if (
@@ -367,6 +372,7 @@ class Application(fix.Application):
 
             self.onMessage(message, sessionID)
         return
+
 
     def onMessage(self, message, sessionID):
         """Processing application message here"""
@@ -501,7 +507,7 @@ class Application(fix.Application):
         # EDP_Functional_Test_Matrix.json
 
         with open('../../testcases/EDP_Functional_Test_Matrix.json', 'r') as f_json:
-            generation('../../testcases/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
+            # generation('../../testcases/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，

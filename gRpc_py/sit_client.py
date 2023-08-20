@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
-import json
 import logging
 import random
 import grpc
-import pandas as pd
 
 from gen.connamara.ep3.v1beta1 import order_entry_api_pb2, order_entry_api_pb2_grpc
 from gen.connamara.ep3.auth.v1beta1 import basic_auth_api_pb2
 from gen.connamara.ep3.auth.v1beta1 import basic_auth_api_pb2_grpc
-# import server
 import time
 from model.logger import setup_logger
 
@@ -53,10 +50,10 @@ def login(username, password):
     return response
 
 
-# # 获取登陆的response
-# res_login = login(USER_INFO[0][0], USER_INFO[0][1])
-# # 定义变量接收token
-# access_token = res_login.access_token
+# 获取登陆的response
+res_login = login(USER_INFO[0][0], USER_INFO[0][1])
+# 定义变量接收token
+access_token = res_login.access_token
 
 
 def genClOrdID():
@@ -69,11 +66,11 @@ def genClOrdID():
     return str1 + str(t) + str(execID).zfill(6)
 
 
-def InsertOrderEntry(access_token, type, side, order_qty, symbol, price, clord_id, account, time_in_force, client_account_id):
-    # # 证书选择SSL类型
-    # res_login = login(USER_INFO[0][0], USER_INFO[0][1])
-    # # 定义变量接收token
-    # access_token = res_login.access_token
+def InsertOrderEntry(type, side, order_qty, symbol, price, clord_id, account, time_in_force, client_account_id):
+    # 证书选择SSL类型
+    res_login = login(USER_INFO[0][0], USER_INFO[0][1])
+    # 定义变量接收token
+    access_token = res_login.access_token
 
     creds = grpc.ssl_channel_credentials()
     conn = grpc.secure_channel(target=TRADE_HOST, credentials=creds,
@@ -101,7 +98,7 @@ def getOrderQty():
 
 
 def runCase():
-    InsertOrderEntry(2, 1, 5, '1308.EDP', 20000, str(genClOrdID()), ACCOUNT_INFO[0], 1, 'P.1.4')
+    InsertOrderEntry(2, 2, 2000, '1308.EDP', 20000, str(genClOrdID()), ACCOUNT_INFO[0], 1,'P.1.4')
 
 
 if __name__ == '__main__':

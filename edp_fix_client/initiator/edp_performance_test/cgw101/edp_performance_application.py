@@ -8,7 +8,6 @@ from datetime import datetime
 from model.logger import setup_logger
 import json
 import random
-import threading
 
 __SOH__ = chr(1)
 
@@ -19,15 +18,12 @@ logfix = logging.getLogger('logfix')
 
 class Application(fix.Application):
     execID = 0
+    Accepted = 0
+    Rejected = 0
     Total = 0
+    Filled = 0
     num = 1
-    order_new = 0
-    order_expired = 0
-    order_accepted = 0
-    order_rejected = 0
-    order_TosTNeT_rejected = 0
-    order_filled = 0
-    order_comfirmation = 0
+    Expired = 0
 
     def __init__(self):
         super().__init__()
@@ -48,11 +44,10 @@ class Application(fix.Application):
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
         logfix.info(
-            "Result : Total = {},Accepted = {},Filled = {},Rejected = {},Expired = {}, TosTNeT_rejected = {}, comfirmation = {}".format(
-                self.Total, self.order_accepted,
-                self.order_filled,
-                self.order_rejected,
-                self.order_expired, self.order_TosTNeT_rejected, self.order_comfirmation))
+            "Result : Total = {},Accepted = {},Filled = {},Rejected = {},Expired = {}".format(self.Total, self.Accepted,
+                                                                                              self.Filled,
+                                                                                              self.Rejected,
+                                                                                              self.Expired))
         print("Session (%s) logout !" % sessionID.toString())
         return
 
@@ -82,34 +77,23 @@ class Application(fix.Application):
 
         if ordStatus == "8":
             logfix.info("(recvMsg) R << %s" % msg)
-            self.order_rejected = self.order_rejected + 1
+            self.Rejected = self.Rejected + 1
             self.Total = self.Total + 1
             logfix.info("Result : Rejected ," + "ordStatus =" + ordStatus)
         elif ordStatus == "0":
             logfix.info("(recvMsg) R << %s" % msg)
             self.Total = self.Total + 1
-            self.order_accepted = self.order_accepted + 1
+            self.Accepted = self.Accepted + 1
             logfix.info("Result : Accepted ," + "ordStatus =" + ordStatus)
-        elif ordStatus == "4":
-            text = message.getField(58)
-            if 'ERROR_20010051,Order rejected due to IoC expired.' == text:
-                logfix.info("(recvMsg) R << %s" % msg)
-                self.order_expired = self.order_expired + 1
-                logfix.info("Result : Expired ," + "ErrorCode =" + text)
-            else:
-                logfix.info("(recvMsg) R << %s" % msg)
-                self.order_TosTNeT_rejected = self.order_TosTNeT_rejected + 1
-                logfix.info("Result : ToSTNeT Rejection ," + "ErrorCode =" + text)
-        elif ordStatus == "2" or ordStatus == "1":
-            execTransType = message.getField(20)
-            if execTransType == '0':
-                logfix.info("(recvMsg) R << %s" % msg)
-                self.order_filled = self.order_filled + 1
-                logfix.info("Result : Filled ," + "ordStatus =" + ordStatus)
-            else:
-                logfix.info("(recvMsg) R << %s" % msg)
-                self.order_comfirmation = self.order_comfirmation + 1
-                logfix.info("Result : comfirmation ," + "ordStatus =" + ordStatus)
+        elif ordStatus == "C":
+            logfix.info("(recvMsg) R << %s" % msg)
+            self.Expired = self.Expired + 1
+            logfix.info("Result : Expired ," + "ordStatus =" + ordStatus)
+        elif ordStatus == "2":
+            logfix.info("(recvMsg) R << %s" % msg)
+            self.Filled = self.Filled + 1
+            logfix.info("Result : Filled ," + "ordStatus =" + ordStatus)
+
         self.onMessage(message, sessionID)
         logfix.info("-------------------------------------------------------------------------------------------------")
         return
@@ -136,21 +120,20 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account('RSIT_EDP_ACCOUNT_1'))
+        msg.setField(fix.Account(row["Account"]))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(row["OrderQty"]))
+        msg.setField(fix.OrdType(row["OrdType"]))
         msg.setField(fix.Symbol(row["Symbol"]))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
-        msg.setField(fix.Side("2"))
-        msg.setField(fix.OrdType('1'))
-        # if row["OrdType"] == "2":
-        #     msg.setField(fix.Price(row["Price"]))
+        if row["OrdType"] == "2":
+            msg.setField(fix.Price(row["Price"]))
 
-        # if (self.num % 2) == 0:
-        #     msg.setField(fix.Side("2"))
-        # else:
-        #     msg.setField(fix.Side("1"))
+        if (self.num % 2) == 0:
+            msg.setField(fix.Side("2"))
+        else:
+            msg.setField(fix.Side("1"))
 
         # 获取TransactTime
         trstime = fix.TransactTime()
@@ -163,20 +146,14 @@ class Application(fix.Application):
     def runTestCase(self, row):
         self.insert_order_request(row)
 
-
     def load_test_case(self):
         """Run"""
-        with open('../../../testcases/full_stock_List.json', 'r') as f_json:
+        with open('../../../testcases/topix400_case.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while self.num < 25:
+            while self.num < 6:
                 self.num += 1
                 for row in case_data_list["testCase"]:
-                    # self.runTestCase(row)
-                    # time.sleep(0.004)
-                    thread = threading.Thread(target=self.runTestCase(row))
-                    # 启动线程
-                    thread.start()
-                    # 等待所有进程执行完毕
-                    thread.join()
+                    self.runTestCase(row)
+                    time.sleep(0.001)
