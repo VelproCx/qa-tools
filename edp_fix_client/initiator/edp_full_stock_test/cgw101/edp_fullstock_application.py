@@ -129,27 +129,6 @@ class Application(fix.Application):
             transactTime = message.getField(60)
             fsxTransactTime = message.getField(8169)
 
-            # 模糊匹配方法，判断收到fix消息体中的clordId是否在列表中，true则更新status，false则新增一条数据
-            # 设置匹配的阈值
-            threshold = 1
-            # 使用difflib模块的get_close_matches函数进行模糊匹配
-            matches = difflib.get_close_matches(clOrdID, [item['clordId'] for item in self.ReceveRes], n=1,
-                                                cutoff=threshold)
-            # 如果有匹配结果
-            if matches:
-                matched_clordId = matches[0]
-                for item in self.ReceveRes:
-                    if item['clordId'] == matched_clordId:
-                        # 更新该组数据的ordstatus
-                        item['ordstatus'].append(str(ordStatus))
-
-            else:
-                # 添加新的数据到数组中
-                if ordStatus != "8":
-                    self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
-                else:
-                    text = message.getField(58)
-                    self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus], 'errorCode': text})
             if msgType != '9':
                 avgPx = message.getField(6)
                 CumQty = message.getField(14)
@@ -375,7 +354,7 @@ class Application(fix.Application):
         msg.setField(fix.OrderQty(row["OrderQty"]))
         msg.setField(fix.OrdType("1"))
         msg.setField(fix.Symbol(row["Symbol"]))
-        if self.order_num % 2 == 0:
+        if (self.order_num % 2) == 0:
             msg.setField(fix.Side("1"))
         else:
             msg.setField(fix.Side("2"))
