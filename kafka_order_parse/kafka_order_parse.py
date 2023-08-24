@@ -911,7 +911,8 @@ class EdpToSTNetAccepted_t(LittleEndianStructure):
         ('SecondaryOrderID', c_char * 32),
         ('ContraBroker', c_char * 20),
         ('SecondaryExecID', c_char * 32),
-        ('FsxOrderID', c_char * 32)
+        ('FsxOrderID', c_char * 32),
+        ('DarkPool', c_char)
     ]
 
 
@@ -975,7 +976,8 @@ class EdpToSTNetRejected_t(LittleEndianStructure):
         ('ContraBroker', c_char * 20),
         ('SecondaryExecID', c_char * 32),
         ('OrigClOrdID', c_char * 32),
-        ('FsxOrderID', c_char * 32)
+        ('FsxOrderID', c_char * 32),
+        ('DarkPool', c_char)
     ]
 
 
@@ -1038,7 +1040,8 @@ class EdpToSTNetConfirmation_t(LittleEndianStructure):
         ('SecondaryOrderID', c_char * 32),
         ('ContraBroker', c_char * 20),
         ('SecondaryExecID', c_char * 32),
-        ('FsxOrderID', c_char * 32)
+        ('FsxOrderID', c_char * 32),
+        ('DarkPool', c_char)
     ]
 
 
