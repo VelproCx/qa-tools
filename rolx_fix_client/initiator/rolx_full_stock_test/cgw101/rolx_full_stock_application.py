@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf8 -*-
 """FIX Application"""
+import threading
+
 import quickfix as fix
 import time
 import logging
@@ -297,10 +299,18 @@ class Application(fix.Application):
         """Run"""
         with open('../../../testcases/full_stock_List.json', 'r') as f_json:
             case_data_list = json.load(f_json)
-            time.sleep(1)
-            # 循环所有用例，并把每条用例放入runTestCase方法中
-            while self.OrderNum < 2:
-                self.OrderNum += 1
+            time.sleep(2)
+            # 循环所有用例，并把每条用例放入runTestCase方法中，
+            while self.order_num < 10000:
+                self.order_num += 1
                 for row in case_data_list["testCase"]:
-                    self.runTestCase(row)
-                    time.sleep(0.004)
+                    self.insert_order_request(row)
+                    time.sleep(0.0035)
+
+    def gen_thread(self):
+        threads = []
+        for _ in range(5):
+            t = threading.Thread(target=self.load_test_case())
+            threads.append(t)
+        for t in threads:
+            t.start()

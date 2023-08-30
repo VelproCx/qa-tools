@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf8 -*-
 """FIX Application"""
+import threading
+
 import quickfix as fix
 import time
 import logging
@@ -12,21 +14,20 @@ import random
 __SOH__ = chr(1)
 
 # report
-setup_logger('logfix', 'logs/report.log')
+setup_logger('logfix', 'report_106.log')
 logfix = logging.getLogger('logfix')
 
 
 class Application(fix.Application):
     execID = 0
-    Total = 0
-    num = 1
     order_new = 0
-    order_expired = 0
+    order_ioc_expired = 0
     order_accepted = 0
     order_rejected = 0
-    order_TosTNeT_rejected = 0
-    order_filled = 0
-    order_comfirmation = 0
+    order_fill_indication = 0
+    order_tostnet_confirmation = 0
+    order_tostnet_rejection = 0
+    order_num = 0
 
     def __init__(self):
         super().__init__()
@@ -46,13 +47,32 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
+        self.logsCheck()
+        # logfix.info(
+        #     "Result: order_new = {}（ order_accepted = {}, order_ioc_expired = {}, order_rejected = {},"
+        #     " order_edp_indication = {}, order_tostnet_confirmation = {}, order_tostnet_rejection = {}".format(
+        #         self.order_new,
+        #         self.order_accepted,
+        #         self.order_ioc_expired,
+        #         self.order_rejected,
+        #         self.order_edp_indication,
+        #         self.order_tostnet_confirmation,
+        #         self.order_tostnet_rejection
+        #     ))
+
+        logfix.info("Result: order_new = {}（ order_accepted = {}, order_rejected = {}）".format(self.order_new,
+                                                                                               self.order_accepted,
+                                                                                               self.order_rejected, ))
         logfix.info(
-            "Result : Total = {},Accepted = {},Filled = {},Rejected = {},Expired = {}, TosTNeT_rejected = {}, comfirmation = {}".format(
-                self.Total, self.order_accepted,
-                self.order_filled,
-                self.order_rejected,
-                self.order_expired, self.order_TosTNeT_rejected, self.order_comfirmation))
-        print("Session (%s) logout !" % sessionID.toString())
+            "Result: order_edp_indication = {}（ order_tostnet_confirmation = {}, order_tostnet_rejection = {}）".format(
+                self.order_edp_indication,
+                self.order_tostnet_confirmation,
+                self.order_tostnet_rejection
+            ))
+        logfix.info("Result: order_ioc_expired = {}".format(
+            self.order_ioc_expired
+        ))
+        print("Session ({}) logout !".format(sessionID.toString()))
         return
 
     def toAdmin(self, message, sessionID):
@@ -63,8 +83,11 @@ class Application(fix.Application):
 
     def toApp(self, message, sessionID):
         # "发送业务消息时候调用此方法"
+        msgtype = message.getHeader().getField(35)
         msg = message.toString().replace(__SOH__, "|")
         logfix.info("(sendMsg) S >> %s" % msg)
+        if msgtype == "D":
+            self.order_new += 1
         return
 
     def fromAdmin(self, message, sessionID):
@@ -78,39 +101,29 @@ class Application(fix.Application):
         # 使用quickFix框架getField方法提取clOrdId、ordStatus
         ordStatus = message.getField(39)
         msg = message.toString().replace(__SOH__, "|")
-
-        if ordStatus == "8":
-            logfix.info("(recvMsg) R << %s" % msg)
-            self.order_rejected = self.order_rejected + 1
-            self.Total = self.Total + 1
-            logfix.info("Result : Rejected ," + "ordStatus =" + ordStatus)
-        elif ordStatus == "0":
-            logfix.info("(recvMsg) R << %s" % msg)
-            self.Total = self.Total + 1
-            self.order_accepted = self.order_accepted + 1
-            logfix.info("Result : Accepted ," + "ordStatus =" + ordStatus)
-        elif ordStatus == "4":
-            text = message.getField(58)
-            if 'ERROR_20010051,Order rejected due to IoC expired.' == text:
-                logfix.info("(recvMsg) R << %s" % msg)
-                self.order_expired = self.order_expired + 1
-                logfix.info("Result : Expired ," + "ErrorCode =" + text)
-            else:
-                logfix.info("(recvMsg) R << %s" % msg)
-                self.order_TosTNeT_rejected = self.order_TosTNeT_rejected + 1
-                logfix.info("Result : ToSTNeT Rejection ," + "ErrorCode =" + text)
-        elif ordStatus == "2" or ordStatus == "1":
-            execTransType = message.getField(20)
-            if execTransType == '0':
-                logfix.info("(recvMsg) R << %s" % msg)
-                self.order_filled = self.order_filled + 1
-                logfix.info("Result : Filled ," + "ordStatus =" + ordStatus)
-            else:
-                logfix.info("(recvMsg) R << %s" % msg)
-                self.order_comfirmation = self.order_comfirmation + 1
-                logfix.info("Result : comfirmation ," + "ordStatus =" + ordStatus)
+        execTransType = message.getField(20)
+        if execTransType == "2":
+            self.order_tostnet_rejection += 1
+            logfix.info("(recvMsg)ToSTNeT Confirmation << {}".format(msg))
+        else:
+            if ordStatus == "0":
+                self.order_accepted += 1
+                logfix.info("(recvMsg) Order Accepted << {}".format(msg))
+            elif ordStatus == "8":
+                self.order_rejected += 1
+                logfix.info("(recvMsg) Order Rejected << {}".format(msg))
+            elif ordStatus == "4":
+                text = message.getField(58)
+                if 'ERROR_00010051,Order rejected due to IoC expired.' == text:
+                    self.order_ioc_expired += 1
+                    logfix.info("(recvMsg) Order IOC Expired << {}".format(msg))
+                else:
+                    self.order_tostnet_rejection += 1
+                    logfix.info("(recvMsg)ToSTNeT Rejection << {}".format(msg))
+            elif ordStatus == "1" or ordStatus == "2":
+                self.order_fill_indication += 1
+                logfix.info("(recvMsg) Order Filled Indication<< {}".format(msg))
         self.onMessage(message, sessionID)
-        logfix.info("-------------------------------------------------------------------------------------------------")
         return
 
     def onMessage(self, message, sessionID):
@@ -135,21 +148,17 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account('RSIT_EDP_ACCOUNT_6'))
+        # msg.setField(fix.Account("RUAT_EDP_ACCOUNT_1"))
+        msg.setField(fix.Account("RSIT_EDP_ACCOUNT_6"))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
-        msg.setField(fix.OrderQty(row["OrderQty"]))
-        msg.setField(fix.OrdType('1'))
+        msg.setField(fix.OrderQty(100))
+        msg.setField(fix.OrdType("1"))
         msg.setField(fix.Symbol(row["Symbol"]))
-        ClientID = msg.getField(11)
-        msg.setField(fix.ClientID(ClientID))
-        msg.setField(fix.Side("2"))
-        # if row["OrdType"] == "2":
-        #     msg.setField(fix.Price(row["Price"]))
 
-        # if (self.num % 2) == 0:
-        #     msg.setField(fix.Side("2"))
-        # else:
-        #     msg.setField(fix.Side("1"))
+        if (self.order_num % 2) == 0:
+            msg.setField(fix.Side("2"))
+        else:
+            msg.setField(fix.Side("1"))
 
         # 获取TransactTime
         trstime = fix.TransactTime()
@@ -159,17 +168,22 @@ class Application(fix.Application):
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
 
-    def runTestCase(self, row):
-        self.insert_order_request(row)
-
     def load_test_case(self):
         """Run"""
-        with open('../../../testcases/full_stock_List.json', 'r') as f_json:
+        with open('uat_test_with_hrt.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while self.num < 6:
-                self.num += 1
+            while self.order_num < 10000:
+                self.order_num += 1
                 for row in case_data_list["testCase"]:
-                    self.runTestCase(row)
-                    time.sleep(0.004)
+                    self.insert_order_request(row)
+                    time.sleep(0.0035)
+
+    def gen_thread(self):
+        threads = []
+        for _ in range(5):
+            t = threading.Thread(target=self.load_test_case())
+            threads.append(t)
+        for t in threads:
+            t.start()

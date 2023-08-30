@@ -17,8 +17,8 @@ def main(config_file):
         initiator = quickfix.SocketInitiator(application, storefactory, settings, logfactory)
 
         initiator.start()
-        application.load_test_case()
-        sleep_duration = timedelta(minutes=1)
+        application.gen_thread()
+        sleep_duration = timedelta(minutes=10)
         end_time = datetime.now() + sleep_duration
         while datetime.now() < end_time:
             time.sleep(1)
