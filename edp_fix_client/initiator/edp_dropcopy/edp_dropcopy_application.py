@@ -1,12 +1,15 @@
 #!/usr/bin/python
 # -*- coding: utf8 -*-
 """FIX Application"""
+import argparse
+import sys
+from datetime import timedelta, datetime
 import quickfix as fix
 import logging
 from model.logger import setup_logger
-
+import time
 __SOH__ = chr(1)
-
+global initiator
 # log
 setup_logger('logfix', 'logs/edp_report.log')
 logfix = logging.getLogger('logfix')
@@ -111,3 +114,26 @@ class Application(fix.Application):
         msg = message.toString().replace(__SOH__, "|")
         logfix.info("(Core) R << %s" % msg)
         pass
+
+
+def main():
+    try:
+        settings = fix.SessionSettings("edp_dropcopy_client.cfg")
+        application = Application()
+        storefactory = fix.FileStoreFactory(settings)
+        logfactory = fix.FileLogFactory(settings)
+        initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
+        initiator.start()
+        # 执行完所有测试用例后等待时间
+        sleep_duration = timedelta(minutes=60)
+        end_time = datetime.now() + sleep_duration
+        while datetime.now() < end_time:
+            time.sleep(1)
+
+    except (fix.ConfigError, fix.RuntimeError) as e:
+        print(e)
+        sys.exit()
+
+
+if __name__ == '__main__':
+    main()
