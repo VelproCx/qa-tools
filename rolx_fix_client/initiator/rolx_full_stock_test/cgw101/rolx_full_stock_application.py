@@ -6,7 +6,7 @@ import threading
 import quickfix as fix
 import time
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from model.logger import setup_logger
 import json
 import random
@@ -314,3 +314,31 @@ class Application(fix.Application):
             threads.append(t)
         for t in threads:
             t.start()
+
+
+
+def main():
+    try:
+        settings = fix.SessionSettings("rolx_full_stock_client.cfg")
+        application = Application()
+        storefactory = fix.FileStoreFactory(settings)
+        logfactory = fix.FileLogFactory(settings)
+        initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
+
+        initiator.start()
+        application.load_test_case()
+        # 执行完所有测试用例后等待时间
+        sleep_duration = timedelta(minutes=5)
+        end_time = datetime.now() + sleep_duration
+        while datetime.now() < end_time:
+            time.sleep(1)
+        initiator.stop()
+
+    except (fix.ConfigError, fix.RuntimeError) as e:
+        print(e)
+        sys.exit()
+
+
+if __name__ == '__main__':
+    main()
+

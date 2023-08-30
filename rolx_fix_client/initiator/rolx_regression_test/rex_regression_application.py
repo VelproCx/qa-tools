@@ -3,10 +3,12 @@
 """FIX Application"""
 import difflib
 import random
+import sys
+
 import quickfix as fix
 import time
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from model.logger import setup_logger
 import json
 import math
@@ -560,3 +562,29 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                 else:
                     time.sleep(1)
                     self.runTestCase(row)
+
+
+def main():
+    try:
+        settings = fix.SessionSettings("rex_regression_client.cfg")
+        application = Application()
+        storefactory = fix.FileStoreFactory(settings)
+        logfactory = fix.FileLogFactory(settings)
+        initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
+
+        initiator.start()
+        application.load_test_case()
+        # 执行完所有测试用例后等待时间
+        sleep_duration = timedelta(minutes=5)
+        end_time = datetime.now() + sleep_duration
+        while datetime.now() < end_time:
+            time.sleep(1)
+        initiator.stop()
+
+    except (fix.ConfigError, fix.RuntimeError) as e:
+        print(e)
+        sys.exit()
+
+
+if __name__ == '__main__':
+    main()
