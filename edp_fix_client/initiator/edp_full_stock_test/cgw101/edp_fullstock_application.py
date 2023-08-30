@@ -3,6 +3,8 @@
 """FIX Application"""
 import difflib
 import random
+import threading
+
 import quickfix as fix
 import time
 import logging
@@ -50,17 +52,30 @@ class Application(fix.Application):
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
         self.logsCheck()
+        # logfix.info(
+        #     "Result: order_new = {}（ order_accepted = {}, order_ioc_expired = {}, order_rejected = {},"
+        #     " order_edp_indication = {}, order_tostnet_confirmation = {}, order_tostnet_rejection = {}".format(
+        #         self.order_new,
+        #         self.order_accepted,
+        #         self.order_ioc_expired,
+        #         self.order_rejected,
+        #         self.order_edp_indication,
+        #         self.order_tostnet_confirmation,
+        #         self.order_tostnet_rejection
+        #     ))
+
+        logfix.info("Result: order_new = {}（ order_accepted = {}, order_rejected = {}）".format(self.order_new,
+                                                                                               self.order_accepted,
+                                                                                               self.order_rejected, ))
         logfix.info(
-            "Result: order_new = {}, order_accepted = {}, order_ioc_expired = {}, order_rejected = {},"
-            " order_edp_indication = {}, order_tostnet_confirmation = {}, order_tostnet_rejection = {}".format(
-                self.order_new,
-                self.order_accepted,
-                self.order_ioc_expired,
-                self.order_rejected,
+            "Result: order_edp_indication = {}（ order_tostnet_confirmation = {}, order_tostnet_rejection = {}）".format(
                 self.order_edp_indication,
                 self.order_tostnet_confirmation,
                 self.order_tostnet_rejection
             ))
+        logfix.info("Result: order_ioc_expired = {}".format(
+            self.order_ioc_expired
+        ))
         print("Session ({}) logout !".format(sessionID.toString()))
         return
 
@@ -200,11 +215,10 @@ class Application(fix.Application):
                     origClOrdID = message.getField(41)
                     clOrdID = message.getField(11)
                     # Execution Report – IOC Expired
-                    if 'ERROR_20010051,Order rejected due to IoC expired.' == text:
+                    if 'ERROR_00010051,Order rejected due to IoC expired.' == text:
                         primaryLastPx = message.getField(8031)
                         primaryBidPx = message.getField(8032)
                         primaryAskPx = message.getField(8033)
-                        print(primaryLastPx, primaryBidPx, primaryAskPx)
                         # routingDecisionTime = message.getField(8051)
                         if (
                                 avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
@@ -311,7 +325,6 @@ class Application(fix.Application):
             self.onMessage(message, sessionID)
         return
 
-
     def onMessage(self, message, sessionID):
         """Processing application message here"""
         pass
@@ -349,7 +362,7 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account("RUAT_EDP_ACCOUNT_5"))
+        msg.setField(fix.Account("RUAT_EDP_ACCOUNT_1"))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(row["OrderQty"]))
         msg.setField(fix.OrdType("1"))
@@ -369,11 +382,20 @@ class Application(fix.Application):
     # 加载用例文件
     def load_test_case(self):
         """Run"""
-        with open('../../../testcases/full_stock_List.json', 'r') as j_son:
-            symbol_list = json.load(j_son)
-            time.sleep(1)
-            while self.order_num > 20:
+        with open('../../../testcases/full_stock_List.json', 'r') as f_json:
+            case_data_list = json.load(f_json)
+            time.sleep(2)
+            # 循环所有用例，并把每条用例放入runTestCase方法中，
+            while self.order_num < 12:
                 self.order_num += 1
-                for row in symbol_list["testCase"]:
+                for row in case_data_list["testCase"]:
                     self.insert_order_request(row)
-                    time.sleep(0.2)
+                    time.sleep(0.04)
+
+    def gen_thread(self):
+        threads = []
+        for _ in range(5):
+            t = threading.Thread(target=self.load_test_case())
+            threads.append(t)
+        for t in threads:
+            t.start()

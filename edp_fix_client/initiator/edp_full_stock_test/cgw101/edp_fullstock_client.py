@@ -17,7 +17,7 @@ def main(config_file):
         initiator = quickfix.SocketInitiator(application, storefactory, settings, logfactory)
 
         initiator.start()
-        application.load_test_case()
+        application.gen_thread()
         # 执行完所有测试用例后等待时间
         sleep_duration = timedelta(minutes=2)
         end_time = datetime.now() + sleep_duration
