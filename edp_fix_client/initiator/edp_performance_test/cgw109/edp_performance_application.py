@@ -149,7 +149,6 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        # msg.setField(fix.Account("RUAT_EDP_ACCOUNT_1"))
         msg.setField(fix.Account("RSIT_EDP_ACCOUNT_9"))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(100))
@@ -175,7 +174,7 @@ class Application(fix.Application):
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while self.order_num < 10000:
+            while self.order_num < 2000:
                 self.order_num += 1
                 for row in case_data_list["testCase"]:
                     self.insert_order_request(row)
@@ -192,7 +191,7 @@ class Application(fix.Application):
 
 def main():
     try:
-        settings = fix.SessionSettings("edp_performance_client.cfg")
+        settings = fix.SessionSettings("edp_performance109_client.cfg")
         application = Application()
         storefactory = fix.FileStoreFactory(settings)
         logfactory = fix.FileLogFactory(settings)

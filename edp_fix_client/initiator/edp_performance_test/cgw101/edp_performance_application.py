@@ -171,11 +171,11 @@ class Application(fix.Application):
 
     def load_test_case(self):
         """Run"""
-        with open('../../../testcases/uat_test_with_hrt.json', 'r') as f_json:
+        with open('uat_test_with_hrt.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while self.order_num < 10000:
+            while self.order_num < 2000:
                 self.order_num += 1
                 for row in case_data_list["testCase"]:
                     self.insert_order_request(row)
@@ -192,7 +192,7 @@ class Application(fix.Application):
 
 def main():
     try:
-        settings = fix.SessionSettings("edp_performance_client.cfg")
+        settings = fix.SessionSettings("edp_performance101_client.cfg")
         application = Application()
         storefactory = fix.FileStoreFactory(settings)
         logfactory = fix.FileLogFactory(settings)
