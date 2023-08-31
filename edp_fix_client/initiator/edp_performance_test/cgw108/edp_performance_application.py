@@ -66,7 +66,7 @@ class Application(fix.Application):
                                                                                                self.order_rejected, ))
         logfix.info(
             "Result: order_edp_indication = {}（ order_tostnet_confirmation = {}, order_tostnet_rejection = {}）".format(
-                self.order_edp_indication,
+                self.order_fill_indication,
                 self.order_tostnet_confirmation,
                 self.order_tostnet_rejection
             ))
@@ -104,7 +104,7 @@ class Application(fix.Application):
         msg = message.toString().replace(__SOH__, "|")
         execTransType = message.getField(20)
         if execTransType == "2":
-            self.order_tostnet_rejection += 1
+            self.order_tostnet_confirmation += 1
             logfix.info("(recvMsg)ToSTNeT Confirmation << {}".format(msg))
         else:
             if ordStatus == "0":
