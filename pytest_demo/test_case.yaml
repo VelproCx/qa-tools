@@ -1,6 +1,7 @@
 Testcase:
-  - ScenarioName: "Regular Order Flow-A(New Order->EDP Fill Indicate->EDP ToSTNeT Confirmation)"
-    Account: "RSIT_EDP_ACCOUNT_1"
+  - Id: 1
+    ScenarioName: "Regular Order Flow-A(New Order->EDP Fill Indicate->EDP ToSTNeT Confirmation)"
+    Account: "RSIT_EDP_ACCOUNT_7"
     Market: "EDP"
     ActionType: "NewAck"
     OrderQty: 500
@@ -15,4 +16,23 @@ Testcase:
     MinQty: 0
     OrderClassification: "3"
     SelfTradePreventionId: "0"
-    OrdStatus: ['0', '2', '2']
+    OrdStatus: [ '0', '2', '2' ]
+
+  - Id: 2
+    ScenarioName: "Regular Order Flow-A(New Order->EDP Fill Indicate->EDP ToSTNeT Confirmation)"
+    Account: "RSIT_EDP_ACCOUNT_7"
+    Market: "EDP"
+    ActionType: "NewAck"
+    OrderQty: 500
+    OrdType: "1"
+    Side: "2"
+    Symbol: "2982"
+    TimeInForce: "3"
+    CrossingPriceType: "EDP"
+    Rule80A: "P"
+    CashMargin: "1"
+    MarginTransactionType: "0"
+    MinQty: 0
+    OrderClassification: "3"
+    SelfTradePreventionId: "0"
+    OrdStatus: [ '0', '2', '2' ]
