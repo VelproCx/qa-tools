@@ -363,7 +363,7 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account("RUAT_EDP_ACCOUNT_1"))
+        msg.setField(fix.Account("RSIT_EDP_ACCOUNT_8"))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(row["OrderQty"]))
         msg.setField(fix.OrdType("1"))
@@ -383,11 +383,11 @@ class Application(fix.Application):
     # 加载用例文件
     def load_test_case(self):
         """Run"""
-        with open('../../../testcases/full_stock_List.json', 'r') as f_json:
+        with open('../../../testcases/rejected2.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while self.order_num < 12:
+            while self.order_num < 1:
                 self.order_num += 1
                 for row in case_data_list["testCase"]:
                     self.insert_order_request(row)

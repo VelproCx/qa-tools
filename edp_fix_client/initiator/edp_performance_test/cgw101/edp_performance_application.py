@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf8 -*-
 """FIX Application"""
+import argparse
+import configparser
 import sys
 import threading
 
@@ -15,7 +17,7 @@ import random
 __SOH__ = chr(1)
 
 # report
-setup_logger('logfix', 'report_101.log')
+setup_logger('logfix', 'report.log')
 logfix = logging.getLogger('logfix')
 
 
@@ -33,6 +35,11 @@ class Application(fix.Application):
     def __init__(self):
         super().__init__()
         self.sessionID = None
+        self.account = None
+        self.Sender = None
+        self.Target = None
+        self.Host = None
+        self.Port = None
 
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
@@ -144,13 +151,13 @@ class Application(fix.Application):
         orderQty = random.randint(1, 5)
         return orderQty
 
-    def insert_order_request(self, row):
+    def insert_order_request(self, row, account):
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
         # msg.setField(fix.Account("RUAT_EDP_ACCOUNT_1"))
-        msg.setField(fix.Account("RSIT_EDP_ACCOUNT_1"))
+        msg.setField(fix.Account(account))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(100))
         msg.setField(fix.OrdType("1"))
@@ -169,37 +176,72 @@ class Application(fix.Application):
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
 
-    def load_test_case(self):
+    def load_test_case(self, account):
         """Run"""
-        with open('uat_test_with_hrt.json', 'r') as f_json:
+        with open('../../../testcases/rejected2.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while self.order_num < 2000:
+            while self.order_num < 2:
                 self.order_num += 1
                 for row in case_data_list["testCase"]:
-                    self.insert_order_request(row)
+                    self.insert_order_request(row, account)
                     time.sleep(0.0035)
 
-    def gen_thread(self):
+    def gen_thread(self, account):
         threads = []
         for _ in range(5):
-            t = threading.Thread(target=self.load_test_case())
+            t = threading.Thread(target=self.load_test_case(account))
             threads.append(t)
         for t in threads:
             t.start()
 
+    def read_config(self, Sender, Target, Host, Port):
+        # 读取并修改配置文件
+        config = configparser.ConfigParser()
+        config.read('edp_performance_client.cfg')
+        config.set('SESSION', 'SenderCompID', Sender)
+        config.set('SESSION', 'TargetCompID', Target)
+        config.set('SESSION', 'SocketConnectHost', Host)
+        config.set('SESSION', 'SocketConnectPort', Port)
+
+        with open('edp_performance_client.cfg', 'w') as configfile:
+            config.write(configfile)
+
 
 def main():
     try:
-        settings = fix.SessionSettings("edp_performance101_client.cfg")
+        # 使用argparse的add_argument方法进行传参
+        parser = argparse.ArgumentParser()  # 创建对象
+        parser.add_argument('--account', default='RSIT_EDP_ACCOUNT_7', help='choose account to use for test')
+        parser.add_argument('--Sender', default='RSIT_EDP_7', help='choose Sender to use for test')
+        parser.add_argument('--Target', default='FSX_SIT_EDP', help='choose Target to use for test')
+        parser.add_argument('--Host', default='54.250.107.1', help='choose Host to use for test')
+        parser.add_argument('--Port', default='5007', help='choose Port to use for test')
+
+        args = parser.parse_args()  # 解析参数
+        account = args.account
+        Sender = args.Sender
+        Target = args.Target
+        Host = args.Host
+        Port = args.Port
+
+        cfg = Application()
+        cfg.Sender = Sender
+        cfg.Target = Target
+        cfg.Host = Host
+        cfg.Port = Port
+        cfg.read_config(Sender, Target, Host, Port)
+
+        settings = fix.SessionSettings("edp_performance_client.cfg")
         application = Application()
+        application.account = account
         storefactory = fix.FileStoreFactory(settings)
         logfactory = fix.FileLogFactory(settings)
         initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
 
         initiator.start()
-        application.gen_thread()
+        application.gen_thread(account)
         sleep_duration = timedelta(minutes=10)
         end_time = datetime.now() + sleep_duration
         while datetime.now() < end_time:
