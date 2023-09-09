@@ -24,12 +24,10 @@ logfix = logging.getLogger('logfix')
 class Application(fix.Application):
     execID = 0
     order_new = 0
-    order_ioc_expired = 0
+    order_expired = 0
     order_accepted = 0
     order_rejected = 0
     order_fill_indication = 0
-    order_tostnet_confirmation = 0
-    order_tostnet_rejection = 0
     order_num = 0
 
     def __init__(self):
@@ -55,7 +53,7 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
-        self.logsCheck()
+        # self.logsCheck()
         # logfix.info(
         #     "Result: order_new = {}（ order_accepted = {}, order_ioc_expired = {}, order_rejected = {},"
         #     " order_edp_indication = {}, order_tostnet_confirmation = {}, order_tostnet_rejection = {}".format(
@@ -109,28 +107,18 @@ class Application(fix.Application):
         # 使用quickFix框架getField方法提取clOrdId、ordStatus
         ordStatus = message.getField(39)
         msg = message.toString().replace(__SOH__, "|")
-        execTransType = message.getField(20)
-        if execTransType == "2":
-            self.order_tostnet_confirmation += 1
-            logfix.info("(recvMsg)ToSTNeT Confirmation << {}".format(msg))
-        else:
-            if ordStatus == "0":
-                self.order_accepted += 1
-                logfix.info("(recvMsg) Order Accepted << {}".format(msg))
-            elif ordStatus == "8":
-                self.order_rejected += 1
-                logfix.info("(recvMsg) Order Rejected << {}".format(msg))
-            elif ordStatus == "4":
-                text = message.getField(58)
-                if 'ERROR_00010051,Order rejected due to IoC expired.' == text:
-                    self.order_ioc_expired += 1
-                    logfix.info("(recvMsg) Order IOC Expired << {}".format(msg))
-                else:
-                    self.order_tostnet_rejection += 1
-                    logfix.info("(recvMsg)ToSTNeT Rejection << {}".format(msg))
-            elif ordStatus == "1" or ordStatus == "2":
-                self.order_fill_indication += 1
-                logfix.info("(recvMsg) Order Filled Indication<< {}".format(msg))
+        if ordStatus == "0":
+            self.order_accepted += 1
+            logfix.info("(recvMsg) Order Accepted << {}".format(msg))
+        elif ordStatus == "8":
+            self.order_rejected += 1
+            logfix.info("(recvMsg) Order Rejected << {}".format(msg))
+        elif ordStatus == "C":
+            self.order_expired += 1
+            logfix.info("(recvMsg) Order Expired << {}".format(msg))
+        elif ordStatus == "1" or ordStatus == "2":
+            self.order_fill_indication += 1
+            logfix.info("(recvMsg) Order Filled Indication<< {}".format(msg))
         self.onMessage(message, sessionID)
         return
 
@@ -156,7 +144,6 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        # msg.setField(fix.Account("RUAT_EDP_ACCOUNT_1"))
         msg.setField(fix.Account(account))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(100))
@@ -178,7 +165,7 @@ class Application(fix.Application):
 
     def load_test_case(self, account):
         """Run"""
-        with open('../../../testcases/', 'r') as f_json:
+        with open('../../testcases/full_stock_List.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
@@ -199,13 +186,13 @@ class Application(fix.Application):
     def read_config(self, Sender, Target, Host, Port):
         # 读取并修改配置文件
         config = configparser.ConfigParser()
-        config.read('edp_performance_client.cfg')
+        config.read('rolx_performance_client.cfg')
         config.set('SESSION', 'SenderCompID', Sender)
         config.set('SESSION', 'TargetCompID', Target)
         config.set('SESSION', 'SocketConnectHost', Host)
         config.set('SESSION', 'SocketConnectPort', Port)
 
-        with open('edp_performance_client.cfg', 'w') as configfile:
+        with open('rolx_performance_client.cfg', 'w') as configfile:
             config.write(configfile)
 
 
@@ -233,7 +220,7 @@ def main():
         cfg.Port = Port
         cfg.read_config(Sender, Target, Host, Port)
 
-        settings = fix.SessionSettings("edp_performance_client.cfg")
+        settings = fix.SessionSettings("rolx_performance_client.cfg")
         application = Application()
         application.account = account
         storefactory = fix.FileStoreFactory(settings)
