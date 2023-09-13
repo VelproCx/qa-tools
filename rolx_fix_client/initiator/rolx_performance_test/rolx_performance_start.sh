@@ -6,6 +6,7 @@
 
 sleep 3
 python3 /app/data/qa-tools/rolx_fix_client/initiator/rolx_performance_test/rolx_performance_application.py --account RSIT_ACCOUNT_1 --Sender RSIT_ROLX_1 --Target FSX_SIT_ROLX --Host clientgateway101 --Port 5001 &
+
 python3 /app/data/qa-tools/rolx_fix_client/initiator/rolx_performance_test/rolx_performance_application.py --account RSIT_ACCOUNT_2 --Sender RSIT_ROLX_2 --Target FSX_SIT_ROLX --Host clientgateway102 --Port 5001 &
 python3 /app/data/qa-tools/rolx_fix_client/initiator/rolx_performance_test/rolx_performance_application.py --account RSIT_ACCOUNT_3 --Sender RSIT_ROLX_3 --Target FSX_SIT_ROLX --Host clientgateway103 --Port 5001 &
 python3 /app/data/qa-tools/rolx_fix_client/initiator/rolx_performance_test/rolx_performance_application.py --account RSIT_ACCOUNT_4 --Sender RSIT_ROLX_4 --Target FSX_SIT_ROLX --Host clientgateway104 --Port 5001 &
