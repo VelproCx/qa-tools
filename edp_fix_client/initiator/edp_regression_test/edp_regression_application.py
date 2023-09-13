@@ -5,7 +5,7 @@ import difflib
 import os
 import random
 import sys
-
+import threading
 import quickfix as fix
 import time
 import logging
@@ -75,7 +75,7 @@ class Application(fix.Application):
         # 将JSON数据写入文件
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = module1.compare_field_values('../../testcases/EDP_Functional_Test_Matrix.json',
+        self.Result = module1.compare_field_values('../../testcases/test.json',
                                                    'logs/recv_data.json',
                                                    'ordstatus')
         print("Session (%s) logout !" % sessionID.toString())
@@ -508,8 +508,8 @@ class Application(fix.Application):
         """Run"""
         # EDP_Functional_Test_Matrix.json
 
-        with open('../../testcases/EDP_Functional_Test_Matrix.json', 'r') as f_json:
-            generation('../../testcases/EDP_Functional_Test_Matrix.json', 'report/edp_report.xlsx')
+        with open('../../testcases/test.json', 'r') as f_json:
+            generation('../../testcases/test.json', 'report/edp_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
@@ -529,6 +529,13 @@ class Application(fix.Application):
                     else:
                         time.sleep(3)
                     self.order_cancel_request(row)
+    def gen_thread(self):
+        threads = []
+        for _ in range(5):
+            t = threading.Thread(target=self.load_test_case())
+            threads.append(t)
+        for t in threads:
+            t.start()
 
 
 def main():

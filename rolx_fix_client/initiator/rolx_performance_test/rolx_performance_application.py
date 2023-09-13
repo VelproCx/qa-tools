@@ -27,6 +27,7 @@ class Application(fix.Application):
     order_expired = 0
     order_accepted = 0
     order_rejected = 0
+    order_partial_fill = 0
     order_fill_indication = 0
     order_num = 0
 
@@ -43,6 +44,7 @@ class Application(fix.Application):
         # "服务器启动时候调用此方法创建"
         self.sessionID = sessionID
         print("onCreate : Session (%s)" % sessionID.toString())
+        time.sleep(1)
         return
 
     def onLogon(self, sessionID):
@@ -54,29 +56,16 @@ class Application(fix.Application):
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
         # self.logsCheck()
-        # logfix.info(
-        #     "Result: order_new = {}（ order_accepted = {}, order_ioc_expired = {}, order_rejected = {},"
-        #     " order_edp_indication = {}, order_tostnet_confirmation = {}, order_tostnet_rejection = {}".format(
-        #         self.order_new,
-        #         self.order_accepted,
-        #         self.order_ioc_expired,
-        #         self.order_rejected,
-        #         self.order_edp_indication,
-        #         self.order_tostnet_confirmation,
-        #         self.order_tostnet_rejection
-        #     ))
-
         logfix.info("Result: order_new = {}（ order_accepted = {}, order_rejected = {}）".format(self.order_new,
                                                                                                self.order_accepted,
                                                                                                self.order_rejected, ))
         logfix.info(
-            "Result: order_edp_indication = {}（ order_tostnet_confirmation = {}, order_tostnet_rejection = {}）".format(
+            "Result: order_partial_fill = {} , order_fill_indication = {}".format(
+                self.order_partial_fill,
                 self.order_fill_indication,
-                self.order_tostnet_confirmation,
-                self.order_tostnet_rejection
             ))
-        logfix.info("Result: order_ioc_expired = {}".format(
-            self.order_ioc_expired
+        logfix.info("Result: order_expired = {}".format(
+            self.order_expired
         ))
         print("Session ({}) logout !".format(sessionID.toString()))
         return
@@ -116,7 +105,10 @@ class Application(fix.Application):
         elif ordStatus == "C":
             self.order_expired += 1
             logfix.info("(recvMsg) Order Expired << {}".format(msg))
-        elif ordStatus == "1" or ordStatus == "2":
+        elif ordStatus == "1":
+            self.order_partial_fill += 1
+            logfix.info("(recvMsg) Order Partially Filled Indication<< {}".format(msg))
+        elif ordStatus == "2":
             self.order_fill_indication += 1
             logfix.info("(recvMsg) Order Filled Indication<< {}".format(msg))
         self.onMessage(message, sessionID)
@@ -146,7 +138,7 @@ class Application(fix.Application):
         header.setField(fix.MsgType("D"))
         msg.setField(fix.Account(account))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
-        msg.setField(fix.OrderQty(100))
+        msg.setField(fix.OrderQty(self.getOrderQty()))
         msg.setField(fix.OrdType("1"))
         msg.setField(fix.Symbol(row["Symbol"]))
 
@@ -165,7 +157,7 @@ class Application(fix.Application):
 
     def load_test_case(self, account):
         """Run"""
-        with open('../../testcases/full_stock_List.json', 'r') as f_json:
+        with open('full_stock_List.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
@@ -173,11 +165,11 @@ class Application(fix.Application):
                 self.order_num += 1
                 for row in case_data_list["testCase"]:
                     self.insert_order_request(row, account)
-                    time.sleep(0.0035)
+                    time.sleep(0.002)
 
     def gen_thread(self, account):
         threads = []
-        for _ in range(5):
+        for _ in range(20):
             t = threading.Thread(target=self.load_test_case(account))
             threads.append(t)
         for t in threads:
@@ -200,7 +192,7 @@ def main():
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
-        parser.add_argument('--account', default='RSIT_EDP_ACCOUNT_7', help='choose account to use for test')
+        parser.add_argument('--account', default='RSIT_ACCOUNT_7', help='choose account to use for test')
         parser.add_argument('--Sender', default='RSIT_EDP_7', help='choose Sender to use for test')
         parser.add_argument('--Target', default='FSX_SIT_EDP', help='choose Target to use for test')
         parser.add_argument('--Host', default='54.250.107.1', help='choose Host to use for test')
