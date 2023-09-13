@@ -55,7 +55,6 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
-        self.logsCheck()
         # logfix.info(
         #     "Result: order_new = {}（ order_accepted = {}, order_ioc_expired = {}, order_rejected = {},"
         #     " order_edp_indication = {}, order_tostnet_confirmation = {}, order_tostnet_rejection = {}".format(
@@ -162,11 +161,12 @@ class Application(fix.Application):
         msg.setField(fix.OrderQty(100))
         msg.setField(fix.OrdType("1"))
         msg.setField(fix.Symbol(row["Symbol"]))
+        msg.setField(fix.Side(row["Side"]))
 
-        if (self.order_num % 2) == 0:
-            msg.setField(fix.Side("2"))
-        else:
-            msg.setField(fix.Side("1"))
+        # if (self.order_num % 2) == 0:
+        #     msg.setField(fix.Side("2"))
+        # else:
+        #     msg.setField(fix.Side("1"))
 
         # 获取TransactTime
         trstime = fix.TransactTime()
@@ -178,19 +178,19 @@ class Application(fix.Application):
 
     def load_test_case(self, account):
         """Run"""
-        with open('../../../testcases/rejected2.json', 'r') as f_json:
+        with open('full_stock_topix400.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while self.order_num < 2:
+            while self.order_num < 736:
                 self.order_num += 1
                 for row in case_data_list["testCase"]:
                     self.insert_order_request(row, account)
-                    time.sleep(0.0035)
+                    time.sleep(0.002)
 
     def gen_thread(self, account):
         threads = []
-        for _ in range(5):
+        for _ in range(20):
             t = threading.Thread(target=self.load_test_case(account))
             threads.append(t)
         for t in threads:
