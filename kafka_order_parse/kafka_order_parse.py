@@ -1164,7 +1164,7 @@ for msg in consumer:
             if (sizeof(OrderCancelAccepted_t)) + sizeof(Time_t) == msg_len:
                 ord = OrderCancelAccepted_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
-            elif (sizeof(OrderAccepted_t)) + sizeof(BBO_t) + sizeof(Time_t):
+            elif (sizeof(OrderCancelAccepted_t)) + sizeof(BBO_t) + sizeof(Time_t):
                 ord = OrderCancelAccepted_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
