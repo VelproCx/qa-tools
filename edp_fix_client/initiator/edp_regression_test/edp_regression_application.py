@@ -186,7 +186,7 @@ class Application(fix.Application):
 
             else:
                 # 添加新的数据到数组中
-                if ordStatus != "8":
+                if ordStatus != "8" and ordStatus != "4":
                     self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
                 else:
                     text = message.getField(58)
@@ -529,14 +529,6 @@ class Application(fix.Application):
                     else:
                         time.sleep(3)
                     self.order_cancel_request(row)
-    def gen_thread(self):
-        threads = []
-        for _ in range(5):
-            t = threading.Thread(target=self.load_test_case())
-            threads.append(t)
-        for t in threads:
-            t.start()
-
 
 def main():
     try:
@@ -547,8 +539,8 @@ def main():
         initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
 
         initiator.start()
-        application.gen_thread()
-        sleep_duration = timedelta(minutes=10)
+        application.load_test_case()
+        sleep_duration = timedelta(minutes=1)
         end_time = datetime.now() + sleep_duration
         while datetime.now() < end_time:
             time.sleep(1)
