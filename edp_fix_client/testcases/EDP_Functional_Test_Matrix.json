@@ -83,7 +83,7 @@
       "Comment": "EDP_Limit_NewAck_Buy",
       "OrderQty": 500,
       "OrdType": "2",
-      "Price": 3215,
+      "Price": 2649,
       "Side": "1",
       "Symbol": "2980",
       "TimeInForce": "3",
@@ -109,7 +109,7 @@
       "Comment": "EDP_Limit_NewAck_Sell",
       "OrderQty": 500,
       "OrdType": "2",
-      "Price": 195,
+      "Price": 256,
       "Side": "2",
       "Symbol": "2982",
       "TimeInForce": "3",
@@ -259,7 +259,7 @@
         "4",
         "4"
       ],
-      "errorCode": "ERROR_30010053,Order rejected due to TOSTNET Cross Reporting failure"
+      "errorCode": "ERROR_00010051,Order rejected due to IoC expired."
     },
     {
       "Id": "11",
@@ -286,7 +286,7 @@
         "4",
         "4"
       ],
-      "errorCode": "ERROR_30010053,Order rejected due to TOSTNET Cross Reporting failure"
+      "errorCode": "ERROR_00010051,Order rejected due to IoC expired."
     },
     {
       "Id": "12",
@@ -314,7 +314,7 @@
         "4",
         "4"
       ],
-      "errorCode": "ERROR_30010053,Order rejected due to TOSTNET Cross Reporting failure"
+      "errorCode": "ERROR_00010051,Order rejected due to IoC expired."
     },
     {
       "Id": "13",
@@ -342,7 +342,7 @@
         "4",
         "4"
       ],
-      "errorCode": "ERROR_30010053,Order rejected due to TOSTNET Cross Reporting failure"
+      "errorCode": "ERROR_00010051,Order rejected due to IoC expired."
     },
     {
       "Id": "14",
@@ -502,7 +502,7 @@
       "Comment": "EDP_Limit_NewAck",
       "OrderQty": 200,
       "OrdType": "2",
-      "Price": 1703,
+      "Price": 1750,
       "Side": "2",
       "Symbol": "3916",
       "TimeInForce": "3",
@@ -605,7 +605,7 @@
       "Comment": "EDP_Limit_NewAck",
       "OrderQty": 88,
       "OrdType": "2",
-      "Price": 33790,
+      "Price": 32290,
       "Side": "1",
       "Symbol": "1329",
       "TimeInForce": "3",
@@ -758,7 +758,7 @@
       "Comment": "EDP_Limit_NewAck",
       "OrderQty": 100,
       "OrdType": "2",
-      "Price": 22000,
+      "Price": 1868,
       "Side": "1",
       "Symbol": "3915",
       "TimeInForce": "3",
@@ -806,7 +806,7 @@
       "Market": "EDP",
       "ActionType": "NewAck",
       "Comment": "EDP_Limit_NewAck",
-      "OrderQty": 500,
+      "OrderQty": 100,
       "OrdType": "2",
       "Price": 1800,
       "Side": "2",
@@ -859,7 +859,7 @@
       "OrderQty": 500,
       "OrdType": "1",
       "Side": "1",
-      "Symbol": "1332",
+      "Symbol": "1399",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -883,7 +883,7 @@
       "OrderQty": 500,
       "OrdType": "1",
       "Side": "2",
-      "Symbol": "1332",
+      "Symbol": "1399",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -906,7 +906,7 @@
       "Comment": "EDP_Limit_NewAck",
       "OrderQty": 500,
       "OrdType": "2",
-      "Price": 650.1,
+      "Price": 708.8,
       "Side": "1",
       "Symbol": "1332",
       "TimeInForce": "3",
@@ -931,7 +931,7 @@
       "Comment": "EDP_Limit_NewAck",
       "OrderQty": 500,
       "OrdType": "2",
-      "Price": 600.1,
+      "Price": 708.8,
       "Side": "2",
       "Symbol": "1332",
       "TimeInForce": "3",
@@ -1031,7 +1031,7 @@
       "Comment": "Price<1,000 Tick size != 0.1",
       "OrderQty": 500,
       "OrdType": "2",
-      "Price": 148.25,
+      "Price": 223.25,
       "Side": "2",
       "Symbol": "1682",
       "TimeInForce": "3",
@@ -1056,7 +1056,7 @@
       "Comment": "Price<3,000 Tick side != 0.5",
       "OrderQty": 500,
       "OrdType": "2",
-      "Price": 1302.6,
+      "Price": 1820.6,
       "Side": "2",
       "Symbol": "2002",
       "TimeInForce": "3",
@@ -1081,7 +1081,7 @@
       "Comment": "Price<1,0000 Tick size != 1",
       "OrderQty": 500,
       "OrdType": "2",
-      "Price": 5990.5,
+      "Price": 6290.5,
       "Side": "2",
       "Symbol": "6965",
       "TimeInForce": "3",
@@ -1106,7 +1106,7 @@
       "Comment": "Price<30,000 Tick side != 5",
       "OrderQty": 500,
       "OrdType": "2",
-      "Price": 24738,
+      "Price": 31238,
       "Side": "2",
       "Symbol": "1577",
       "TimeInForce": "3",
@@ -1181,7 +1181,7 @@
       "Comment": "Price<5,000  Tick side != 5",
       "OrderQty": 500,
       "OrdType": "2",
-      "Price": 4051,
+      "Price": 4421,
       "Side": "2",
       "Symbol": "7740",
       "TimeInForce": "3",
@@ -1206,7 +1206,7 @@
       "Comment": "Price<30,000 Tick side != 10",
       "OrderQty": 500,
       "OrdType": "2",
-      "Price": 7428,
+      "Price": 2428,
       "Side": "2",
       "Symbol": "2222",
       "TimeInForce": "3",
@@ -1232,7 +1232,7 @@
       "Comment": "Price<50,000 Tick side != 50",
       "OrderQty": 500,
       "OrdType": "2",
-      "Price": 46008,
+      "Price": 47058,
       "Side": "2",
       "Symbol": "3476",
       "TimeInForce": "3",
@@ -1258,7 +1258,7 @@
       "Comment": "Price<300,000 Tick side != 100",
       "OrderQty": 50,
       "OrdType": "2",
-      "Price": 56555,
+      "Price": 58005,
       "Side": "2",
       "Symbol": "8963",
       "TimeInForce": "3",
@@ -1284,7 +1284,7 @@
       "Comment": "Price<500,000 Tick side != 500",
       "OrderQty": 500,
       "OrdType": "2",
-      "Price": 401009,
+      "Price": 453509,
       "Side": "2",
       "Symbol": "8964",
       "TimeInForce": "3",
@@ -1370,7 +1370,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "4"
+        "2",
+        "2"
       ]
     },
     {
@@ -1394,7 +1395,8 @@
       "SelfTradePreventionId": "0",
       "ordstatus": [
         "0",
-        "4"
+        "2",
+        "2"
       ]
     },
     {
@@ -1455,7 +1457,7 @@
       "OrderQty": 7,
       "OrdType": "1",
       "Side": "2",
-      "Symbol": "1492",
+      "Symbol": "1472",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -1479,7 +1481,7 @@
       "OrderQty": 1000,
       "OrdType": "1",
       "Side": "2",
-      "Symbol": "1319",
+      "Symbol": "1773",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -1503,7 +1505,7 @@
       "OrderQty": 2000,
       "OrdType": "1",
       "Side": "2",
-      "Symbol": "1319",
+      "Symbol": "1773",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -1551,7 +1553,7 @@
       "OrderQty": 10000,
       "OrdType": "1",
       "Side": "2",
-      "Symbol": "8301",
+      "Symbol": "8951",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
