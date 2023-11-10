@@ -1,0 +1,5 @@
+20231110-10:32:52.000 : Created session
+20231110-10:32:52.000 : Connecting to 192.168.0.20 on port 11113
+20231110-10:32:52.000 : Initiated logon request
+20231110-10:32:52.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-10:32:52.000 : Received logon response

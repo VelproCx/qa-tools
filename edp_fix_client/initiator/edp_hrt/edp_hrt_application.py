@@ -116,10 +116,15 @@ class Application(fix.Application):
         logfix.info("(Core) R << %s" % msg)
         pass
 
+    # def order_entry(self,row):
+
+
+
+
 
 def main():
     try:
-        settings = fix.SessionSettings("edp_dropcopy_client.cfg")
+        settings = fix.SessionSettings("edp_hrt_client.cfg")
         application = Application()
         storefactory = fix.FileStoreFactory(settings)
         logfactory = fix.FileLogFactory(settings)
