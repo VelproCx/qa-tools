@@ -266,7 +266,7 @@ class Application(fix.Application):
                     origClOrdID = message.getField(41)
                     clOrdID = message.getField(11)
                     # Execution Report – IOC Expired
-                    if 'ERROR_20010051,Order rejected due to IoC expired.' == text:
+                    if 'ERROR_00010051,Order rejected due to IoC expired.' == text:
                         primaryLastPx = message.getField(8031)
                         primaryBidPx = message.getField(8032)
                         primaryAskPx = message.getField(8033)
@@ -282,7 +282,7 @@ class Application(fix.Application):
                         else:
                             logfix.info("(recvMsg) Order Expired FixMsg Error! << {}".format(msg))
                     # Execution Report – Order Canceled
-                    elif 'ERROR_20010052,Order canceled due to client cancel request.' == text:
+                    elif 'ERROR_00010052,Order canceled due to client cancel request.' == text:
                         if (
                                 avgPx, clOrdID, CumQty, execID, execTransType, orderID, orderQty, ordType, rule80A,
                                 side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
@@ -374,7 +374,6 @@ class Application(fix.Application):
 
             self.onMessage(message, sessionID)
         return
-
 
     def onMessage(self, message, sessionID):
         """Processing application message here"""
@@ -524,12 +523,12 @@ class Application(fix.Application):
 
                 elif row["ActionType"] == 'CancelAck':
                     # 增加判断条件，判断是否为需要cancel的symbol
-                    if row["Symbol"] == "1496" or row["Symbol"] == "2927" or row["Symbol"] == "3915" or row["Symbol"] == "3916":
+                    if row["Symbol"] == "1496" or row["Symbol"] == "2927" or row["Symbol"] == "3915" or row[
+                        "Symbol"] == "3916":
                         time.sleep(3)
                     else:
                         time.sleep(3)
                     self.order_cancel_request(row)
-
 
 def main():
     try:
@@ -540,8 +539,8 @@ def main():
         initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
 
         initiator.start()
-        application.gen_thread()
-        sleep_duration = timedelta(minutes=10)
+        application.load_test_case()
+        sleep_duration = timedelta(minutes=5)
         end_time = datetime.now() + sleep_duration
         while datetime.now() < end_time:
             time.sleep(1)

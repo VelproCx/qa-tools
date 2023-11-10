@@ -1,0 +1,5 @@
+20231011-07:07:18.000 : Created session
+20231011-07:07:18.000 : Connecting to 54.64.189.2 on port 30256
+20231011-07:07:20.000 : Initiated logon request
+20231011-07:07:20.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231011-07:07:20.000 : Received logon response

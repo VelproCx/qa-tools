@@ -28,6 +28,15 @@ logfix = logging.getLogger('logfix')
 
 
 # edp
+# USER_INFO = [
+#     ('HRT_SIIT_EDP_USER_1', 'hrtsiitedpuser1'),
+# ]
+#
+# ACCOUNT_INFO = [
+#     'firms/HRT-Clear-Member/accounts/HRT_SIIT_EDP_ACCOUNT_1',
+# ]
+
+# edp
 USER_INFO = [
     ('HRT_SIT_EDP_USER_1', 'hrtsitedpuser1'),
 ]
@@ -98,7 +107,7 @@ def getOrderQty():
 
 
 def runCase():
-    InsertOrderEntry(2, 2, 2000, '1308.EDP', 20000, str(genClOrdID()), ACCOUNT_INFO[0], 1,'P.1.4')
+    InsertOrderEntry(2, 2, 2000, '1309.EDP', 30000, str(genClOrdID()), ACCOUNT_INFO[0], 1, 'P.1.4')
 
 
 if __name__ == '__main__':

@@ -1,0 +1,24 @@
+20231006-10:34:00.000 : Created session
+20231006-10:34:00.000 : Connecting to 52.194.183.77 on port 30056
+20231006-10:35:14.000 : Created session
+20231006-10:35:14.000 : Created session
+20231006-10:35:14.000 : Connecting to 52.194.183.77 on port 30056
+20231006-10:35:14.000 : Connecting to 52.194.183.77 on port 30056
+20231006-11:10:02.000 : Created session
+20231006-11:10:02.000 : Connecting to 52.194.183.77 on port 30056
+20231006-11:10:02.000 : Initiated logon request
+20231006-11:10:02.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231006-11:10:02.000 : Received logon response
+20231006-11:10:04.000 : Message 2 Rejected: Conditionally Required Field Missing:39
+20231006-11:10:04.000 : Message 3 Rejected: Conditionally Required Field Missing:39
+20231006-11:10:05.000 : Initiated logout request
+20231006-11:10:05.000 : Received logout response
+20231006-11:10:05.000 : Disconnecting
+20231006-11:11:29.000 : Created session
+20231006-11:11:29.000 : Connecting to 52.194.183.77 on port 30056
+20231006-11:11:30.000 : Initiated logon request
+20231006-11:11:30.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231006-11:11:30.000 : Received logon response
+20231006-11:11:32.000 : Initiated logout request
+20231006-11:11:32.000 : Received logout response
+20231006-11:11:32.000 : Disconnecting

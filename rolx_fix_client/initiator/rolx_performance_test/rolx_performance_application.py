@@ -200,7 +200,7 @@ def main():
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
-        parser.add_argument('--account', default='RSIT_EDP_ACCOUNT_7', help='choose account to use for test')
+        parser.add_argument('--account', default='RSIT_ACCOUNT_7', help='choose account to use for test')
         parser.add_argument('--Sender', default='RSIT_EDP_7', help='choose Sender to use for test')
         parser.add_argument('--Target', default='FSX_SIT_EDP', help='choose Target to use for test')
         parser.add_argument('--Host', default='54.250.107.1', help='choose Host to use for test')

@@ -1,0 +1,27 @@
+20231002-03:38:35.000 : Created session
+20231002-03:38:35.000 : Connecting to 54.250.107.1 on port 5001
+20231002-03:38:35.000 : Initiated logon request
+20231002-03:38:36.000 : Socket Error: Connection reset by peer.
+20231002-03:38:36.000 : Disconnecting
+20231002-03:39:35.000 : Connecting to 54.250.107.1 on port 5001
+20231002-03:39:35.000 : Initiated logon request
+20231002-03:39:35.000 : Socket Error: Connection reset by peer.
+20231002-03:39:35.000 : Disconnecting
+20231002-03:40:35.000 : Connecting to 54.250.107.1 on port 5001
+20231002-03:40:36.000 : Initiated logon request
+20231002-03:40:36.000 : Socket Error: Connection reset by peer.
+20231002-03:40:36.000 : Disconnecting
+20231002-03:41:35.000 : Connecting to 54.250.107.1 on port 5001
+20231002-03:41:35.000 : Initiated logon request
+20231002-03:41:35.000 : Socket Error: Connection reset by peer.
+20231002-03:41:35.000 : Disconnecting
+20231002-03:42:35.000 : Connecting to 54.250.107.1 on port 5001
+20231002-03:42:35.000 : Initiated logon request
+20231002-03:42:35.000 : Socket Error: Connection reset by peer.
+20231002-03:42:35.000 : Disconnecting
+20231002-03:43:35.000 : Connecting to 54.250.107.1 on port 5001
+20231002-03:43:35.000 : Initiated logon request
+20231002-03:43:35.000 : Socket Error: Connection reset by peer.
+20231002-03:43:35.000 : Disconnecting
+20231006-10:24:35.000 : Created session
+20231006-10:24:35.000 : Connecting to 54.250.107.1 on port 30050
