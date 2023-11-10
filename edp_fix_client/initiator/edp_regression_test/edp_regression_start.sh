@@ -16,9 +16,9 @@
 #python3 sit_regression_client.py
 #sleep 10
 #
-cd /var/jenkins_home/workspace/edp_regression_test/edp_fix_client/initiator/edp_regression_test
+#cd /var/jenkins_home/workspace/edp_regression_test/edp_fix_client/initiator/edp_regression_test
 sleep 5
-python3 edp_regression_client.py edp_regression_client.cfg
+python3 /Users/elevenchen/Desktop/qa-tools/edp_fix_client/initiator/edp_regression_test/edp_regression_client.py edp_regression_client.cfg
 
 #本地
 #cd /Users/zhenghuaimao/Desktop/qa-tools/gRpc_py
@@ -31,3 +31,4 @@ python3 edp_regression_client.py edp_regression_client.cfg
 #python3 edp_regression_client.py edp_regression_client.cfg
 
 
+python3 main_edp.py /app/data/logs/edp-fsx-uat/clientgateway.log /app/data/logs/edp-fsx-uat/crossreport.log /app/data/logs/edp-fsx-uat/sor.log UAT 106 20231023

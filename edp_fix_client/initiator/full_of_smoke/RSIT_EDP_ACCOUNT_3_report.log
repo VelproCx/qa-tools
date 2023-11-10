@@ -1,0 +1,5 @@
+2023-10-06 20:11:14,740 : (Core) S >> 8=FIX.4.2|9=83|35=A|34=1|49=RSIT_EDP_3|52=20231006-11:11:14.000|56=FSX_SIT_EDP|98=0|108=300|141=Y|10=199|
+2023-10-06 20:11:14,804 : Result: order_new = 0（ order_accepted = 0, order_rejected = 0, order_book_is_close =0）
+2023-10-06 20:11:14,805 : Result: order_edp_indication = 0（ order_tostnet_confirmation = 0, order_tostnet_rejection = 0）
+2023-10-06 20:11:14,805 : Result: order_ioc_expired = 0
+2023-10-06 20:11:14,805 : Result: not_book_is_close = []

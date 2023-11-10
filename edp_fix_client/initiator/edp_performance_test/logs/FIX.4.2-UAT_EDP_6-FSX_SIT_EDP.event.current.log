@@ -1,0 +1,94 @@
+20231016-08:30:16.000 : Created session
+20231016-08:30:16.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:30:16.000 : Initiated logon request
+20231016-08:30:16.000 : Socket Error: Connection reset by peer.
+20231016-08:30:16.000 : Disconnecting
+20231016-08:31:16.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:31:16.000 : Initiated logon request
+20231016-08:31:16.000 : Socket Error: Connection reset by peer.
+20231016-08:31:16.000 : Disconnecting
+20231016-08:31:20.000 : Created session
+20231016-08:31:20.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:31:21.000 : Initiated logon request
+20231016-08:31:21.000 : Socket Error: Connection reset by peer.
+20231016-08:31:21.000 : Disconnecting
+20231016-08:32:16.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:32:16.000 : Initiated logon request
+20231016-08:32:16.000 : Socket Error: Connection reset by peer.
+20231016-08:32:16.000 : Disconnecting
+20231016-08:32:21.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:32:21.000 : Initiated logon request
+20231016-08:32:21.000 : Socket Error: Connection reset by peer.
+20231016-08:32:21.000 : Disconnecting
+20231016-08:33:16.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:33:16.000 : Initiated logon request
+20231016-08:33:16.000 : Socket Error: Connection reset by peer.
+20231016-08:33:16.000 : Disconnecting
+20231016-08:33:21.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:33:21.000 : Initiated logon request
+20231016-08:33:21.000 : Socket Error: Connection reset by peer.
+20231016-08:33:21.000 : Disconnecting
+20231016-08:34:15.000 : Created session
+20231016-08:34:15.000 : Connecting to 3.112.234.157 on port 30056
+20231016-08:34:15.000 : Initiated logon request
+20231016-08:34:15.000 : Socket Error: Connection reset by peer.
+20231016-08:34:15.000 : Disconnecting
+20231016-08:34:16.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:34:16.000 : Initiated logon request
+20231016-08:34:16.000 : Socket Error: Connection reset by peer.
+20231016-08:34:16.000 : Disconnecting
+20231016-08:34:21.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:34:21.000 : Initiated logon request
+20231016-08:34:21.000 : Socket Error: Connection reset by peer.
+20231016-08:34:21.000 : Disconnecting
+20231016-08:35:15.000 : Connecting to 3.112.234.157 on port 30056
+20231016-08:35:15.000 : Initiated logon request
+20231016-08:35:15.000 : Socket Error: Connection reset by peer.
+20231016-08:35:15.000 : Disconnecting
+20231016-08:35:16.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:35:16.000 : Initiated logon request
+20231016-08:35:16.000 : Socket Error: Connection reset by peer.
+20231016-08:35:16.000 : Disconnecting
+20231016-08:35:21.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:35:21.000 : Initiated logon request
+20231016-08:35:21.000 : Socket Error: Connection reset by peer.
+20231016-08:35:21.000 : Disconnecting
+20231016-08:36:06.000 : Created session
+20231016-08:36:06.000 : Connecting to 3.112.234.157 on port 5006
+20231016-08:36:06.000 : Initiated logon request
+20231016-08:36:15.000 : Connecting to 3.112.234.157 on port 30056
+20231016-08:36:15.000 : Initiated logon request
+20231016-08:36:15.000 : Socket Error: Connection reset by peer.
+20231016-08:36:15.000 : Disconnecting
+20231016-08:36:16.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:36:16.000 : Initiated logon request
+20231016-08:36:16.000 : Socket Error: Connection reset by peer.
+20231016-08:36:16.000 : Disconnecting
+20231016-08:36:21.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:36:21.000 : Initiated logon request
+20231016-08:36:21.000 : Socket Error: Connection reset by peer.
+20231016-08:36:21.000 : Disconnecting
+20231016-08:37:15.000 : Connecting to 3.112.234.157 on port 30056
+20231016-08:37:15.000 : Initiated logon request
+20231016-08:37:16.000 : Socket Error: Connection reset by peer.
+20231016-08:37:16.000 : Disconnecting
+20231016-08:37:16.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:37:16.000 : Initiated logon request
+20231016-08:37:16.000 : Socket Error: Connection reset by peer.
+20231016-08:37:16.000 : Disconnecting
+20231016-08:37:21.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:37:21.000 : Initiated logon request
+20231016-08:37:21.000 : Socket Error: Connection reset by peer.
+20231016-08:37:21.000 : Disconnecting
+20231016-08:38:15.000 : Connecting to 3.112.234.157 on port 30056
+20231016-08:38:15.000 : Initiated logon request
+20231016-08:38:15.000 : Socket Error: Connection reset by peer.
+20231016-08:38:15.000 : Disconnecting
+20231016-08:38:16.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:38:16.000 : Initiated logon request
+20231016-08:38:16.000 : Socket Error: Connection reset by peer.
+20231016-08:38:16.000 : Disconnecting
+20231016-08:38:21.000 : Connecting to 54.199.160.54 on port 30056
+20231016-08:38:22.000 : Initiated logon request
+20231016-08:38:22.000 : Socket Error: Connection reset by peer.
+20231016-08:38:22.000 : Disconnecting

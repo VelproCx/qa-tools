@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5f0e19d0-646b-43a6-b2a4-6e5bdbe24eda" name="Changes" comment="修改performance shell脚本">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/qa-tools.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_dropcopy/logs/FIX.4.2-FSX_UAT_EDP_DC-RUAT_EDP_DC_6.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_dropcopy/logs/FIX.4.2-FSX_UAT_EDP_DC-RUAT_EDP_DC_6.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_dropcopy/logs/edp_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_dropcopy/sessions/FIX.4.2-FSX_UAT_EDP_DC-RUAT_EDP_DC_6.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_dropcopy/sessions/FIX.4.2-FSX_UAT_EDP_DC-RUAT_EDP_DC_6.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_dropcopy/sessions/FIX.4.2-FSX_UAT_EDP_DC-RUAT_EDP_DC_6.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_dropcopy/sessions/FIX.4.2-FSX_UAT_EDP_DC-RUAT_EDP_DC_6.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/EDP_FOR_PROD.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/edp_fullstock_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/edp_fullstock_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/logs/FIX.4.2-RSIT_EDP_2-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/logs/FIX.4.2-RSIT_EDP_2-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/edp_dropcopy_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/edp_dropcopy_start.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/logs/FIX.4.2-FSX_UAT_EDP_DC-RUAT_EDP_DC_6.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/logs/FIX.4.2-FSX_UAT_EDP_DC-RUAT_EDP_DC_6.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/logs/FIX.4.2-RSIT_EDP_2-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/logs/FIX.4.2-RSIT_EDP_2-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/logs/GLOBAL.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/logs/GLOBAL.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/logs/edp_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/report/test.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/sessions/FIX.4.2-FSX_UAT_EDP_DC-RUAT_EDP_DC_6.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/sessions/FIX.4.2-FSX_UAT_EDP_DC-RUAT_EDP_DC_6.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/sessions/FIX.4.2-FSX_UAT_EDP_DC-RUAT_EDP_DC_6.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/sessions/FIX.4.2-FSX_UAT_EDP_DC-RUAT_EDP_DC_6.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/RUAT_EDP_ACCOUNT_6_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/RUAT_EDP_ACCOUNT_7_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/logs/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/logs/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/logs/FIX.4.2-RSIT_EDP_7-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/logs/FIX.4.2-RSIT_EDP_7-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/logs/FIX.4.2-RSIT_EDP_99-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/logs/FIX.4.2-RSIT_EDP_99-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/logs/FIX.4.2-RUAT_EDP_7-FSX_UAT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/logs/FIX.4.2-RUAT_EDP_7-FSX_UAT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/logs/FIX.4.2-UAT_EDP_6-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/logs/FIX.4.2-UAT_EDP_6-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/logs/FIX.4.2-UAT_EDP_7-FSX_UAT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/logs/FIX.4.2-UAT_EDP_7-FSX_UAT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/logs/GLOBAL.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/logs/GLOBAL.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RSIT_EDP_7-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RSIT_EDP_7-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RSIT_EDP_7-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RSIT_EDP_7-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RSIT_EDP_99-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RSIT_EDP_99-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RSIT_EDP_99-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RSIT_EDP_99-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RUAT_EDP_7-FSX_UAT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RUAT_EDP_7-FSX_UAT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RUAT_EDP_7-FSX_UAT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RUAT_EDP_7-FSX_UAT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-UAT_EDP_6-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-UAT_EDP_6-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-UAT_EDP_6-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-UAT_EDP_6-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-UAT_EDP_7-FSX_UAT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-UAT_EDP_7-FSX_UAT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-UAT_EDP_7-FSX_UAT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-UAT_EDP_7-FSX_UAT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/test.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/logs/FIX.4.2-RSIT_EDP_2-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/logs/FIX.4.2-RSIT_EDP_2-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/logs/FIX.4.2-RSIT_EDP_6-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/logs/FIX.4.2-RSIT_EDP_6-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/logs/FIX.4.2-RUAT_EDP_5-FSX_UAT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/logs/FIX.4.2-RUAT_EDP_5-FSX_UAT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/logs/GLOBAL.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/logs/GLOBAL.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/logs/edp_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/logs/recv_data.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/sessions/FIX.4.2-RSIT_EDP_2-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/sessions/FIX.4.2-RSIT_EDP_2-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/sessions/FIX.4.2-RSIT_EDP_2-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/sessions/FIX.4.2-RSIT_EDP_2-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/sessions/FIX.4.2-RSIT_EDP_6-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/sessions/FIX.4.2-RSIT_EDP_6-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/sessions/FIX.4.2-RSIT_EDP_6-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/sessions/FIX.4.2-RSIT_EDP_6-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/sessions/FIX.4.2-RUAT_EDP_5-FSX_UAT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/sessions/FIX.4.2-RUAT_EDP_5-FSX_UAT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/sessions/FIX.4.2-RUAT_EDP_5-FSX_UAT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/sessions/FIX.4.2-RUAT_EDP_5-FSX_UAT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/RSIT_EDP_ACCOUNT_10_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/RSIT_EDP_ACCOUNT_1_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/RSIT_EDP_ACCOUNT_2_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/RSIT_EDP_ACCOUNT_3_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/RSIT_EDP_ACCOUNT_4_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/RSIT_EDP_ACCOUNT_5_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/RSIT_EDP_ACCOUNT_6_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/RSIT_EDP_ACCOUNT_7_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/RSIT_EDP_ACCOUNT_8_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/RSIT_EDP_ACCOUNT_99_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/RSIT_EDP_ACCOUNT_9_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/full_of_smoke.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/full_of_smoke.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/full_of_smoke.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_10-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_10-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_2-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_2-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_3-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_3-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_4-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_4-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_5-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_5-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_6-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_6-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_7-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_7-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_8-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_8-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_9-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_9-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_99-FSX_SIT_EDP.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/FIX.4.2-RSIT_EDP_99-FSX_SIT_EDP.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/GLOBAL.event.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/GLOBAL.messages.current.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/logs/eod_report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/report/edp_report.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_10-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_10-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_10-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_10-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_2-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_2-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_2-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_2-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_3-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_3-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_3-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_3-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_4-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_4-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_4-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_4-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_5-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_5-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_5-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_5-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_6-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_6-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_6-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_6-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_7-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_7-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_7-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_7-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_8-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_8-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_8-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_8-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_9-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_9-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_9-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_9-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_99-FSX_SIT_EDP.body" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_99-FSX_SIT_EDP.header" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_99-FSX_SIT_EDP.seqnums" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/sessions/FIX.4.2-RSIT_EDP_99-FSX_SIT_EDP.session" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/smoke_case.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gRpc_py/edp-load-test-withoutssl_uat_roll_symbol_update500.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gRpc_py/full_stock_topix400.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gRpc_py/report.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gRpc_py/symbol.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gRpc_py/symbol.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_performance_test/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_performance_test/model/Field.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_performance_test/model/Message.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_performance_test/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_performance_test/model/logger.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_performance_test/rolx_performance_application.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_performance_test/rolx_performance_client.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_performance_test/rolx_performance_start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_debug_test/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/logs/GLOBAL.event.current.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_debug_test/model/Field.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/model/Field.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_debug_test/model/Message.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/model/Message.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_debug_test/model/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/logs/GLOBAL.messages.current.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_debug_test/model/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/model/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_dropcopy/edp_dropcopy_application.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_dropcopy/edp_hrt_application.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_dropcopy/edp_dropcopy_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/edp_dropcopy_client.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_dropcopy/edp_dropcopy_start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_dropcopy/edp_hrt_start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/cgw101/edp_fullstock_application.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/cgw101/edp_fullstock_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_dropcopy/edp_hrt_client.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/cgw101/edp_fullstock_start.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/cgw101/get_symbol.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/get_symbol.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/cgw101/logs/edp_fullstock_report.log" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/logs/edp_fullstock_report.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/cgw101/model/Field.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/model/Field.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/cgw101/model/Message.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/model/Message.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/cgw101/model/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/model/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/cgw101/model/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/model/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/cgw101/report/test.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/edp_performance_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/edp_performance_client.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/edp_performance_start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/edp_performance_start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/uat_test_with_hrt.json" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/uat_test_with_hrt.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/edp_regression_application.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/edp_regression_application.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/edp_regression_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/edp_regression_client.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/edp_regression_start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/edp_regression_start.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/report/edp_report.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/report/edp_report.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/testcases/EDP_Functional_Test_Matrix.json" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/testcases/EDP_Functional_Test_Matrix.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/testcases/full_stock_topix400.json" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/testcases/full_stock_topix400.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/testcases/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/testcases/test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/testcases/topix400_case.json" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/testcases/topix400_case.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/testcases/uat_test_with_hrt.json" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/testcases/uat_test_with_hrt.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gRpc_py/sit_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/gRpc_py/sit_client.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/gRpc_py/sit_client.py" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2UhogYyocVskodozFZkelV1kMy7" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/elevenchen/Desktop/qa-tools/edp_fix_client/initiator",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.stylelint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.stylelint": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/edp_fix_client/initiator" />
+      <recent name="$PROJECT_DIR$/gRpc_py" />
+      <recent name="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test" />
+      <recent name="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke" />
+      <recent name="$PROJECT_DIR$/edp_fix_client/initiator/edp_debug_test" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gRpc_py" />
+      <recent name="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test" />
+      <recent name="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/cgw101/logs" />
+      <recent name="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test" />
+      <recent name="$PROJECT_DIR$/pytest_demo" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.sit_client">
+    <configuration name="edp-load-test-withoutssl_uat_roll_symbol_update500" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="qa-tools" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gRpc_py" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gRpc_py/edp-load-test-withoutssl_uat_roll_symbol_update500.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="edp_performance_application" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="qa-tools" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="edp_regression_application" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="qa-tools" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/edp_regression_application.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="sit_client" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="qa-tools" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gRpc_py" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gRpc_py/sit_client.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="edp_regression_start.sh" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test/edp_regression_start.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/sh" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.sit_client" />
+        <item itemvalue="Python.edp-load-test-withoutssl_uat_roll_symbol_update500" />
+        <item itemvalue="Python.edp_regression_application" />
+        <item itemvalue="Shell Script.edp_regression_start.sh" />
+        <item itemvalue="Python.edp_performance_application" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5f0e19d0-646b-43a6-b2a4-6e5bdbe24eda" name="Changes" comment="--task=1001301 --user=xiang.chen 【QA】与HRT 进行UAT Test https://www.tapd.cn/47616997/s/1040550" />
+      <created>1693401284834</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1693401284834</updated>
+      <workItem from="1693401285940" duration="12024000" />
+      <workItem from="1693473412631" duration="1743000" />
+      <workItem from="1693476220283" duration="10887000" />
+      <workItem from="1693794621270" duration="12462000" />
+      <workItem from="1693883157519" duration="6321000" />
+      <workItem from="1694080021853" duration="4212000" />
+      <workItem from="1694102845162" duration="7017000" />
+      <workItem from="1694213944684" duration="14563000" />
+      <workItem from="1694578540241" duration="1316000" />
+      <workItem from="1695281746639" duration="6439000" />
+      <workItem from="1695371522565" duration="354000" />
+      <workItem from="1695373812886" duration="40974000" />
+      <workItem from="1696929010466" duration="664000" />
+      <workItem from="1697007488020" duration="1410000" />
+      <workItem from="1697088645368" duration="727000" />
+      <workItem from="1697444764559" duration="5039000" />
+      <workItem from="1697457355820" duration="5149000" />
+      <workItem from="1697612942778" duration="2293000" />
+      <workItem from="1697629540922" duration="2509000" />
+      <workItem from="1697727224490" duration="5800000" />
+      <workItem from="1698029803669" duration="4463000" />
+      <workItem from="1698038768436" duration="15260000" />
+      <workItem from="1698222595780" duration="598000" />
+      <workItem from="1698225946036" duration="10306000" />
+      <workItem from="1698738350434" duration="4212000" />
+      <workItem from="1699345996756" duration="2805000" />
+      <workItem from="1699525339693" duration="641000" />
+      <workItem from="1699611312104" duration="622000" />
+    </task>
+    <task id="LOCAL-00001" summary="修改EDP项目结构">
+      <created>1693402290261</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1693402290261</updated>
+    </task>
+    <task id="LOCAL-00002" summary="修改ROLX项目结构">
+      <created>1693402608280</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1693402608280</updated>
+    </task>
+    <task id="LOCAL-00003" summary="update edp permanence test case path and number of cycle">
+      <created>1693463578395</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1693463578395</updated>
+    </task>
+    <task id="LOCAL-00004" summary="fix order_fill_indication Cannot be counted">
+      <created>1693472681456</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1693472681456</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fix order_fill_indication Cannot be counted">
+      <created>1693472694028</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1693472694028</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fix order_fill_indication Cannot be counted">
+      <created>1693472758553</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1693472758553</updated>
+    </task>
+    <task id="LOCAL-00007" summary="add edp pytest demo">
+      <created>1693563434825</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1693563434825</updated>
+    </task>
+    <task id="LOCAL-00008" summary="修改performance项目结构">
+      <created>1694262741097</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1694262741097</updated>
+    </task>
+    <task id="LOCAL-00009" summary="修改performance shell脚本">
+      <created>1694272605018</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1694272605018</updated>
+    </task>
+    <task id="LOCAL-00010" summary="修改performance shell脚本">
+      <created>1694578355579</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1694578355579</updated>
+    </task>
+    <task id="LOCAL-00011" summary="修改performance shell脚本">
+      <created>1694578621301</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1694578621301</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="修改EDP项目结构" />
+    <MESSAGE value="修改ROLX项目结构" />
+    <MESSAGE value="update edp permanence test case path and number of cycle" />
+    <MESSAGE value="fix order_fill_indication Cannot be counted" />
+    <MESSAGE value="add edp pytest demo" />
+    <MESSAGE value="修改performance项目结构" />
+    <MESSAGE value="修改performance shell脚本" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改performance shell脚本" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/qa_tools$data_comparison.coverage" NAME="data_comparison Coverage Results" MODIFIED="1691497538462" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/edp_fix_client/method" />
+    <SUITE FILE_PATH="coverage/qa_tools$order_entry_api_pb2.coverage" NAME="order_entry_api_pb2 Coverage Results" MODIFIED="1691655083666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gRpc_py/gen/connamara/ep3/v1beta1" />
+    <SUITE FILE_PATH="coverage/qa_tools$edp_performance_application.coverage" NAME="edp_performance_application Coverage Results" MODIFIED="1697445869075" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test" />
+    <SUITE FILE_PATH="coverage/qa_tools$edp_performance_application__1_.coverage" NAME="edp_performance_application (1) Coverage Results" MODIFIED="1693811085647" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rolx_fix_client/initiator/rolx_performance_test/cgw101" />
+    <SUITE FILE_PATH="coverage/qa_tools$edp_regression_application.coverage" NAME="edp_regression_application Coverage Results" MODIFIED="1697804692075" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/edp_fix_client/initiator/edp_regression_test" />
+    <SUITE FILE_PATH="coverage/qa_tools$sit_client.coverage" NAME="sit_client Coverage Results" MODIFIED="1698219786153" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gRpc_py" />
+    <SUITE FILE_PATH="coverage/qa_tools$pytest_for_test_fix_request_test_send_fix_request.coverage" NAME="pytest for test_fix_request.test_send_fix_request Coverage Results" MODIFIED="1693885370052" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pytest_demo" />
+    <SUITE FILE_PATH="coverage/qa_tools$edp_regression_client.coverage" NAME="edp_regression_client Coverage Results" MODIFIED="1693399111105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/edp_fix_client/initiator/edp_debug_test" />
+    <SUITE FILE_PATH="coverage/qa_tools$edp_dropcopy_application.coverage" NAME="edp_dropcopy_application Coverage Results" MODIFIED="1693407358640" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/edp_fix_client/initiator/edp_dropcopy" />
+    <SUITE FILE_PATH="coverage/qa_tools$edp_fullstock_application.coverage" NAME="edp_fullstock_application Coverage Results" MODIFIED="1696411554271" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/edp_fix_client/initiator/edp_full_stock_test/cgw101" />
+    <SUITE FILE_PATH="coverage/qa_tools$pytest_in_test_fix_request_py.coverage" NAME="pytest in test_fix_request.py Coverage Results" MODIFIED="1693885299760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pytest_demo" />
+    <SUITE FILE_PATH="coverage/qa_tools$kafka_order_parse.coverage" NAME="kafka_order_parse Coverage Results" MODIFIED="1691674428277" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/kafka_order_parse" />
+    <SUITE FILE_PATH="coverage/qa_tools$update_edp_symbols_status.coverage" NAME="update_edp_symbols_status Coverage Results" MODIFIED="1691999790384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gRpc_py" />
+    <SUITE FILE_PATH="coverage/qa_tools$full_of_smoke.coverage" NAME="full_of_smoke Coverage Results" MODIFIED="1696588112795" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke" />
+    <SUITE FILE_PATH="coverage/qa_tools$edp_load_test_withoutssl_uat_roll_symbol_update500.coverage" NAME="edp-load-test-withoutssl_uat_roll_symbol_update500 Coverage Results" MODIFIED="1698038943993" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gRpc_py" />
+  </component>
+</project>

@@ -16,10 +16,6 @@ import random
 
 __SOH__ = chr(1)
 
-# report
-setup_logger('logfix', 'report.log')
-logfix = logging.getLogger('logfix')
-
 
 class Application(fix.Application):
     execID = 0
@@ -161,12 +157,8 @@ class Application(fix.Application):
         msg.setField(fix.OrderQty(100))
         msg.setField(fix.OrdType("1"))
         msg.setField(fix.Symbol(row["Symbol"]))
-        msg.setField(fix.Side(row["Side"]))
 
-        # if (self.order_num % 2) == 0:
-        #     msg.setField(fix.Side("2"))
-        # else:
-        #     msg.setField(fix.Side("1"))
+        msg.setField(fix.Side("1"))
 
         # 获取TransactTime
         trstime = fix.TransactTime()
@@ -178,23 +170,17 @@ class Application(fix.Application):
 
     def load_test_case(self, account):
         """Run"""
-        with open('full_stock_topix400.json', 'r') as f_json:
+        with open('uat_test_with_hrt.json', 'r') as f_json:
+            orderNum = 0
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while self.order_num < 736:
-                self.order_num += 1
+            while orderNum < 41:
+                orderNum += 1
                 for row in case_data_list["testCase"]:
                     self.insert_order_request(row, account)
-                    time.sleep(0.002)
+                    time.sleep(0.05)
 
-    def gen_thread(self, account):
-        threads = []
-        for _ in range(20):
-            t = threading.Thread(target=self.load_test_case(account))
-            threads.append(t)
-        for t in threads:
-            t.start()
 
     def read_config(self, Sender, Target, Host, Port):
         # 读取并修改配置文件
@@ -210,13 +196,14 @@ class Application(fix.Application):
 
 
 def main():
+    global account
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
-        parser.add_argument('--account', default='RSIT_EDP_ACCOUNT_7', help='choose account to use for test')
-        parser.add_argument('--Sender', default='RSIT_EDP_7', help='choose Sender to use for test')
-        parser.add_argument('--Target', default='FSX_SIT_EDP', help='choose Target to use for test')
-        parser.add_argument('--Host', default='54.250.107.1', help='choose Host to use for test')
+        parser.add_argument('--account', default='RUAT_EDP_ACCOUNT_7', help='choose account to use for test')
+        parser.add_argument('--Sender', default='RUAT_EDP_7', help='choose Sender to use for test')
+        parser.add_argument('--Target', default='FSX_UAT_EDP', help='choose Target to use for test')
+        parser.add_argument('--Host', default='clientgateway107', help='choose Host to use for test')
         parser.add_argument('--Port', default='5007', help='choose Port to use for test')
 
         args = parser.parse_args()  # 解析参数
@@ -233,6 +220,11 @@ def main():
         cfg.Port = Port
         cfg.read_config(Sender, Target, Host, Port)
 
+        global logfix
+        # report
+        setup_logger('logfix', '{}_report.log'.format(account))
+        logfix = logging.getLogger('logfix')
+
         settings = fix.SessionSettings("edp_performance_client.cfg")
         application = Application()
         application.account = account
@@ -241,8 +233,8 @@ def main():
         initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
 
         initiator.start()
-        application.gen_thread(account)
-        sleep_duration = timedelta(minutes=10)
+        application.load_test_case(account)
+        sleep_duration = timedelta(minutes=1)
         end_time = datetime.now() + sleep_duration
         while datetime.now() < end_time:
             time.sleep(1)

@@ -1,0 +1,16 @@
+20231006-09:59:44.000 : Created session
+20231006-09:59:44.000 : Connecting to 52.194.183.77 on port 30052
+20231006-09:59:44.000 : Initiated logon request
+20231006-09:59:44.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231006-09:59:44.000 : Received logon response
+20231006-10:00:55.000 : Initiated logout request
+20231006-10:00:55.000 : Received logout response
+20231006-10:00:55.000 : Disconnecting
+20231006-10:03:55.000 : Created session
+20231006-10:03:55.000 : Connecting to 52.194.183.77 on port 30052
+20231006-10:03:55.000 : Initiated logon request
+20231006-10:03:55.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231006-10:03:55.000 : Received logon response
+20231006-10:05:07.000 : Initiated logout request
+20231006-10:05:08.000 : Received logout response
+20231006-10:05:08.000 : Disconnecting

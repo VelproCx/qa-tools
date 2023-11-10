@@ -1,0 +1,31 @@
+20231002-03:39:10.000 : Created session
+20231002-03:39:10.000 : Connecting to 54.250.107.1 on port 5001
+20231002-03:39:10.000 : Initiated logon request
+20231002-03:39:10.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231002-03:39:10.000 : Received logon response
+20231002-03:39:56.000 : Message 1651 Rejected: Conditionally Required Field Missing:39
+20231002-03:39:56.000 : Message 1652 Rejected: Conditionally Required Field Missing:39
+20231002-03:43:15.000 : Created session
+20231002-03:43:15.000 : Connecting to 54.250.107.1 on port 5001
+20231002-03:43:16.000 : Initiated logon request
+20231002-03:43:21.000 : Socket Error: Connection reset by peer.
+20231002-03:43:21.000 : Disconnecting
+20231002-03:44:08.000 : Created session
+20231002-03:44:08.000 : Connecting to 54.250.107.1 on port 5001
+20231002-03:44:09.000 : Initiated logon request
+20231002-03:44:14.000 : Socket Error: Connection reset by peer.
+20231002-03:44:14.000 : Disconnecting
+20231002-03:45:09.000 : Connecting to 54.250.107.1 on port 5001
+20231002-03:45:09.000 : Initiated logon request
+20231002-03:47:19.000 : Created session
+20231002-03:47:19.000 : Connecting to 54.250.107.1 on port 5001
+20231002-03:47:19.000 : Initiated logon request
+20231002-03:47:25.000 : Socket Error: Connection reset by peer.
+20231002-03:47:25.000 : Disconnecting
+20231002-03:48:19.000 : Connecting to 54.250.107.1 on port 5001
+20231002-03:48:20.000 : Initiated logon request
+20231002-04:10:51.000 : Created session
+20231002-04:10:51.000 : Connecting to 54.250.107.1 on port 5001
+20231002-04:10:52.000 : Initiated logon request
+20231002-04:10:52.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231002-04:10:52.000 : Received logon response
