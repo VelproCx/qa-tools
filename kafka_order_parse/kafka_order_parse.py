@@ -78,7 +78,9 @@ class NewOrder_t(LittleEndianStructure):
 
         ('MinQty', c_double),
         ('OrderClassification', c_char),
-        ('SelfTradePreventionId', c_int)
+        ('SelfTradePreventionId', c_int),
+
+        ('OrderCapacity', c_char)
     ]
 
 
@@ -1303,7 +1305,7 @@ for msg in consumer:
                 print("EdpToSTNetConfirmation msg length err, len : {}".format(msg_len))
                 exit(0)
         elif b'3' == hd.Msgtype and b'I' == hd.Evttype:
-            if(sizeof(Rejected_t)) + sizeof(Time_t) == msg_len:
+            if (sizeof(Rejected_t)) + sizeof(Time_t) == msg_len:
                 ord = Rejected_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             elif (sizeof(Rejected_t)) + sizeof(BBO_t) + sizeof(Time_t) == msg_len:
