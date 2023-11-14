@@ -3,6 +3,7 @@
 """FIX Application"""
 import argparse
 import configparser
+import csv
 import random
 import sys
 import quickfix as fix
@@ -19,6 +20,9 @@ current_date = datetime.now().strftime("%Y-%m-%d")
 log_filename = f"edp_report_{current_date}.log"
 setup_logger('logfix', 'logs/' + log_filename)
 logfix = logging.getLogger('logfix')
+
+symbols = []
+securityIDs = []
 
 
 class Application(fix.Application):
@@ -54,31 +58,8 @@ class Application(fix.Application):
     def toApp(self, message, sessionID):
         # "发送业务消息时候调用此方法"
         logfix.info("-------------------------------------------------------------------------------------------------")
-        msgType = message.getHeader().getField(35)
         msg = message.toString().replace(__SOH__, "|")
-        # 7.1 New Order Single
-        if msgType == "D":
-            orderQty = message.getField(38)
-            ordType = message.getField(40)
-            clOrdID = message.getField(11)
-            side = message.getField(54)
-            symbol = message.getField(55)
-            transactTime = message.getField(60)
-
-            if (clOrdID, orderQty, ordType, side, symbol, transactTime,) != "":
-                logfix.info("(sendMsg) New Ack >> {}".format(msg))
-            else:
-                logfix.info("(sendMsg) New Ack >> {}".format(msg) + 'New Order Single FixMsg Error!')
-        # 7.4 Order Cancel Request
-        elif msgType == "F":
-            clOrdID = message.getField(11)
-            side = message.getField(54)
-            symbol = message.getField(55)
-            transactTime = message.getField(60)
-            if (clOrdID, side, symbol, transactTime) != "":
-                logfix.info("(sendMsg) Cancel Ack >> {}".format(msg))
-            else:
-                logfix.info("(sendMsg) Cancel Ack >> {}".format(msg) + 'Order Cancel Request FixMsg Error!')
+        logfix.info("(sendMsg) New Ack >> {}".format(msg))
         return
 
     def fromAdmin(self, message, sessionID):
@@ -107,11 +88,9 @@ class Application(fix.Application):
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
         return str(t) + str1 + str(self.execID).zfill(6)
 
-    def genPrice(self):
-        return
-
-    def insert_order_request(self, row, account):
+    def insert_order_request(self, symbol, price, securityID):
         msg = fix.Message()
+        print(symbol, price, account)
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
@@ -120,11 +99,20 @@ class Application(fix.Application):
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(100))
         msg.setField(fix.OrdType("1"))
-        msg.setField(fix.Symbol(row["Symbol"]))
-        msg.setField(fix.Price())
+        msg.setField(fix.Symbol(symbol))
+        msg.setField(fix.Price(price))
 
         msg.setField(fix.Side("1"))
-
+        msg.setField(fix.OrderCapacity('P'))
+        msg.setField(fix.ExDestination("EiB MarketEiB"))
+        msg.setField(fix.TimeInForce("0"))
+        msg.setField(fix.CashMargin("1"))
+        msg.setField(fix.SecurityID(securityID))
+        msg.setField(8164, "EDP")
+        msg.setField(8214, "0")
+        msg.setField(fix.MinQty(0))
+        msg.setField(8060, "3")
+        msg.setField(8174, "0")
         # 获取TransactTime
         trstime = fix.TransactTime()
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
@@ -133,42 +121,45 @@ class Application(fix.Application):
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
 
-    def load_test_case(self, account):
+    def load_test_case(self):
         """Run"""
-        with open('uat_test_with_hrt.json', 'r') as f_json:
-            orderNum = 0
-            case_data_list = json.load(f_json)
-            time.sleep(2)
-            # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while orderNum < 41:
-                orderNum += 1
-                for row in case_data_list["testCase"]:
-                    self.insert_order_request(row, account)
-                    time.sleep(0.05)
+        num = 0
+        while num < int(message_num):
+            num += 1
+            sleep_time = float(sleep) * 0.001
+            time.sleep(sleep_time)
+            symbol = symbols[num % len(symbols)]
+            price = num % len(symbols) + 1
+            securityID = securityID[num % len(securityIDs)]
+            self.insert_order_request(symbol, price, securityID)
 
     def read_config(self, sender, target, host, port):
         # 读取并修改配置文件
         config = configparser.ConfigParser()
-        config.read('edp_performance_client.cfg')
+        config.read('edp_hrt_client.cfg')
         config.set('SESSION', 'SenderCompID', sender)
         config.set('SESSION', 'TargetCompID', target)
         config.set('SESSION', 'SocketConnectHost', host)
         config.set('SESSION', 'SocketConnectPort', port)
 
-        with open('edp_performance_client.cfg', 'w') as configfile:
+        with open('edp_hrt_client.cfg', 'w') as configfile:
             config.write(configfile)
 
 
 def main():
     global account
+    global message_num
+    global sleep
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
-        parser.add_argument('--account', default='RUAT_EDP_ACCOUNT_7', help='choose account to use for test')
-        parser.add_argument('--sender', default='RUAT_EDP_7', help='choose Sender to use for test')
-        parser.add_argument('--target', default='FSX_UAT_EDP', help='choose Target to use for test')
-        parser.add_argument('--host', default='clientgateway107', help='choose Host to use for test')
-        parser.add_argument('--port', default='5007', help='choose Port to use for test')
+        parser.add_argument('--account', default='RSIT_EDP_ACCOUNT_1', help='choose account to use for test')
+        parser.add_argument('--sender', default='TRADER_C', help='choose Sender to use for test')
+        parser.add_argument('--target', default='terminal_1', help='choose Target to use for test')
+        parser.add_argument('--host', default='192.168.0.20', help='choose Host to use for test')
+        parser.add_argument('--port', default='11113', help='choose Port to use for test')
+        parser.add_argument('--m', help='choose num')
+        parser.add_argument('--s', help='choose num')
 
         args = parser.parse_args()  # 解析参数
         account = args.account
@@ -176,6 +167,8 @@ def main():
         target = args.target
         host = args.host
         port = args.port
+        message_num = args.m
+        sleep = args.s
 
         cfg = Application()
         cfg.sender = sender
@@ -184,20 +177,21 @@ def main():
         cfg.port = port
         cfg.read_config(sender, target, host, port)
 
-        global logfix
-        # report
-        setup_logger('logfix', '{}_report.log'.format(account))
-        logfix = logging.getLogger('logfix')
+        with open('symbol.csv', 'r', newline='') as csvfile:
+            csvreader = csv.reader(csvfile)
+            for row in csvreader:
+                symbol = row[0]
+                symbols.append(symbol)
 
-        settings = fix.SessionSettings("edp_performance_client.cfg")
+        settings = fix.SessionSettings("edp_hrt_client.cfg")
         application = Application()
         application.account = account
-        storefactory = fix.FileStoreFactory(settings)
-        logfactory = fix.FileLogFactory(settings)
-        initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
+        store_factory = fix.FileStoreFactory(settings)
+        log_factory = fix.FileLogFactory(settings)
+        initiator = fix.SocketInitiator(application, store_factory, settings, log_factory)
 
         initiator.start()
-        application.load_test_case(account)
+        application.load_test_case()
         sleep_duration = timedelta(minutes=1)
         end_time = datetime.now() + sleep_duration
         while datetime.now() < end_time:
