@@ -98,7 +98,7 @@ class Application(fix.Application):
         msg.setField(fix.Account(account))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(100))
-        msg.setField(fix.OrdType("1"))
+        msg.setField(fix.OrdType("2"))
         msg.setField(fix.Symbol(symbol))
         msg.setField(fix.Price(price))
 
@@ -130,7 +130,7 @@ class Application(fix.Application):
             time.sleep(sleep_time)
             symbol = symbols[num % len(symbols)]
             price = num % len(symbols) + 1
-            securityID = securityID[num % len(securityIDs)]
+            securityID = securityIDs[num % len(securityIDs)]
             self.insert_order_request(symbol, price, securityID)
 
     def read_config(self, sender, target, host, port):
@@ -144,6 +144,24 @@ class Application(fix.Application):
 
         with open('edp_hrt_client.cfg', 'w') as configfile:
             config.write(configfile)
+
+
+def convert_stock_code(stock_code):
+    digits = "0123456789"
+    letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    result = ""
+    slice_char = stock_code[:4]
+    for char in slice_char:
+        if char.isdigit():
+            # 处理数字位
+            digit = str(digits.index(char)).zfill(2)
+            result += digit
+        elif char.isalpha():
+            # 处理字母位
+            letter = str(letters.index(char.upper()) + 10)
+            result += letter
+
+    return result
 
 
 def main():
@@ -181,6 +199,8 @@ def main():
             csvreader = csv.reader(csvfile)
             for row in csvreader:
                 symbol = row[0]
+                securityID = "5" + convert_stock_code(symbol)
+                securityIDs.append(securityID)
                 symbols.append(symbol)
 
         settings = fix.SessionSettings("edp_hrt_client.cfg")
