@@ -8,7 +8,7 @@ import sys
 import quickfix as fix
 import time
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from model.logger import setup_logger
 import json
 
@@ -120,8 +120,8 @@ class Application(fix.Application):
         msg.setField(fix.Symbol(data.get("Symbol")))
 
         # 判断订单类型
-        if data.get("Price") == "2":
-            msg.setField(fix.Price(data.get("Price")))
+        if data.get("OrdType") == "2":
+            msg.setField(fix.Price(int(data.get("Price"))))
 
         if data.get("TimeInForce") != "":
             msg.setField(fix.TimeInForce(data.get("TimeInForce")))
@@ -160,7 +160,6 @@ class Application(fix.Application):
         trstime = fix.TransactTime()
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
         msg.setField(trstime)
-        print(111)
 
         fix.Session.sendToTarget(msg, self.sessionID)
 
@@ -188,9 +187,6 @@ class Application(fix.Application):
         # 读取并修改配置文件
         config = configparser.ConfigParser(allow_no_value=True)
         config.optionxform = str  # 保持键的大小写
-
-        print(sender, target, host, port)
-
         config.read('edp_hrt_client.cfg')
         config.set('SESSION', 'SenderCompID', sender)
         config.set('SESSION', 'TargetCompID', target)
@@ -213,14 +209,11 @@ def main():
             data = json.loads(args.data)
         else:
             data = {}
-        print(data)
         account = data.get("Account")
         sender = data.get("Sender")
         target = data.get("Target")
         host = data.get("Ip")
         port = data.get("Port")
-
-        print(args.data)
 
         cfg = Application()
         cfg.Sender = sender
@@ -242,7 +235,10 @@ def main():
             application.insert_order_request(data)
         elif data.get("ActionType") == "CancelAck":
             application.order_cancel_request(data)
-        time.sleep(10)
+        sleep_duration = timedelta(minutes=5)
+        end_time = datetime.now() + sleep_duration
+        while datetime.now() < end_time:
+            time.sleep(1)
         initiator.stop()
 
     except (fix.ConfigError, fix.RuntimeError) as e:
