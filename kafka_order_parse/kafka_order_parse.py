@@ -1120,7 +1120,7 @@ for msg in consumer:
                 neword = NewOrder_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(neword)
             else:
-                print("New order msg length err, len : {}}".format(msg_len))
+                print("New order msg length err, len : {}".format(msg_len))
                 exit(0)
         elif b'8' == hd.Msgtype and b'B' == hd.Evttype:
             if (sizeof(OrderAccepted_t)) + sizeof(Time_t) == msg_len:
