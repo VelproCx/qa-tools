@@ -1,0 +1,5 @@
+20231110-10:30:32.000 : Created session
+20231110-10:30:32.000 : Connecting to 192.168.0.20 on port 11128
+20231110-10:30:32.000 : Initiated logon request
+20231110-10:30:38.000 : Socket Error: Connection reset by peer.
+20231110-10:30:38.000 : Disconnecting

@@ -17,8 +17,11 @@ import random
 from datetime import datetime
 import csv
 
-TRADE_HOST = 'a5520941d6c304606b40a7c7dd0dbe9b-275250026.ap-northeast-1.elb.amazonaws.com:8000'
-AUTH_HOST = 'traderauth.uat.rsec.oddlotx.com:443'
+# TRADE_HOST = 'a5520941d6c304606b40a7c7dd0dbe9b-275250026.ap-northeast-1.elb.amazonaws.com:8000'
+# AUTH_HOST = 'traderauth.uat.rsec.oddlotx.com:443'
+
+AUTH_HOST = 'traderauth.sit.rsec.oddlotx.com:443'
+TRADE_HOST = 'traderapi.sit.rsec.oddlotx.com:443'
 
 setup_logger('logfix', 'report.log')
 logfix = logging.getLogger('logfix')
@@ -26,21 +29,29 @@ logfix = logging.getLogger('logfix')
 creds = grpc.ssl_channel_credentials()
 
 USER_INFO = [
-    ('HRT_UAT_EDP_USER_AMM', 'hrtuatedpuseramm'),
-    ('R-Sec_UAT_EDP_USER_2', 'rsecuatedpuser2')
+    ('HRT_SIT_EDP_USER_1', 'hrtsitedpuser1'),
 ]
 
 ACCOUNT_INFO = [
-    'firms/HRT-Clear-Member/accounts/HRT_UAT_EDP_ACCOUNT_1',
-    'firms/Clear-Member/accounts/RUAT_EDP_ACCOUNT_2'
-    'firms/Clear-Member/accounts/RPROD_ACCOUNT_3'
-    'firms/Clear-Member/accounts/RPROD_ACCOUNT_4'
-    'firms/Clear-Member/accounts/RPROD_ACCOUNT_5'
-    'firms/Clear-Member/accounts/RPROD_ACCOUNT_6'
-    'firms/Clear-Member/accounts/RPROD_ACCOUNT_7'
-    'firms/Clear-Member/accounts/RPROD_ACCOUNT_8'
-    'firms/Clear-Member/accounts/RPROD_ACCOUNT_9'
+    'firms/HRT-Clear-Member/accounts/HRT_SIT_EDP_ACCOUNT_1',
 ]
+
+# USER_INFO = [
+#     ('HRT_UAT_EDP_USER_AMM', 'hrtuatedpuseramm'),
+#     ('R-Sec_UAT_EDP_USER_2', 'rsecuatedpuser2')
+# ]
+#
+# ACCOUNT_INFO = [
+#     'firms/HRT-Clear-Member/accounts/HRT_UAT_EDP_ACCOUNT_1',
+#     'firms/Clear-Member/accounts/RUAT_EDP_ACCOUNT_2'
+#     'firms/Clear-Member/accounts/RPROD_ACCOUNT_3'
+#     'firms/Clear-Member/accounts/RPROD_ACCOUNT_4'
+#     'firms/Clear-Member/accounts/RPROD_ACCOUNT_5'
+#     'firms/Clear-Member/accounts/RPROD_ACCOUNT_6'
+#     'firms/Clear-Member/accounts/RPROD_ACCOUNT_7'
+#     'firms/Clear-Member/accounts/RPROD_ACCOUNT_8'
+#     'firms/Clear-Member/accounts/RPROD_ACCOUNT_9'
+# ]
 
 symbols = []
 
@@ -90,7 +101,6 @@ def InsertOrderEntry(threadId, client, num_of_message, type, side, order_qty, ac
         logfix.debug("Thread-" + str(threadId) +
                      " Send Request Last ," + "SendNum = " + str(num))
         response = client.InsertOrder(
-            # order_entry_api_pb2.InsertOrderRequest(type=type, side=side, order_qty=order_qty, symbol=symbol,
             order_entry_api_pb2.InsertOrderRequest(type=type, side=side, order_qty=order_qty,
                                                    symbol=symbols[num % len(symbols)],
                                                    price=num % len(symbols) + 1,
@@ -107,10 +117,10 @@ def InsertOrderEntry(threadId, client, num_of_message, type, side, order_qty, ac
 def createOrderEntryConnection(access_token, account):
     # 证书选择SSL类型
     creds = grpc.ssl_channel_credentials()
-    channel = grpc.insecure_channel(target=TRADE_HOST)
-    # channel = grpc.secure_channel(target=TRADE_HOST, credentials=creds,
-    #                               options=[('grpc.max_send_message_length', 20 * 1024 * 1024),
-    #                                        ('grpc.max_receive_message_length', 20 * 1024 * 1024)], )
+    # channel = grpc.insecure_channel(target=TRADE_HOST)
+    channel = grpc.secure_channel(target=TRADE_HOST, credentials=creds,
+                                  options=[('grpc.max_send_message_length', 20 * 1024 * 1024),
+                                           ('grpc.max_receive_message_length', 20 * 1024 * 1024)], )
 
     connection = order_entry_api_pb2_grpc.OrderEntryAPIStub(channel=channel)
     return connection
@@ -165,60 +175,6 @@ def startBatch(order_entry_connection, order_connection, access_token, account, 
         for result in pool.starmap(loadBatch, items):
             pass
     pool.join()
-
-
-#    # search orders
-#     logfix.info("start search orders ---")
-#     orders_in_response = []
-#     filter = order_api_pb2.SearchOrdersRequest(
-#         clord_id=clord_id,
-#         page_size=1000
-#     )
-
-#     while len(orders_in_response) != len(orders.requests)*num_of_thread*num_of_message:
-#         response = order_connection.SearchOrders(filter, metadata=meta)
-#         # orders_in_response = [
-#         #     p for p in response.order if p.state != "PENDING"];
-#         orders_in_response = []
-#         for order in response.order:
-#             if order.state and order.state == "PENDING":
-#                 continue
-#             else:
-#                 orders_in_response.append(order)
-#         logfix.debug(" search order response order ==" +
-#                      str(response))
-
-#     # Process order times
-#     logfix.info("start cancel orders ---")
-#     prev_order = None
-#     orders_sec = []
-#     sum = 0
-#     i = 0
-#     cancel_orders = order_entry_api_pb2.CancelOrderListRequest()
-#     for order in orders_in_response:
-#         cancel_order = order_entry_api_pb2.CancelOrderRequest(
-#             order_id=order.id,
-#             clord_id=order.clord_id + "-cxl",
-#             symbol="7267.ROLB")
-
-#         cancel_orders.requests.append(cancel_order)
-#         if prev_order is None:
-#             prev_order = order
-#         else:
-#             diff_sec = (prev_order.insert_time.seconds + prev_order.insert_time.nanos /
-#                         1e9) - (order.insert_time.seconds + order.insert_time.nanos/1e9)
-#             sum = sum + diff_sec
-#             i = i + 1
-#             orders_sec.append(diff_sec)
-#             prev_order = order
-
-#     orders_sec.sort()
-#     logfix.info(
-#         " total time {}, number of order {} ,average insertion time {} second".format(sum, i, sum/i))
-#     # cancel order
-#     cancel_response = order_entry_connection.CancelOrderList(
-#         cancel_orders, metadata=meta)
-#     logfix.info("batch cancel order done")
 
 
 def loadBatch(thread_id, order_entry_connection, num_of_message, orders, clord_id, meta):

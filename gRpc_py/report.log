@@ -1,2 +1,8 @@
-2023-10-25 16:43:08,180 : order_id: "1717084360996986880"
-
+2023-11-13 12:10:03,363 : Number of Logical CPU cores: 8
+2023-11-13 12:10:03,365 : load test start at --- 11/13/2023, 12:10:03
+2023-11-13 12:10:03,365 : running command --- ./edp-load-test-withoutssl_uat_roll_symbol_update500.py -m 1 -t 10 -s 5
+2023-11-13 12:10:03,365 : user:HRT_SIT_EDP_USER_1  account: firms/HRT-Clear-Member/accounts/HRT_SIT_EDP_ACCOUNT_1
+2023-11-13 12:10:03,366 : start login --- 1699845003.365762 seconds ---
+2023-11-13 12:10:04,197 : start connection  --- 1699845004.1974 seconds ---
+2023-11-13 12:10:04,198 : start load --- 1699845004.1974 seconds ---
+2023-11-13 12:10:04,891 : finished --- 1 messages per thread, total  10 threads, total 10 messages in 1.526285171508789 seconds ---

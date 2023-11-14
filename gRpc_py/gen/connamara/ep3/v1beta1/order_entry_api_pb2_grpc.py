@@ -5,7 +5,6 @@ import grpc
 from gen.connamara.ep3.v1beta1 import order_entry_api_pb2 as connamara_dot_ep3_dot_v1beta1_dot_order__entry__api__pb2
 
 
-
 class OrderEntryAPIStub(object):
     """OrderEntryAPI is the API Surface for connected clients to send and modify orders.
     """

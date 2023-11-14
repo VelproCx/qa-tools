@@ -197,24 +197,24 @@ def main():
         # parser.add_argument('--Port', default='5001', help='choose Port to use for test')
 
         parser.add_argument('--account', default='RSIT_EDP_ACCOUNT_2', help='choose account to use for test')
-        parser.add_argument('--Sender', default='RSIT_EDP_2', help='choose Sender to use for test')
-        parser.add_argument('--Target', default='FSX_SIT_EDP', help='choose Target to use for test')
-        parser.add_argument('--Host', default='52.194.183.77', help='choose Host to use for test')
-        parser.add_argument('--Port', default='30052', help='choose Port to use for test')
+        parser.add_argument('--sender', default='RSIT_EDP_2', help='choose Sender to use for test')
+        parser.add_argument('--target', default='FSX_SIT_EDP', help='choose Target to use for test')
+        parser.add_argument('--host', default='52.194.183.77', help='choose Host to use for test')
+        parser.add_argument('--port', default='30052', help='choose Port to use for test')
 
         args = parser.parse_args()  # 解析参数
         account = args.account
-        Sender = args.Sender
-        Target = args.Target
-        Host = args.Host
-        Port = args.Port
+        sender = args.Sender
+        target = args.Target
+        host = args.Host
+        port = args.Port
 
         cfg = Application()
-        cfg.Sender = Sender
-        cfg.Target = Target
-        cfg.Host = Host
-        cfg.Port = Port
-        cfg.read_config(Sender, Target, Host, Port)
+        cfg.Sender = sender
+        cfg.Target = target
+        cfg.Host = host
+        cfg.Port = port
+        cfg.read_config(sender, target, host, port)
 
         global logfix
         # report
