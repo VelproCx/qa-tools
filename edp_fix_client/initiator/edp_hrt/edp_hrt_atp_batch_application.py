@@ -107,7 +107,6 @@ class Application(fix.Application):
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
         return str(t) + str1 + str(self.execID).zfill(6)
 
-
     def genPrice(self):
         return
 
@@ -147,19 +146,17 @@ class Application(fix.Application):
                     self.insert_order_request(row, account)
                     time.sleep(0.05)
 
-
-    def read_config(self, Sender, Target, Host, Port):
+    def read_config(self, sender, target, host, port):
         # 读取并修改配置文件
         config = configparser.ConfigParser()
         config.read('edp_performance_client.cfg')
-        config.set('SESSION', 'SenderCompID', Sender)
-        config.set('SESSION', 'TargetCompID', Target)
-        config.set('SESSION', 'SocketConnectHost', Host)
-        config.set('SESSION', 'SocketConnectPort', Port)
+        config.set('SESSION', 'SenderCompID', sender)
+        config.set('SESSION', 'TargetCompID', target)
+        config.set('SESSION', 'SocketConnectHost', host)
+        config.set('SESSION', 'SocketConnectPort', port)
 
         with open('edp_performance_client.cfg', 'w') as configfile:
             config.write(configfile)
-
 
 
 def main():
@@ -168,24 +165,24 @@ def main():
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
         parser.add_argument('--account', default='RUAT_EDP_ACCOUNT_7', help='choose account to use for test')
-        parser.add_argument('--Sender', default='RUAT_EDP_7', help='choose Sender to use for test')
-        parser.add_argument('--Target', default='FSX_UAT_EDP', help='choose Target to use for test')
-        parser.add_argument('--Host', default='clientgateway107', help='choose Host to use for test')
-        parser.add_argument('--Port', default='5007', help='choose Port to use for test')
+        parser.add_argument('--sender', default='RUAT_EDP_7', help='choose Sender to use for test')
+        parser.add_argument('--target', default='FSX_UAT_EDP', help='choose Target to use for test')
+        parser.add_argument('--host', default='clientgateway107', help='choose Host to use for test')
+        parser.add_argument('--port', default='5007', help='choose Port to use for test')
 
         args = parser.parse_args()  # 解析参数
         account = args.account
-        Sender = args.Sender
-        Target = args.Target
-        Host = args.Host
-        Port = args.Port
+        sender = args.sender
+        target = args.target
+        host = args.host
+        port = args.port
 
         cfg = Application()
-        cfg.Sender = Sender
-        cfg.Target = Target
-        cfg.Host = Host
-        cfg.Port = Port
-        cfg.read_config(Sender, Target, Host, Port)
+        cfg.sender = sender
+        cfg.target = target
+        cfg.host = host
+        cfg.port = port
+        cfg.read_config(sender, target, host, port)
 
         global logfix
         # report

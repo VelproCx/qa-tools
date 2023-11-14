@@ -172,14 +172,14 @@ class Application(fix.Application):
                 self.insert_order_request(row, account)
                 time.sleep(0.004)
 
-    def read_config(self, Sender, Target, Host, Port):
+    def read_config(self, sender, target, host, port):
         # 读取并修改配置文件
         config = configparser.ConfigParser()
         config.read('full_of_smoke.cfg')
-        config.set('SESSION', 'SenderCompID', Sender)
-        config.set('SESSION', 'TargetCompID', Target)
-        config.set('SESSION', 'SocketConnectHost', Host)
-        config.set('SESSION', 'SocketConnectPort', Port)
+        config.set('SESSION', 'SenderCompID', sender)
+        config.set('SESSION', 'TargetCompID', target)
+        config.set('SESSION', 'SocketConnectHost', host)
+        config.set('SESSION', 'SocketConnectPort', port)
 
         with open('full_of_smoke.cfg', 'w') as configfile:
             config.write(configfile)
@@ -204,10 +204,10 @@ def main():
 
         args = parser.parse_args()  # 解析参数
         account = args.account
-        sender = args.Sender
-        target = args.Target
-        host = args.Host
-        port = args.Port
+        sender = args.sender
+        target = args.target
+        host = args.host
+        port = args.port
 
         cfg = Application()
         cfg.Sender = sender
