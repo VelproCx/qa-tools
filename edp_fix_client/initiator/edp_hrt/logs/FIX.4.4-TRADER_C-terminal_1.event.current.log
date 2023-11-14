@@ -3,3 +3,240 @@
 20231110-10:32:52.000 : Initiated logon request
 20231110-10:32:52.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
 20231110-10:32:52.000 : Received logon response
+20231110-10:59:12.000 : Created session
+20231110-10:59:12.000 : Connecting to 192.168.0.20 on port 11113
+20231110-10:59:12.000 : Initiated logon request
+20231110-10:59:12.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-10:59:12.000 : Received logon response
+20231110-10:59:25.000 : Initiated logout request
+20231110-10:59:25.000 : Received logout response
+20231110-10:59:25.000 : Disconnecting
+20231110-11:02:42.000 : Created session
+20231110-11:02:42.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:02:42.000 : Initiated logon request
+20231110-11:02:42.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:02:42.000 : Received logon response
+20231110-11:02:55.000 : Initiated logout request
+20231110-11:02:55.000 : Received logout response
+20231110-11:02:55.000 : Disconnecting
+20231110-11:03:18.000 : Created session
+20231110-11:03:18.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:03:18.000 : Initiated logon request
+20231110-11:03:18.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:03:18.000 : Received logon response
+20231110-11:03:31.000 : Initiated logout request
+20231110-11:03:31.000 : Received logout response
+20231110-11:03:31.000 : Disconnecting
+20231110-11:03:40.000 : Created session
+20231110-11:03:40.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:03:40.000 : Initiated logon request
+20231110-11:03:40.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:03:40.000 : Received logon response
+20231110-11:05:08.000 : Created session
+20231110-11:05:08.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:05:08.000 : Initiated logon request
+20231110-11:05:08.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:05:08.000 : Received logon response
+20231110-11:05:21.000 : Initiated logout request
+20231110-11:05:21.000 : Received logout response
+20231110-11:05:21.000 : Disconnecting
+20231110-11:06:38.000 : Created session
+20231110-11:06:38.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:06:38.000 : Initiated logon request
+20231110-11:06:38.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:06:38.000 : Received logon response
+20231110-11:06:51.000 : Initiated logout request
+20231110-11:06:51.000 : Received logout response
+20231110-11:06:51.000 : Disconnecting
+20231110-11:08:08.000 : Created session
+20231110-11:08:08.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:08:08.000 : Initiated logon request
+20231110-11:08:08.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:08:08.000 : Received logon response
+20231110-11:08:11.000 : Message 2 Rejected: Conditionally Required Field Missing:37
+20231110-11:08:22.000 : Initiated logout request
+20231110-11:08:22.000 : Received logout response
+20231110-11:08:22.000 : Disconnecting
+20231110-11:08:56.000 : Created session
+20231110-11:08:56.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:08:56.000 : Initiated logon request
+20231110-11:08:56.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:08:56.000 : Received logon response
+20231110-11:08:59.000 : Message 2 Rejected: Conditionally Required Field Missing:37
+20231110-11:09:09.000 : Initiated logout request
+20231110-11:09:09.000 : Received logout response
+20231110-11:09:09.000 : Disconnecting
+20231110-11:09:40.000 : Created session
+20231110-11:09:40.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:09:40.000 : Initiated logon request
+20231110-11:09:40.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:09:40.000 : Received logon response
+20231110-11:09:43.000 : Message 2 Rejected: Conditionally Required Field Missing:37
+20231110-11:09:53.000 : Initiated logout request
+20231110-11:09:54.000 : Received logout response
+20231110-11:09:54.000 : Disconnecting
+20231110-11:10:32.000 : Created session
+20231110-11:10:32.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:10:32.000 : Initiated logon request
+20231110-11:10:32.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:10:32.000 : Received logon response
+20231110-11:10:46.000 : Initiated logout request
+20231110-11:10:46.000 : Received logout response
+20231110-11:10:46.000 : Disconnecting
+20231110-11:11:03.000 : Created session
+20231110-11:11:03.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:11:03.000 : Initiated logon request
+20231110-11:11:03.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:11:03.000 : Received logon response
+20231110-11:11:16.000 : Initiated logout request
+20231110-11:11:16.000 : Received logout response
+20231110-11:11:16.000 : Disconnecting
+20231110-11:32:32.000 : Created session
+20231110-11:32:32.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:32:32.000 : Initiated logon request
+20231110-11:32:32.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:32:32.000 : Received logon response
+20231110-11:32:46.000 : Initiated logout request
+20231110-11:32:46.000 : Received logout response
+20231110-11:32:46.000 : Disconnecting
+20231110-11:34:22.000 : Created session
+20231110-11:34:22.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:34:22.000 : Initiated logon request
+20231110-11:34:22.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:34:22.000 : Received logon response
+20231110-11:34:35.000 : Initiated logout request
+20231110-11:34:35.000 : Received logout response
+20231110-11:34:35.000 : Disconnecting
+20231110-11:36:26.000 : Created session
+20231110-11:36:26.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:36:26.000 : Initiated logon request
+20231110-11:36:26.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:36:26.000 : Received logon response
+20231110-11:36:39.000 : Initiated logout request
+20231110-11:36:39.000 : Received logout response
+20231110-11:36:39.000 : Disconnecting
+20231110-11:37:07.000 : Created session
+20231110-11:37:07.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:37:07.000 : Initiated logon request
+20231110-11:37:07.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:37:07.000 : Received logon response
+20231110-11:37:21.000 : Initiated logout request
+20231110-11:37:21.000 : Received logout response
+20231110-11:37:21.000 : Disconnecting
+20231110-11:38:10.000 : Created session
+20231110-11:38:10.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:38:10.000 : Initiated logon request
+20231110-11:38:10.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:38:10.000 : Received logon response
+20231110-11:38:23.000 : Initiated logout request
+20231110-11:38:23.000 : Received logout response
+20231110-11:38:23.000 : Disconnecting
+20231110-11:40:17.000 : Created session
+20231110-11:40:17.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:40:17.000 : Initiated logon request
+20231110-11:40:17.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:40:17.000 : Received logon response
+20231110-11:40:36.000 : Created session
+20231110-11:40:36.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:40:36.000 : Initiated logon request
+20231110-11:40:36.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:40:36.000 : Received logon response
+20231110-11:40:49.000 : Initiated logout request
+20231110-11:40:49.000 : Received logout response
+20231110-11:40:49.000 : Disconnecting
+20231110-11:45:27.000 : Created session
+20231110-11:45:27.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:45:27.000 : Initiated logon request
+20231110-11:45:27.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:45:27.000 : Received logon response
+20231110-11:45:38.000 : Initiated logout request
+20231110-11:45:38.000 : Received logout response
+20231110-11:45:38.000 : Disconnecting
+20231110-11:45:51.000 : Created session
+20231110-11:45:51.000 : Connecting to 192.168.0.20 on port 11113
+20231110-11:45:51.000 : Initiated logon request
+20231110-11:45:51.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-11:45:51.000 : Received logon response
+20231110-11:46:02.000 : Initiated logout request
+20231110-11:46:02.000 : Received logout response
+20231110-11:46:02.000 : Disconnecting
+20231110-12:24:59.000 : Created session
+20231110-12:24:59.000 : Connecting to 192.168.0.20 on port 11113
+20231110-12:24:59.000 : Initiated logon request
+20231110-12:24:59.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-12:24:59.000 : Received logon response
+20231110-12:25:10.000 : Initiated logout request
+20231110-12:25:10.000 : Received logout response
+20231110-12:25:10.000 : Disconnecting
+20231110-13:01:47.000 : Created session
+20231110-13:01:47.000 : Connecting to 192.168.0.20 on port 11113
+20231110-13:01:47.000 : Initiated logon request
+20231110-13:01:47.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-13:01:47.000 : Received logon response
+20231110-13:01:58.000 : Initiated logout request
+20231110-13:01:58.000 : Received logout response
+20231110-13:01:58.000 : Disconnecting
+20231110-13:02:21.000 : Created session
+20231110-13:02:21.000 : Connecting to 192.168.0.20 on port 11113
+20231110-13:02:21.000 : Initiated logon request
+20231110-13:02:21.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-13:02:21.000 : Received logon response
+20231110-13:02:32.000 : Initiated logout request
+20231110-13:02:32.000 : Received logout response
+20231110-13:02:32.000 : Disconnecting
+20231110-13:03:40.000 : Created session
+20231110-13:03:40.000 : Connecting to 192.168.0.20 on port 11113
+20231110-13:03:40.000 : Initiated logon request
+20231110-13:03:40.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-13:03:40.000 : Received logon response
+20231110-13:03:51.000 : Initiated logout request
+20231110-13:03:51.000 : Received logout response
+20231110-13:03:51.000 : Disconnecting
+20231110-13:04:04.000 : Created session
+20231110-13:04:04.000 : Connecting to 192.168.0.20 on port 11113
+20231110-13:04:04.000 : Initiated logon request
+20231110-13:04:04.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-13:04:04.000 : Received logon response
+20231110-13:04:16.000 : Initiated logout request
+20231110-13:04:16.000 : Received logout response
+20231110-13:04:16.000 : Disconnecting
+20231110-13:19:38.000 : Created session
+20231110-13:19:38.000 : Connecting to 192.168.0.20 on port 11113
+20231110-13:19:38.000 : Initiated logon request
+20231110-13:19:38.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-13:19:38.000 : Received logon response
+20231110-13:19:50.000 : Initiated logout request
+20231110-13:19:50.000 : Received logout response
+20231110-13:19:50.000 : Disconnecting
+20231110-13:20:01.000 : Created session
+20231110-13:20:01.000 : Connecting to 192.168.0.20 on port 11113
+20231110-13:20:01.000 : Initiated logon request
+20231110-13:20:01.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-13:20:01.000 : Received logon response
+20231110-13:20:13.000 : Initiated logout request
+20231110-13:20:13.000 : Received logout response
+20231110-13:20:13.000 : Disconnecting
+20231110-13:20:29.000 : Created session
+20231110-13:20:29.000 : Connecting to 192.168.0.20 on port 11113
+20231110-13:20:29.000 : Initiated logon request
+20231110-13:20:29.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-13:20:29.000 : Received logon response
+20231110-13:20:41.000 : Initiated logout request
+20231110-13:20:41.000 : Received logout response
+20231110-13:20:41.000 : Disconnecting
+20231110-13:23:09.000 : Created session
+20231110-13:23:09.000 : Connecting to 192.168.0.20 on port 11113
+20231110-13:23:09.000 : Initiated logon request
+20231110-13:23:09.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231110-13:23:09.000 : Received logon response
+20231110-13:23:21.000 : Initiated logout request
+20231110-13:23:21.000 : Received logout response
+20231110-13:23:21.000 : Disconnecting
+20231113-06:17:47.000 : Created session
+20231113-06:17:47.000 : Connecting to 192.168.0.20 on port 11113
+20231113-06:17:47.000 : Initiated logon request
+20231113-06:17:47.000 : Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1
+20231113-06:17:47.000 : Received logon response
+20231113-06:17:59.000 : Initiated logout request
+20231113-06:17:59.000 : Received logout response
+20231113-06:17:59.000 : Disconnecting

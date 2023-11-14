@@ -8,7 +8,7 @@ import sys
 import quickfix as fix
 import time
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from model.logger import setup_logger
 import json
 
@@ -107,142 +107,104 @@ class Application(fix.Application):
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
         return str(t) + str1 + str(self.execID).zfill(6)
 
-    def insert_order_request(self, data):
+
+    def genPrice(self):
+        return
+
+    def insert_order_request(self, row, account):
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account(data.get('Account')))
+        # msg.setField(fix.Account("RUAT_EDP_ACCOUNT_1"))
+        msg.setField(fix.Account(account))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
-        msg.setField(fix.OrderQty(int(data.get("OrderQty"))))
-        msg.setField(fix.OrdType(data.get("OrdType")))
-        msg.setField(fix.Side(data.get("Side")))
-        msg.setField(fix.Symbol(data.get("Symbol")))
+        msg.setField(fix.OrderQty(100))
+        msg.setField(fix.OrdType("1"))
+        msg.setField(fix.Symbol(row["Symbol"]))
+        msg.setField(fix.Price())
 
-        # 判断订单类型
-        if data.get("Price") == "2":
-            msg.setField(fix.Price(data.get("Price")))
-
-        if data.get("TimeInForce") != "":
-            msg.setField(fix.TimeInForce(data.get("TimeInForce")))
-
-        if data.get("OrderCapacity") != "":
-            msg.setField(fix.OrderCapacity(data.get("OrderCapacity")))
-
-        if data.get("CashMargin") != "":
-            msg.setField(fix.CashMargin(data.get("CashMargin")))
-
-        if data.get("SecurityID") != "":
-            msg.setField(fix.SecurityID(data.get("SecurityID")))
-
-        if data.get("ExDestination") != "":
-            msg.setField(fix.ExDestination(data.get("ExDestination")))
-
-        # 自定义Tag
-        if data.get("CrossingPriceType") != "":
-            msg.setField(8164, data.get("CrossingPriceType"))
-
-        if data.get("MarginTransactionType") != "":
-            msg.setField(8214, data.get("MarginTransactionType"))
-
-        # EDP
-
-        if data.get("MinQty") != "":
-            msg.setField(fix.MinQty(int(data.get("MinQty"))))
-
-        if data.get("OrderClassification") != "":
-            msg.setField(8060, data.get("OrderClassification"))
-
-        if data.get("SelfTradePreventionId") != "":
-            msg.setField(8174, data.get("SelfTradePreventionId"))
+        msg.setField(fix.Side("1"))
 
         # 获取TransactTime
         trstime = fix.TransactTime()
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
         msg.setField(trstime)
-        print(111)
 
-        fix.Session.sendToTarget(msg, self.sessionID)
-
-        return msg
-
-    def order_cancel_request(self, row):
-        clOrdId = self.ORDERS_DICT
-        time.sleep(1)
-        msg = fix.Message()
-        header = msg.getHeader()
-        header.setField(fix.MsgType(fix.MsgType_OrderCancelRequest))
-        header.setField(fix.BeginString("FIX.4.2"))
-        header.setField(fix.MsgType("F"))
-        msg.setField(fix.OrigClOrdID(clOrdId))
-        msg.setField(fix.ClOrdID(self.getClOrdID()))
-        msg.setField(fix.Symbol(row["Symbol"]))
-        msg.setField(fix.Side(row["Side"]))
-        trstime = fix.TransactTime()
-        trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
-        msg.setField(trstime)
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
 
-    def read_config(self, sender, target, host, port):
+    def load_test_case(self, account):
+        """Run"""
+        with open('uat_test_with_hrt.json', 'r') as f_json:
+            orderNum = 0
+            case_data_list = json.load(f_json)
+            time.sleep(2)
+            # 循环所有用例，并把每条用例放入runTestCase方法中，
+            while orderNum < 41:
+                orderNum += 1
+                for row in case_data_list["testCase"]:
+                    self.insert_order_request(row, account)
+                    time.sleep(0.05)
+
+
+    def read_config(self, Sender, Target, Host, Port):
         # 读取并修改配置文件
-        config = configparser.ConfigParser(allow_no_value=True)
-        config.optionxform = str  # 保持键的大小写
+        config = configparser.ConfigParser()
+        config.read('edp_performance_client.cfg')
+        config.set('SESSION', 'SenderCompID', Sender)
+        config.set('SESSION', 'TargetCompID', Target)
+        config.set('SESSION', 'SocketConnectHost', Host)
+        config.set('SESSION', 'SocketConnectPort', Port)
 
-        print(sender, target, host, port)
+        with open('edp_performance_client.cfg', 'w') as configfile:
+            config.write(configfile)
 
-        config.read('edp_hrt_client.cfg')
-        config.set('SESSION', 'SenderCompID', sender)
-        config.set('SESSION', 'TargetCompID', target)
-        config.set('SESSION', 'SocketConnectHost', host)
-        config.set('SESSION', 'SocketConnectPort', port)
-
-        with open('edp_hrt_client.cfg', 'w') as configfile:
-            config.write(configfile, space_around_delimiters=False)
 
 
 def main():
-    global data
+    global account
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
-        parser.add_argument('--data', help='please enter send data')
+        parser.add_argument('--account', default='RUAT_EDP_ACCOUNT_7', help='choose account to use for test')
+        parser.add_argument('--Sender', default='RUAT_EDP_7', help='choose Sender to use for test')
+        parser.add_argument('--Target', default='FSX_UAT_EDP', help='choose Target to use for test')
+        parser.add_argument('--Host', default='clientgateway107', help='choose Host to use for test')
+        parser.add_argument('--Port', default='5007', help='choose Port to use for test')
+
         args = parser.parse_args()  # 解析参数
-
-        if args.data:
-            data = json.loads(args.data)
-        else:
-            data = {}
-        print(data)
-        account = data.get("Account")
-        sender = data.get("Sender")
-        target = data.get("Target")
-        host = data.get("Ip")
-        port = data.get("Port")
-
-        print(args.data)
+        account = args.account
+        Sender = args.Sender
+        Target = args.Target
+        Host = args.Host
+        Port = args.Port
 
         cfg = Application()
-        cfg.Sender = sender
-        cfg.Target = target
-        cfg.Host = host
-        cfg.Port = port
-        cfg.read_config(sender, target, host, port)
+        cfg.Sender = Sender
+        cfg.Target = Target
+        cfg.Host = Host
+        cfg.Port = Port
+        cfg.read_config(Sender, Target, Host, Port)
 
-        settings = fix.SessionSettings("edp_hrt_client.cfg")
+        global logfix
+        # report
+        setup_logger('logfix', '{}_report.log'.format(account))
+        logfix = logging.getLogger('logfix')
+
+        settings = fix.SessionSettings("edp_performance_client.cfg")
         application = Application()
         application.account = account
-        store_factory = fix.FileStoreFactory(settings)
-        log_factory = fix.FileLogFactory(settings)
-        initiator = fix.SocketInitiator(application, store_factory, settings, log_factory)
+        storefactory = fix.FileStoreFactory(settings)
+        logfactory = fix.FileLogFactory(settings)
+        initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
 
         initiator.start()
-        time.sleep(1)
-        if data.get("ActionType") == "NewAck":
-            application.insert_order_request(data)
-        elif data.get("ActionType") == "CancelAck":
-            application.order_cancel_request(data)
-        time.sleep(10)
+        application.load_test_case(account)
+        sleep_duration = timedelta(minutes=1)
+        end_time = datetime.now() + sleep_duration
+        while datetime.now() < end_time:
+            time.sleep(1)
         initiator.stop()
 
     except (fix.ConfigError, fix.RuntimeError) as e:
