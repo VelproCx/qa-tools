@@ -26,4 +26,4 @@ sleep 5
 #    "ExDestination":"EiB Market"}
 #'
 
-python3 edp_hrt_atp_batch_application.py --m 10 --s 10
+python3 edp_hrt_atp_batch_application.py --m 706 --s 5

@@ -3,6 +3,7 @@
 """FIX Application"""
 import argparse
 import configparser
+import csv
 import sys
 import threading
 
@@ -16,7 +17,7 @@ import random
 
 __SOH__ = chr(1)
 
-
+symbols = []
 class Application(fix.Application):
     execID = 0
     order_new = 0
@@ -146,7 +147,7 @@ class Application(fix.Application):
         orderQty = random.randint(1, 5)
         return orderQty
 
-    def insert_order_request(self, row, account):
+    def insert_order_request(self, symbol):
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
@@ -156,7 +157,7 @@ class Application(fix.Application):
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(100))
         msg.setField(fix.OrdType("1"))
-        msg.setField(fix.Symbol(row["Symbol"]))
+        msg.setField(fix.Symbol(symbol))
 
         msg.setField(fix.Side("1"))
 
@@ -168,28 +169,25 @@ class Application(fix.Application):
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
 
-    def load_test_case(self, account):
+    def load_test_case(self):
         """Run"""
-        with open('uat_test_with_hrt.json', 'r') as f_json:
-            orderNum = 0
-            case_data_list = json.load(f_json)
-            time.sleep(2)
-            # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while orderNum < 41:
-                orderNum += 1
-                for row in case_data_list["testCase"]:
-                    self.insert_order_request(row, account)
-                    time.sleep(0.05)
+        num = 0
+        while num < int(message_num):
+            num += 1
+            sleep_time = float(sleep) * 0.001
+            time.sleep(sleep_time)
+            symbol = symbols[num % len(symbols)]
+            self.insert_order_request(symbol)
 
 
-    def read_config(self, Sender, Target, Host, Port):
+    def read_config(self, sender, target, host, port):
         # 读取并修改配置文件
         config = configparser.ConfigParser()
         config.read('edp_performance_client.cfg')
-        config.set('SESSION', 'SenderCompID', Sender)
-        config.set('SESSION', 'TargetCompID', Target)
-        config.set('SESSION', 'SocketConnectHost', Host)
-        config.set('SESSION', 'SocketConnectPort', Port)
+        config.set('SESSION', 'SenderCompID', sender)
+        config.set('SESSION', 'TargetCompID', target)
+        config.set('SESSION', 'SocketConnectHost', host)
+        config.set('SESSION', 'SocketConnectPort', port)
 
         with open('edp_performance_client.cfg', 'w') as configfile:
             config.write(configfile)
@@ -197,33 +195,46 @@ class Application(fix.Application):
 
 def main():
     global account
+    global message_num
+    global sleep
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
-        parser.add_argument('--account', default='RUAT_EDP_ACCOUNT_7', help='choose account to use for test')
-        parser.add_argument('--Sender', default='RUAT_EDP_7', help='choose Sender to use for test')
-        parser.add_argument('--Target', default='FSX_UAT_EDP', help='choose Target to use for test')
-        parser.add_argument('--Host', default='clientgateway107', help='choose Host to use for test')
-        parser.add_argument('--Port', default='5007', help='choose Port to use for test')
+        parser.add_argument('--account', default='RSIT_EDP_ACCOUNT_1', help='choose account to use for test')
+        parser.add_argument('--sender', default='RSIT_EDP_1', help='choose Sender to use for test')
+        parser.add_argument('--target', default='FSX_SIT_EDP', help='choose Target to use for test')
+        parser.add_argument('--host', default='10.4.129.151', help='choose Host to use for test')
+        parser.add_argument('--port', default='30051', help='choose Port to use for test')
+        parser.add_argument('--m', help='choose num')
+        parser.add_argument('--s', help='choose num')
 
         args = parser.parse_args()  # 解析参数
         account = args.account
-        Sender = args.Sender
-        Target = args.Target
-        Host = args.Host
-        Port = args.Port
+        sender = args.sender
+        target = args.target
+        host = args.host
+        port = args.port
+        message_num = args.m
+        sleep = args.s
 
         cfg = Application()
-        cfg.Sender = Sender
-        cfg.Target = Target
-        cfg.Host = Host
-        cfg.Port = Port
-        cfg.read_config(Sender, Target, Host, Port)
+        cfg.sender = sender
+        cfg.target = target
+        cfg.host = host
+        cfg.port = port
+        cfg.read_config(sender, target, host, port)
 
         global logfix
         # report
         setup_logger('logfix', '{}_report.log'.format(account))
         logfix = logging.getLogger('logfix')
+
+
+        with open('symbol.csv', 'r', newline='') as csvfile:
+            csvreader = csv.reader(csvfile)
+            for row in csvreader:
+                symbol = row[0]
+                symbols.append(symbol)
 
         settings = fix.SessionSettings("edp_performance_client.cfg")
         application = Application()
@@ -233,7 +244,7 @@ def main():
         initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
 
         initiator.start()
-        application.load_test_case(account)
+        application.load_test_case()
         sleep_duration = timedelta(minutes=1)
         end_time = datetime.now() + sleep_duration
         while datetime.now() < end_time:

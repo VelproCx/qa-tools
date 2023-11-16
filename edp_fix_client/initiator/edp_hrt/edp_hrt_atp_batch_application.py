@@ -90,7 +90,6 @@ class Application(fix.Application):
 
     def insert_order_request(self, symbol, price, securityID):
         msg = fix.Message()
-        print(symbol, price, account)
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
@@ -102,7 +101,7 @@ class Application(fix.Application):
         msg.setField(fix.Symbol(symbol))
         msg.setField(fix.Price(price))
 
-        msg.setField(fix.Side("1"))
+        msg.setField(fix.Side("2"))
         msg.setField(fix.OrderCapacity('P'))
         msg.setField(fix.ExDestination("EiB MarketEiB"))
         msg.setField(fix.TimeInForce("0"))
@@ -171,11 +170,17 @@ def main():
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
-        parser.add_argument('--account', default='RSIT_EDP_ACCOUNT_1', help='choose account to use for test')
-        parser.add_argument('--sender', default='TRADER_C', help='choose Sender to use for test')
-        parser.add_argument('--target', default='terminal_1', help='choose Target to use for test')
-        parser.add_argument('--host', default='192.168.0.20', help='choose Host to use for test')
-        parser.add_argument('--port', default='11113', help='choose Port to use for test')
+        # 20服务器
+        # parser.add_argument('--account', default='RSIT_EDP_ACCOUNT_1', help='choose account to use for test')
+        # parser.add_argument('--sender', default='TRADER_C', help='choose Sender to use for test')
+        # parser.add_argument('--target', default='terminal_1', help='choose Target to use for test')
+        # parser.add_argument('--host', default='192.168.0.20', help='choose Host to use for test')
+        # parser.add_argument('--port', default='11113', help='choose Port to use for test')
+        parser.add_argument('--account', default='HRT_SIT_EDP_ACCOUNT_1', help='choose account to use for test')
+        parser.add_argument('--sender', default='HRT_SIT_EDP_D_1', help='choose Sender to use for test')
+        parser.add_argument('--target', default='s_t2', help='choose Target to use for test')
+        parser.add_argument('--host', default='10.4.128.117', help='choose Host to use for test')
+        parser.add_argument('--port', default='11131', help='choose Port to use for test')
         parser.add_argument('--m', help='choose num')
         parser.add_argument('--s', help='choose num')
 
