@@ -5,23 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f0e19d0-646b-43a6-b2a4-6e5bdbe24eda" name="Changes" comment="修改performance shell脚本">
-      <change afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/symbol.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_dropcopy/edp_hrt_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_dropcopy/edp_hrt_client.cfg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/edp_hrt_atp_batch_application.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/edp_hrt_atp_batch_application.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/edp_hrt_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/edp_hrt_client.cfg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/edp_hrt_start.sh" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/edp_hrt_start.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/logs/FIX.4.4-TRADER_C-terminal_1.event.current.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/logs/FIX.4.4-TRADER_C-terminal_1.messages.current.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/sessions/FIX.4.4-TRADER_C-terminal_1.session" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/symbol.csv" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/symbol.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/edp_performance_client.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/edp_performance_client.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/logs/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.event.current.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.body" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.header" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.seqnums" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test/sessions/FIX.4.2-RSIT_EDP_1-FSX_SIT_EDP.session" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/full_of_smoke.sh" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/full_of_smoke/full_of_smoke.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/sessions/FIX.4.4-TRADER_C-terminal_1.body" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/sessions/FIX.4.4-TRADER_C-terminal_1.body" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/sessions/FIX.4.4-TRADER_C-terminal_1.header" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/sessions/FIX.4.4-TRADER_C-terminal_1.header" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/sessions/FIX.4.4-TRADER_C-terminal_1.seqnums" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/initiator/edp_hrt/sessions/FIX.4.4-TRADER_C-terminal_1.seqnums" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/edp_fix_client/testcases/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/edp_fix_client/testcases/test.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,21 +40,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/elevenchen/Desktop/qa-tools/edp_fix_client/initiator/edp_performance_test",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.stylelint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.stylelint": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/elevenchen/Desktop/qa-tools/edp_fix_client/initiator/edp_performance_test&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/edp_fix_client/initiator/edp_performance_test" />
@@ -318,7 +308,8 @@
     <MESSAGE value="add edp pytest demo" />
     <MESSAGE value="修改performance项目结构" />
     <MESSAGE value="修改performance shell脚本" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改performance shell脚本" />
+    <MESSAGE value="update: 修改performance 发单数量计算" />
+    <option name="LAST_COMMIT_MESSAGE" value="update: 修改performance 发单数量计算" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/qa_tools$data_comparison.coverage" NAME="data_comparison Coverage Results" MODIFIED="1691497538462" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/edp_fix_client/method" />

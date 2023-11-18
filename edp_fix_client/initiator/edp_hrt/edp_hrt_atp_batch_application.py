@@ -6,6 +6,8 @@ import configparser
 import csv
 import random
 import sys
+import threading
+
 import quickfix as fix
 import time
 import logging
@@ -134,7 +136,8 @@ class Application(fix.Application):
 
     def read_config(self, sender, target, host, port):
         # 读取并修改配置文件
-        config = configparser.ConfigParser()
+        config = configparser.ConfigParser(allow_no_value=True)
+        config.optionxform = str  # 保持键的大小写
         config.read('edp_hrt_client.cfg')
         config.set('SESSION', 'SenderCompID', sender)
         config.set('SESSION', 'TargetCompID', target)
@@ -163,6 +166,13 @@ def convert_stock_code(stock_code):
     return result
 
 
+class LoadTestCaseThread(threading.Thread):
+    def __init__(self, application):
+        super().__init__()
+        self.application = application
+
+    def run(self):
+        self.application.load_test_case()
 def main():
     global account
     global message_num
@@ -171,18 +181,19 @@ def main():
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
         # 20服务器
-        # parser.add_argument('--account', default='RSIT_EDP_ACCOUNT_1', help='choose account to use for test')
-        # parser.add_argument('--sender', default='TRADER_C', help='choose Sender to use for test')
-        # parser.add_argument('--target', default='terminal_1', help='choose Target to use for test')
-        # parser.add_argument('--host', default='192.168.0.20', help='choose Host to use for test')
-        # parser.add_argument('--port', default='11113', help='choose Port to use for test')
+        # parser.add_argument('-account', default='HRT_SIT_EDP_ACCOUNT_2', help='choose account to use for test')
+        # parser.add_argument('-sender', default='TRADER_C', help='choose Sender to use for test')
+        # parser.add_argument('-target', default='terminal_1', help='choose Target to use for test')
+        # parser.add_argument('-host', default='192.168.0.20', help='choose Host to use for test')
+        # parser.add_argument('-port', default='11113', help='choose Port to use for test')
         parser.add_argument('--account', default='HRT_SIT_EDP_ACCOUNT_1', help='choose account to use for test')
         parser.add_argument('--sender', default='HRT_SIT_EDP_D_1', help='choose Sender to use for test')
         parser.add_argument('--target', default='s_t2', help='choose Target to use for test')
         parser.add_argument('--host', default='10.4.128.117', help='choose Host to use for test')
         parser.add_argument('--port', default='11131', help='choose Port to use for test')
-        parser.add_argument('--m', help='choose num')
-        parser.add_argument('--s', help='choose num')
+        parser.add_argument('-m', help='Please enter the order quantity')
+        parser.add_argument('-s', help='Please enter the delay')
+        parser.add_argument('-t', help='Please enter the number of threads')
 
         args = parser.parse_args()  # 解析参数
         account = args.account
@@ -192,6 +203,7 @@ def main():
         port = args.port
         message_num = args.m
         sleep = args.s
+        ord_threads = args.t
 
         cfg = Application()
         cfg.sender = sender
@@ -216,7 +228,17 @@ def main():
         initiator = fix.SocketInitiator(application, store_factory, settings, log_factory)
 
         initiator.start()
-        application.load_test_case()
+        # 创建十个线程并发运行 load_test_case 方法
+        threads = []
+        for _ in range(int(ord_threads)):
+            thread = LoadTestCaseThread(application)
+            threads.append(thread)
+            thread.start()
+
+        # 等待所有线程完成
+        for thread in threads:
+            thread.join()
+
         sleep_duration = timedelta(minutes=1)
         end_time = datetime.now() + sleep_duration
         while datetime.now() < end_time:
