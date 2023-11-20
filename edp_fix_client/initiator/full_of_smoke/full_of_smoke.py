@@ -3,6 +3,7 @@
 """FIX Application"""
 import argparse
 import configparser
+import csv
 import sys
 
 import quickfix as fix
@@ -10,10 +11,11 @@ import time
 import logging
 from datetime import datetime, timedelta
 from model.logger import setup_logger
-import json
 import random
 
 __SOH__ = chr(1)
+
+symbols = []
 
 
 class Application(fix.Application):
@@ -141,16 +143,16 @@ class Application(fix.Application):
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
         return str(t) + str1 + str(self.execID).zfill(6)
 
-    def insert_order_request(self, row, account):
+    def insert_order_request(self, symbol):
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
         msg.setField(fix.Account(account))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
-        msg.setField(fix.OrderQty(row["OrderQty"]))
+        msg.setField(fix.OrderQty(100))
         msg.setField(fix.OrdType("1"))
-        msg.setField(fix.Symbol(row["Symbol"]))
+        msg.setField(fix.Symbol(symbol))
 
         msg.setField(fix.Side("2"))
 
@@ -162,15 +164,28 @@ class Application(fix.Application):
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
 
-    def load_test_case(self, account):
+    def load_test_case(self):
         """Run"""
-        with open('smoke_case.json', 'r') as f_json:
-            case_data_list = json.load(f_json)
-            time.sleep(2)
-            # 循环所有用例，并把每条用例放入runTestCase方法中，
-            for row in case_data_list["testCase"]:
-                self.insert_order_request(row, account)
-                time.sleep(0.004)
+        start_time = datetime.now()
+        tor = int(time_of_running)
+
+        while True:
+            current_time = datetime.now()
+            time_difference = current_time - start_time
+
+            for symbol in symbols:
+                if time_difference <= timedelta(minutes=tor):
+                    current_time = datetime.now()
+                    time_difference = current_time - start_time
+
+                    if time_difference <= timedelta(minutes=tor):
+                        self.insert_order_request(symbol)
+                        time.sleep(1)
+                else:
+                    break
+
+            if time_difference > timedelta(minutes=tor):
+                return
 
     def read_config(self, sender, target, host, port):
         # 读取并修改配置文件
@@ -187,6 +202,7 @@ class Application(fix.Application):
 
 def main():
     global account
+    global time_of_running
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
@@ -196,11 +212,12 @@ def main():
         # parser.add_argument('--Host', default='clientgateway99', help='choose Host to use for test')
         # parser.add_argument('--Port', default='5001', help='choose Port to use for test')
 
-        parser.add_argument('--account', default='RSIT_EDP_ACCOUNT_2', help='choose account to use for test')
-        parser.add_argument('--sender', default='RSIT_EDP_2', help='choose Sender to use for test')
-        parser.add_argument('--target', default='FSX_SIT_EDP', help='choose Target to use for test')
-        parser.add_argument('--host', default='52.194.183.77', help='choose Host to use for test')
-        parser.add_argument('--port', default='30052', help='choose Port to use for test')
+        parser.add_argument('-account', default='RSIT_EDP_ACCOUNT_2', help='choose account to use for test')
+        parser.add_argument('-sender', default='RSIT_EDP_2', help='choose Sender to use for test')
+        parser.add_argument('-target', default='FSX_SIT_EDP', help='choose Target to use for test')
+        parser.add_argument('-host', default='clientgateway102', help='choose Host to use for test')
+        parser.add_argument('-port', default='30052', help='choose Port to use for test')
+        parser.add_argument('-tor', default='30052', help='Time of running')
 
         args = parser.parse_args()  # 解析参数
         account = args.account
@@ -208,6 +225,7 @@ def main():
         target = args.target
         host = args.host
         port = args.port
+        time_of_running = args.tor
 
         cfg = Application()
         cfg.Sender = sender
@@ -221,6 +239,12 @@ def main():
         setup_logger('logfix', '{}_report.log'.format(account))
         logfix = logging.getLogger('logfix')
 
+        with open('symbol.csv', 'r', newline='') as csvfile:
+            csvreader = csv.reader(csvfile)
+            for row in csvreader:
+                symbol = row[0]
+                symbols.append(symbol)
+
         settings = fix.SessionSettings("full_of_smoke.cfg")
         application = Application()
         application.account = account
@@ -229,7 +253,7 @@ def main():
         initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
 
         initiator.start()
-        application.load_test_case(account)
+        application.load_test_case()
 
         initiator.stop()
 
