@@ -27,7 +27,7 @@ def compare_field_values(json_file1, json_file2, field_name):
             elif record1[field_name] == record2[field_name]:
                 resList.append("success")
             else:
-                logfix.info(f"第 {i} 组数据的指定字段值不相同" + "," + "clordId:" + str(record2['clordId']))
+                logfix.info(f"第 {i} 组数据的指定字段值不相同" + "," + "clOrdId:" + str(record2['clOrdId']))
                 resList.append('failed')
                 logfix.info("Except:" + str(record1[field_name]) + " ，" + "ordStatus: " + str(record2[field_name]))
     else:

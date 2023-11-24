@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf8 -*-
 """FIX Application"""
+import argparse
+import configparser
+import csv
 import difflib
 import os
 import random
@@ -180,17 +183,17 @@ class Application(fix.Application):
             if matches:
                 matched_clordId = matches[0]
                 for item in self.ReceveRes:
-                    if item['clordId'] == matched_clordId:
+                    if item['clOrdId'] == matched_clordId:
                         # 更新该组数据的ordstatus
-                        item['ordstatus'].append(str(ordStatus))
+                        item['ordStatus'].append(str(ordStatus))
 
             else:
                 # 添加新的数据到数组中
                 if ordStatus != "8":
-                    self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
+                    self.ReceveRes.append({'clOrdId': clOrdID, 'ordStatus': [ordStatus]})
                 else:
                     text = message.getField(58)
-                    self.ReceveRes.append({'clordId': clOrdID, 'ordstatus': [ordStatus], 'errorCode': text})
+                    self.ReceveRes.append({'clOrdId': clOrdID, 'ordStatus': [ordStatus], 'errorCode': text})
             if msgType != '9':
                 avgPx = message.getField(6)
                 CumQty = message.getField(14)
@@ -432,7 +435,7 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account(row["Account"]))
+        msg.setField(fix.Account(account))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(row["OrderQty"]))
         msg.setField(fix.OrdType(row["OrdType"]))
@@ -515,7 +518,7 @@ class Application(fix.Application):
             for row in case_data_list["testCase"]:
                 if row['Id'] == "1":
                     self.insert_order_request(row)
-                    time.sleep(60)
+                    time.sleep(1)
 
                 elif row["ActionType"] == 'NewAck':
                     self.insert_order_request(row)
@@ -523,24 +526,58 @@ class Application(fix.Application):
 
                 elif row["ActionType"] == 'CancelAck':
                     # 增加判断条件，判断是否为需要cancel的symbol
-                    if row["Symbol"] == "1496" or row["Symbol"] == "2927" or row["Symbol"] == "3915" or row[
-                        "Symbol"] == "3916":
-                        time.sleep(3)
-                    else:
-                        time.sleep(3)
+                    time.sleep(1)
                     self.order_cancel_request(row)
 
+    def read_config(self, sender, target, host, port):
+        # 读取并修改配置文件
+        config = configparser.ConfigParser(allow_no_value=True)
+        config.optionxform = str  # 保持键的大小写
+        config.read('edp_regression_client.cfg')
+        config.set('SESSION', 'SenderCompID', sender)
+        config.set('SESSION', 'TargetCompID', target)
+        config.set('SESSION', 'SocketConnectHost', host)
+        config.set('SESSION', 'SocketConnectPort', port)
+
+        with open('edp_regression_client.cfg', 'w') as configfile:
+            config.write(configfile)
+
+
 def main():
+    global account
     try:
+        # 使用argparse的add_argument方法进行传参
+        parser = argparse.ArgumentParser()  # 创建对象
+        parser.add_argument('-account', default='RSIT_EDP_ACCOUNT_1', help='choose account to use for test')
+        parser.add_argument('-sender', default='RSIT_EDP_1', help='choose Sender to use for test')
+        parser.add_argument('-target', default='FSX_SIT_EDP', help='choose Target to use for test')
+        parser.add_argument('-host', default='10.4.129.151', help='choose Host to use for test')
+        parser.add_argument('-port', default='30051', help='choose Port to use for test')
+
+        args = parser.parse_args()  # 解析参数
+        account = args.account
+        sender = args.sender
+        target = args.target
+        host = args.host
+        port = args.port
+
+        cfg = Application()
+        cfg.sender = sender
+        cfg.target = target
+        cfg.host = host
+        cfg.port = port
+        cfg.read_config(sender, target, host, port)
+
         settings = fix.SessionSettings("edp_regression_client.cfg")
         application = Application()
+        application.account = account
         storefactory = fix.FileStoreFactory(settings)
         logfactory = fix.FileLogFactory(settings)
         initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
 
         initiator.start()
         application.load_test_case()
-        sleep_duration = timedelta(minutes=5)
+        sleep_duration = timedelta(minutes=1)
         end_time = datetime.now() + sleep_duration
         while datetime.now() < end_time:
             time.sleep(1)
