@@ -68,9 +68,9 @@ class Application(fix.Application):
         logfix.info("Result: order_ioc_expired = {}".format(
             self.order_ioc_expired
         ))
-        logfix.info("Result: not_book_is_close = {}".format(
-            self.not_book_is_close
-        ))
+        # logfix.info("Result: not_book_is_close = {}".format(
+        #     self.not_book_is_close
+        # ))
         print("Session ({}) logout !".format(sessionID.toString()))
         return
 
@@ -173,14 +173,14 @@ class Application(fix.Application):
             current_time = datetime.now()
             time_difference = current_time - start_time
 
-            for symbol in self.symbols:
+            for symbol in symbols:
                 if time_difference <= timedelta(minutes=tor):
                     current_time = datetime.now()
                     time_difference = current_time - start_time
 
                     if time_difference <= timedelta(minutes=tor):
                         self.insert_order_request(symbol)
-                        time.sleep(1)
+                        time.sleep(0.005)
                 else:
                     break
 
@@ -189,14 +189,15 @@ class Application(fix.Application):
 
     def read_config(self, sender, target, host, port):
         # 读取并修改配置文件
-        config = configparser.ConfigParser()
-        config.read('full_of_smoke.cfg')
+        config = configparser.ConfigParser(allow_no_value=True)
+        config.optionxform = str  # 保持键的大小写
+        config.read('/app/data/qa-tools/edp_fix_client/initiator/full_of_smoke/full_of_smoke.cfg')
         config.set('SESSION', 'SenderCompID', sender)
         config.set('SESSION', 'TargetCompID', target)
         config.set('SESSION', 'SocketConnectHost', host)
         config.set('SESSION', 'SocketConnectPort', port)
 
-        with open('full_of_smoke.cfg', 'w') as configfile:
+        with open('/app/data/qa-tools/edp_fix_client/initiator/full_of_smoke/full_of_smoke.cfg', 'w') as configfile:
             config.write(configfile)
 
 
@@ -239,13 +240,13 @@ def main():
         setup_logger('logfix', '{}_report.log'.format(account))
         logfix = logging.getLogger('logfix')
 
-        with open('symbol.csv', 'r', newline='') as csvfile:
+        with open('/app/data/qa-tools/edp_fix_client/initiator/full_of_smoke/symbol.csv', 'r', newline='') as csvfile:
             csvreader = csv.reader(csvfile)
             for row in csvreader:
                 symbol = row[0]
                 symbols.append(symbol)
 
-        settings = fix.SessionSettings("full_of_smoke.cfg")
+        settings = fix.SessionSettings("/app/data/qa-tools/edp_fix_client/initiator/full_of_smoke/full_of_smoke.cfg")
         application = Application()
         application.account = account
         storefactory = fix.FileStoreFactory(settings)

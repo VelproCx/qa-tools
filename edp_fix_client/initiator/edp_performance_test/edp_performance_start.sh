@@ -5,20 +5,20 @@
 
 
 sleep 3
-python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py --account RSIT_EDP_ACCOUNT_1 --Sender RSIT_EDP_1 --Target FSX_SIT_EDP --Host clientgateway101 --Port 5001 &
-sleep 1
-python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py --account RSIT_EDP_ACCOUNT_1 --Sender RSIT_EDP_2 --Target FSX_SIT_EDP --Host clientgateway102 --Port 5001 &
-sleep 1
-python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py --account RSIT_EDP_ACCOUNT_1 --Sender RSIT_EDP_3 --Target FSX_SIT_EDP --Host clientgateway103 --Port 5001 &
-sleep 1
-python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py --account RSIT_EDP_ACCOUNT_1 --Sender RSIT_EDP_4 --Target FSX_SIT_EDP --Host clientgateway104 --Port 5001 &
-sleep 1
-python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py --account RSIT_EDP_ACCOUNT_1 --Sender RSIT_EDP_5 --Target FSX_SIT_EDP --Host clientgateway105 --Port 5001 &
-sleep 1
-python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py --account RSIT_EDP_ACCOUNT_1 --Sender RSIT_EDP_6 --Target FSX_SIT_EDP --Host clientgateway106 --Port 5001 &
-sleep 1
-python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py --account RSIT_EDP_ACCOUNT_1 --Sender RSIT_EDP_7 --Target FSX_SIT_EDP --Host clientgateway107 --Port 5001 &
-sleep 1
-python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py --account RSIT_EDP_ACCOUNT_1 --Sender RSIT_EDP_8 --Target FSX_SIT_EDP --Host clientgateway108 --Port 5001 &
-sleep 1
-python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py --account RSIT_EDP_ACCOUNT_1 --Sender RSIT_EDP_9 --Target FSX_SIT_EDP --Host clientgateway109 --Port 5001 &
+#python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py -account RUAT_EDP_ACCOUNT_1 -sender RUAT_EDP_1 -target FSX_UAT_EDP -host clientgateway101 -port 5001 &
+#sleep 1
+#python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py -account RUAT_EDP_ACCOUNT_1 -sender RUAT_EDP_2 -target FSX_UAT_EDP -host clientgateway102 -port 5001 &
+#sleep 1
+#python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py -account RUAT_EDP_ACCOUNT_1 -sender RUAT_EDP_3 -target FSX_UAT_EDP -host clientgateway103 -port 5001 &
+#sleep 1
+python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py -account RUAT_EDP_ACCOUNT_1 -sender RUAT_EDP_4 -target FSX_UAT_EDP -host clientgateway104 -port 5001 -m 30000 -s 5
+#sleep 1
+#python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py -account RUAT_EDP_ACCOUNT_1 -sender RUAT_EDP_5 -target FSX_UAT_EDP -host clientgateway105 -port 5001 &
+#sleep 1
+#python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py -account RUAT_EDP_ACCOUNT_1 -sender RUAT_EDP_6 -target FSX_UAT_EDP -host clientgateway106 -port 5001 &
+#sleep 1
+#python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py -account RUAT_EDP_ACCOUNT_1 -sender RUAT_EDP_7 -target FSX_UAT_EDP -host clientgateway107 -port 5001 &
+#sleep 1
+#python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py -account RUAT_EDP_ACCOUNT_1 -sender RUAT_EDP_8 -target FSX_UAT_EDP -host clientgateway108 -port 5001 &
+#sleep 1
+#python3 /app/data/qa-tools/edp_fix_client/initiator/edp_performance_test/edp_performance_application.py -account RUAT_EDP_ACCOUNT_1 -sender RUAT_EDP_9 -target FSX_UAT_EDP -host clientgateway109 -port 5001 &
