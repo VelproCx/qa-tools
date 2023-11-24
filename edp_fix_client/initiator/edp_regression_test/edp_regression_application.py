@@ -77,14 +77,14 @@ class Application(fix.Application):
             file.write(json_data)
         self.Result = module1.compare_field_values('../../testcases/EDP_Functional_Test_Matrix.json',
                                                    'logs/recv_data.json',
-                                                   'ordstatus')
+                                                   'ordStatus')
         print("Session (%s) logout !" % sessionID.toString())
 
         ordstatus_list = []
         errorCode_list = []
 
         for i in self.ReceveRes:
-            ordstatus_list.append(str(i['ordstatus']))
+            ordstatus_list.append(str(i['ordStatus']))
             if 'errorCode' in i:
                 errorCode_list.append(str(i['errorCode']))
 
