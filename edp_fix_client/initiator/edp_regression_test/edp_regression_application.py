@@ -216,9 +216,9 @@ class Application(fix.Application):
                 OrderClassification = message.getField(8060)
                 SelfTradePreventionId = message.getField(8174)
 
-                if symbol == '1496' or symbol == '2927' or symbol == '3915' or symbol == '3916':
-                    self.ORDERS_DICT = message.getField(11)
-                    print(self.ORDERS_DICT)
+
+                self.ORDERS_DICT = message.getField(11)
+
                 msg = message.toString().replace(__SOH__, "|")
                 # 7.2 Execution Report – Order Accepted
                 if ordStatus == "0":
