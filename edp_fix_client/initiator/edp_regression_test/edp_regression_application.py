@@ -39,10 +39,8 @@ class Application(fix.Application):
     orderID = 0
     execID = 0
     ORDERS_DICT = []
-    Success = 0
-    Fail = 0
     Result = []
-    ReceveRes = []
+    RecvRes = []
     order_new = 0
     order_expired = 0
     order_accepted = 0
@@ -70,7 +68,7 @@ class Application(fix.Application):
         # "客户端断开连接时候调用此方法"
         print(self.ReceveRes)
         self.logsCheck()
-        json_data = json.dumps(self.ReceveRes)
+        json_data = json.dumps(self.RecvRes)
         module_name = "compare_field_values"
         module_path = data_comparison_path
         # 导入具有完整文件路径的模块
@@ -86,7 +84,7 @@ class Application(fix.Application):
         ordstatus_list = []
         errorCode_list = []
 
-        for i in self.ReceveRes:
+        for i in self.RecvRes:
             ordstatus_list.append(str(i['ordStatus']))
             if 'errorCode' in i:
                 errorCode_list.append(str(i['errorCode']))
@@ -177,13 +175,13 @@ class Application(fix.Application):
             # 设置匹配的阈值
             threshold = 1
             # 使用difflib模块的get_close_matches函数进行模糊匹配
-            matches = difflib.get_close_matches(clOrdID, [item['clordId'] for item in self.ReceveRes], n=1,
+            matches = difflib.get_close_matches(clOrdID, [item['clOrdId'] for item in self.ReceveRes], n=1,
                                                 cutoff=threshold)
             # 如果有匹配结果
             if matches:
-                matched_clordId = matches[0]
+                matched_clOrdId = matches[0]
                 for item in self.ReceveRes:
-                    if item['clOrdId'] == matched_clordId:
+                    if item['clOrdId'] == matched_clOrdId:
                         # 更新该组数据的ordstatus
                         item['ordStatus'].append(str(ordStatus))
 
@@ -215,7 +213,6 @@ class Application(fix.Application):
                 MinQty = message.getField(110)
                 OrderClassification = message.getField(8060)
                 SelfTradePreventionId = message.getField(8174)
-
 
                 self.ORDERS_DICT = message.getField(11)
 
@@ -435,13 +432,19 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account(account))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(row["OrderQty"]))
         msg.setField(fix.OrdType(row["OrdType"]))
         msg.setField(fix.Side(row["Side"]))
         msg.setField(fix.Symbol(row["Symbol"]))
         # ClientID = msg.getField(11)
+
+        # 判断account错误：
+        if "Invalid account" in row["errorCode"]:
+            msg.setField(fix.Account(row["Account"]))
+
+        else:
+            msg.setField(fix.Account(account))
 
         # 判断订单类型
         if row["OrdType"] == "2":
