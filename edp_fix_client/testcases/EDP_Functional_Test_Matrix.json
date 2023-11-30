@@ -2,7 +2,7 @@
   "testCase": [
     {
       "Id": "1",
-      "ScenarioName": "Trading Hours Check: Send order before Open(\uff5e9:00))",
+      "ScenarioName": "Trading Hours Check: Send order before Open(9:00))",
       "Account": "RUAT_EDP_ACCOUNT_5",
       "Market": "EDP",
       "ActionType": "NewAck",
@@ -83,7 +83,7 @@
       "Comment": "EDP_Limit_NewAck_Buy",
       "OrderQty": 100,
       "OrdType": "2",
-      "Price": 13070,
+      "Price": 14790,
       "Side": "1",
       "Symbol": "6758",
       "TimeInForce": "3",
@@ -109,7 +109,7 @@
       "Comment": "EDP_Limit_NewAck_Sell",
       "OrderQty": 100,
       "OrdType": "2",
-      "Price": 13065,
+      "Price": 9877,
       "Side": "2",
       "Symbol": "6758",
       "TimeInForce": "3",
@@ -162,8 +162,8 @@
       "OrderQty": 200,
       "OrdType": "2",
       "Side": "2",
-      "Price": 1665,
-      "Symbol": "5110",
+      "Price": 2475.5,
+      "Symbol": "1928",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -216,7 +216,7 @@
       "OrderQty": 300,
       "OrdType": "2",
       "Side": "2",
-      "Price": 1354,
+      "Price": 1200,
       "Symbol": "6473",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
@@ -241,10 +241,10 @@
       "Market": "EDP",
       "ActionType": "NewAck",
       "Comment": "EDP_Market_NewAck",
-      "OrderQty": 88,
+      "OrderQty": 99,
       "OrdType": "1",
       "Side": "1",
-      "Symbol": "6481",
+      "Symbol": "2071",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -268,10 +268,10 @@
       "Market": "EDP",
       "ActionType": "NewAck",
       "Comment": "EDP_Market_NewAck",
-      "OrderQty": 88,
+      "OrderQty": 99,
       "OrdType": "1",
       "Side": "2",
-      "Symbol": "6481",
+      "Symbol": "2073",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -295,11 +295,11 @@
       "Market": "EDP",
       "ActionType": "NewAck",
       "Comment": "EDP_Limit_NewAck",
-      "OrderQty": 88,
+      "OrderQty": 99,
       "OrdType": "2",
-      "Price": 2985,
+      "Price": 14000,
       "Side": "1",
-      "Symbol": "6481",
+      "Symbol": "2073",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -323,11 +323,11 @@
       "Market": "EDP",
       "ActionType": "NewAck",
       "Comment": "EDP_Limit_NewAck",
-      "OrderQty": 88,
+      "OrderQty": 99,
       "OrdType": "2",
-      "Price": 2984,
+      "Price": 8637,
       "Side": "2",
-      "Symbol": "6481",
+      "Symbol": "2073",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -391,7 +391,7 @@
       "ordStatus": [
         "8"
       ],
-      "errorCode": "Unknown order"
+      "errorCode": "Too late to cancel Order"
     },
     {
       "Id": "16",
@@ -403,8 +403,8 @@
       "OrderQty": 100,
       "OrdType": "2",
       "Side": "2",
-      "Price": 785,
-      "Symbol": "6471",
+      "Price": 2099.5,
+      "Symbol": "2809",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -429,7 +429,7 @@
       "OrderQty": 100,
       "OrdType": "2",
       "Side": "2",
-      "Symbol": "6471",
+      "Symbol": "2809",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -441,7 +441,7 @@
       "ordStatus": [
         "8"
       ],
-      "errorCode": "Unknown order"
+      "errorCode": "Too late to cancel Order"
     },
     {
       "Id": "18",
@@ -491,7 +491,7 @@
       "ordStatus": [
         "8"
       ],
-      "errorCode": "Unknown order"
+      "errorCode": "Too late to cancel Order"
     },
     {
       "Id": "20",
@@ -542,7 +542,7 @@
       "ordStatus": [
         "8"
       ],
-      "errorCode": "Unknown order"
+      "errorCode": "Too late to cancel Order"
     },
     {
       "Id": "22",
@@ -605,9 +605,9 @@
       "Comment": "EDP_Limit_NewAck",
       "OrderQty": 88,
       "OrdType": "2",
-      "Price": 2067.5,
+      "Price": 6235.5,
       "Side": "1",
-      "Symbol": "6503",
+      "Symbol": "2839",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -632,9 +632,9 @@
       "Comment": "EDP_Limit_NewAck",
       "OrderQty": 88,
       "OrdType": "2",
-      "Price": 2066.5,
+      "Price": 4637.5,
       "Side": "2",
-      "Symbol": "6503",
+      "Symbol": "2839",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -697,7 +697,7 @@
       "ordStatus": [
         "8"
       ],
-      "errorCode": "Unknown order"
+      "errorCode": "Too late to cancel Order"
     },
     {
       "Id": "28",
@@ -747,7 +747,7 @@
       "ordStatus": [
         "8"
       ],
-      "errorCode": "Unknown order"
+      "errorCode": "Too late to cancel Order"
     },
     {
       "Id": "30",
@@ -771,8 +771,7 @@
       "SelfTradePreventionId": "0",
       "ordStatus": [
         "0",
-        "2",
-        "2"
+        "4"
       ]
     },
     {
@@ -797,7 +796,7 @@
       "ordStatus": [
         "8"
       ],
-      "errorCode": "Unknown order"
+      "errorCode": "Too late to cancel Order"
     },
     {
       "Id": "32",
@@ -821,8 +820,7 @@
       "SelfTradePreventionId": "0",
       "ordStatus": [
         "0",
-        "2",
-        "2"
+        "4"
       ]
     },
     {
@@ -847,7 +845,7 @@
       "ordStatus": [
         "8"
       ],
-      "errorCode": "Unknown order"
+      "errorCode": "Too late to cancel Order"
     },
     {
       "Id": "34",
@@ -981,7 +979,7 @@
       "Comment": "Price=Low-limit-1",
       "OrderQty": 500,
       "OrdType": "2",
-      "Price": 3767,
+      "Price": 4204,
       "Side": "2",
       "Symbol": "4063",
       "TimeInForce": "3",
@@ -1006,7 +1004,7 @@
       "Comment": "Price=High-limit+1",
       "OrderQty": 500,
       "OrdType": "2",
-      "Price": 5169,
+      "Price": 6206,
       "Side": "2",
       "Symbol": "4063",
       "TimeInForce": "3",
@@ -1116,7 +1114,9 @@
       "SelfTradePreventionId": "0",
       "ordStatus": [
         "0",
+        "1",
         "2",
+        "1",
         "2"
       ]
     },
@@ -1174,7 +1174,7 @@
       "Account": "RUAT_EDP_ACCOUNT_5",
       "Market": "EDP",
       "ActionType": "NewAck",
-      "Comment": "Lot size=1,Quantity=1",
+      "Comment": "Lot size=1,Quantity=7",
       "OrderQty": 7,
       "OrdType": "1",
       "Side": "2",
@@ -1198,7 +1198,7 @@
       "Account": "RUAT_EDP_ACCOUNT_5",
       "Market": "EDP",
       "ActionType": "NewAck",
-      "Comment": "Lot size=1,Quantity=1",
+      "Comment": "Lot size=1,Quantity=1000",
       "OrderQty": 1000,
       "OrdType": "1",
       "Side": "2",
@@ -1222,7 +1222,7 @@
       "Account": "RUAT_EDP_ACCOUNT_5",
       "Market": "EDP",
       "ActionType": "NewAck",
-      "Comment": "Lot size=1,Quantity=1",
+      "Comment": "Lot size=1,Quantity=2000",
       "OrderQty": 2000,
       "OrdType": "1",
       "Side": "2",
@@ -1246,7 +1246,7 @@
       "Account": "RUAT_EDP_ACCOUNT_5",
       "Market": "EDP",
       "ActionType": "NewAck",
-      "Comment": "Lot size=1,Quantity=1",
+      "Comment": "Lot size=1,Quantity=1001",
       "OrderQty": 1001,
       "OrdType": "1",
       "Side": "2",
