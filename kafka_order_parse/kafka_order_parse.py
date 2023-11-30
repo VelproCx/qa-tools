@@ -316,7 +316,10 @@ class OrderCancelAccepted_t(LittleEndianStructure):
         ('PrimaryBidPx', c_double),
         ('PrimaryAskPx', c_double),
         ('RoutingDecisionTime', c_char * 28),
-        ('Text', c_char * 150)
+        ('Text', c_char * 150),
+        ('MinQty', c_double),
+        ('OrderClassification', c_char),
+        ('SelfTradePreventionId', c_int)
     ]
 
 
@@ -1043,7 +1046,8 @@ class EdpToSTNetConfirmation_t(LittleEndianStructure):
         ('ContraBroker', c_char * 20),
         ('SecondaryExecID', c_char * 32),
         ('FsxOrderID', c_char * 32),
-        ('DarkPool', c_char)
+        ('DarkPool', c_char),
+        ('PropExecID', c_char)
     ]
 
 
