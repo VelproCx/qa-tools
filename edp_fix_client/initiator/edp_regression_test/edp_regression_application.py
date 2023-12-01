@@ -66,7 +66,7 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
-        print(self.ReceveRes)
+        print(self.RecvRes)
         self.logsCheck()
         json_data = json.dumps(self.RecvRes)
         module_name = "compare_field_values"
@@ -175,12 +175,12 @@ class Application(fix.Application):
             # 设置匹配的阈值
             threshold = 1
             # 使用difflib模块的get_close_matches函数进行模糊匹配
-            matches = difflib.get_close_matches(clOrdID, [item['clOrdId'] for item in self.ReceveRes], n=1,
+            matches = difflib.get_close_matches(clOrdID, [item['clOrdId'] for item in self.RecvRes], n=1,
                                                 cutoff=threshold)
             # 如果有匹配结果
             if matches:
                 matched_clOrdId = matches[0]
-                for item in self.ReceveRes:
+                for item in self.RecvRes:
                     if item['clOrdId'] == matched_clOrdId:
                         # 更新该组数据的ordstatus
                         item['ordStatus'].append(str(ordStatus))
@@ -188,10 +188,10 @@ class Application(fix.Application):
             else:
                 # 添加新的数据到数组中
                 if ordStatus != "8":
-                    self.ReceveRes.append({'clOrdId': clOrdID, 'ordStatus': [ordStatus]})
+                    self.RecvRes.append({'clOrdId': clOrdID, 'ordStatus': [ordStatus]})
                 else:
                     text = message.getField(58)
-                    self.ReceveRes.append({'clOrdId': clOrdID, 'ordStatus': [ordStatus], 'errorCode': text})
+                    self.RecvRes.append({'clOrdId': clOrdID, 'ordStatus': [ordStatus], 'errorCode': text})
             if msgType != '9':
                 avgPx = message.getField(6)
                 CumQty = message.getField(14)
@@ -436,15 +436,13 @@ class Application(fix.Application):
         msg.setField(fix.OrderQty(row["OrderQty"]))
         msg.setField(fix.OrdType(row["OrdType"]))
         msg.setField(fix.Side(row["Side"]))
+        msg.setField(fix.Account(account))
         msg.setField(fix.Symbol(row["Symbol"]))
         # ClientID = msg.getField(11)
 
         # 判断account错误：
-        if "Invalid account" in row["errorCode"]:
+        if "not the target test account" in row["ScenarioName"]:
             msg.setField(fix.Account(row["Account"]))
-
-        else:
-            msg.setField(fix.Account(account))
 
         # 判断订单类型
         if row["OrdType"] == "2":
