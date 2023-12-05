@@ -16,6 +16,8 @@ from datetime import datetime, timedelta
 from model.logger import setup_logger
 import json
 from openpyxl import load_workbook
+from model.runEmail import send_mail
+
 
 __SOH__ = chr(1)
 
@@ -95,6 +97,7 @@ class Application(fix.Application):
         self.writeResExcel('report/edp_report.xlsx', ordstatus_list, 2, 'J')
         self.writeResExcel('report/edp_report.xlsx', errorCode_list, 2, 'K')
         self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'L')
+        send_mail(['report/edp_report.xlsx', 'logs/edp_report.log'])
         return
 
     def toAdmin(self, message, sessionID):
