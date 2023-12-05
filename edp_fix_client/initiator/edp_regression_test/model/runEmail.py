@@ -8,17 +8,19 @@ import smtplib
 
 from email.mime.base import MIMEBase
 from email import encoders
+from email.utils import formataddr
 
 
 # 定义发邮件
 def send_mail(file_path):
     assert isinstance(file_path, list)
 
-    smtpserver = 'smtp.gmail.com'
-    # 设置登录邮箱的账号和授权密码
-    user = 'miaolan.huang.fsy@finstadiumx.co.jp'
-    password = "cvgqpwysiybswgtv"
-    sender = 'miaolan.huang.fsy@finstadiumx.co.jp'
+    smtpserver = 'email-smtp.ap-northeast-1.amazonaws.com'
+    port = 465  # Amazon SES SMTP端口为465
+    user = 'AKIATDLW3JI55OXL6PJE'
+    password = 'BKusrtLwYnincf9wWNeXw008BfHrhLbMAoSkPUwzcAkD'
+
+    sender = 'no-reply@finstadiumx.co.jp'
     # 可添加多个收件人的邮箱
     receives = ['huangmiaolan@farsightedyu.com', 'zhangtaotao@farsightedyu.com',
                 'zhenghuaimao@farsightedyu.com', 'xiang.chen@farsightedyu.com']
@@ -26,10 +28,10 @@ def send_mail(file_path):
     # 构造邮件对象
     msg = MIMEMultipart('mixed')
     # 定义邮件的标题
-    subject = '【EDP】【UAT】edp regression test report'
+    subject = '【EDP】【SIT】Edp Regression Test Report'
     # HTML邮件正文，定义成字典
     msg['Subject'] = Header(subject, "utf-8")
-    msg['From'] = sender
+    msg['From'] = formataddr(('FSX', sender))
     msg['To'] = ','.join(receives)
     # 构造文字内容
     text_plain = MIMEText("Regression Result，Please check the attachment.", 'html', 'utf-8')
@@ -40,24 +42,13 @@ def send_mail(file_path):
         part = MIMEBase('application', 'octet-stream')
         part.set_payload(open(file, 'rb').read())
         encoders.encode_base64(part)
-        part.add_header('Content-Disposition', 'attachment', filename=file.split("/")[-1])
+        part.add_header('Content-Disposition', f'attachment; filename="{file}"')
         msg.attach(part)
 
-    # 邮箱设置时勾选了SSL加密连接，进行防垃圾邮件，SSL协议端口号要使用465
-    smtp = smtplib.SMTP_SSL(smtpserver, 465)
-    # 向服务器标识用户身份
-    smtp.helo(smtpserver)
-    # 向服务器返回确认结果
-    smtp.ehlo(smtpserver)
-    # 登录邮箱的账号和授权密码
-    smtp.login(user, password)
+    context = smtplib.SMTP_SSL(smtpserver, port)
+    context.login(user, password)
 
     print("开始发送邮件...")
-    # 开始进行邮件的发送，msg表示已定义的字典
-    smtp.sendmail(sender, receives, msg.as_string())
-    smtp.quit()
+    context.sendmail(sender, receives, msg.as_string())
     print("已发送邮件")
     return
-
-
-send_mail(['test.log'])
