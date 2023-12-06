@@ -121,7 +121,7 @@ class Application(fix.Application):
 
         # 判断订单类型
         if data.get("OrdType") == "2":
-            msg.setField(fix.Price(int(data.get("Price"))))
+            msg.setField(fix.Price(float(data.get("Price"))))
 
         if data.get("TimeInForce") != "":
             msg.setField(fix.TimeInForce(data.get("TimeInForce")))
