@@ -12,14 +12,13 @@ class AtpEod:
 
     @classmethod
     def sum_eod_num(cls):
-        with open("logs/fix_terminal2_20231201.log", "r") as file:
+        with open("logs/fix_terminal2_20231211.log", "r") as file:
             for line in tqdm(file):
-                if "send" in line and "35=8" in line and "56=HRT_UAT_EDP_D_1" in line:
+                if "send" in line and "35=8" in line and "56=HRT_SIT_EDP_D_1" in line:
                     if "39=0" in line:
-
                         cls.order_num += 1
                         order_data = re.sub(r"\x01", "|", line)
-                        print(order_data)
+                        # print(order_data)
                         cls.order_datas_list.append(order_data)
 
                     elif "39=1" in line or "39=2" in line:
@@ -31,7 +30,7 @@ class AtpEod:
                         cls.trade_datas_list.append(trade_data)
                 else:
                     pass
-        print(cls.order_num, cls.trade_num)
+        print("Order: {}".format(cls.order_num), "Trade: {}".format(cls.trade_num))
 
     @classmethod
     def generate_hrt_order_eod(cls):
@@ -48,7 +47,7 @@ class AtpEod:
             "OrderVenue",
             "OrderStatus"
         ]
-        with open("logs/fix_terminal2_20231118.bk.log", "r") as f:
+        with open("logs/fix_terminal2_20231211.log", "r") as f:
             for log_data in tqdm(f):
                 if "send" in log_data and "35=8" in log_data and "39=0" in log_data:
                     cls.order_num += 1

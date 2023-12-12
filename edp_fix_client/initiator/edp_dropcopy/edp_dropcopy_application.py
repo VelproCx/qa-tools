@@ -8,6 +8,7 @@ import quickfix as fix
 import logging
 from model.logger import setup_logger
 import time
+
 __SOH__ = chr(1)
 global initiator
 # log

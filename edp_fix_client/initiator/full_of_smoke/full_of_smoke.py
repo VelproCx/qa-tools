@@ -68,9 +68,7 @@ class Application(fix.Application):
         logfix.info("Result: order_ioc_expired = {}".format(
             self.order_ioc_expired
         ))
-        # logfix.info("Result: not_book_is_close = {}".format(
-        #     self.not_book_is_close
-        # ))
+
         print("Session ({}) logout !".format(sessionID.toString()))
         return
 
@@ -170,14 +168,17 @@ class Application(fix.Application):
         tor = int(time_of_running)
 
         while True:
+            # 获取当前时间
             current_time = datetime.now()
+            # 定义时间区间
             time_difference = current_time - start_time
-
+            # 循环股票列表
             for symbol in symbols:
+                # 判断时间区间是否小于等于传进来的运行时间参数
                 if time_difference <= timedelta(minutes=tor):
+                    # 重新计算
                     current_time = datetime.now()
                     time_difference = current_time - start_time
-
                     if time_difference <= timedelta(minutes=tor):
                         self.insert_order_request(symbol)
                         time.sleep(0.005)
