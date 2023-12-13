@@ -24,6 +24,7 @@ logfix = logging.getLogger('logfix')
 class Application(fix.Application):
     orderID = 0
     execID = 0
+    ORDERS_DICT = []
 
     def __init__(self):
         super().__init__()
@@ -64,6 +65,7 @@ class Application(fix.Application):
             side = message.getField(54)
             symbol = message.getField(55)
             transactTime = message.getField(60)
+            self.ORDERS_DICT = message.getField(11)
 
             if (clOrdID, orderQty, ordType, side, symbol, transactTime,) != "":
                 logfix.info("(sendMsg) New Ack >> {}".format(msg))
@@ -75,6 +77,7 @@ class Application(fix.Application):
             side = message.getField(54)
             symbol = message.getField(55)
             transactTime = message.getField(60)
+
             if (clOrdID, side, symbol, transactTime) != "":
                 logfix.info("(sendMsg) Cancel Ack >> {}".format(msg))
             else:
@@ -107,54 +110,56 @@ class Application(fix.Application):
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
         return str(t) + str1 + str(self.execID).zfill(6)
 
-    def insert_order_request(self, data):
+    def insert_order_request(self, row):
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account(data.get('Account')))
+        # msg.setField(fix.Account(row.get('Account')))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
-        msg.setField(fix.OrderQty(int(data.get("OrderQty"))))
-        msg.setField(fix.OrdType(data.get("OrdType")))
-        msg.setField(fix.Side(data.get("Side")))
-        msg.setField(fix.Symbol(data.get("Symbol")))
+        msg.setField(fix.OrderQty(row["OrderQty"]))
+        msg.setField(fix.Account(account))
+        msg.setField(fix.OrdType(row["OrdType"]))
+        msg.setField(fix.Side(row["Side"]))
+        msg.setField(fix.Symbol(row["Symbol"]))
+        msg.setField(16606, "MM_FIRM_1")
 
         # 判断订单类型
-        if data.get("OrdType") == "2":
-            msg.setField(fix.Price(float(data.get("Price"))))
+        if row["OrdType"] == "2":
+            msg.setField(fix.Price(int(row["Price"])))
 
-        if data.get("TimeInForce") != "":
-            msg.setField(fix.TimeInForce(data.get("TimeInForce")))
+        if row["TimeInForce"] != "":
+            msg.setField(fix.TimeInForce(row["TimeInForce"]))
 
-        if data.get("OrderCapacity") != "":
-            msg.setField(fix.OrderCapacity(data.get("OrderCapacity")))
+        if row["OrderCapacity"] != "":
+            msg.setField(fix.OrderCapacity(row["OrderCapacity"]))
 
-        if data.get("CashMargin") != "":
-            msg.setField(fix.CashMargin(data.get("CashMargin")))
+        if row["CashMargin"] != "":
+            msg.setField(fix.CashMargin(row["CashMargin"]))
 
-        if data.get("SecurityID") != "":
-            msg.setField(fix.SecurityID(data.get("SecurityID")))
+        if row["SecurityID"] != "":
+            msg.setField(fix.SecurityID(row["SecurityID"]))
 
-        if data.get("ExDestination") != "":
-            msg.setField(fix.ExDestination(data.get("ExDestination")))
+        if row["ExDestination"] != "":
+            msg.setField(fix.ExDestination(row["ExDestination"]))
 
         # 自定义Tag
-        if data.get("CrossingPriceType") != "":
-            msg.setField(8164, data.get("CrossingPriceType"))
+       # if row["CrossingPriceType"] != "":
+        #    msg.setField(8164, row["CrossingPriceType"])
 
-        if data.get("MarginTransactionType") != "":
-            msg.setField(8214, data.get("MarginTransactionType"))
+       # if row["MarginTransactionType"] != "":
+        #    msg.setField(8214, row["MarginTransactionType"])
 
         # EDP
 
-        if data.get("MinQty") != "":
-            msg.setField(fix.MinQty(int(data.get("MinQty"))))
+       # if row["MinQty"] != "":
+        #    msg.setField(fix.MinQty(int(row["MinQty"])))
 
-        if data.get("OrderClassification") != "":
-            msg.setField(8060, data.get("OrderClassification"))
+       # if row["OrderClassification"] != "":
+        #    msg.setField(8060, row["OrderClassification"])
 
-        if data.get("SelfTradePreventionId") != "":
-            msg.setField(8174, data.get("SelfTradePreventionId"))
+       # if row["SelfTradePreventionId"] != "":
+        #    msg.setField(8174, row["SelfTradePreventionId"])
 
         # 获取TransactTime
         trstime = fix.TransactTime()
@@ -173,6 +178,7 @@ class Application(fix.Application):
         header.setField(fix.MsgType(fix.MsgType_OrderCancelRequest))
         header.setField(fix.BeginString("FIX.4.2"))
         header.setField(fix.MsgType("F"))
+        msg.setField(fix.Account(account))
         msg.setField(fix.OrigClOrdID(clOrdId))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.Symbol(row["Symbol"]))
@@ -180,6 +186,8 @@ class Application(fix.Application):
         trstime = fix.TransactTime()
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
         msg.setField(trstime)
+        if row["SecurityID"] != "":
+            msg.setField(fix.SecurityID(row["SecurityID"]))
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
 
@@ -196,24 +204,37 @@ class Application(fix.Application):
         with open('edp_hrt_client.cfg', 'w') as configfile:
             config.write(configfile, space_around_delimiters=False)
 
+    def run_case(self):
+        with open('../../testcases/hrt_Test_List.json', 'r') as h_json:
+            case_data_list = json.load(h_json)
+            for row in case_data_list["testCase"]:
+                if row["ActionType"] == "NewAck":
+                    self.insert_order_request(row)
+                elif row["ActionType"] == "CancelAck":
+                    self.order_cancel_request(row)
+
 
 def main():
-    global data
+    global account
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
-        parser.add_argument('--data', help='please enter send data')
+        parser.add_argument('--account', default='HRT_UAT_EDP_ACCOUNT_1', help='choose account to use for test')
+        parser.add_argument('--sender', default='HRT_UAT_EDP_D_1', help='choose Sender to use for test')
+        parser.add_argument('--target', default='s_t2', help='choose Target to use for test')
+        parser.add_argument('--host', default='10.2.143.128', help='choose Host to use for test')
+        parser.add_argument('--port', default='11131', help='choose Port to use for test')
         args = parser.parse_args()  # 解析参数
 
-        if args.data:
-            data = json.loads(args.data)
-        else:
-            data = {}
-        account = data.get("Account")
-        sender = data.get("Sender")
-        target = data.get("Target")
-        host = data.get("Ip")
-        port = data.get("Port")
+        # if args.data:
+        #     data = json.loads(args.data)
+        # else:
+        #     data = {}
+        account = args.account
+        sender = args.sender
+        target = args.target
+        host = args.host
+        port = args.port
 
         cfg = Application()
         cfg.Sender = sender
@@ -231,10 +252,7 @@ def main():
 
         initiator.start()
         time.sleep(1)
-        if data.get("ActionType") == "NewAck":
-            application.insert_order_request(data)
-        elif data.get("ActionType") == "CancelAck":
-            application.order_cancel_request(data)
+        application.run_case()
         sleep_duration = timedelta(minutes=5)
         end_time = datetime.now() + sleep_duration
         while datetime.now() < end_time:

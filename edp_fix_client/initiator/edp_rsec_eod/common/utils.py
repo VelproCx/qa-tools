@@ -40,26 +40,21 @@ def login(env):
 
 
 # 通过参数控制需要获取需要下载的文件名称
-def get_eod_name(filename):
+def get_date():
     # 获取当前时间
     date = datetime.now()
     day_year = date.year
     day_month = date.month
     day_day = date.day
-    # 如果是1号，则月份减1
-    if day_day == 1:
-        day_month -= 1
-        day_day = calendar.monthrange(day_year, day_month)[1]
-    else:
-        day_day -= 1
+    # # 如果是1号，则月份减1
+    # if day_day == 1:
+    #     day_month -= 1
+    #     day_day = calendar.monthrange(day_year, day_month)[1]
+    # else:
+    #     day_day -= 1
     # 拼接时间字符串
     date_staring = f"{day_year}{day_month:02d}{day_day:02d}"
-    # 拼接EOD路径
-    eod_file_path = "/data/RSec/for_RSec/EoD/EDP/{}_{}.csv.gz".format(filename,
-                                                                      date_staring)
-
-    print("EOD文件路径：" + eod_file_path)
-    return eod_file_path
+    return date_staring
 
 
 # 保存下载的附件
@@ -90,17 +85,22 @@ def decompress_gzip_file(input_path, output_dir):
     with gzip.open(input_path, 'rb') as f_in:
         with open(output_path, 'wb') as f_out:
             shutil.copyfileobj(f_in, f_out)
-    print('文件解压成功')
+    print('文件下载成功')
 
 
 # EOD 下载请求
 def download_eod(env, filename):
+    print('文件下载中')
     # 定义两个环境url
     sit_url = "https://adminui.sit.edp-atp.finstadiumxjp.com//api/statistical-report/download-file"
     uat_url = "https://adminui.uat.edp-atp.finstadiumxjp.com//api/statistical-report/download-file"
     # 设计参数
+    # 拼接EOD路径
+    eod_file_path = "/data/RSec/for_RSec/EoD/EDP/{}_{}.csv.gz".format(filename,
+                                                                      get_date())
+    print('EOD文件路径：' + eod_file_path)
     data = json.dumps({
-        "route": get_eod_name(filename)
+        "route": eod_file_path
     })
     # 构建请求头
     headers = {
