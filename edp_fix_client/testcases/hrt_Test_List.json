@@ -1,0 +1,42 @@
+{
+  "testCase": [
+    {
+    "Market": "EDP",
+    "ActionType": "NewAck",
+    "Price":"2023",
+    "OrderQty": 10000,
+    "OrdType": "2",
+    "Side": "2",
+    "Symbol": "9989.EDP",
+    "SecurityID":"509090809",
+    "TimeInForce": "1",
+    "CrossingPriceType": "EDP",
+    "OrderCapacity": "P",
+    "CashMargin": "1",
+    "MarginTransactionType": "0",
+    "MinQty": 0,
+    "OrderClassification": "3",
+    "SelfTradePreventionId": "0",
+    "ExDestination":"EiB Market"
+
+    },
+    {
+     "Market": "EDP",
+    "ActionType": "CancelAck",
+    "OrderQty": 10000,
+    "OrdType": "2",
+    "Side": "2",
+    "Symbol": "9989.EDP",
+    "SecurityID":"509090809",
+    "TimeInForce": "1",
+    "CrossingPriceType": "EDP",
+    "OrderCapacity": "P",
+    "CashMargin": "3",
+    "MarginTransactionType": "0",
+    "MinQty": 0,
+    "OrderClassification": "3",
+    "SelfTradePreventionId": "0",
+    "ExDestination":"EiB Market"
+    }
+  ]
+}
