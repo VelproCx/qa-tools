@@ -39,8 +39,8 @@ class Application(fix.Application):
     orderID = 0
     execID = 0
     ORDERS_DICT = []
-    Result = []
-    RecvRes = []
+    result = []
+    recvRes = []
     order_new = 0
     order_expired = 0
     order_accepted = 0
@@ -66,9 +66,8 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
-        print(self.RecvRes)
         self.logsCheck()
-        json_data = json.dumps(self.RecvRes)
+        json_data = json.dumps(self.recvRes)
         module_name = "compare_field_values"
         module_path = data_comparison_path
         # 导入具有完整文件路径的模块
@@ -76,7 +75,7 @@ class Application(fix.Application):
         # 将JSON数据写入文件
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.Result = module1.compare_field_values('../../testcases/EDP_Functional_Test_Matrix.json',
+        self.result = module1.compare_field_values('../../testcases/EDP_Functional_Test_Matrix.json',
                                                    'logs/recv_data.json',
                                                    'ordStatus')
         print("Session (%s) logout !" % sessionID.toString())
@@ -84,17 +83,17 @@ class Application(fix.Application):
         ordStatus_list = []
         errorCode_list = []
 
-        for i in self.RecvRes:
+        for i in self.recvRes:
             ordStatus_list.append(str(i['ordStatus']))
             if 'errorCode' in i:
                 errorCode_list.append(str(i['errorCode']))
-
             else:
                 errorCode_list.append(" ")
 
-        self.writeResExcel('report/edp_report.xlsx', ordStatus_list, 2, 'J')
-        self.writeResExcel('report/edp_report.xlsx', errorCode_list, 2, 'K')
-        self.writeResExcel('report/edp_report.xlsx', self.Result, 2, 'L')
+
+        self.write_res_excel('report/edp_report.xlsx', ordStatus_list, 2, 'J')
+        self.write_res_excel('report/edp_report.xlsx', errorCode_list, 2, 'K')
+        self.write_res_excel('report/edp_report.xlsx', self.result, 2, 'L')
         send_mail(['report/edp_report.xlsx', 'logs/edp_report.log'])
         return
 
@@ -178,22 +177,25 @@ class Application(fix.Application):
                 # 设置匹配的阈值
                 threshold = 1
                 # 使用diffLib模块的get_close_matches函数进行模糊匹配
-                matches = difflib.get_close_matches(clOrdID, [item['clOrdId'] for item in self.RecvRes], n=1,
+                matches = difflib.get_close_matches(clOrdID, [item['clOrdId'] for item in self.recvRes], n=1,
                                                     cutoff=threshold)
                 # 如果有匹配结果
                 if matches:
                     matched_clOrdId = matches[0]
-                    for item in self.RecvRes:
+                    for item in self.recvRes:
                         if item['clOrdId'] == matched_clOrdId:
                             # 更新该组数据的ordStatus
                             item['ordStatus'].append(str(ordStatus))
+                            if ordStatus == "4":
+                                text = message.getField(58)
+                                item['errorCode'] = text
                 else:
                     # 添加新的数据到数组中
-                    if ordStatus == "8" or ordStatus == "C":
-                        text = message.getField(58)
-                        self.RecvRes.append({'clOrdId': clOrdID, 'ordStatus': [ordStatus], 'errorCode': text})
+                    if ordStatus != "8":
+                        self.recvRes.append({'clOrdId': clOrdID, 'ordStatus': [ordStatus], 'errorCode': ""})
                     else:
-                        self.RecvRes.append({'clOrdId': clOrdID, 'ordStatus': [ordStatus]})
+                        text = message.getField(58)
+                        self.recvRes.append({'clOrdId': clOrdID, 'ordStatus': [ordStatus], 'errorCode': text})
 
                 if msgType != '9':
                     avgPx = message.getField(6)
@@ -322,7 +324,7 @@ class Application(fix.Application):
                         routingDecisionTime = message.getField(8051)
                         # price = message.getField(44)
                         # Added tag to the EDP project
-                        lastLiquidityind = message.getField(851)
+
                         if execTransType == "0":
                             if (
                                     avgPx, clOrdID, CumQty, execID, execTransType, lastPx, lastShares, orderID,
@@ -331,7 +333,7 @@ class Application(fix.Application):
                                     execType, leavesQty, cashMargin, crossingPriceType, fsxTransactTime,
                                     marginTransactionType, primaryLastPx, primaryBidPx, primaryAskPx,
                                     routingDecisionTime,
-                                    MinQty, OrderClassification, SelfTradePreventionId, lastLiquidityind) != "":
+                                    MinQty, OrderClassification, SelfTradePreventionId) != "":
                                 logfix.info(
                                     "(recvMsg) Order Filled << {}".format(msg))
                                 if ordStatus == '2':
@@ -384,9 +386,9 @@ class Application(fix.Application):
                     else:
                         logfix.info(
                             "(recvMsg) Order Cancel Reject << {}".format(msg) + 'Order Cancel Reject FixMsg Error!')
+                self.onMessage(message, sessionID)
         except FieldNotFound as e:
             logfix.error(f"未找到字段：{e}")
-        self.onMessage(message, sessionID)
         return
 
     def onMessage(self, message, sessionID):
@@ -396,28 +398,28 @@ class Application(fix.Application):
     # 判断log文件中是否存在 Market Price is not matching
     def logsCheck(self):
         response = ['ps: 若列表存在failed数据，请查看report.log文件']
-        self.writeResExcel('report/edp_report.xlsx', response, 2, 'M')
+        self.write_res_excel('report/edp_report.xlsx', response, 2, 'M')
         with open('logs/edp_report.log', 'r') as f:
             content = f.read()
 
         if 'FixMsg Error' in content:
             logfix.info('FixMsg is NG')
             response = ['FixMsg is NG']
-            self.writeResExcel('report/edp_report.xlsx', response, 4, 'M')
+            self.write_res_excel('report/edp_report.xlsx', response, 4, 'M')
         else:
             logfix.info('FixMsg is OK')
             response = ['FixMsg is OK']
-            self.writeResExcel('report/edp_report.xlsx', response, 4, 'M')
+            self.write_res_excel('report/edp_report.xlsx', response, 4, 'M')
         if 'Order execType error' in content:
             logfix.info("execType is NG")
             response = ['execType is NG']
-            self.writeResExcel('report/edp_report.xlsx', response, 5, "M")
+            self.write_res_excel('report/edp_report.xlsx', response, 5, "M")
         else:
             logfix.info("execType is OK")
             response = ['execType is OK']
-            self.writeResExcel('report/edp_report.xlsx', response, 5, "M")
+            self.write_res_excel('report/edp_report.xlsx', response, 5, "M")
 
-    def writeResExcel(self, filename, data, row, column):
+    def write_res_excel(self, filename, data, row, column):
         # 打开现有的 Excel 文件或创建新的 Workbook
         workbook = load_workbook(filename)
         # 选择要写入数据的工作表
@@ -433,7 +435,7 @@ class Application(fix.Application):
         # 保存修改并关闭工作簿
         workbook.save(filename)
 
-    def get_clord_id(self):
+    def get_client_order_id(self):
         # "随机数生成ClOrdID"
         self.execID += 1
         # 获取当前时间并且进行格式转换
@@ -446,7 +448,7 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.ClOrdID(self.getClOrdID()))
+        msg.setField(fix.ClOrdID(self.get_client_order_id()))
         msg.setField(fix.OrderQty(row["OrderQty"]))
         msg.setField(fix.OrdType(row["OrdType"]))
         msg.setField(fix.Side(row["Side"]))
@@ -507,7 +509,7 @@ class Application(fix.Application):
         header.setField(fix.BeginString("FIX.4.2"))
         header.setField(fix.MsgType("F"))
         msg.setField(fix.OrigClOrdID(clOrdId))
-        msg.setField(fix.ClOrdID(self.getClOrdID()))
+        msg.setField(fix.ClOrdID(self.get_client_order_id()))
         msg.setField(fix.Symbol(row["Symbol"]))
         msg.setField(fix.Side(row["Side"]))
         trstime = fix.TransactTime()

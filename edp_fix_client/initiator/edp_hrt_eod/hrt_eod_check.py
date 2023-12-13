@@ -1,5 +1,7 @@
 import csv
 import re
+import time
+
 from tqdm import tqdm
 __SOH__ = chr(1)
 
@@ -14,22 +16,32 @@ class AtpEod:
     def sum_eod_num(cls):
         with open("logs/fix_terminal2_20231211.log", "r") as file:
             for line in tqdm(file):
-                if "send" in line and "35=8" in line and "56=HRT_PROD_EDP_D_1" in line:
-                    if "39=0" in line or "39=8" in line:
+                if "send" in line and "35=8" in line:
+                    cls.order_num += 1
+                    print(line)
+                    time.sleep(10)
+                    if "56=HRT_PROD_EDP_D_1" in line:
+                        print(111)
                         cls.order_num += 1
-                        order_data = re.sub(r"\x01", "|", line)
-                        # print(order_data)
-                        cls.order_datas_list.append(order_data)
-
-                    elif "39=1" in line or "39=2" in line:
-                        # with open("logs/trade.log", "a") as logs:
-                        #     log_data = re.sub(r"\x01", "|", line)
-                        #     logs.write(log_data)
-                        cls.trade_num += 1
-                        trade_data = re.sub(r"\x01", "|", line)
-                        cls.trade_datas_list.append(trade_data)
-                else:
+                elif "39=1" in line or "39=2" in line:
                     pass
+
+                # if "send" in line and "35=8" in line and "56=HRT_PROD_EDP_D_1" in line:
+                #     # if "39=0" in line:
+                #     cls.order_num += 1
+                #     order_data = re.sub(r"\x01", "|", line)
+                #     # print(order_data)
+                #     cls.order_datas_list.append(order_data)
+                #
+                # elif "39=1" in line or "39=2" in line:
+                #     # with open("logs/trade.log", "a") as logs:
+                #     #     log_data = re.sub(r"\x01", "|", line)
+                #     #     logs.write(log_data)
+                #     cls.trade_num += 1
+                #     trade_data = re.sub(r"\x01", "|", line)
+                #     cls.trade_datas_list.append(trade_data)
+                # else:
+                #     pass
         print("Order: {}".format(cls.order_num), "Trade: {}".format(cls.trade_num))
 
     @classmethod
