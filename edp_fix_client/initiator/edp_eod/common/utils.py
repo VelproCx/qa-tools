@@ -1,6 +1,7 @@
 import calendar
 import gzip
 import os
+import re
 import shutil
 from datetime import datetime
 import json
@@ -90,6 +91,7 @@ def decompress_gzip_file(input_path, output_dir):
 
 # EOD 下载请求
 def download_eod(env, filename):
+    global decoded_filename
     print('文件下载中')
     # 定义两个环境url
     sit_url = "https://adminui.sit.edp-atp.finstadiumxjp.com//api/statistical-report/download-file"
@@ -138,4 +140,9 @@ def download_eod(env, filename):
         print('请求失败')
 
 
+# 校验时间格式是否正确
+def validate_date_format(date_string):
+    pattern = r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{6}000'
+    match = re.fullmatch(pattern, date_string)
+    return match is not None
 
