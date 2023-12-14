@@ -1,0 +1,94 @@
+EDP_RSec_Order:
+  - Account
+  - OrderID
+  - OrderPrice
+  - OrderQty
+  - Side
+  - Market
+  - Symbol
+  - TimeInForce
+  - CashMargin
+  - MarginTransactionType
+  - OrderType
+  - OrderEventType
+  - OrderAckNo
+  - TransactionTime
+  - OrderVenue
+  - PrimaryLastPx
+  - PrimaryBidPx
+  - PrimaryAskPx
+Order: 1655074 Trade: 0
+Order: 1655077 Trade: 0
+Order: 305553 Trade: 0
+     Order: 278115 Trade: 0  
+       278115 66 4197 27438
+       1654705 125 244 372
+              
+        1654705 125 244 0
+        278115 66 4197 0
+       1654705
+EDP_RSec_Trade:
+  - Account
+  - Counterparty
+  - OrderID
+  - OrderPrice
+  - OrderQty
+  - Side
+  - Market
+  - Symbol
+  - VenueExecID
+  - TradePrice
+  - TradeQty
+  - TradeTime
+  - PrimaryPriceFlag
+  - PrimaryLastPx
+  - PrimaryBidPx
+  - PrimaryAskPx
+  - ToSTNeTOrderID
+  - ToSTNeTExecutionID
+  - ToSTNeTTransactionTime
+EDP_RSec_MarketData:
+  - Account
+  - OrderID
+  - OrderPrice
+  - OrderQty
+  - Side
+  - Market
+  - Symbol
+  - TransactionTime
+  - QuoteVenue
+  - QuoteTime
+  - QuotePrice
+  - QuoteQty
+EDP_HRT_Trade:
+  - Account
+  - Counterparty
+  - OrderID
+  - OrderPrice
+  - OrderQty
+  - Side
+  - Market
+  - Symbol
+  - VenueExecID
+  - TradePrice
+  - TradeQty
+  - TradeTime
+  - PrimaryPriceFlag
+  - PrimaryLastPx
+  - PrimaryBidPx
+  - PrimaryAskPx
+  - ToSTNeTOrderID
+  - ToSTNeTExecutionID
+  - ToSTNeTTransactionTime
+EDP_HRT_Order:
+  - ClOrdID
+  - OrderID
+  - OrderPrice
+  - OrderQty
+  - Side
+  - Symbol
+  - OrderType
+  - TimeInForce
+  - TrasactionTime
+  - OrderVenue
+  - OrderStatus
