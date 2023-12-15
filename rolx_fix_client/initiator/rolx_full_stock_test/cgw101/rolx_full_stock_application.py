@@ -297,8 +297,6 @@ class Application(fix.Application):
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
 
-    # def runTestCase(self, row):
-    #     self.insert_order_request(row)
 
     # 加载用例文件
     def load_test_case(self):
