@@ -270,7 +270,7 @@ class Application(fix.Application):
         return orderQty
 
     # New Ack Req
-    def insert_order_request(self,symbol ):
+    def insert_order_request(self, symbol):
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
@@ -296,7 +296,6 @@ class Application(fix.Application):
 
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
-
 
     # 加载用例文件
     def load_test_case(self):
@@ -380,7 +379,6 @@ def main():
             for row in case_data_list:
                 symbol = row[0]
                 symbols.append(symbol)
-
 
         settings = fix.SessionSettings("rolx_full_stock_client.cfg")
         application = Application()
