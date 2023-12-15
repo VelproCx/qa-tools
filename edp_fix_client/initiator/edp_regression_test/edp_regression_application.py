@@ -16,7 +16,6 @@ from model.logger import setup_logger
 import json
 from openpyxl import load_workbook
 from model.runEmail import send_mail
-
 __SOH__ = chr(1)
 
 from importlib.machinery import SourceFileLoader
@@ -89,7 +88,6 @@ class Application(fix.Application):
                 errorCode_list.append(str(i['errorCode']))
             else:
                 errorCode_list.append(" ")
-
 
         self.write_res_excel('report/edp_report.xlsx', ordStatus_list, 2, 'J')
         self.write_res_excel('report/edp_report.xlsx', errorCode_list, 2, 'K')
