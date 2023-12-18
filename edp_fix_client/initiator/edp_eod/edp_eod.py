@@ -50,10 +50,7 @@ class Validator:
             accept_field = data[self.filename]
 
         for current, accept in zip(self.current_field, accept_field):
-            if current == accept:
-                # print(f"Field inconsistency: {current}")
-                pass
-            else:
+            if current != accept:
                 self.logger.error(f"Field not inconsistency: current:{current}，accept:{accept}")
         self.logger.info(f"字段验证完成")
 
