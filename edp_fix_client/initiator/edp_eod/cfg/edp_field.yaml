@@ -1,85 +1,85 @@
 EDP_RSec_Order:
-  - Account
-  - OrderID
-  - OrderPrice
-  - OrderQty
-  - Side
-  - Market
-  - Symbol
-  - TimeInForce
-  - CashMargin
-  - MarginTransactionType
-  - OrderType
-  - OrderEventType
-  - OrderAckNo
-  - TransactionTime
-  - OrderVenue
-  - PrimaryLastPx
-  - PrimaryBidPx
-  - PrimaryAskPx
+  Account:
+  OrderID:
+  OrderPrice:
+  OrderQty:
+  Side:
+  Market:
+  Symbol:
+  TimeInForce: ["3"]
+  CashMargin: ["1"]
+  MarginTransactionType: ["0"]
+  OrderType: ["1","2"]
+  OrderEventType:
+  OrderAckNo:
+  TransactionTime:
+  OrderVenue: ["XTKS"]
+  PrimaryLastPx:
+  PrimaryBidPx:
+  PrimaryAskPx:
 
 EDP_RSec_Trade:
-  - Account
-  - Counterparty
-  - OrderID
-  - OrderPrice
-  - OrderQty
-  - Side
-  - Market
-  - Symbol
-  - VenueExecID
-  - TradePrice
-  - TradeQty
-  - TradeTime
-  - PrimaryPriceFlag
-  - PrimaryLastPx
-  - PrimaryBidPx
-  - PrimaryAskPx
-  - ToSTNeTOrderID
-  - ToSTNeTExecutionID
-  - ToSTNeTTransactionTime
+  Account:
+  Counterparty:
+  OrderID:
+  OrderPrice:
+  OrderQty:
+  Side: ["1", "2"]
+  Market: ["EDP"]
+  Symbol:
+  VenueExecID:
+  TradePrice: ["0.0000", "0.000", "0.00", "0.0", "0"]
+  TradeQty: ["0.0000", "0.000", "0.00", "0.0", "0"]
+  TradeTime:
+  PrimaryPriceFlag: ["1", "9", "0"]
+  PrimaryLastPx:
+  PrimaryBidPx:
+  PrimaryAskPx:
+  ToSTNeTOrderID:
+  ToSTNeTExecutionID:
+  ToSTNeTTransactionTime:
 EDP_RSec_MarketData:
-  - Account
-  - OrderID
-  - OrderPrice
-  - OrderQty
-  - Side
-  - Market
-  - Symbol
-  - TransactionTime
-  - QuoteVenue
-  - QuoteTime
-  - QuotePrice
-  - QuoteQty
+  Account:
+  OrderID:
+  OrderPrice:
+  OrderQty:
+  Side: ["1","2"]
+  Market: ["1","2"]
+  Symbol:
+  TransactionTime:
+  QuoteVenue:
+  QuoteTime:
+  QuotePrice:
+  QuoteQty:
 EDP_HRT_Trade:
-  - Account
-  - Counterparty
-  - OrderID
-  - OrderPrice
-  - OrderQty
-  - Side
-  - Market
-  - Symbol
-  - VenueExecID
-  - TradePrice
-  - TradeQty
-  - TradeTime
-  - PrimaryPriceFlag
-  - PrimaryLastPx
-  - PrimaryBidPx
-  - PrimaryAskPx
-  - ToSTNeTOrderID
-  - ToSTNeTExecutionID
-  - ToSTNeTTransactionTime
+  Account:
+  Counterparty:
+  OrderID:
+  OrderPrice:
+  OrderQty:
+  Side: ["1","2"]
+  Market: ["1","2"]
+  Symbol:
+  VenueExecID:
+  TradePrice: ["0.0000", "0.000", "0.00", "0.0", "0"]
+  TradeQty:
+  TradeTime:
+  PrimaryPriceFlag:
+  PrimaryLastPx: ["0.0000", "0.000", "0.00", "0.0", "0"]
+  PrimaryBidPx: ["0.0000", "0.000", "0.00", "0.0", "0"]
+  PrimaryAskPx: ["0.0000", "0.000", "0.00", "0.0", "0"]
+  ToSTNeTOrderID:
+  ToSTNeTExecutionID:
+  ToSTNeTTransactionTime:
 EDP_HRT_Order:
-  - ClOrdID
-  - OrderID
-  - OrderPrice
-  - OrderQty
-  - Side
-  - Symbol
-  - OrderType
-  - TimeInForce
-  - TransactionTime
-  - OrderVenue
-  - OrderStatus
+  ClOrdID:
+  OrderID:
+  OrderPrice:
+  OrderQty:
+  Side: ["1","2"]
+  Symbol:
+  OrderType: ["2"]
+  TimeInForce: ["0"]
+  TransactionTime:
+  OrderVenue: ["EDP"]
+  OrderStatus: ["2", "4", "8"]
