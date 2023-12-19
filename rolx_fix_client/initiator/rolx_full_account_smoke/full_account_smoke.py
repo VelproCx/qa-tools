@@ -33,11 +33,6 @@ class Application(fix.Application):
     def __init__(self):
         super().__init__()
         self.sessionID = None
-        self.account = None
-        self.Sender = None
-        self.Target = None
-        self.Host = None
-        self.Port = None
 
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
@@ -81,7 +76,7 @@ class Application(fix.Application):
         # "发送业务消息时候调用此方法"
         msgtype = message.getHeader().getField(35)
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(sendMsg) S >> %s" % msg)
+        logfix.info("(sendMsg) New Ack >> %s" % msg)
         if msgtype == "D":
             self.order_new += 1
         return
@@ -106,7 +101,7 @@ class Application(fix.Application):
             logfix.info("(recvMsg) Order Rejected << {}".format(msg))
         elif ordStatus == "4":
             self.order_expired += 1
-            logfix.info("(recvMsg) Order IOC Expired << {}".format(msg))
+            logfix.info("(recvMsg) Order Expired End Of Day << {}".format(msg))
         elif ordStatus == "1" or ordStatus == "2":
             self.order_fill_indication += 1
             logfix.info("(recvMsg) Order Filled Indication<< {}".format(msg))
