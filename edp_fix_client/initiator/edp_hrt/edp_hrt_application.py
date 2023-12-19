@@ -22,9 +22,9 @@ logfix = logging.getLogger('logfix')
 
 
 class Application(fix.Application):
-    orderID = 0
-    execID = 0
-    ORDERS_DICT = []
+    order_id = 0
+    exec_id = 0
+    orders_dict = []
 
     def __init__(self):
         super().__init__()
@@ -33,23 +33,23 @@ class Application(fix.Application):
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
         self.sessionID = sessionID
-        print("onCreate : Session ({})".format(sessionID.toString()))
+        print(f"onCreate : Session ({sessionID.toString()})")
         return
 
     def onLogon(self, sessionID):
         # "客户端登陆成功时候调用此方法"
         self.sessionID = sessionID
-        print("Successful Logon to session '{}'.".format(sessionID.toString()))
+        print(f"Successful Logon to session '{sessionID.toString()}'.")
         return
 
     def onLogout(self, sessionID):
-        print("Session (%s) logout !" % sessionID.toString())
+        print(f"Session ({sessionID.toString()}) logout !")
         return
 
     def toAdmin(self, message, sessionID):
         # "发送会话消息时候调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) S >> {}".format(msg))
+        logfix.info(f"(Core) S >> {msg}")
         return
 
     def toApp(self, message, sessionID):
@@ -65,12 +65,12 @@ class Application(fix.Application):
             side = message.getField(54)
             symbol = message.getField(55)
             transactTime = message.getField(60)
-            self.ORDERS_DICT = message.getField(11)
+            self.orders_dict = message.getField(11)
 
             if (clOrdID, orderQty, ordType, side, symbol, transactTime,) != "":
-                logfix.info("(sendMsg) New Ack >> {}".format(msg))
+                logfix.info(f"(sendMsg) New Ack >> {msg}")
             else:
-                logfix.info("(sendMsg) New Ack >> {}".format(msg) + 'New Order Single FixMsg Error!')
+                logfix.info(f"(sendMsg) New Ack >> {msg}" + 'New Order Single FixMsg Error!')
         # 7.4 Order Cancel Request
         elif msgType == "F":
             clOrdID = message.getField(11)
@@ -79,22 +79,22 @@ class Application(fix.Application):
             transactTime = message.getField(60)
 
             if (clOrdID, side, symbol, transactTime) != "":
-                logfix.info("(sendMsg) Cancel Ack >> {}".format(msg))
+                logfix.info(f"(sendMsg) Cancel Ack >> {msg}")
             else:
-                logfix.info("(sendMsg) Cancel Ack >> {}".format(msg) + 'Order Cancel Request FixMsg Error!')
+                logfix.info(f"(sendMsg) Cancel Ack >> {msg}" + 'Order Cancel Request FixMsg Error!')
         return
 
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) R << {}".format(msg))
+        logfix.info(f"(Core) R << {msg}")
         return
 
     def fromApp(self, message, sessionID):
         logfix.info("-------------------------------------------------------------------------------------------------")
         # "接收业务消息时调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) recvMsg << {}".format(msg))
+        logfix.info(f"(Core) recvMsg << {msg}")
         self.onMessage(message, sessionID)
         return
 
@@ -104,11 +104,11 @@ class Application(fix.Application):
 
     def getClOrdID(self):
         # "随机数生成ClOrdID"
-        self.execID += 1
+        self.exec_id += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
-        return str(t) + str1 + str(self.execID).zfill(6)
+        return str(t) + str1 + str(self.exec_id).zfill(6)
 
     def insert_order_request(self, row):
         msg = fix.Message()
@@ -173,7 +173,7 @@ class Application(fix.Application):
         return msg
 
     def order_cancel_request(self, row):
-        clOrdId = self.ORDERS_DICT
+        clOrdId = self.orders_dict
         time.sleep(1)
         msg = fix.Message()
         header = msg.getHeader()

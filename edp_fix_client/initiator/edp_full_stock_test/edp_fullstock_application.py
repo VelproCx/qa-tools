@@ -17,7 +17,7 @@ __SOH__ = chr(1)
 
 
 class Application(fix.Application):
-    execID = 0
+    exec_id = 0
     order_new = 0
     order_ioc_expired = 0
     order_accepted = 0
@@ -41,48 +41,39 @@ class Application(fix.Application):
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
         self.sessionID = sessionID
-        print("onCreate : Session (%s)" % sessionID.toString())
+        print(f"onCreate : Session ({sessionID.toString()})")
         return
 
     def onLogon(self, sessionID):
         # "客户端登陆成功时候调用此方法"
         self.sessionID = sessionID
-        print("Successful Logon to session '%s'." % sessionID.toString())
+        print(f"Successful Logon to session '{sessionID.toString()}'.")
         return
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
-        logfix.info("Result: order_new = {}（ order_accepted = {}, order_rejected = {}, order_book_is_close ={}）".format(
-            self.order_new,
-            self.order_accepted,
-            self.order_rejected,
-            self.order_book_is_close))
+        logfix.info(f"Result: order_new = {self.order_new}, order_accepted = {self.order_accepted}, "
+                    f"order_rejected = {self.order_rejected}, order_book_is_close ={self.order_book_is_close}）")
         logfix.info(
-            "Result: order_edp_indication = {}（ order_tostnet_confirmation = {}, order_tostnet_rejection = {}）".format(
-                self.order_fill_indication,
-                self.order_tostnet_confirmation,
-                self.order_tostnet_rejection
-            ))
-        logfix.info("Result: order_ioc_expired = {}".format(
-            self.order_ioc_expired
-        ))
-        logfix.info("Result: not_book_is_close = {}".format(
-            self.not_book_is_close
-        ))
-        print("Session ({}) logout !".format(sessionID.toString()))
+            f"Result: order_edp_indication = {self.order_fill_indication}, "
+            f"order_tostnet_confirmation = {self.order_tostnet_confirmation}, order_tostnet_rejection = {self.order_tostnet_rejection}）")
+
+        logfix.info(f"Result: order_ioc_expired = {self.order_ioc_expired}")
+        logfix.info(f"Result: not_book_is_close = {self.not_book_is_close}")
+        print(f"Session ({sessionID.toString()}) logout !")
         return
 
     def toAdmin(self, message, sessionID):
         # "发送会话消息时候调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) S >> %s" % msg)
+        logfix.info(f"(Core) S >> {msg}")
         return
 
     def toApp(self, message, sessionID):
         # "发送业务消息时候调用此方法"
         msgtype = message.getHeader().getField(35)
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(sendMsg) S >> %s" % msg)
+        logfix.info(f"(sendMsg) S >> {msg}")
         if msgtype == "D":
             self.order_new += 1
         return
@@ -90,7 +81,7 @@ class Application(fix.Application):
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) R << %s" % msg)
+        logfix.info(f"(Core) R << {msg}")
         return
 
     def fromApp(self, message, sessionID):
@@ -101,15 +92,15 @@ class Application(fix.Application):
         execTransType = message.getField(20)
         if execTransType == "2":
             self.order_tostnet_confirmation += 1
-            logfix.info("(recvMsg)ToSTNeT Confirmation << {}".format(msg))
+            logfix.info(f"(recvMsg)ToSTNeT Confirmation << {msg}")
         else:
             if ordStatus == "0":
                 self.order_accepted += 1
-                logfix.info("(recvMsg) Order Accepted << {}".format(msg))
+                logfix.info(f"(recvMsg) Order Accepted << {msg}")
             elif ordStatus == "8":
                 text = message.getField(58)
                 self.order_rejected += 1
-                logfix.info("(recvMsg) Order Rejected << {}".format(msg))
+                logfix.info(f"(recvMsg) Order Rejected << {msg}")
                 # 目前该ErrorCode返回的错误码为200开头，后期可能需要修改成000开头
                 if 'ERROR_20010064,Book is Closed' in text:
                     self.order_book_is_close += 1
@@ -135,14 +126,13 @@ class Application(fix.Application):
 
     def getClOrdID(self):
         # "随机数生成ClOrdID"
-        self.execID += 1
+        self.exec_id += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
-        return str(t) + str1 + str(self.execID).zfill(6)
+        return str(t) + str1 + str(self.exec_id).zfill(6)
 
-
-    def insert_order_request(self, row, account, orderNum):
+    def insert_order_request(self, row, account, order_num):
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
@@ -153,7 +143,7 @@ class Application(fix.Application):
         msg.setField(fix.OrdType("1"))
         msg.setField(fix.Symbol(row["Symbol"]))
 
-        if (orderNum % 2) == 0:
+        if (order_num % 2) == 0:
             msg.setField(fix.Side("2"))
         else:
             msg.setField(fix.Side("1"))
@@ -169,24 +159,24 @@ class Application(fix.Application):
     def load_test_case(self, account):
         """Run"""
         with open('EDP_FOR_PROD.json', 'r') as f_json:
-            orderNum = 0
+            order_num = 0
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while orderNum < 2:
-                orderNum += 1
+            while order_num < 2:
+                order_num += 1
                 for row in case_data_list["testCase"]:
-                    self.insert_order_request(row, account, orderNum)
+                    self.insert_order_request(row, account, order_num)
                     time.sleep(0.004)
 
-    def read_config(self, Sender, Target, Host, Port):
+    def read_config(self, sender, target, host, port):
         # 读取并修改配置文件
         config = configparser.ConfigParser()
         config.read('edp_fullstock_client.cfg')
-        config.set('SESSION', 'SenderCompID', Sender)
-        config.set('SESSION', 'TargetCompID', Target)
-        config.set('SESSION', 'SocketConnectHost', Host)
-        config.set('SESSION', 'SocketConnectPort', Port)
+        config.set('SESSION', 'SenderCompID', sender)
+        config.set('SESSION', 'TargetCompID', target)
+        config.set('SESSION', 'SocketConnectHost', host)
+        config.set('SESSION', 'SocketConnectPort', port)
 
         with open('edp_fullstock_client.cfg', 'w') as configfile:
             config.write(configfile)
@@ -202,7 +192,7 @@ def main():
         parser.add_argument('--Target', default='FSX_PROD_EDP', help='choose Target to use for test')
         parser.add_argument('--Host', default='clientgateway99', help='choose Host to use for test')
         parser.add_argument('--Port', default='5001', help='choose Port to use for test')
-        
+
         # parser.add_argument('--account', default='RSIT_EDP_ACCOUNT_2', help='choose account to use for test')
         # parser.add_argument('--Sender', default='RSIT_EDP_2', help='choose Sender to use for test')
         # parser.add_argument('--Target', default='FSX_SIT_EDP', help='choose Target to use for test')
@@ -211,21 +201,21 @@ def main():
 
         args = parser.parse_args()  # 解析参数
         account = args.account
-        Sender = args.Sender
-        Target = args.Target
-        Host = args.Host
-        Port = args.Port
+        sender = args.Sender
+        target = args.Target
+        host = args.Host
+        port = args.Port
 
         cfg = Application()
-        cfg.Sender = Sender
-        cfg.Target = Target
-        cfg.Host = Host
-        cfg.Port = Port
-        cfg.read_config(Sender, Target, Host, Port)
+        cfg.Sender = sender
+        cfg.Target = target
+        cfg.Host = host
+        cfg.Port = port
+        cfg.read_config(sender, target, host, port)
 
         global logfix
         # report
-        setup_logger('logfix', '{}_report.log'.format(account))
+        setup_logger('logfix', f'{account}_report.log')
         logfix = logging.getLogger('logfix')
 
         settings = fix.SessionSettings("edp_fullstock_client.cfg")

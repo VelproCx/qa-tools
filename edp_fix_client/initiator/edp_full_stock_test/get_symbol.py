@@ -24,18 +24,18 @@ def login_admin():
         "Content-Type": "application/json"
     }
     get_token = post_main(url, headers, data).json()
-    tokendate = get_token["accessToken"]
-    token = "Bearer {}".format(tokendate)
+    token_date = get_token["accessToken"]
+    token = "Bearer {}".format(token_date)
     print(
         "-------------------------------login admin success-------------------------------")
     return token
 
 
 def get_security_master_name(market):
-    daydate = datetime.now()
-    day_year = daydate.year
-    day_month = daydate.month
-    day_day = daydate.day
+    day_date = datetime.now()
+    day_year = day_date.year
+    day_month = day_date.month
+    day_day = day_date.day
     if day_day == 1:
         # 判断是否为当月第一天，如果是，就去取上个月最后一天的股票文件
         day_month -= 1
@@ -60,8 +60,8 @@ def get_symbol_file(market):
         "Authorization": login_admin(),
         "Content-Type": "application/json"
     }
-    get_Symbol_date = post_main(url, headers, data)
-    date = get_Symbol_date.text
+    get_symbol_date = post_main(url, headers, data)
+    date = get_symbol_date.text
     print(
         "-------------------------------full stock symbols gen success-------------------------------")
     if date.strip() == "":

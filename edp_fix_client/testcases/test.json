@@ -1,17 +1,16 @@
 {
   "testCase": [
     {
-      "Id": "9",
-      "ScenarioName": "MinQty is none",
-      "Account": "RSIT_EDP_ACCOUNT_1",
+      "Id": "2",
+      "ScenarioName": "Regular Order Flow-A(New Order->EDP Fill Indicate->EDP ToSTNeT Confirmation)",
+      "Account": "RUAT_EDP_ACCOUNT_5",
       "Market": "EDP",
       "ActionType": "NewAck",
-      "Comment": "EDP_Market_NewAck",
+      "Comment": "EDP_Market_NewAck_Buy",
       "OrderQty": 100,
       "OrdType": "1",
-      "Price": 50001,
       "Side": "1",
-      "Symbol": "5110",
+      "Symbol": "9989",
       "TimeInForce": "3",
       "CrossingPriceType": "EDP",
       "Rule80A": "P",
@@ -20,7 +19,12 @@
       "MinQty": 0,
       "OrderClassification": "3",
       "SelfTradePreventionId": "0",
-      "ordstatus": "C"
+      "ordStatus": [
+        "0",
+        "2",
+        "2"
+      ]
     }
   ]
 }
+

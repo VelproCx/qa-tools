@@ -19,7 +19,7 @@ symbols = []
 
 
 class Application(fix.Application):
-    execID = 0
+    exec_id = 0
     order_new = 0
     order_ioc_expired = 0
     order_accepted = 0
@@ -43,46 +43,38 @@ class Application(fix.Application):
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
         self.sessionID = sessionID
-        print("onCreate : Session (%s)" % sessionID.toString())
+        print(f"onCreate : Session ({sessionID.toString()})")
         return
 
     def onLogon(self, sessionID):
         # "客户端登陆成功时候调用此方法"
         self.sessionID = sessionID
-        print("Successful Logon to session '%s'." % sessionID.toString())
+        print(f"Successful Logon to session '{sessionID.toString()}'." )
         return
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
-        logfix.info("Result: order_new = {}（ order_accepted = {}, order_rejected = {}, order_book_is_close ={}）".format(
-            self.order_new,
-            self.order_accepted,
-            self.order_rejected,
-            self.order_book_is_close))
+        logfix.info(f"Result: order_new = {self.order_new}, order_accepted = {self.order_accepted}, "
+                    f"order_rejected = {self.order_rejected}, order_book_is_close ={self.order_book_is_close}）")
         logfix.info(
-            "Result: order_edp_indication = {}（ order_tostnet_confirmation = {}, order_tostnet_rejection = {}）".format(
-                self.order_fill_indication,
-                self.order_tostnet_confirmation,
-                self.order_tostnet_rejection
-            ))
-        logfix.info("Result: order_ioc_expired = {}".format(
-            self.order_ioc_expired
-        ))
+            f"Result: order_edp_indication = {self.order_fill_indication}, "
+            f"order_tostnet_confirmation = {self.order_tostnet_confirmation}, order_tostnet_rejection = {self.order_tostnet_rejection}）")
+        logfix.info(f"Result: order_ioc_expired = { self.order_ioc_expired}")
 
-        print("Session ({}) logout !".format(sessionID.toString()))
+        print(f"Session ({sessionID.toString()}) logout !")
         return
 
     def toAdmin(self, message, sessionID):
         # "发送会话消息时候调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) S >> %s" % msg)
+        logfix.info(f"(Core) S >> {msg}")
         return
 
     def toApp(self, message, sessionID):
         # "发送业务消息时候调用此方法"
         msgtype = message.getHeader().getField(35)
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(sendMsg) S >> %s" % msg)
+        logfix.info(f"(sendMsg) S >> {msg}")
         if msgtype == "D":
             self.order_new += 1
         return
@@ -90,7 +82,7 @@ class Application(fix.Application):
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) R << %s" % msg)
+        logfix.info(f"(Core) R << {msg}")
         return
 
     def fromApp(self, message, sessionID):
@@ -101,15 +93,15 @@ class Application(fix.Application):
         execTransType = message.getField(20)
         if execTransType == "2":
             self.order_tostnet_confirmation += 1
-            logfix.info("(recvMsg)ToSTNeT Confirmation << {}".format(msg))
+            logfix.info(f"(recvMsg)ToSTNeT Confirmation << {msg}")
         else:
             if ordStatus == "0":
                 self.order_accepted += 1
-                logfix.info("(recvMsg) Order Accepted << {}".format(msg))
+                logfix.info(f"(recvMsg) Order Accepted << {msg}")
             elif ordStatus == "8":
                 text = message.getField(58)
                 self.order_rejected += 1
-                logfix.info("(recvMsg) Order Rejected << {}".format(msg))
+                logfix.info(f"(recvMsg) Order Rejected << {msg}")
                 # 目前该ErrorCode返回的错误码为200开头，后期可能需要修改成000开头
                 if 'ERROR_20010064,Book is Closed' in text:
                     self.order_book_is_close += 1
@@ -119,13 +111,13 @@ class Application(fix.Application):
                 text = message.getField(58)
                 if 'ERROR_00010051,Order rejected due to IoC expired.' == text:
                     self.order_ioc_expired += 1
-                    logfix.info("(recvMsg) Order IOC Expired << {}".format(msg))
+                    logfix.info(f"(recvMsg) Order IOC Expired << {msg}")
                 else:
                     self.order_tostnet_rejection += 1
-                    logfix.info("(recvMsg)ToSTNeT Rejection << {}".format(msg))
+                    logfix.info(f"(recvMsg)ToSTNeT Rejection << {msg}")
             elif ordStatus == "1" or ordStatus == "2":
                 self.order_fill_indication += 1
-                logfix.info("(recvMsg) Order Filled Indication<< {}".format(msg))
+                logfix.info(f"(recvMsg) Order Filled Indication<< {msg}")
         self.onMessage(message, sessionID)
         return
 
@@ -135,11 +127,11 @@ class Application(fix.Application):
 
     def getClOrdID(self):
         # "随机数生成ClOrdID"
-        self.execID += 1
+        self.exec_id += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
-        return str(t) + str1 + str(self.execID).zfill(6)
+        return str(t) + str1 + str(self.exec_id).zfill(6)
 
     def insert_order_request(self, symbol):
         msg = fix.Message()

@@ -24,12 +24,12 @@ setup_logger('logfix', 'logs/' + log_filename)
 logfix = logging.getLogger('logfix')
 
 symbols = []
-securityIDs = []
+security_ids = []
 
 
 class Application(fix.Application):
-    orderID = 0
-    execID = 0
+    order_id = 0
+    exec_id = 0
 
     def __init__(self):
         super().__init__()
@@ -38,43 +38,43 @@ class Application(fix.Application):
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
         self.sessionID = sessionID
-        print("onCreate : Session ({})".format(sessionID.toString()))
+        print(f"onCreate : Session ({sessionID.toString()})")
         return
 
     def onLogon(self, sessionID):
         # "客户端登陆成功时候调用此方法"
         self.sessionID = sessionID
-        print("Successful Logon to session '{}'.".format(sessionID.toString()))
+        print(f"Successful Logon to session '{sessionID.toString()}'.")
         return
 
     def onLogout(self, sessionID):
-        print("Session (%s) logout !" % sessionID.toString())
+        print(f"Session ({sessionID.toString()}) logout !")
         return
 
     def toAdmin(self, message, sessionID):
         # "发送会话消息时候调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) S >> {}".format(msg))
+        logfix.info(f"(Core) S >> {msg}")
         return
 
     def toApp(self, message, sessionID):
         # "发送业务消息时候调用此方法"
         logfix.info("-------------------------------------------------------------------------------------------------")
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(sendMsg) New Ack >> {}".format(msg))
+        logfix.info(f"(sendMsg) New Ack >> {msg}")
         return
 
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) R << {}".format(msg))
+        logfix.info(f"(Core) R << {msg}")
         return
 
     def fromApp(self, message, sessionID):
         logfix.info("-------------------------------------------------------------------------------------------------")
         # "接收业务消息时调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) recvMsg << {}".format(msg))
+        logfix.info(f"(Core) recvMsg << {msg}")
         self.onMessage(message, sessionID)
         return
 
@@ -84,11 +84,11 @@ class Application(fix.Application):
 
     def getClOrdID(self):
         # "随机数生成ClOrdID"
-        self.execID += 1
+        self.exec_id += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
-        return str(t) + str1 + str(self.execID).zfill(6)
+        return str(t) + str1 + str(self.exec_id).zfill(6)
 
     def insert_order_request(self, symbol, price, securityID):
         msg = fix.Message()
@@ -131,7 +131,7 @@ class Application(fix.Application):
             time.sleep(sleep_time)
             symbol = symbols[num % len(symbols)]
             price = num % len(symbols) + 1
-            securityID = securityIDs[num % len(securityIDs)]
+            securityID = security_ids[num % len(security_ids)]
             self.insert_order_request(symbol, price, securityID)
 
     def read_config(self, sender, target, host, port):
@@ -217,7 +217,7 @@ def main():
             for row in csvreader:
                 symbol = row[0]
                 securityID = "5" + convert_stock_code(symbol)
-                securityIDs.append(securityID)
+                security_ids.append(securityID)
                 symbols.append(symbol)
 
         settings = fix.SessionSettings("edp_hrt_client.cfg")
