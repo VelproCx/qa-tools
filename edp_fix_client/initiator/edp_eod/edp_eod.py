@@ -29,7 +29,7 @@ class Validator:
 
     # 将csv文件的数据存入list中
     def data_generation(self):
-        # download_eod(self.env, self.filename)
+        download_eod(self.env, self.filename)
         # 打开csv文件
         open_file = "{}_{}.csv".format(self.filename, get_date())
         self.logger.info(open_file)
@@ -64,22 +64,19 @@ class Validator:
             yaml_data = file.read()
             data = yaml.safe_load(yaml_data)
             fields = data[self.filename]
-            # print(fields)
         # 打印数据列表
+        self.logger.info('数据格式验证中')
         for data_dict in self.data_list:
             for recv_val in data_dict:
                 for field in fields:
                     if recv_val == field:
-                        print(recv_val + field)
                         # 判空
                         if not data_dict[field]:
-                            print(111)
-                            # self.logger.info(f'{field} not inconsistency,OrderID:{data_dict["OrderID"]}')
+                            self.logger.info(f'{field} not inconsistency,OrderID:{data_dict["OrderID"]}')
 
                         # 判值及类型
                         if recv_val in self.VALID_TIME:
                             if not validate_date_format(data_dict[field]):
-                                # print()
                                 self.logger.info(f'{field} not inconsistency,OrderID:{data_dict["OrderID"]}')
 
                         if recv_val in self.VALID_BBO and data_dict[
@@ -88,8 +85,8 @@ class Validator:
                             self.logger.info(f'{field} not inconsistency,OrderID:{data_dict["OrderID"]}')
 
                         # 判断Account是否为当前环境的Account
-                        if recv_val == 'Account' and f'R{self.env}_EDP_ACCOUNT_' not in data_dict["Account"]:
-                            print(recv_val)
+                        if recv_val == 'Account' and f'R{self.env}_EDP_ACCOUNT_' not in data_dict[
+                            "Account"] and self.filename != 'EDP_HRT_Trade':
                             self.logger.info(f'Account not inconsistency,OrderID:{data_dict["OrderID"]}')
 
                         # 判断Symbol格式是否正确
@@ -102,16 +99,17 @@ class Validator:
                             if field == accepted_field:
                                 if accepted_value:
                                     if data_dict[field] not in accepted_value:
-                                        # print(data_dict[field], accepted_value)
-                                        self.logger.info(f'{field} not inconsistency,OrderID:{data_dict["OrderID"]}')
-                        # print(accepted_field, accepted_value)
-        # self.logger.info(errors)
+                                        if field not in ["TradePrice", "TradeQty"]:
+                                            self.logger.info(
+                                                f'{field} not inconsistency,OrderID:{data_dict["OrderID"]}')
+        self.logger.info('数据验证完成')
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-e', default='UAT', help='1、SIT 2、UAT')
-    parser.add_argument('-f', default='EDP_RSec_Order', help='...')
+    parser.add_argument('-f', default='EDP_RSec_Order',
+                        help='1、EDP_RSec_Trade 2、EDP_HRT_Trade 3、EDP_HRT_Order 4、EDP_RSec_MarketData 5、EDP_RSec_Order')
     args = parser.parse_args()
 
     # report

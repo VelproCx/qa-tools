@@ -13,7 +13,7 @@ EDP_RSec_Order:
   OrderEventType:
   OrderAckNo:
   TransactionTime:
-  OrderVenue: ["XTKS"]
+  OrderVenue: ["EDP"]
   PrimaryLastPx:
   PrimaryBidPx:
   PrimaryAskPx:
@@ -44,7 +44,7 @@ EDP_RSec_MarketData:
   OrderPrice:
   OrderQty:
   Side: ["1","2"]
-  Market: ["1","2"]
+  Market: ["EDP"]
   Symbol:
   TransactionTime:
   QuoteVenue:
