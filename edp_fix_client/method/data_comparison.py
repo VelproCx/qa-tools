@@ -31,5 +31,5 @@ def compare_field_values(json_file1, json_file2, field_name):
                 resList.append('failed')
                 logfix.info("Except:" + str(record1[field_name]) + " ，" + "ordStatus: " + str(record2[field_name]))
     else:
-        logfix.info("两个文件记录数量不一致，预期数量：{}，实际数量：{}！".format(len(records1), len(records2)))
+        logfix.info(f"两个文件记录数量不一致，预期数量：{len(records1)}，实际数量：{len(records2)}！")
     return resList

@@ -1097,14 +1097,14 @@ def OrderDump(ord, indent=None):
         attr_name = attr[0]
         attr_val = getattr(ord, attr[0])
         if hasattr(attr_val, "_fields_"):
-            print((prifix + "{}:").format(attr_name))
+            print((prifix + f"{attr_name}:"))
             OrderDump(attr_val, prifix + " ")
         else:
             if "tv_sec" == attr_name and 0 <= attr_val:
                 print((prifix + " {}: {} ( {} )").format(attr_name, attr_val, time.strftime("%Y-%m-%d %H-%M-%S"),
                                                          time.localtime(attr_val)))
             else:
-                print((prifix + " {} : {}").format(attr_name, attr_val))
+                print((prifix + f" {attr_name} : {attr_val}"))
     print(prifix + "}")
 
 
@@ -1115,7 +1115,7 @@ for msg in consumer:
     msg_len = len(msg.value)
     if 'Order' == msg.topic:
         hd = Header_t.from_buffer_copy(msg.value)
-        print("recv msg Msgtype : {}, Evttpype: {}, len : {}".format(hd.Msgtype, hd.Evttype, msg_len))
+        print(f"recv msg Msgtype : {hd.Msgtype}, Evttpype: {hd.Evttype}, len : {msg_len}")
         if b'D' == hd.Msgtype and b'0' == hd.Evttype:
             if (sizeof(NewOrder_t)) + sizeof(Time_t) == msg_len:
                 neword = NewOrder_t.from_buffer_copy(msg.value)
@@ -1124,7 +1124,7 @@ for msg in consumer:
                 neword = NewOrder_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(neword)
             else:
-                print("New order msg length err, len : {}".format(msg_len))
+                print(f"New order msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'B' == hd.Evttype:
             if (sizeof(OrderAccepted_t)) + sizeof(Time_t) == msg_len:
@@ -1134,7 +1134,7 @@ for msg in consumer:
                 ord = OrderAccepted_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("OrderAccepted msg length err, len : {}".format(msg_len))
+                print(f"OrderAccepted msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'C' == hd.Evttype:
             if (sizeof(OrderRejected_t)) + sizeof(Time_t) == msg_len:
@@ -1144,7 +1144,7 @@ for msg in consumer:
                 ord = OrderRejected_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("OrderRejected msg length err, len : {}".format(msg_len))
+                print(f"OrderRejected msg length err, len : {msg_len}")
                 exit(0)
         elif b'F' == hd.Msgtype and b'1' == hd.Evttype:
             if (sizeof(CancelOrder_t)) + sizeof(Time_t) == msg_len:
@@ -1154,7 +1154,7 @@ for msg in consumer:
                 ord = CancelOrder_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("CancelOrder msg length err, len : {}".format(msg_len))
+                print(f"CancelOrder msg length err, len : {msg_len}")
                 exit(0)
         elif b'9' == hd.Msgtype and b'E' == hd.Evttype:
             if (sizeof(OrderCancelRejected_t)) + sizeof(Time_t) == msg_len:
@@ -1164,7 +1164,7 @@ for msg in consumer:
                 ord = OrderCancelRejected_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("OrderCancelRejected msg length err, len : {}".format(msg_len))
+                print(f"OrderCancelRejected msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'D' == hd.Evttype:
             if (sizeof(OrderCancelAccepted_t)) + sizeof(Time_t) == msg_len:
@@ -1174,7 +1174,7 @@ for msg in consumer:
                 ord = OrderCancelAccepted_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("OrderCancelAccepted msg length err, len : {}".format(msg_len))
+                print(f"OrderCancelAccepted msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'H' == hd.Evttype:
             print(sizeof(Trade_t), sizeof(BBO_t), sizeof(Time_t), msg_len)
@@ -1185,7 +1185,7 @@ for msg in consumer:
                 ord = Trade_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("Trade msg length err, len : {}".format(msg_len))
+                print(f"Trade msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'F' == hd.Evttype:
             # if (sizeof(UnsolicitedCancelReplaceResponse_t)) + sizeof(Time_t) == msg_len:
@@ -1215,7 +1215,7 @@ for msg in consumer:
                 ord = BusinessMessageRejected_with_time_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("BusinessMessageRejected msg length err, len : {}".format(msg_len))
+                print(f"BusinessMessageRejected msg length err, len : {msg_len}")
                 exit(0)
         elif b'h' == hd.Msgtype and b'G' == hd.Evttype:
             if (sizeof(TradeSessionStatus_t)) == msg_len:
@@ -1225,7 +1225,7 @@ for msg in consumer:
                 ord = TradeSessionStatus_with_time_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("TradeSessionStatus msg length err, len : {}".format(msg_len))
+                print(f"TradeSessionStatus msg length err, len : {msg_len}")
                 exit(0)
         elif b's' == hd.Msgtype and b'L' == hd.Evttype:
             print(sizeof(EdpCrossNewOrder_t), sizeof(Time_t), msg_len)
@@ -1236,7 +1236,7 @@ for msg in consumer:
                 ord = EdpCrossNewOrder_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("EdpCrossNewOrder msg length err, len : {}".format(msg_len))
+                print(f"EdpCrossNewOrder msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'M' == hd.Evttype:
             if (sizeof(EdpCrossAcceptance_t)) + sizeof(Time_t) == msg_len:
@@ -1246,7 +1246,7 @@ for msg in consumer:
                 ord = EdpCrossAcceptance_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("EdpCrossAcceptance msg length err, len : {}".format(msg_len))
+                print(f"EdpCrossAcceptance msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'N' == hd.Evttype:
             if (sizeof(EdpCrossRejected_t)) + sizeof(Time_t) == msg_len:
@@ -1256,7 +1256,7 @@ for msg in consumer:
                 ord = EdpCrossRejected_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("EdpCrossRejected msg length err, len : {}".format(msg_len))
+                print(f"EdpCrossRejected msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'O' == hd.Evttype:
             if (sizeof(EdpCrossExecution_t)) + sizeof(Time_t) == msg_len:
@@ -1266,7 +1266,7 @@ for msg in consumer:
                 ord = EdpCrossExecution_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("EdpCrossExecution msg length err, len : {}".format(msg_len))
+                print(f"EdpCrossExecution msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'P' == hd.Evttype:
             if (sizeof(EdpCrossExpired_t)) + sizeof(Time_t) == msg_len:
@@ -1276,7 +1276,7 @@ for msg in consumer:
                 ord = EdpCrossExpired_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("EdpCrossExpired msg length err, len : {}".format(msg_len))
+                print(f"EdpCrossExpired msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'K' == hd.Evttype:
             if (sizeof(EdpToSTNetAccepted_t)) + sizeof(Time_t) == msg_len:
@@ -1286,7 +1286,7 @@ for msg in consumer:
                 ord = EdpToSTNetAccepted_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("EdpToSTNetAccepted msg length err, len : {}".format(msg_len))
+                print(f"EdpToSTNetAccepted msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'R' == hd.Evttype:
             if (sizeof(EdpToSTNetRejected_t)) + sizeof(Time_t) == msg_len:
@@ -1296,7 +1296,7 @@ for msg in consumer:
                 ord = EdpToSTNetRejected_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("EdpToSTNetRejected msg length err, len : {}".format(msg_len))
+                print(f"EdpToSTNetRejected msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'V' == hd.Evttype:
             if (sizeof(EdpToSTNetConfirmation_t)) + sizeof(Time_t) == msg_len:
@@ -1306,7 +1306,7 @@ for msg in consumer:
                 ord = EdpToSTNetConfirmation_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                print("EdpToSTNetConfirmation msg length err, len : {}".format(msg_len))
+                print(f"EdpToSTNetConfirmation msg length err, len : {msg_len}")
                 exit(0)
         elif b'3' == hd.Msgtype and b'I' == hd.Evttype:
             if (sizeof(Rejected_t)) + sizeof(Time_t) == msg_len:
