@@ -1,0 +1,36 @@
+{
+  "testCase": [
+    {
+    "Market": "ROLX",
+    "ActionType": "NewAck",
+    "Price":"2023",
+    "OrderQty": 10000,
+    "OrdType": "2",
+    "Side": "2",
+    "Symbol": "9989.ROL",
+    "SecurityID":"509090809",
+    "TimeInForce": "1",
+    "CrossingPriceType": "ROL",
+    "OrderCapacity": "P",
+    "CashMargin": "1",
+    "MarginTransactionType": "0",
+    "ExDestination":"EiB Market"
+
+    },
+    {
+     "Market": "ROLX",
+    "ActionType": "CancelAck",
+    "OrderQty": 10000,
+    "OrdType": "2",
+    "Side": "2",
+    "Symbol": "9989.ROL",
+    "SecurityID":"509090809",
+    "TimeInForce": "1",
+    "CrossingPriceType": "ROL",
+    "OrderCapacity": "P",
+    "CashMargin": "3",
+    "MarginTransactionType": "0",
+    "ExDestination":"EiB Market"
+    }
+  ]
+}
