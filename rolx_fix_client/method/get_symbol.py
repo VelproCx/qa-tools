@@ -23,7 +23,7 @@ def login_admin():
     }
     get_token = post_main(url, headers, data).json()
     tokendate = get_token["accessToken"]
-    token = "Bearer {}".format(tokendate)
+    token = f"Bearer {tokendate}"
     return token
 
 
