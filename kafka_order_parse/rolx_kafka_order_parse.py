@@ -558,13 +558,15 @@ def OrderDump(ord, indent=None):
         attr_name = attr[0]
         attr_val = getattr(ord, attr[0])
         if hasattr(attr_val, "_fields_"):
-            logfix.info((prifix + "  {} :").format(attr_name))
+            logfix.info((prifix + f"  {attr_name} :"))
             OrderDump(attr_val, prifix + "  ")
         else:
             if "tv_sec" == attr_name and 0 <= attr_val:
-                logfix.info((prifix + "  {} : {} ( {} )").format(attr_name, attr_val, time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(attr_val))))
+                logfix.info((prifix + "  {} : {} ( {} )").format(attr_name, attr_val, time.strftime("%Y-%m-%d %H:%M:%S",
+                                                                                                    time.localtime(
+                                                                                                        attr_val))))
             else:
-                logfix.info((prifix + "  {} : {}").format(attr_name, attr_val))
+                logfix.info((prifix + f"  {attr_name} : {attr_val}"))
     logfix.info(prifix + "}")
 
     '''
@@ -597,7 +599,7 @@ for msg in consumer:
     if 'Order' == msg.topic:
         hd = Header_t.from_buffer_copy(msg.value)
         logfix.info("{")
-        logfix.info("recv msg Msgtype : {}, Evttype : {}, len : {}".format(hd.Msgtype, hd.Evttype, msg_len))
+        logfix.info(f"recv msg Msgtype : {hd.Msgtype}, Evttype : {hd.Evttype}, len : {msg_len}")
         if b'D' == hd.Msgtype and b'0' == hd.Evttype:
             if (sizeof(NewOrder_t)) + sizeof(Time_t) == msg_len:
                 neword = NewOrder_t.from_buffer_copy(msg.value)
@@ -606,7 +608,7 @@ for msg in consumer:
                 neword = NewOrder_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(neword)
             else:
-                logfix.info("new order msg length err, len : %d" % msg_len)
+                logfix.info(f"new order msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'B' == hd.Evttype:
             if (sizeof(OrderAccepted_t)) + sizeof(Time_t) == msg_len:
@@ -616,7 +618,7 @@ for msg in consumer:
                 ord = OrderAccepted_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("OrderAccepted msg length err, len : %d" % msg_len)
+                logfix.info(f"OrderAccepted msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'C' == hd.Evttype:
             if (sizeof(OrderRejected_t)) + sizeof(Time_t) == msg_len:
@@ -626,7 +628,7 @@ for msg in consumer:
                 ord = OrderRejected_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("OrderRejected msg length err, len : %d" % msg_len)
+                logfix.info(f"OrderRejected msg length err, len : {msg_len}")
                 exit(0)
         elif b'F' == hd.Msgtype and b'1' == hd.Evttype:
             if (sizeof(CancelOrder_t)) + sizeof(Time_t) == msg_len:
@@ -636,7 +638,7 @@ for msg in consumer:
                 ord = CancelOrder_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("CancelOrder msg length err, len : %d" % msg_len)
+                logfix.info(f"CancelOrder msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'H' == hd.Evttype:
             if (sizeof(Trade_t)) + sizeof(Time_t) == msg_len:
@@ -646,7 +648,7 @@ for msg in consumer:
                 ord = Trade_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("Trade msg length err, len : %d" % msg_len)
+                logfix.info(f"Trade msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'D' == hd.Evttype:
             if (sizeof(OrderCancelAccepted_t)) + sizeof(Time_t) == msg_len:
@@ -656,7 +658,7 @@ for msg in consumer:
                 ord = OrderCancelAccepted_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("OrderCancelAccepted msg length err, len : %d" % msg_len)
+                logfix.info(f"OrderCancelAccepted msg length err, len : {msg_len}")
                 exit(0)
         elif b'9' == hd.Msgtype and b'E' == hd.Evttype:
             if (sizeof(OrderCancelRejected_t)) + sizeof(Time_t) == msg_len:
@@ -666,7 +668,7 @@ for msg in consumer:
                 ord = OrderCancelRejected_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("OrderCancelRejected msg length err, len : %d" % msg_len)
+                logfix.info(f"OrderCancelRejected msg length err, len : {msg_len}")
                 exit(0)
         elif b'G' == hd.Msgtype and b'2' == hd.Evttype:
             if (sizeof(AmendOrder_t)) + sizeof(Time_t) == msg_len:
@@ -676,7 +678,7 @@ for msg in consumer:
                 ord = AmendOrder_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("AmendOrder msg length err, len : %d" % msg_len)
+                logfix.info(f"AmendOrder msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'F' == hd.Evttype:
             if (sizeof(UnsolicitedCancelReplaceResponse_t)) + sizeof(Time_t) == msg_len:
@@ -686,7 +688,7 @@ for msg in consumer:
                 ord = UnsolicitedCancelReplaceResponse_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("UnsolicitedCancelReplaceResponse msg length err, len : %d" % msg_len)
+                logfix.info(f"UnsolicitedCancelReplaceResponse msg length err, len : {msg_len}")
                 exit(0)
         elif b'j' == hd.Msgtype and b'J' == hd.Evttype:
             if (sizeof(BusinessMessageRejected_t)) == msg_len:
@@ -696,7 +698,7 @@ for msg in consumer:
                 ord = BusinessMessageRejected_with_time_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("BusinessMessageRejected msg length err, len : %d" % msg_len)
+                logfix.info(f"BusinessMessageRejected msg length err, len : {msg_len}")
                 exit(0)
         elif b'D' == hd.Msgtype and b'Q' == hd.Evttype:
             if (sizeof(NewOrder_t)) + sizeof(Time_t) == msg_len:
@@ -706,7 +708,7 @@ for msg in consumer:
                 neword = NewOrder_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(neword)
             else:
-                logfix.info("queueing-order msg length err, len : %d" % msg_len)
+                logfix.info(f"queueing-order msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'a' == hd.Evttype:
             if (sizeof(Trade_t)) + sizeof(Time_t) == msg_len:
@@ -716,7 +718,7 @@ for msg in consumer:
                 ord = Trade_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("prop-buy msg length err, len : %d" % msg_len)
+                logfix.info(f"prop-buy msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'b' == hd.Evttype:
             if (sizeof(Trade_t)) + sizeof(Time_t) == msg_len:
@@ -726,7 +728,7 @@ for msg in consumer:
                 ord = Trade_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("prop-sell msg length err, len : %d" % msg_len)
+                logfix.info(f"prop-sell msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'c' == hd.Evttype:
             if (sizeof(Trade_t)) + sizeof(Time_t) == msg_len:
@@ -736,7 +738,7 @@ for msg in consumer:
                 ord = Trade_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("hrt-buy msg length err, len : %d" % msg_len)
+                logfix.info(f"hrt-buy msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'd' == hd.Evttype:
             if (sizeof(Trade_t)) + sizeof(Time_t) == msg_len:
@@ -746,7 +748,7 @@ for msg in consumer:
                 ord = Trade_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("hrt-sell msg length err, len : %d" % msg_len)
+                logfix.info(f"hrt-sell msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'S' == hd.Evttype:
             if (sizeof(OrderAccepted_t)) + sizeof(Time_t) == msg_len:
@@ -756,7 +758,7 @@ for msg in consumer:
                 ord = OrderAccepted_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("snapshot msg length err, len : %d" % msg_len)
+                logfix.info(f"snapshot msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'e' == hd.Evttype:
             if (sizeof(OrderAccepted_t)) + sizeof(Time_t) == msg_len:
@@ -766,7 +768,7 @@ for msg in consumer:
                 ord = OrderAccepted_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("Queuing.OrderAccepted msg length err, len : %d" % msg_len)
+                logfix.info(f"Queuing.OrderAccepted msg length err, len : {msg_len}")
                 exit(0)
         elif b'8' == hd.Msgtype and b'f' == hd.Evttype:
             if (sizeof(OrderRejected_t)) + sizeof(Time_t) == msg_len:
@@ -776,7 +778,7 @@ for msg in consumer:
                 ord = OrderRejected_with_BBO_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("Queuing.OrderRejected msg length err, len : %d" % msg_len)
+                logfix.info(f"Queuing.OrderRejected msg length err, len : {msg_len}")
                 exit(0)
         elif b'3' == hd.Msgtype and b'I' == hd.Evttype:
             if (sizeof(Rejected_t)) == msg_len:
@@ -786,7 +788,7 @@ for msg in consumer:
                 ord = Rejected_with_time_t.from_buffer_copy(msg.value)
                 OrderDump(ord)
             else:
-                logfix.info("Rejected msg length err, len : %d" % msg_len)
+                logfix.info(f"Rejected msg length err, len : {msg_len}")
                 exit(0)
         else:
             logfix.info("Unsupported message type")

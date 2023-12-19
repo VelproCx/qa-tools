@@ -42,7 +42,7 @@ class AtpEod:
                 #     cls.trade_datas_list.append(trade_data)
                 # else:
                 #     pass
-        print("Order: {}".format(cls.order_num), "Trade: {}".format(cls.trade_num))
+        print(f"Order: {cls.order_num}", f"Trade: {cls.trade_num}")
 
     @classmethod
     def generate_hrt_order_eod(cls):

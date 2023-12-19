@@ -304,7 +304,7 @@ class Application(fix.Application):
         tor = int(time_of_running)
 
         while True:
-            # 获取当前时间
+            # 获取当前的时间
             current_time = datetime.now()
             # 定义时间区间
             time_difference = current_time - start_time
