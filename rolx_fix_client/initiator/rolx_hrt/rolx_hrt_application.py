@@ -22,9 +22,9 @@ logfix = logging.getLogger('logfix')
 
 
 class Application(fix.Application):
-    orderID = 0
-    execID = 0
-    ORDERS_DICT = []
+    order_id = 0
+    exec_id = 0
+    orders_dict = []
 
     def __init__(self):
         super().__init__()
@@ -43,7 +43,7 @@ class Application(fix.Application):
         return
 
     def onLogout(self, sessionID):
-        print(f"Session (%s) logout ! {sessionID.toString()}")
+        print(f"Session ({sessionID.toString()}) logout !")
         return
 
     def toAdmin(self, message, sessionID):
@@ -57,31 +57,6 @@ class Application(fix.Application):
         logfix.info("-------------------------------------------------------------------------------------------------")
         msg = message.toString().replace(__SOH__, "|")
         logfix.info(f"(Core) New Ack >> {msg}")
-
-        # 7.1 New Order Single
-        # if msgType == "D":
-        #     orderQty = message.getField(38)
-        #     ordType = message.getField(40)
-        #     clOrdID = message.getField(11)
-        #     side = message.getField(54)
-        #     symbol = message.getField(55)
-        #     transactTime = message.getField(60)
-        #     self.ORDERS_DICT = message.getField(11)
-        #
-        #     if (clOrdID, orderQty, ordType, side, symbol, transactTime,) != "":
-        #     else:
-        #         logfix.info("(sendMsg) New Ack >> {}".format(msg) + 'New Order Single FixMsg Error!')
-        # 7.4 Order Cancel Request
-        # elif msgType == "F":
-        #     clOrdID = message.getField(11)
-        #     side = message.getField(54)
-        #     symbol = message.getField(55)
-        #     transactTime = message.getField(60)
-        #
-        #     if (clOrdID, side, symbol, transactTime) != "":
-        #         logfix.info("(sendMsg) Cancel Ack >> {}".format(msg))
-        #     else:
-        #         logfix.info("(sendMsg) Cancel Ack >> {}".format(msg) + 'Order Cancel Request FixMsg Error!')
         return
 
     def fromAdmin(self, message, sessionID):
@@ -104,11 +79,11 @@ class Application(fix.Application):
 
     def getClOrdID(self):
         # "随机数生成ClOrdID"
-        self.execID += 1
+        self.exec_id += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
-        return str(t) + str1 + str(self.execID).zfill(6)
+        return str(t) + str1 + str(self.exec_id).zfill(6)
 
     def insert_order_request(self, row):
         msg = fix.Message()
@@ -162,7 +137,7 @@ class Application(fix.Application):
         return msg
 
     def order_cancel_request(self, row):
-        clOrdId = self.ORDERS_DICT
+        clOrdId = self.orders_dict
         time.sleep(1)
         msg = fix.Message()
         header = msg.getHeader()
@@ -208,10 +183,7 @@ def main():
         parser.add_argument('--port', default='11131', help='choose Port to use for test')
         args = parser.parse_args()  # 解析参数
 
-        # if args.data:
-        #     data = json.loads(args.data)
-        # else:
-        #     data = {}
+
         account = args.account
         sender = args.sender
         target = args.target
@@ -234,8 +206,8 @@ def main():
 
         initiator.start()
         time.sleep(1)
-        with open('../../testcases/hrt_test_list.json', 'r') as h_json:
-            case_data_list = json.load(h_json)
+        with open('../../testcases/hrt_test_list.json', 'r') as f_json:
+            case_data_list = json.load(f_json)
             for row in case_data_list["testCase"]:
                 if row["ActionType"] == "NewAck":
                     application.insert_order_request(row)
