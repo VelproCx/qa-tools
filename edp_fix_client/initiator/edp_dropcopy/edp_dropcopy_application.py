@@ -9,18 +9,14 @@ import logging
 from model.logger import setup_logger
 import time
 
-__SOH__ = chr(1)
-global initiator
-# log
-setup_logger('logfix', 'logs/edp_report.log')
-logfix = logging.getLogger('logfix')
-
 
 class Application(fix.Application):
 
-    def __init__(self):
+    def __init__(self, logger):
         super().__init__()
         self.sessionID = None
+        self.logger = logger
+        self.__SOH__ = chr(1)
 
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
@@ -41,37 +37,39 @@ class Application(fix.Application):
 
     def toAdmin(self, message, sessionID):
         # "发送会话消息时候调用此方法"
-        msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) S >> {}".format(msg))
+        msg = message.toString().replace(self.__SOH__, "|")
+        self.logger.info("(Core) S >> {}".format(msg))
         return
 
     def toApp(self, message, sessionID):
         # "发送业务消息时候调用此方法"
-        logfix.info("-------------------------------------------------------------------------------------------------")
-        msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) R << %s" % msg)
+        self.logger.info(
+            "-------------------------------------------------------------------------------------------------")
+        msg = message.toString().replace(self.__SOH__, "|")
+        self.logger.info("(Core) R << %s" % msg)
         return
 
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
-        msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) R << %s" % msg)
+        msg = message.toString().replace(self.__SOH__, "|")
+        self.logger.info("(Core) R << %s" % msg)
         return
 
     def fromApp(self, message, sessionID):
         # "接收业务消息时调用此方法"
-        logfix.info("-------------------------------------------------------------------------------------------------")
+        self.logger.info(
+            "-------------------------------------------------------------------------------------------------")
         msgType = message.getHeader().getField(35)
-        msg = message.toString().replace(__SOH__, "|")
+        msg = message.toString().replace(self.__SOH__, "|")
         if msgType == "j":
             refSeqNum = message.getField(45)
             text = message.getField(58)
             refMsgType = message.getField(372)
             businessRejectRefID = message.getField(379)
             if (refSeqNum, text, refMsgType, businessRejectRefID) != '':
-                logfix.info("(recvMsg) Business Message << {}".format(msg))
+                self.logger.info("(recvMsg) Business Message << {}".format(msg))
             else:
-                logfix.info("(recvMsg) Business Message Error")
+                self.logger.info("(recvMsg) Business Message Error")
         elif msgType == "8":
             clOrdID = message.getField(11)
             execID = message.getField(17)
@@ -89,9 +87,9 @@ class Application(fix.Application):
                 if (clOrdID, orderID, execID, side, symbol,
                     fsxTransactTime, execRefID,
                     lastPx, lastShares, execTransType) != '':
-                    logfix.info("(recvMsg) EDP ToSTNeT Confirmation << {}".format(msg))
+                    self.logger.info("(recvMsg) EDP ToSTNeT Confirmation << {}".format(msg))
                 else:
-                    logfix.info(
+                    self.logger.info(
                         "(recvMsg) EDP ToSTNeT Confirmation << {},EDP ToSTNeT Confirmation FixMsg Error!".format(msg))
             else:
                 ordStatus = message.getField(39)
@@ -102,9 +100,9 @@ class Application(fix.Application):
                 if (
                         clOrdID, execID, orderID, ordStatus, transactTime, side, symbol, transactTime, execType,
                         text, origClOrdID) != "":
-                    logfix.info("(recvMsg) EDP ToSTNeT Rejection << {}".format(msg))
+                    self.logger.info("(recvMsg) EDP ToSTNeT Rejection << {}".format(msg))
                 else:
-                    logfix.info(
+                    self.logger.info(
                         "(recvMsg) EDP ToSTNeT Rejection << {},EDP ToSTNeT Rejection FixMsg Error!".format(msg))
 
             self.onMessage(message, sessionID)
@@ -112,18 +110,22 @@ class Application(fix.Application):
 
     def onMessage(self, message, sessionID):
         """Processing application message here"""
-        msg = message.toString().replace(__SOH__, "|")
-        logfix.info("(Core) R << %s" % msg)
+        msg = message.toString().replace(self.__SOH__, "|")
+        self.logger.info("(Core) R << %s" % msg)
         pass
 
 
 def main():
     try:
+        # log
+        setup_logger('logfix', 'logs/edp_report.log')
+        logger = logging.getLogger('logfix')
+
         settings = fix.SessionSettings("edp_dropcopy_client.cfg")
-        application = Application()
-        storefactory = fix.FileStoreFactory(settings)
-        logfactory = fix.FileLogFactory(settings)
-        initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
+        application = Application(logger)
+        storeFactory = fix.FileStoreFactory(settings)
+        logFactory = fix.FileLogFactory(settings)
+        initiator = fix.SocketInitiator(application, storeFactory, settings, logFactory)
         initiator.start()
         # 执行完所有测试用例后等待时间
         sleep_duration = timedelta(minutes=60)

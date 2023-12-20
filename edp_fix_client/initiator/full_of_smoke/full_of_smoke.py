@@ -13,32 +13,33 @@ from datetime import datetime, timedelta
 from model.logger import setup_logger
 import random
 
-__SOH__ = chr(1)
-
 symbols = []
 
 
 class Application(fix.Application):
-    exec_id = 0
-    order_new = 0
-    order_ioc_expired = 0
-    order_accepted = 0
-    order_rejected = 0
-    order_fill_indication = 0
-    order_tostnet_confirmation = 0
-    order_tostnet_rejection = 0
-    order_num = 0
-    order_book_is_close = 0
-    not_book_is_close = []
 
-    def __init__(self):
+    def __init__(self, account, logger, time_of_running):
         super().__init__()
         self.sessionID = None
-        self.account = None
-        self.Sender = None
-        self.Target = None
-        self.Host = None
-        self.Port = None
+        self.account = account
+        self.logger = logger
+        self.time_of_running = time_of_running
+
+        # 定义变量
+        self.exec_id = 0
+        self.order_new = 0
+        self.order_ioc_expired = 0
+        self.order_accepted = 0
+        self.order_rejected = 0
+        self.order_fill_indication = 0
+        self.order_tostnet_confirmation = 0
+        self.order_tostnet_rejection = 0
+        self.order_num = 0
+        self.order_book_is_close = 0
+        self.not_book_is_close = []
+
+        # 定义常量
+        self.__SOH__ = chr(1)
 
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
@@ -49,59 +50,59 @@ class Application(fix.Application):
     def onLogon(self, sessionID):
         # "客户端登陆成功时候调用此方法"
         self.sessionID = sessionID
-        print(f"Successful Logon to session '{sessionID.toString()}'." )
+        print(f"Successful Logon to session '{sessionID.toString()}'.")
         return
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
-        logfix.info(f"Result: order_new = {self.order_new}, order_accepted = {self.order_accepted}, "
-                    f"order_rejected = {self.order_rejected}, order_book_is_close ={self.order_book_is_close}）")
-        logfix.info(
+        self.logger.info(f"Result: order_new = {self.order_new}, order_accepted = {self.order_accepted}, "
+                         f"order_rejected = {self.order_rejected}, order_book_is_close ={self.order_book_is_close}）")
+        self.logger.info(
             f"Result: order_edp_indication = {self.order_fill_indication}, "
             f"order_tostnet_confirmation = {self.order_tostnet_confirmation}, order_tostnet_rejection = {self.order_tostnet_rejection}）")
-        logfix.info(f"Result: order_ioc_expired = { self.order_ioc_expired}")
+        self.logger.info(f"Result: order_ioc_expired = {self.order_ioc_expired}")
 
         print(f"Session ({sessionID.toString()}) logout !")
         return
 
     def toAdmin(self, message, sessionID):
         # "发送会话消息时候调用此方法"
-        msg = message.toString().replace(__SOH__, "|")
-        logfix.info(f"(Core) S >> {msg}")
+        msg = message.toString().replace(self.__SOH__, "|")
+        self.logger.info(f"(Core) S >> {msg}")
         return
 
     def toApp(self, message, sessionID):
         # "发送业务消息时候调用此方法"
         msgtype = message.getHeader().getField(35)
-        msg = message.toString().replace(__SOH__, "|")
-        logfix.info(f"(sendMsg) S >> {msg}")
+        msg = message.toString().replace(self.__SOH__, "|")
+        self.logger.info(f"(sendMsg) S >> {msg}")
         if msgtype == "D":
             self.order_new += 1
         return
 
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
-        msg = message.toString().replace(__SOH__, "|")
-        logfix.info(f"(Core) R << {msg}")
+        msg = message.toString().replace(self.__SOH__, "|")
+        self.logger.info(f"(Core) R << {msg}")
         return
 
     def fromApp(self, message, sessionID):
         # "接收业务消息时调用此方法"
         # 使用quickFix框架getField方法提取clOrdId、ordStatus
         ordStatus = message.getField(39)
-        msg = message.toString().replace(__SOH__, "|")
+        msg = message.toString().replace(self.__SOH__, "|")
         execTransType = message.getField(20)
         if execTransType == "2":
             self.order_tostnet_confirmation += 1
-            logfix.info(f"(recvMsg)ToSTNeT Confirmation << {msg}")
+            self.logger.info(f"(recvMsg)ToSTNeT Confirmation << {msg}")
         else:
             if ordStatus == "0":
                 self.order_accepted += 1
-                logfix.info(f"(recvMsg) Order Accepted << {msg}")
+                self.logger.info(f"(recvMsg) Order Accepted << {msg}")
             elif ordStatus == "8":
                 text = message.getField(58)
                 self.order_rejected += 1
-                logfix.info(f"(recvMsg) Order Rejected << {msg}")
+                self.logger.info(f"(recvMsg) Order Rejected << {msg}")
                 # 目前该ErrorCode返回的错误码为200开头，后期可能需要修改成000开头
                 if 'ERROR_20010064,Book is Closed' in text:
                     self.order_book_is_close += 1
@@ -111,13 +112,13 @@ class Application(fix.Application):
                 text = message.getField(58)
                 if 'ERROR_00010051,Order rejected due to IoC expired.' == text:
                     self.order_ioc_expired += 1
-                    logfix.info(f"(recvMsg) Order IOC Expired << {msg}")
+                    self.logger.info(f"(recvMsg) Order IOC Expired << {msg}")
                 else:
                     self.order_tostnet_rejection += 1
-                    logfix.info(f"(recvMsg)ToSTNeT Rejection << {msg}")
+                    self.logger.info(f"(recvMsg)ToSTNeT Rejection << {msg}")
             elif ordStatus == "1" or ordStatus == "2":
                 self.order_fill_indication += 1
-                logfix.info(f"(recvMsg) Order Filled Indication<< {msg}")
+                self.logger.info(f"(recvMsg) Order Filled Indication<< {msg}")
         self.onMessage(message, sessionID)
         return
 
@@ -125,7 +126,7 @@ class Application(fix.Application):
         """Processing application message here"""
         pass
 
-    def getClOrdID(self):
+    def gen_client_order_id(self):
         # "随机数生成ClOrdID"
         self.exec_id += 1
         # 获取当前时间并且进行格式转换
@@ -138,7 +139,7 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account(account))
+        msg.setField(fix.Account(self.account))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(100))
         msg.setField(fix.OrdType("1"))
@@ -157,7 +158,7 @@ class Application(fix.Application):
     def load_test_case(self):
         """Run"""
         start_time = datetime.now()
-        tor = int(time_of_running)
+        tor = int(self.time_of_running)
 
         while True:
             # 获取当前时间
@@ -195,8 +196,6 @@ class Application(fix.Application):
 
 
 def main():
-    global account
-    global time_of_running
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
@@ -228,10 +227,9 @@ def main():
         cfg.Port = port
         cfg.read_config(sender, target, host, port)
 
-        global logfix
         # report
         setup_logger('logfix', '{}_report.log'.format(account))
-        logfix = logging.getLogger('logfix')
+        logger = logging.getLogger('logfix')
 
         with open('/app/data/qa-tools/edp_fix_client/initiator/full_of_smoke/symbol.csv', 'r', newline='') as csvfile:
             csvreader = csv.reader(csvfile)
@@ -240,11 +238,10 @@ def main():
                 symbols.append(symbol)
 
         settings = fix.SessionSettings("/app/data/qa-tools/edp_fix_client/initiator/full_of_smoke/full_of_smoke.cfg")
-        application = Application()
-        application.account = account
-        storefactory = fix.FileStoreFactory(settings)
-        logfactory = fix.FileLogFactory(settings)
-        initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
+        application = Application(account, logger, time_of_running)
+        storeFactory = fix.FileStoreFactory(settings)
+        logFactory = fix.FileLogFactory(settings)
+        initiator = fix.SocketInitiator(application, storeFactory, settings, logFactory)
 
         initiator.start()
         application.load_test_case()

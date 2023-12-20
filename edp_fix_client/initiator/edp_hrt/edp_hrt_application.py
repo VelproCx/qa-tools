@@ -12,23 +12,22 @@ from datetime import datetime, timedelta
 from model.logger import setup_logger
 import json
 
-__SOH__ = chr(1)
-
-# report
-current_date = datetime.now().strftime("%Y-%m-%d")
-log_filename = f"edp_report_{current_date}.log"
-setup_logger('logfix', 'logs/' + log_filename)
-logfix = logging.getLogger('logfix')
-
 
 class Application(fix.Application):
-    order_id = 0
-    exec_id = 0
-    orders_dict = []
 
-    def __init__(self):
+    def __init__(self, account, logger):
         super().__init__()
         self.sessionID = None
+        self.account = account
+        self.logger = logger
+
+        # 定义变量
+        self.order_id = 0
+        self.exec_id = 0
+        self.orders_dict = []
+
+        # 定义常量
+        self.__SOH__ = chr(1)
 
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
@@ -48,15 +47,16 @@ class Application(fix.Application):
 
     def toAdmin(self, message, sessionID):
         # "发送会话消息时候调用此方法"
-        msg = message.toString().replace(__SOH__, "|")
-        logfix.info(f"(Core) S >> {msg}")
+        msg = message.toString().replace(self.__SOH__, "|")
+        self.logger.info(f"(Core) S >> {msg}")
         return
 
     def toApp(self, message, sessionID):
         # "发送业务消息时候调用此方法"
-        logfix.info("-------------------------------------------------------------------------------------------------")
+        self.logger.info(
+            "-------------------------------------------------------------------------------------------------")
         msgType = message.getHeader().getField(35)
-        msg = message.toString().replace(__SOH__, "|")
+        msg = message.toString().replace(self.__SOH__, "|")
         # 7.1 New Order Single
         if msgType == "D":
             orderQty = message.getField(38)
@@ -68,9 +68,9 @@ class Application(fix.Application):
             self.orders_dict = message.getField(11)
 
             if (clOrdID, orderQty, ordType, side, symbol, transactTime,) != "":
-                logfix.info(f"(sendMsg) New Ack >> {msg}")
+                self.logger.info(f"(sendMsg) New Ack >> {msg}")
             else:
-                logfix.info(f"(sendMsg) New Ack >> {msg}" + 'New Order Single FixMsg Error!')
+                self.logger.info(f"(sendMsg) New Ack >> {msg}" + 'New Order Single FixMsg Error!')
         # 7.4 Order Cancel Request
         elif msgType == "F":
             clOrdID = message.getField(11)
@@ -79,22 +79,23 @@ class Application(fix.Application):
             transactTime = message.getField(60)
 
             if (clOrdID, side, symbol, transactTime) != "":
-                logfix.info(f"(sendMsg) Cancel Ack >> {msg}")
+                self.logger.info(f"(sendMsg) Cancel Ack >> {msg}")
             else:
-                logfix.info(f"(sendMsg) Cancel Ack >> {msg}" + 'Order Cancel Request FixMsg Error!')
+                self.logger.info(f"(sendMsg) Cancel Ack >> {msg}" + 'Order Cancel Request FixMsg Error!')
         return
 
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
-        msg = message.toString().replace(__SOH__, "|")
-        logfix.info(f"(Core) R << {msg}")
+        msg = message.toString().replace(self.__SOH__, "|")
+        self.logger.info(f"(Core) R << {msg}")
         return
 
     def fromApp(self, message, sessionID):
-        logfix.info("-------------------------------------------------------------------------------------------------")
+        self.logger.info(
+            "-------------------------------------------------------------------------------------------------")
         # "接收业务消息时调用此方法"
-        msg = message.toString().replace(__SOH__, "|")
-        logfix.info(f"(Core) recvMsg << {msg}")
+        msg = message.toString().replace(self.__SOH__, "|")
+        self.logger.info(f"(Core) recvMsg << {msg}")
         self.onMessage(message, sessionID)
         return
 
@@ -102,7 +103,7 @@ class Application(fix.Application):
         """Processing application message here"""
         pass
 
-    def getClOrdID(self):
+    def gen_client_order_id(self):
         # "随机数生成ClOrdID"
         self.exec_id += 1
         # 获取当前时间并且进行格式转换
@@ -115,10 +116,9 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        # msg.setField(fix.Account(row.get('Account')))
-        msg.setField(fix.ClOrdID(self.getClOrdID()))
+        msg.setField(fix.ClOrdID(self.gen_client_order_id()))
         msg.setField(fix.OrderQty(row["OrderQty"]))
-        msg.setField(fix.Account(account))
+        msg.setField(fix.Account(self.account))
         msg.setField(fix.OrdType(row["OrdType"]))
         msg.setField(fix.Side(row["Side"]))
         msg.setField(fix.Symbol(row["Symbol"]))
@@ -180,7 +180,7 @@ class Application(fix.Application):
         header.setField(fix.MsgType(fix.MsgType_OrderCancelRequest))
         header.setField(fix.BeginString("FIX.4.2"))
         header.setField(fix.MsgType("F"))
-        msg.setField(fix.Account(account))
+        msg.setField(fix.Account(self.account))
         msg.setField(fix.OrigClOrdID(clOrdId))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.Symbol(row["Symbol"]))
@@ -208,7 +208,6 @@ class Application(fix.Application):
 
 
 def main():
-    global account
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
@@ -236,9 +235,14 @@ def main():
         cfg.Port = port
         cfg.read_config(sender, target, host, port)
 
+        # report
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        log_filename = f"edp_report_{current_date}.log"
+        setup_logger('logfix', 'logs/' + log_filename)
+        logger = logging.getLogger('logfix')
+
         settings = fix.SessionSettings("edp_hrt_client.cfg")
-        application = Application()
-        application.account = account
+        application = Application(account, logger)
         store_factory = fix.FileStoreFactory(settings)
         log_factory = fix.FileLogFactory(settings)
         initiator = fix.SocketInitiator(application, store_factory, settings, log_factory)

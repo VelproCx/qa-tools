@@ -12,22 +12,21 @@ from datetime import datetime, timedelta
 from model.logger import setup_logger
 import json
 
-__SOH__ = chr(1)
-
-# report
-current_date = datetime.now().strftime("%Y-%m-%d")
-log_filename = f"edp_report_{current_date}.log"
-setup_logger('logfix', 'edp_fix_client/initiator/edp_smoke_test/logs/' + log_filename)
-logfix = logging.getLogger('logfix')
-
 
 class Application(fix.Application):
-    order_id = 0
-    exec_id = 0
 
-    def __init__(self):
+    def __init__(self, data, logger):
         super().__init__()
         self.sessionID = None
+        self.data = data
+        self.logger = logger
+
+        # 定义变量
+        self.order_id = 0
+        self.exec_id = 0
+
+        # 定义常量
+        self.__SOH__ = chr(1)
 
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
@@ -47,15 +46,16 @@ class Application(fix.Application):
 
     def toAdmin(self, message, sessionID):
         # "发送会话消息时候调用此方法"
-        msg = message.toString().replace(__SOH__, "|")
-        logfix.info(f"(Core) S >> {msg}")
+        msg = message.toString().replace(self.__SOH__, "|")
+        self.logger.info(f"(Core) S >> {msg}")
         return
 
     def toApp(self, message, sessionID):
         # "发送业务消息时候调用此方法"
-        logfix.info("-------------------------------------------------------------------------------------------------")
+        self.logger.info(
+            "-------------------------------------------------------------------------------------------------")
         msgType = message.getHeader().getField(35)
-        msg = message.toString().replace(__SOH__, "|")
+        msg = message.toString().replace(self.__SOH__, "|")
         # 7.1 New Order Single
         if msgType == "D":
             orderQty = message.getField(38)
@@ -66,9 +66,9 @@ class Application(fix.Application):
             transactTime = message.getField(60)
 
             if (clOrdID, orderQty, ordType, side, symbol, transactTime,) != "":
-                logfix.info(f"(sendMsg) New Ack >> {msg}")
+                self.logger.info(f"(sendMsg) New Ack >> {msg}")
             else:
-                logfix.info(f"(sendMsg) New Ack >> {msg}" + 'New Order Single FixMsg Error!')
+                self.logger.info(f"(sendMsg) New Ack >> {msg}" + 'New Order Single FixMsg Error!')
         # 7.4 Order Cancel Request
         elif msgType == "F":
             clOrdID = message.getField(11)
@@ -76,41 +76,42 @@ class Application(fix.Application):
             symbol = message.getField(55)
             transactTime = message.getField(60)
             if (clOrdID, side, symbol, transactTime) != "":
-                logfix.info(f"(sendMsg) Cancel Ack >> {msg}")
+                self.logger.info(f"(sendMsg) Cancel Ack >> {msg}")
             else:
-                logfix.info(f"(sendMsg) Cancel Ack >> {msg}" + 'Order Cancel Request FixMsg Error!')
+                self.logger.info(f"(sendMsg) Cancel Ack >> {msg}" + 'Order Cancel Request FixMsg Error!')
         return
 
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
-        msg = message.toString().replace(__SOH__, "|")
-        logfix.info(f"(Core) R << {msg}")
+        msg = message.toString().replace(self.__SOH__, "|")
+        self.logger.info(f"(Core) R << {msg}")
         return
 
     def fromApp(self, message, sessionID):
-        logfix.info("-------------------------------------------------------------------------------------------------")
+        self.logger.info(
+            "-------------------------------------------------------------------------------------------------")
         # "接收业务消息时调用此方法"
         msgType = message.getHeader().getField(35)
         if msgType == 'h':
             tradingSessionID = message.getField(336)
             tradSesMode = message.getField(339)
             tradSesStatus = message.getField(340)
-            msg = message.toString().replace(__SOH__, "|")
+            msg = message.toString().replace(self.__SOH__, "|")
             if (tradingSessionID, tradSesMode, tradSesStatus) != '':
-                logfix.info(f"(recvMsg) Trading Session << {msg}")
+                self.logger.info(f"(recvMsg) Trading Session << {msg}")
             else:
-                logfix.info("(recvMsg) Trading Session Error")
+                self.logger.info("(recvMsg) Trading Session Error")
         # Business Message Reject
         elif msgType == 'j':
             refSeqNum = message.getField(45)
             text = message.getField(58)
             refMsgType = message.getField(372)
             businessRejectRefID = message.getField(379)
-            msg = message.toString().replace(__SOH__, "|")
+            msg = message.toString().replace(self.__SOH__, "|")
             if (refSeqNum, text, refMsgType, businessRejectRefID) != '':
-                logfix.info(f"(recvMsg) Business Message << {msg}")
+                self.logger.info(f"(recvMsg) Business Message << {msg}")
             else:
-                logfix.info("(recvMsg) Business Message Error")
+                self.logger.info("(recvMsg) Business Message Error")
         else:
             clOrdID = message.getField(11)
             order_id = message.getField(37)
@@ -140,7 +141,7 @@ class Application(fix.Application):
                 OrderClassification = message.getField(8060)
                 SelfTradePreventionId = message.getField(8174)
 
-                msg = message.toString().replace(__SOH__, "|")
+                msg = message.toString().replace(self.__SOH__, "|")
                 # 7.2 Execution Report – Order Accepted
                 if ordStatus == "0":
                     execBroker = message.getField(76)
@@ -154,12 +155,12 @@ class Application(fix.Application):
                             cashMargin,
                             crossingPriceType, fsxTransactTime, marginTransactionType, MinQty, OrderClassification,
                             SelfTradePreventionId) != "":
-                        logfix.info(f"(recvMsg) Order Accepted << {msg}" + "ordStatus = " + str(ordStatus))
-                        logfix.info("Result : Order Accepted ," + "ordStatus =" + ordStatus)
+                        self.logger.info(f"(recvMsg) Order Accepted << {msg}" + "ordStatus = " + str(ordStatus))
+                        self.logger.info("Result : Order Accepted ," + "ordStatus =" + ordStatus)
                     else:
-                        logfix.info(f"(recvMsg) Order Accepted << {msg}" + 'Order Accepted FixMsg Error!')
+                        self.logger.info(f"(recvMsg) Order Accepted << {msg}" + 'Order Accepted FixMsg Error!')
                     if execType != ordStatus:
-                        logfix.info(
+                        self.logger.info(
                             f"(recvMsg) Order execType error,orderStatus = {ordStatus},execType = {execType}")
                 # 7.3 Execution Report – Order Rejected
                 elif ordStatus == "8":
@@ -175,11 +176,11 @@ class Application(fix.Application):
                             crossingPriceType,
                             fsxTransactTime, marginTransactionType, text, ordRejReason, MinQty, OrderClassification,
                             SelfTradePreventionId) != "":
-                        logfix.info(f"(recvMsg) Order Rej << {msg}" + "RejRes = " + str(text))
+                        self.logger.info(f"(recvMsg) Order Rej << {msg}" + "RejRes = " + str(text))
                     else:
-                        logfix.info(f"(recvMsg) Order Rejected << {msg}" + 'Order Rejected FixMsg Error!')
+                        self.logger.info(f"(recvMsg) Order Rejected << {msg}" + 'Order Rejected FixMsg Error!')
                     if execType != ordStatus:
-                        logfix.info(
+                        self.logger.info(
                             f"(recvMsg) Order execType error,orderStatus = {ordStatus},execType = {execType}")
                 elif ordStatus == "4":
                     #  7.8 Execution Report – Order Canceled / IOC Expired / ToSTNeT Rejection
@@ -199,10 +200,10 @@ class Application(fix.Application):
                                 side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty,
                                 cashMargin, crossingPriceType, fsxTransactTime, marginTransactionType, origClOrdID,
                                 text) != "" and primaryLastPx != "0" or primaryBidPx != "0" or primaryAskPx != "0":
-                            logfix.info(f"(recvMsg) Order Expired << {msg}")
-                            logfix.info("Result : Order Expired ," + "ordStatus =" + ordStatus)
+                            self.logger.info(f"(recvMsg) Order Expired << {msg}")
+                            self.logger.info("Result : Order Expired ," + "ordStatus =" + ordStatus)
                         else:
-                            logfix.info(f"(recvMsg) Order Expired FixMsg Error! << {msg}")
+                            self.logger.info(f"(recvMsg) Order Expired FixMsg Error! << {msg}")
                     # Execution Report – Order Canceled
                     elif 'ERROR_00010052,Order canceled due to client cancel request.' == text:
                         if (
@@ -210,10 +211,10 @@ class Application(fix.Application):
                                 side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
                                 crossingPriceType, fsxTransactTime, marginTransactionType, origClOrdID, execBroker,
                                 MinQty, OrderClassification, SelfTradePreventionId, text) != "":
-                            logfix.info(f"(recvMsg) Order Canceled << {msg}")
-                            logfix.info("Result : Order Canceled ," + "ordStatus =" + ordStatus)
+                            self.logger.info(f"(recvMsg) Order Canceled << {msg}")
+                            self.logger.info("Result : Order Canceled ," + "ordStatus =" + ordStatus)
                         else:
-                            logfix.info(f"(recvMsg) Order Canceled << {msg}" + 'Order Canceled FixMsg Error!')
+                            self.logger.info(f"(recvMsg) Order Canceled << {msg}" + 'Order Canceled FixMsg Error!')
                     # Execution Report – ToSTNeT Rejection
                     else:
                         if (
@@ -221,10 +222,10 @@ class Application(fix.Application):
                                 side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty,
                                 cashMargin, crossingPriceType, fsxTransactTime, marginTransactionType, origClOrdID,
                                 text) != "":
-                            logfix.info(f"(recvMsg)ToSTNeT Rejection << {msg}")
-                            logfix.info("Result:ToSTNeT Rejection ," + "ordStatus =" + ordStatus)
+                            self.logger.info(f"(recvMsg)ToSTNeT Rejection << {msg}")
+                            self.logger.info("Result:ToSTNeT Rejection ," + "ordStatus =" + ordStatus)
                         else:
-                            logfix.info(
+                            self.logger.info(
                                 f"(recvMsg)ToSTNeT Rejection << {msg}" + 'EDP ToSTNeT Rejection FixMsg Error!')
                 # 7.7 Execution Report – Trade
                 elif ordStatus == "1" or ordStatus == "2":
@@ -245,15 +246,15 @@ class Application(fix.Application):
                                 execType, leavesQty, cashMargin, crossingPriceType, fsxTransactTime,
                                 marginTransactionType, primaryLastPx, primaryBidPx, primaryAskPx, routingDecisionTime,
                                 MinQty, OrderClassification, SelfTradePreventionId, lastLiquidityind) != "":
-                            logfix.info(
+                            self.logger.info(
                                 f"(recvMsg) Order Filled << {msg}")
                             if ordStatus == '2':
-                                logfix.info("Result : EP3 Order Filled ," + "ordStatus =" + ordStatus)
+                                self.logger.info("Result : EP3 Order Filled ," + "ordStatus =" + ordStatus)
                             else:
-                                logfix.info("Result : EP3 Order Partially Filled ," + "ordStatus =" + ordStatus)
+                                self.logger.info("Result : EP3 Order Partially Filled ," + "ordStatus =" + ordStatus)
 
                         else:
-                            logfix.info(f"(recvMsg) EP3 Order Filled << {msg}" + "Order Trade FixMsg Error!")
+                            self.logger.info(f"(recvMsg) EP3 Order Filled << {msg}" + "Order Trade FixMsg Error!")
 
                     elif execTransType == '2':
                         execRefID = message.getField(19)
@@ -261,21 +262,22 @@ class Application(fix.Application):
                         toSTNeTorder_id = message.getField(8101)
                         toSTNeTExecutionID = message.getField(8102)
                         toSTNeTTransactionTime = message.getField(8106)
-                        Secondaryorder_id = message.getField(198)
+                        secondaryOrderId = message.getField(198)
                         ContraBroker = message.getField(375)
-                        Secondaryexec_id = message.getField(527)
+                        secondaryExecId = message.getField(527)
                         if (
                                 avgPx, clOrdID, CumQty, exec_id, execTransType, lastPx, lastShares, order_id,
                                 orderQty, ordType, rule80A, side, symbol, timeInForce, transactTime, execBroker,
                                 clientID, execType, leavesQty, cashMargin, crossingPriceType, fsxTransactTime,
                                 marginTransactionType, primaryLastPx, primaryBidPx, primaryAskPx, routingDecisionTime,
                                 MinQty, OrderClassification, SelfTradePreventionId, execRefID, lastLiquidityInd,
-                                toSTNeTorder_id, toSTNeTTransactionTime, Secondaryorder_id, ContraBroker, Secondaryexec_id,
+                                toSTNeTorder_id, toSTNeTTransactionTime, secondaryOrderId, ContraBroker,
+                                secondaryExecId,
                                 toSTNeTExecutionID) != "":
-                            logfix.info(
+                            self.logger.info(
                                 f"(recvMsg)ToSTNeT Confirmation << {msg}")
                         else:
-                            logfix.info(
+                            self.logger.info(
                                 f"(recvMsg)ToSTNeT Confirmation << {msg}" + 'EDP ToSTNeT Confirmation FixMsg Error!')
 
             else:
@@ -284,12 +286,12 @@ class Application(fix.Application):
                 cxlRejReason = message.getField(102)
                 cxlRejResponseTo = message.getField(434)
                 clOrdID = message.getField(11)
-                msg = message.toString().replace(__SOH__, "|")
+                msg = message.toString().replace(self.__SOH__, "|")
                 if (clOrdID, order_id, transactTime, fsxTransactTime, origClOrdID, text,
                     cxlRejReason, cxlRejResponseTo) != "":
-                    logfix.info(f"(recvMsg) Order Cancel Reject << {msg}" + "ordStatus = " + str(ordStatus))
+                    self.logger.info(f"(recvMsg) Order Cancel Reject << {msg}" + "ordStatus = " + str(ordStatus))
                 else:
-                    logfix.info(f"(recvMsg) Order Cancel Reject << {msg}" + 'Order Cancel Reject FixMsg Error!')
+                    self.logger.info(f"(recvMsg) Order Cancel Reject << {msg}" + 'Order Cancel Reject FixMsg Error!')
 
             self.onMessage(message, sessionID)
         return
@@ -298,7 +300,7 @@ class Application(fix.Application):
         """Processing application message here"""
         pass
 
-    def getClOrdID(self):
+    def gen_client_order_id(self):
         # "随机数生成ClOrdID"
         self.exec_id += 1
         # 获取当前时间并且进行格式转换
@@ -312,7 +314,7 @@ class Application(fix.Application):
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
         msg.setField(fix.Account(data.get('account')))
-        msg.setField(fix.ClOrdID(self.getClOrdID()))
+        msg.setField(fix.ClOrdID(self.gen_client_order_id()))
         msg.setField(fix.OrderQty(int(data.get("orderQty"))))
         msg.setField(fix.OrdType(data.get("ordType")))
         msg.setField(fix.Side(data.get("side")))
@@ -381,8 +383,6 @@ class Application(fix.Application):
         config = configparser.ConfigParser(allow_no_value=True)
         config.optionxform = str  # 保持键的大小写
 
-        print(sender, target, host, port)
-
         config.read('edp_fix_client/initiator/edp_smoke_test/edp_smoke_client.cfg')
         config.set('SESSION', 'SenderCompID', sender)
         config.set('SESSION', 'TargetCompID', target)
@@ -394,8 +394,6 @@ class Application(fix.Application):
 
 
 def main():
-    global data
-    print(111)
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
@@ -407,14 +405,11 @@ def main():
             data = json.loads(args.data)
         else:
             data = {}
-        print(data)
         account = data.get("account")
         sender = data.get("sender")
         target = data.get("target")
         host = data.get("ip")
         port = data.get("port")
-
-        print(args.data)
 
         cfg = Application()
         cfg.Sender = sender
@@ -423,9 +418,14 @@ def main():
         cfg.Port = port
         cfg.read_config(sender, target, host, port)
 
+        # report
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        log_filename = f"edp_report_{current_date}.log"
+        setup_logger('logfix', 'edp_fix_client/initiator/edp_smoke_test/logs/' + log_filename)
+        logger = logging.getLogger('logfix')
+
         settings = fix.SessionSettings("edp_fix_client/initiator/edp_smoke_test/edp_smoke_client.cfg")
-        application = Application()
-        application.account = account
+        application = Application(data, logger)
         store_factory = fix.FileStoreFactory(settings)
         log_factory = fix.FileLogFactory(settings)
         initiator = fix.SocketInitiator(application, store_factory, settings, log_factory)
