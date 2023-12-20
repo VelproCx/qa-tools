@@ -332,7 +332,7 @@ class Application(fix.Application):
         config.set('SESSION', 'SocketConnectHost', Host)
         config.set('SESSION', 'SocketConnectPort', Post)
 
-        with open('edp_fullstock_client.cfg', 'w') as configfile:
+        with open('rolx_full_stock_client.cfg', 'w') as configfile:
             config.write(configfile)
 
 
