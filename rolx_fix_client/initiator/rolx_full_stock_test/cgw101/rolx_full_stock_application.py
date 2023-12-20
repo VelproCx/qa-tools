@@ -4,7 +4,8 @@
 import argparse
 import configparser
 import threading
-
+import argparse
+import configparser
 import quickfix as fix
 import time
 import logging
@@ -51,6 +52,12 @@ class Application(fix.Application):
     def __init__(self):
         super().__init__()
         self.sessionID = None
+        self.sessionID = None
+        self.account = None
+        self.Sender = None
+        self.Target = None
+        self.Host = None
+        self.Port = None
 
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
@@ -270,21 +277,20 @@ class Application(fix.Application):
         return orderQty
 
     # New Ack Req
-    def insert_order_request(self, symbol):
+    def insert_order_request(self, row, account, order_num):
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        # msg.setField(fix.Account("RSIT_ACCOUNT_1"))
         msg.setField(fix.Account(account))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(self.getOrderQty()))
         # msg.setField(fix.OrderQty(row['OrderQty']))
         msg.setField(fix.OrdType("1"))
-        msg.setField(fix.Symbol(symbol))
+        msg.setField(fix.Symbol(row["symbol"]))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
-        if self.OrderNum % 2 == 1:
+        if order_num % 2 == 1:
             msg.setField(fix.Side("1"))
         else:
             msg.setField(fix.Side("2"))
@@ -298,48 +304,36 @@ class Application(fix.Application):
         return msg
 
     # 加载用例文件
-    def load_test_case(self):
+    def load_test_case(self, account):
         """Run"""
-        start_time = datetime.now()
-        tor = int(time_of_running)
+        with open('../../../testcases/full_stock_List.json', 'r') as f_json:
+            order_num = 0
+            case_data_list = json.load(f_json)
+            time.sleep(2)
+            # 循环所有用例，并把每条用例放入runTestCase方法中，
+            while order_num < 10:
+                order_num += 1
+                for row in case_data_list["testCase"]:
+                    self.insert_order_request(row, account, order_num)
+                    time.sleep(0.0035)
 
-        while True:
-            # 获取当前的时间
-            current_time = datetime.now()
-            # 定义时间区间
-            time_difference = current_time - start_time
-            # 循环股票列表
-            for symbol in symbols:
-                # 判断时间区间是否小于等于传进来的运行时间参数
-                if time_difference <= timedelta(minutes=tor):
-                    # 重新计算
-                    current_time = datetime.now()
-                    time_difference = current_time - start_time
-                    if time_difference <= timedelta(minutes=tor):
-                        self.insert_order_request(symbol)
-                        time.sleep(1)
-                else:
-                    break
 
-            if time_difference > timedelta(minutes=tor):
-                return
+    def gen_thread(self):
+        threads = []
+        for _ in range(5):
+            t = threading.Thread(target=self.load_test_case())
+            threads.append(t)
+        for t in threads:
+            t.start()
 
-    # def gen_thread(self):
-    #     threads = []
-    #     for _ in range(5):
-    #         t = threading.Thread(target=self.load_test_case())
-    #         threads.append(t)
-    #     for t in threads:
-    #         t.start()
 
-    def read_config(self, sender, target, host, port):
-        config = configparser.ConfigParser(allow_no_value=True)
-        config.optionxform = str
-        config.read("rolx_full_stock_client.cfg")
-        config.set('SESSION', 'SenderCompID', sender)
-        config.set('SESSION', 'TargetCompID', target)
-        config.set('SESSION', 'SocketConnectHost', host)
-        config.set('SESSION', 'SocketConnectPort', port)
+    def read_config(self, Sender, Target, Host, Post):
+        config = configparser.ConfigParser()
+        config.read('rolx_full_stock_client.cfg')
+        config.set('SESSION', 'SenderCompID', Sender)
+        config.set('SESSION', 'TargetCompID', Target)
+        config.set('SESSION', 'SocketConnectHost', Host)
+        config.set('SESSION', 'SocketConnectPort', Post)
 
         with open('rolx_full_stock_client.cfg', 'w') as configfile:
             config.write(configfile)
@@ -347,38 +341,28 @@ class Application(fix.Application):
 
 def main():
     global account
-    global time_of_running
-
     try:
-        parser = argparse.ArgumentParser()
-
-        parser.add_argument('-account', default='RUAT_ROLX_2', help='choose account to use for test')
-        parser.add_argument('-sender', default='RUAT_ROLX_2', help='choose Sender to use for test')
-        parser.add_argument('-target', default='FSX_UAT_ROLX', help='choose Target to use for test')
-        parser.add_argument('-host', default='clientgateway102', help='choose Host to use for test')
-        parser.add_argument('-port', default='5001', help='choose Port to use for test')
-        parser.add_argument('-tor', default=30, help='time_of_running')
+        # 使用argparse的add_argument方法进行传参
+        parser = argparse.ArgumentParser()  # 创建对象
+        parser.add_argument('--account', default='RSIT_ACCOUNT_1', help='choose account to use for test')
+        parser.add_argument('--Sender', default='RSIT_ROLX_1', help='choose Sender to use for test')
+        parser.add_argument('--Target', default='FSX_SIT_ROLX', help='choose Target to use for test')
+        parser.add_argument('--Host', default='35.74.32.240', help='choose Host to use for test')
+        parser.add_argument('--Port', default='5001', help='choose Port to use for test')
 
         args = parser.parse_args()
         account = args.account
-        sender = args.sender
-        target = args.target
-        host = args.host
-        port = args.port
-        time_of_running = args.tor
+        Sender = args.Sender
+        Target = args.Target
+        Host = args.Host
+        Port = args.Port
 
         cfg = Application()
-        cfg.Sender = sender
-        cfg.Target = target
-        cfg.Host = host
-        cfg.Port = port
-        cfg.read_config(sender, target, host, port)
-
-        with open("../../../testcases/full_stock_List.json", "r") as f_json:
-            case_data_list = json.load(f_json)
-            for row in case_data_list:
-                symbol = row[0]
-                symbols.append(symbol)
+        cfg.Sender = Sender
+        cfg.Target = Target
+        cfg.Host = Host
+        cfg.Port = Port
+        cfg.read_config(Sender, Target, Host, Port)
 
         settings = fix.SessionSettings("rolx_full_stock_client.cfg")
         application = Application()
@@ -387,7 +371,7 @@ def main():
         initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
 
         initiator.start()
-        application.load_test_case()
+        application.load_test_case(account)
         # 执行完所有测试用例后等待时间
         sleep_duration = timedelta(minutes=5)
         end_time = datetime.now() + sleep_duration
