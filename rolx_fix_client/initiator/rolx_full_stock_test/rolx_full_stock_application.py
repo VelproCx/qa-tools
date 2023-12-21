@@ -14,10 +14,6 @@ import math
 import sys
 
 sys.path.append("medhod/")
-# from get_Symbol import get_Symbol_file
-
-__SOH__ = chr(1)
-
 symbols = []
 
 
@@ -43,7 +39,7 @@ class Application(fix.Application):
         self.not_book_is_close = []
 
         # 定义常量
-        self.__SOH__ = chr(1)
+        self.self.__SOH__ = chr(1)
 
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
@@ -68,7 +64,7 @@ class Application(fix.Application):
 
     def toAdmin(self, message, sessionID):
         # "发送会话消息时候调用此方法"
-        msg = message.toString().replace(__SOH__, "|")
+        msg = message.toString().replace(self.__SOH__, "|")
         self.logger.info(f"(Core) S >> {msg}")
         return
 
@@ -76,7 +72,7 @@ class Application(fix.Application):
         # "发送业务消息时候调用此方法"
         self.logger.info("-------------------------------------------------------------------------------------------")
         msgType = message.getHeader().getField(35)
-        msg = message.toString().replace(__SOH__, "|")
+        msg = message.toString().replace(self.__SOH__, "|")
         # 7.1 New Order Single
         if msgType == "D":
             self.order_new += 1
@@ -84,7 +80,7 @@ class Application(fix.Application):
 
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
-        msg = message.toString().replace(__SOH__, "|")
+        msg = message.toString().replace(self.__SOH__, "|")
         self.logger.info(f"(Core) R << {msg}")
         return
 
@@ -92,7 +88,7 @@ class Application(fix.Application):
         # "接收业务消息时调用此方法"
         # 使用quickFix框架getField方法提取tag及value
         ordStatus = message.getField(39)
-        msg = message.toString().replace(__SOH__, "|")
+        msg = message.toString().replace(self.__SOH__, "|")
 
         # 7.2 Execution Report – Order Accepted
         if ordStatus == "0":
@@ -170,7 +166,7 @@ class Application(fix.Application):
             self.logger.info('Market Price is OK')
 
     # "随机数生成ClOrdID"
-    def getClOrdID(self):
+    def gen_client_order_id(self):
         self.execID += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
@@ -178,7 +174,7 @@ class Application(fix.Application):
         return '2023' + str1 + str(t) + str(self.execID).zfill(8)
 
     # Order Qty 随机生成
-    def getOrderQty(self):
+    def get_order_qty(self):
         # 随机生成Qty1-5
         orderQty = random.randint(1, 5)
         return orderQty
@@ -190,8 +186,8 @@ class Application(fix.Application):
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
         msg.setField(fix.Account(account))
-        msg.setField(fix.ClOrdID(self.getClOrdID()))
-        msg.setField(fix.OrderQty(self.getOrderQty()))
+        msg.setField(fix.ClOrdID(self.gen_client_order_id()))
+        msg.setField(fix.OrderQty(self.get_order_qty()))
         # msg.setField(fix.OrderQty(row['OrderQty']))
         msg.setField(fix.OrdType("1"))
         msg.setField(fix.Symbol(row["symbol"]))
