@@ -1,12 +1,4 @@
 #!/bin/sh
-cd /app/data/auto_fix_client/initiator/trading_hours_test/cgw101
-#本地调试路径：
-#/initiator/trading_hours_test/cgw101
-#uat调试路径：
-#/app/data/rolx_fix_client/initiator/trading_hours_test/cgw101
-sleep 5
-python3 /app/data/auto_fix_client/initiator/trading_hours_test/cgw101/rol_tradingHours_client.py /app/data/auto_fix_client/initiator/trading_hours_test/cgw101/rol_tradingHours_client.cfg
-#本地调试路径：
-#/initiator/trading_hours_test/cgw101/rol_tradingHours_client.py  /initiator/trading_hours_test/cgw101/rol_tradingHours_client.cfg
-#uat调试路径：
-#/app/data/rolx_fix_client/initiator/trading_hours_test/cgw101/rol_tradingHours_client.py  /app/data/rolx_fix_client/initiator/trading_hours_test/cgw101/rol_tradingHours_client.cfg
+#python3 /app/data/qa-tools/rolx_fix_client/initiator/trading_hours_test/cgw101/rol_tradingHours_application.py -account RSIT_ACCOUNT_1 -sender RSIT_ROLX_1 -target FSX_SIT_ROLX -host 35.74.32.240 -port 5001
+
+python3 /Users/zhenghuaimao/Desktop/qa-tools/rolx_fix_client/initiator/trading_hours_test/cgw101/rol_tradingHours_application.py --account RSIT_ACCOUNT_7 --Sender RSIT_ROLX_7 --Target FSX_SIT_ROLX --Host 35.74.32.240 --Port 5001
