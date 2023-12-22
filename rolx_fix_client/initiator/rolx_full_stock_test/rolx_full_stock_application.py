@@ -13,7 +13,7 @@ import random
 import math
 import sys
 
-sys.path.append("medhod/")
+sys.path.append("method/")
 symbols = []
 
 
@@ -55,6 +55,7 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
+        self.logs_check()
         self.logger.info(
             f"Result : NewAck ={self.order_new}, Accepted = {self.order_accepted}, Rejected= {self.order_rejected}, "
             f"Expired= {self.order_expired}, Filled = {self.order_filled}, "
@@ -108,7 +109,7 @@ class Application(fix.Application):
         # 7.7 Execution Report – Trade
         elif ordStatus == "1" or ordStatus == "2":
             side = message.getField(54)
-            lastPx = float(message.getField(31))
+            lastPx = message.getField(169)
             clOrdID = message.getField(11)
             primaryBidPx = float(message.getField(8032))
             primaryAskPx = float(message.getField(8033))
@@ -157,7 +158,7 @@ class Application(fix.Application):
         pass
 
     # 判断log文件中是否存在 Market Price is not matching
-    def logsCheck(self):
+    def logs_check(self):
         with open('rolx_report.log', 'r') as f:
             content = f.read()
         if 'Market Price is not matching' in content:
@@ -180,22 +181,17 @@ class Application(fix.Application):
         return orderQty
 
     # New Ack Req
-    def insert_order_request(self, row, account, order_num):
+    def insert_order_request(self, row, order_num):
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account(account))
+        msg.setField(fix.Account(self.account))
         msg.setField(fix.ClOrdID(self.gen_client_order_id()))
         msg.setField(fix.OrderQty(self.get_order_qty()))
+        # msg.setField(fix.OrderQty(row['OrderQty']))
         msg.setField(fix.OrdType("1"))
         msg.setField(fix.Symbol(row["symbol"]))
-        ClientID = msg.getField(11)
-        msg.setField(fix.ClientID(ClientID))
-
-        # 自定义Tag
-        msg.setField(8164, "ROL")
-
         if order_num % 2 == 1:
             msg.setField(fix.Side("1"))
         else:
@@ -210,17 +206,16 @@ class Application(fix.Application):
         return msg
 
     # 加载用例文件
-    def load_test_case(self, account):
+    def load_test_case(self):
         """Run"""
         with open('../../testcases/full_stock_List.json', 'r') as f_json:
-            order_num = 0
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while order_num < 10:
-                order_num += 1
+            while self.order_num < 10:
+                self.order_num += 1
                 for row in case_data_list["testCase"]:
-                    self.insert_order_request(row, account, order_num)
+                    self.insert_order_request(row, self.order_num)
                     time.sleep(0.0035)
 
     # def gen_thread(self):
@@ -231,13 +226,15 @@ class Application(fix.Application):
     #     for t in threads:
     #         t.start()
 
-    def read_config(self, Sender, Target, Host, Post):
-        config = configparser.ConfigParser()
+    def read_config(self, sender, target, host, post):
+        # 读取并修改配置文件
+        config = configparser.ConfigParser(allow_no_value=True)
+        config.optionxform = str  # 保持键的大小写
         config.read('rolx_full_stock_client.cfg')
-        config.set('SESSION', 'SenderCompID', Sender)
-        config.set('SESSION', 'TargetCompID', Target)
-        config.set('SESSION', 'SocketConnectHost', Host)
-        config.set('SESSION', 'SocketConnectPort', Post)
+        config.set('SESSION', 'SenderCompID', sender)
+        config.set('SESSION', 'TargetCompID', target)
+        config.set('SESSION', 'SocketConnectHost', host)
+        config.set('SESSION', 'SocketConnectPort', post)
 
         with open('rolx_full_stock_client.cfg', 'w') as configfile:
             config.write(configfile)
@@ -247,18 +244,18 @@ def main():
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
-        parser.add_argument('--account', default='RSIT_ACCOUNT_1', help='choose account to use for test')
-        parser.add_argument('--Sender', default='RSIT_ROLX_1', help='choose Sender to use for test')
-        parser.add_argument('--Target', default='FSX_SIT_ROLX', help='choose Target to use for test')
-        parser.add_argument('--Host', default='35.74.32.240', help='choose Host to use for test')
-        parser.add_argument('--Port', default='5001', help='choose Port to use for test')
+        parser.add_argument('-account', default='RSIT_ACCOUNT_1', help='choose account to use for test')
+        parser.add_argument('-sender', default='RSIT_ROLX_1', help='choose Sender to use for test')
+        parser.add_argument('-target', default='FSX_SIT_ROLX', help='choose Target to use for test')
+        parser.add_argument('-host', default='35.74.32.240', help='choose Host to use for test')
+        parser.add_argument('-port', default='5001', help='choose Port to use for test')
 
         args = parser.parse_args()
         account = args.account
-        sender = args.Sender
-        target = args.Target
-        host = args.Host
-        port = args.Port
+        sender = args.sender
+        target = args.target
+        host = args.host
+        port = args.port
 
         # report
         setup_logger('logfix', 'logs/rolx_report.log')
@@ -273,12 +270,12 @@ def main():
 
         settings = fix.SessionSettings("rolx_full_stock_client.cfg")
         application = Application(account, logger)
-        storefactory = fix.FileStoreFactory(settings)
-        logfactory = fix.FileLogFactory(settings)
-        initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
+        storeFactory = fix.FileStoreFactory(settings)
+        logFactory = fix.FileLogFactory(settings)
+        initiator = fix.SocketInitiator(application, storeFactory, settings, logFactory)
 
         initiator.start()
-        application.load_test_case(account)
+        application.load_test_case()
         # 执行完所有测试用例后等待时间
         sleep_duration = timedelta(minutes=5)
         end_time = datetime.now() + sleep_duration
