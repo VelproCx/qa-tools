@@ -176,23 +176,21 @@ class Application(fix.Application):
         orderQty = random.randint(1, 5)
         return orderQty
 
-    def insert_order_request(self, row, account, order_num):
+    def insert_order_request(self, row):
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account(account))
+        msg.setField(fix.Account(self.account))
         msg.setField(fix.ClOrdID(self.gen_client_order_id()))
         msg.setField(fix.OrderQty(self.get_order_qty()))
         msg.setField(fix.OrdType("1"))
         msg.setField(fix.Symbol(row["Symbol"]))
-        ClientID = msg.getField(11)
-        msg.setField(fix.ClientID(ClientID))
 
         # 自定义Tag
         msg.setField(8164, "REX")
 
-        if (order_num % 2) == 1:
+        if (self.order_num % 2) == 1:
             msg.setField(fix.Side("1"))
         else:
             msg.setField(fix.Side("2"))
@@ -207,29 +205,29 @@ class Application(fix.Application):
     # def runTestCase(self, row):
     #     self.insert_order_request(row)
 
-    def load_test_case(self, account):
+    def load_test_case(self):
         """Run"""
         with open('../../testcases/rex_1602.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(1)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
-            order_num = 0
-            while order_num < 2:
-                order_num += 1
-                self.sideNum += 1
+            while self.order_num < 2:
+                self.order_num += 1
                 for row in case_data_list["testCase"]:
-                    self.insert_order_request(row, account, order_num)
+                    self.insert_order_request(row)
                     time.sleep(0.04)
 
-    def read_config(self, Sender, Target, Host, Post):
-        config = configparser.ConfigParser()
-        config.read('rex_full_stock_client.cfg')
-        config.set('SESSION', 'SenderCompID', Sender)
-        config.set('SESSION', 'TargetCompID', Target)
-        config.set('SESSION', 'SocketConnectHost', Host)
-        config.set('SESSION', 'SocketConnectPort', Post)
+    def read_config(self, sender, target, host, post):
+        # 读取并修改配置文件
+        config = configparser.ConfigParser(allow_no_value=True)
+        config.optionxform = str  # 保持键的大小写
+        config.read('rolx_full_stock_client.cfg')
+        config.set('SESSION', 'SenderCompID', sender)
+        config.set('SESSION', 'TargetCompID', target)
+        config.set('SESSION', 'SocketConnectHost', host)
+        config.set('SESSION', 'SocketConnectPort', post)
 
-        with open('rex_full_stock_client.cfg', 'w') as configfile:
+        with open('rolx_full_stock_client.cfg', 'w') as configfile:
             config.write(configfile)
 
 
@@ -263,12 +261,12 @@ def main():
 
         settings = fix.SessionSettings("rex_full_stock_client.cfg")
         application = Application(account, logger)
-        storefactory = fix.FileStoreFactory(settings)
-        logfactory = fix.FileLogFactory(settings)
-        initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
+        storeFactory = fix.FileStoreFactory(settings)
+        logFactory = fix.FileLogFactory(settings)
+        initiator = fix.SocketInitiator(application, storeFactory, settings, logFactory)
 
         initiator.start()
-        application.load_test_case(account)
+        application.load_test_case()
         # 执行完所有测试用例后等待时间
         sleep_duration = timedelta(minutes=5)
         end_time = datetime.now() + sleep_duration

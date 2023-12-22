@@ -109,7 +109,7 @@ class Application(fix.Application):
         # 7.7 Execution Report – Trade
         elif ordStatus == "1" or ordStatus == "2":
             side = message.getField(54)
-            lastPx = message.getField(169)
+            lastPx = message.getField(31)
             clOrdID = message.getField(11)
             primaryBidPx = float(message.getField(8032))
             primaryAskPx = float(message.getField(8033))
@@ -181,7 +181,7 @@ class Application(fix.Application):
         return orderQty
 
     # New Ack Req
-    def insert_order_request(self, row, order_num):
+    def insert_order_request(self, row):
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
@@ -192,7 +192,11 @@ class Application(fix.Application):
         # msg.setField(fix.OrderQty(row['OrderQty']))
         msg.setField(fix.OrdType("1"))
         msg.setField(fix.Symbol(row["symbol"]))
-        if order_num % 2 == 1:
+
+        # 自定义Tag
+        msg.setField(8164, "ROL")
+
+        if (self.order_num % 2) == 1:
             msg.setField(fix.Side("1"))
         else:
             msg.setField(fix.Side("2"))
@@ -215,7 +219,7 @@ class Application(fix.Application):
             while self.order_num < 10:
                 self.order_num += 1
                 for row in case_data_list["testCase"]:
-                    self.insert_order_request(row, self.order_num)
+                    self.insert_order_request(row)
                     time.sleep(0.0035)
 
     # def gen_thread(self):
