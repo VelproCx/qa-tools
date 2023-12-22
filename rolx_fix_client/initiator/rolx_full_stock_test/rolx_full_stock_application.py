@@ -13,7 +13,7 @@ import random
 import math
 import sys
 
-sys.path.append("medhod/")
+sys.path.append("method/")
 symbols = []
 
 
