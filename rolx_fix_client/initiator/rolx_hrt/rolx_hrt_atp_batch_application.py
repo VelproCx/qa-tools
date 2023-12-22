@@ -7,32 +7,33 @@ import csv
 import random
 import sys
 import threading
+
 import quickfix as fix
 import time
 import logging
 from datetime import datetime, timedelta
 from model.logger import setup_logger
+import json
+
+__SOH__ = chr(1)
+
+# report
+current_date = datetime.now().strftime("%Y-%m-%d")
+log_filename = f"edp_report_{current_date}.log"
+setup_logger('logfix', 'logs/' + log_filename)
+logfix = logging.getLogger('logfix')
 
 symbols = []
 security_ids = []
 
 
 class Application(fix.Application):
+    order_id = 0
+    exec_id = 0
 
-    def __init__(self, account, logger, message_num, sleep):
+    def __init__(self):
         super().__init__()
         self.sessionID = None
-        self.account = account
-        self.logger = logger
-        self.message_num = message_num
-        self.sleep = sleep
-
-        # 定义变量
-        self.order_id = 0
-        self.exec_id = 0
-
-        # 定义常量
-        self.__SOH__ = chr(1)
 
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
@@ -52,30 +53,28 @@ class Application(fix.Application):
 
     def toAdmin(self, message, sessionID):
         # "发送会话消息时候调用此方法"
-        msg = message.toString().replace(self.__SOH__, "|")
-        self.logger.info(f"(Core) S >> {msg}")
+        msg = message.toString().replace(__SOH__, "|")
+        logfix.info(f"(Core) S >> {msg}")
         return
 
     def toApp(self, message, sessionID):
         # "发送业务消息时候调用此方法"
-        self.logger.info(
-            "-------------------------------------------------------------------------------------------------")
-        msg = message.toString().replace(self.__SOH__, "|")
-        self.logger.info(f"(sendMsg) New Ack >> {msg}")
+        logfix.info("-------------------------------------------------------------------------------------------------")
+        msg = message.toString().replace(__SOH__, "|")
+        logfix.info(f"(sendMsg) New Ack >> {msg}")
         return
 
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
-        msg = message.toString().replace(self.__SOH__, "|")
-        self.logger.info(f"(Core) R << {msg}")
+        msg = message.toString().replace(__SOH__, "|")
+        logfix.info(f"(Core) R << {msg}")
         return
 
     def fromApp(self, message, sessionID):
-        self.logger.info(
-            "-------------------------------------------------------------------------------------------------")
+        logfix.info("-------------------------------------------------------------------------------------------------")
         # "接收业务消息时调用此方法"
-        msg = message.toString().replace(self.__SOH__, "|")
-        self.logger.info(f"(Core) recvMsg << {msg}")
+        msg = message.toString().replace(__SOH__, "|")
+        logfix.info(f"(Core) recvMsg << {msg}")
         self.onMessage(message, sessionID)
         return
 
@@ -83,7 +82,7 @@ class Application(fix.Application):
         """Processing application message here"""
         pass
 
-    def gen_client_order_id(self):
+    def getClOrdID(self):
         # "随机数生成ClOrdID"
         self.exec_id += 1
         # 获取当前时间并且进行格式转换
@@ -97,8 +96,8 @@ class Application(fix.Application):
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
         # msg.setField(fix.Account("RUAT_EDP_ACCOUNT_1"))
-        msg.setField(fix.Account(self.account))
-        msg.setField(fix.ClOrdID(self.gen_client_order_id()))
+        msg.setField(fix.Account(account))
+        msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(100))
         msg.setField(fix.OrdType("2"))
         msg.setField(fix.Symbol(symbol))
@@ -126,9 +125,9 @@ class Application(fix.Application):
     def load_test_case(self):
         """Run"""
         num = 0
-        while num < int(self.message_num):
+        while num < int(message_num):
             num += 1
-            sleep_time = float(self.sleep) * 0.001
+            sleep_time = float(sleep) * 0.001
             time.sleep(sleep_time)
             symbol = symbols[num % len(symbols)]
             price = num % len(symbols) + 1
@@ -167,16 +166,17 @@ def convert_stock_code(stock_code):
     return result
 
 
-class Threads(threading.Thread):
+class LoadTestCaseThread(threading.Thread):
     def __init__(self, application):
         super().__init__()
         self.application = application
 
     def run(self):
         self.application.load_test_case()
-
-
 def main():
+    global account
+    global message_num
+    global sleep
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
@@ -186,7 +186,6 @@ def main():
         # parser.add_argument('-target', default='terminal_1', help='choose Target to use for test')
         # parser.add_argument('-host', default='192.168.0.20', help='choose Host to use for test')
         # parser.add_argument('-port', default='11113', help='choose Port to use for test')
-
         parser.add_argument('--account', default='HRT_SIT_EDP_ACCOUNT_1', help='choose account to use for test')
         parser.add_argument('--sender', default='HRT_SIT_EDP_D_1', help='choose Sender to use for test')
         parser.add_argument('--target', default='s_t2', help='choose Target to use for test')
@@ -213,12 +212,6 @@ def main():
         cfg.port = port
         cfg.read_config(sender, target, host, port)
 
-        # report
-        current_date = datetime.now().strftime("%Y-%m-%d")
-        log_filename = f"edp_report_{current_date}.log"
-        setup_logger('logfix', 'logs/' + log_filename)
-        logger = logging.getLogger('logfix')
-
         with open('symbol.csv', 'r', newline='') as csvfile:
             csvreader = csv.reader(csvfile)
             for row in csvreader:
@@ -228,16 +221,17 @@ def main():
                 symbols.append(symbol)
 
         settings = fix.SessionSettings("edp_hrt_client.cfg")
-        application = Application(account, logger, message_num, sleep)
-        storeFactory = fix.FileStoreFactory(settings)
-        logFactory = fix.FileLogFactory(settings)
-        initiator = fix.SocketInitiator(application, storeFactory, settings, logFactory)
+        application = Application()
+        application.account = account
+        store_factory = fix.FileStoreFactory(settings)
+        log_factory = fix.FileLogFactory(settings)
+        initiator = fix.SocketInitiator(application, store_factory, settings, log_factory)
 
         initiator.start()
-        # 创建线程并发运行 load_test_case 方法
+        # 创建十个线程并发运行 load_test_case 方法
         threads = []
         for _ in range(int(ord_threads)):
-            thread = Threads(application)
+            thread = LoadTestCaseThread(application)
             threads.append(thread)
             thread.start()
 

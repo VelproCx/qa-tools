@@ -11,11 +11,11 @@ FSX-EDP自动测试工具，使用quickfix库，协议为FIX4.2
 
 4、gRpc_py
 EP3直连下单脚本
-
+[edp_eod.py](edp_fix_client%2Finitiator%2Fedp_eod%2Fedp_eod.py)
 5、rolx_admin_interface
 ROLX-ADMIN 接口自动化脚本
 
-6、fix_parser 
+6、fix_parser [edp_eod.py](edp_fix_client%2Finitiator%2Fedp_eod%2Fedp_eod.py)
 fix消息体解析
 
 7、kafka_order_parse

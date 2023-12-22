@@ -12,22 +12,23 @@ from datetime import datetime, timedelta
 from model.logger import setup_logger
 import json
 
+__SOH__ = chr(1)
+
+# report
+current_date = datetime.now().strftime("%Y-%m-%d")
+log_filename = f"rolx_report_{current_date}.log"
+setup_logger('logfix', 'logs/' + log_filename)
+logfix = logging.getLogger('logfix')
+
 
 class Application(fix.Application):
+    order_id = 0
+    exec_id = 0
+    orders_dict = []
 
-    def __init__(self, account, logger):
+    def __init__(self):
         super().__init__()
         self.sessionID = None
-        self.account = account
-        self.logger = logger
-
-        # 定义变量
-        self.order_id = 0
-        self.exec_id = 0
-        self.orders_dict = []
-
-        # 定义常量
-        self.__SOH__ = chr(1)
 
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
@@ -47,55 +48,28 @@ class Application(fix.Application):
 
     def toAdmin(self, message, sessionID):
         # "发送会话消息时候调用此方法"
-        msg = message.toString().replace(self.__SOH__, "|")
-        self.logger.info(f"(Core) S >> {msg}")
+        msg = message.toString().replace(__SOH__, "|")
+        logfix.info(f"(Core) S >> {msg}")
         return
 
     def toApp(self, message, sessionID):
         # "发送业务消息时候调用此方法"
-        self.logger.info(
-            "-------------------------------------------------------------------------------------------------")
-        msgType = message.getHeader().getField(35)
-        msg = message.toString().replace(self.__SOH__, "|")
-        # 7.1 New Order Single
-        if msgType == "D":
-            orderQty = message.getField(38)
-            ordType = message.getField(40)
-            clOrdID = message.getField(11)
-            side = message.getField(54)
-            symbol = message.getField(55)
-            transactTime = message.getField(60)
-            self.orders_dict = message.getField(11)
-
-            if (clOrdID, orderQty, ordType, side, symbol, transactTime,) != "":
-                self.logger.info(f"(sendMsg) New Ack >> {msg}")
-            else:
-                self.logger.info(f"(sendMsg) New Ack >> {msg}" + 'New Order Single FixMsg Error!')
-        # 7.4 Order Cancel Request
-        elif msgType == "F":
-            clOrdID = message.getField(11)
-            side = message.getField(54)
-            symbol = message.getField(55)
-            transactTime = message.getField(60)
-
-            if (clOrdID, side, symbol, transactTime) != "":
-                self.logger.info(f"(sendMsg) Cancel Ack >> {msg}")
-            else:
-                self.logger.info(f"(sendMsg) Cancel Ack >> {msg}" + 'Order Cancel Request FixMsg Error!')
+        logfix.info("-------------------------------------------------------------------------------------------------")
+        msg = message.toString().replace(__SOH__, "|")
+        logfix.info(f"(Core) New Ack >> {msg}")
         return
 
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
-        msg = message.toString().replace(self.__SOH__, "|")
-        self.logger.info(f"(Core) R << {msg}")
+        msg = message.toString().replace(__SOH__, "|")
+        logfix.info(f"(Core) R << {msg}")
         return
 
     def fromApp(self, message, sessionID):
-        self.logger.info(
-            "-------------------------------------------------------------------------------------------------")
+        logfix.info("-------------------------------------------------------------------------------------------------")
         # "接收业务消息时调用此方法"
-        msg = message.toString().replace(self.__SOH__, "|")
-        self.logger.info(f"(Core) recvMsg << {msg}")
+        msg = message.toString().replace(__SOH__, "|")
+        logfix.info(f"(Core) recvMsg << {msg}")
         self.onMessage(message, sessionID)
         return
 
@@ -103,7 +77,7 @@ class Application(fix.Application):
         """Processing application message here"""
         pass
 
-    def gen_client_order_id(self):
+    def getClOrdID(self):
         # "随机数生成ClOrdID"
         self.exec_id += 1
         # 获取当前时间并且进行格式转换
@@ -116,9 +90,10 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.ClOrdID(self.gen_client_order_id()))
+        # msg.setField(fix.Account(row.get('Account')))
+        msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(row["OrderQty"]))
-        msg.setField(fix.Account(self.account))
+        msg.setField(fix.Account(account))
         msg.setField(fix.OrdType(row["OrdType"]))
         msg.setField(fix.Side(row["Side"]))
         msg.setField(fix.Symbol(row["Symbol"]))
@@ -152,17 +127,6 @@ class Application(fix.Application):
         # 自定义tag：
         msg.setField(16606, "MM_FIRM_1")
 
-        # EDP
-
-        if row["MinQty"] != "":
-            msg.setField(fix.MinQty(int(row["MinQty"])))
-
-        if row["OrderClassification"] != "":
-            msg.setField(8060, row["OrderClassification"])
-
-        if row["SelfTradePreventionId"] != "":
-            msg.setField(8174, row["SelfTradePreventionId"])
-
         # 获取TransactTime
         trstime = fix.TransactTime()
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
@@ -180,7 +144,7 @@ class Application(fix.Application):
         header.setField(fix.MsgType(fix.MsgType_OrderCancelRequest))
         header.setField(fix.BeginString("FIX.4.2"))
         header.setField(fix.MsgType("F"))
-        msg.setField(fix.Account(self.account))
+        msg.setField(fix.Account(account))
         msg.setField(fix.OrigClOrdID(clOrdId))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.Symbol(row["Symbol"]))
@@ -197,31 +161,29 @@ class Application(fix.Application):
         # 读取并修改配置文件
         config = configparser.ConfigParser(allow_no_value=True)
         config.optionxform = str  # 保持键的大小写
-        config.read('edp_hrt_client.cfg')
+        config.read('rolx_hrt_client.cfg')
         config.set('SESSION', 'SenderCompID', sender)
         config.set('SESSION', 'TargetCompID', target)
         config.set('SESSION', 'SocketConnectHost', host)
         config.set('SESSION', 'SocketConnectPort', port)
 
-        with open('edp_hrt_client.cfg', 'w') as configfile:
+        with open('rolx_hrt_client.cfg', 'w') as configfile:
             config.write(configfile, space_around_delimiters=False)
 
 
 def main():
+    global account
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
-        parser.add_argument('--account', default='HRT_UAT_EDP_ACCOUNT_1', help='choose account to use for test')
-        parser.add_argument('--sender', default='HRT_UAT_EDP_D_1', help='choose Sender to use for test')
+        parser.add_argument('--account', default='HRT_UAT_ROLX_ACCOUNT_1', help='choose account to use for test')
+        parser.add_argument('--sender', default='HRT_UAT_ROLX_D_1', help='choose Sender to use for test')
         parser.add_argument('--target', default='s_t2', help='choose Target to use for test')
         parser.add_argument('--host', default='10.2.143.128', help='choose Host to use for test')
         parser.add_argument('--port', default='11131', help='choose Port to use for test')
         args = parser.parse_args()  # 解析参数
 
-        # if args.data:
-        #     data = json.loads(args.data)
-        # else:
-        #     data = {}
+
         account = args.account
         sender = args.sender
         target = args.target
@@ -235,22 +197,17 @@ def main():
         cfg.Port = port
         cfg.read_config(sender, target, host, port)
 
-        # report
-        current_date = datetime.now().strftime("%Y-%m-%d")
-        log_filename = f"edp_report_{current_date}.log"
-        setup_logger('logfix', 'logs/' + log_filename)
-        logger = logging.getLogger('logfix')
-
-        settings = fix.SessionSettings("edp_hrt_client.cfg")
-        application = Application(account, logger)
+        settings = fix.SessionSettings("rolx_hrt_client.cfg")
+        application = Application()
+        application.account = account
         store_factory = fix.FileStoreFactory(settings)
         log_factory = fix.FileLogFactory(settings)
         initiator = fix.SocketInitiator(application, store_factory, settings, log_factory)
 
         initiator.start()
         time.sleep(1)
-        with open('../../testcases/hrt_Test_List.json', 'r') as h_json:
-            case_data_list = json.load(h_json)
+        with open('../../testcases/hrt_test_list.json', 'r') as f_json:
+            case_data_list = json.load(f_json)
             for row in case_data_list["testCase"]:
                 if row["ActionType"] == "NewAck":
                     application.insert_order_request(row)

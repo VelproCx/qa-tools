@@ -1,6 +1,7 @@
 # from model import Field
 import Field
 
+
 class Types(object):
     Logon = 'A'
     Heartbeat = '0'
@@ -24,7 +25,9 @@ class Types(object):
     PositionRequest = 'AN'
     PositionReport = 'AP'
 
+
 __SOH__ = chr(1)
+
 
 def build_checksum(message):
     checksum = sum([ord(i) for i in list(message)]) % 256
@@ -33,6 +36,7 @@ def build_checksum(message):
 
 def make_pair(pair):
     return str(pair[0]) + "=" + str(pair[1]) + __SOH__
+
 
 class Base(object):
     default_session = None
@@ -102,7 +106,7 @@ class Base(object):
                     result.append({})
                 result[i][field_id] = value
         return result
-    
+
     def parse_string(self, string, session):
         result = Base(None, session)
         for pair in string.split(__SOH__):

@@ -172,13 +172,13 @@ class Application(fix.Application):
         # 读取并修改配置文件
         config = configparser.ConfigParser(allow_no_value=True)
         config.optionxform = str  # 保持键的大小写
-        config.read('rolx_performance_client.cfg')
+        config.read('rex_performance_client.cfg')
         config.set('SESSION', 'SenderCompID', Sender)
         config.set('SESSION', 'TargetCompID', Target)
         config.set('SESSION', 'SocketConnectHost', Host)
         config.set('SESSION', 'SocketConnectPort', Port)
 
-        with open('rolx_performance_client.cfg', 'w') as configfile:
+        with open('rex_performance_client.cfg', 'w') as configfile:
             config.write(configfile)
 
 
@@ -190,8 +190,8 @@ def main():
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
         parser.add_argument('--account', default='RSIT_ACCOUNT_7', help='choose account to use for test')
-        parser.add_argument('--Sender', default='RSIT_ROLX_7', help='choose Sender to use for test')
-        parser.add_argument('--Target', default='FSX_SIT_ROLX', help='choose Target to use for test')
+        parser.add_argument('--Sender', default='RSIT_REX_7', help='choose Sender to use for test')
+        parser.add_argument('--Target', default='FSX_SIT_REX', help='choose Target to use for test')
         parser.add_argument('--Host', default='54.250.107.1', help='choose Host to use for test')
         parser.add_argument('--Port', default='5007', help='choose Port to use for test')
         parser.add_argument('--m', help='choose num')
@@ -224,7 +224,7 @@ def main():
                 symbol = row[0]
                 symbols.append(symbol)
 
-        settings = fix.SessionSettings("rolx_performance_client.cfg")
+        settings = fix.SessionSettings("rex_performance_client.cfg")
         application = Application()
         application.account = account
         storefactory = fix.FileStoreFactory(settings)
