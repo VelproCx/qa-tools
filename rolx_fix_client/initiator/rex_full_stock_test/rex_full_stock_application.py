@@ -3,6 +3,7 @@
 """FIX Application"""
 import argparse
 import configparser
+import sys
 import quickfix as fix
 import time
 import logging
@@ -11,13 +12,10 @@ from model.logger import setup_logger
 import json
 import random
 import math
-import sys
-
-sys.path.append("medhod/")
-symbols = []
 
 
 class Application(fix.Application):
+
     def __init__(self, account, logger):
         super().__init__()
         self.sessionID = None
@@ -26,8 +24,8 @@ class Application(fix.Application):
 
         # 定义变量
         self.execID = 0
-        self.ROL_PROP_BPS_BUY = 0.0022
-        self.ROL_PROP_BPS_SELL = 0.0022
+        self.REX_PROP_BPS_BUY = 0.0022
+        self.REX_PROP_BPS_SELL = 0.0022
         self.order_new = 0
         self.order_expired = 0
         self.order_accepted = 0
@@ -39,8 +37,7 @@ class Application(fix.Application):
         self.not_book_is_close = []
 
         # 定义常量
-        self.self.__SOH__ = chr(1)
-
+        self.__SOH__ = chr(1)
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
         self.sessionID = sessionID
@@ -86,7 +83,7 @@ class Application(fix.Application):
 
     def fromApp(self, message, sessionID):
         # "接收业务消息时调用此方法"
-        # 使用quickFix框架getField方法提取tag及value
+        # 使用quickFix框架getField方法提取clOrdId、ordStatus
         ordStatus = message.getField(39)
         msg = message.toString().replace(self.__SOH__, "|")
 
@@ -105,16 +102,16 @@ class Application(fix.Application):
             else:
                 self.not_book_is_close.append(msg)
 
+
         # 7.7 Execution Report – Trade
         elif ordStatus == "1" or ordStatus == "2":
             side = message.getField(54)
             lastPx = float(message.getField(31))
             clOrdID = message.getField(11)
-            primaryBidPx = float(message.getField(8032))
-            primaryAskPx = float(message.getField(8033))
-            adjustLastPxBuy = math.ceil(primaryAskPx * (1 + self.ROL_PROP_BPS_BUY))
-            adjustLastPxSell = math.floor(primaryBidPx * (1 - self.ROL_PROP_BPS_SELL))
-
+            primaryLastPx = float(message.getField(8031))
+            adjustLastPxBuy = math.ceil(primaryLastPx * (1 + self.REX_PROP_BPS_BUY))
+            adjustLastPxSell = math.floor(primaryLastPx * (1 - self.REX_PROP_BPS_SELL))
+            # Trade Tags is null check
             if ordStatus == "1":
                 self.order_partially_filled += 1
                 self.logger.info(f"(recvMsg) Order Partially Filled << {msg}, Side: {str(side)}, Fill Price: "
@@ -125,18 +122,18 @@ class Application(fix.Application):
                 self.logger.info(f"(recvMsg) Order Filled << {msg}, Side: {str(side)}, Fill Price: "
                                  f"{str(lastPx)}, AdjustLastPx Of Buy: {str(adjustLastPxBuy)}, AdjustLastPx Of Sell:"
                                  f"{str(adjustLastPxSell)}")
-
             # Fill Price Check
             if side == "1":
-                adjustLastPx = math.ceil(primaryAskPx * (1 + self.ROL_PROP_BPS_BUY))
+                adjustLastPx = math.ceil(primaryLastPx * (1 + self.REX_PROP_BPS_BUY))
                 if adjustLastPx == lastPx:
                     return True
                 else:
                     self.logger.info(
                         f'Market Price is not matching, clOrdID：{clOrdID}, adjustLastPx：{str(adjustLastPx)},'
                         f'lastPx: {str(lastPx)}')
+
             elif side == "2":
-                adjustLastPx = math.floor(primaryBidPx * (1 - self.ROL_PROP_BPS_SELL))
+                adjustLastPx = math.floor(primaryLastPx * (1 - self.REX_PROP_BPS_SELL))
                 if adjustLastPx == lastPx:
                     return True
                 else:
@@ -149,6 +146,7 @@ class Application(fix.Application):
             text = message.getField(58)
             self.logger.info(f"(recvMsg) Order Expired << {msg}, ExpireRes = {str(text)}")
             self.order_expired += 1
+
         self.onMessage(message, sessionID)
         return
 
@@ -158,28 +156,26 @@ class Application(fix.Application):
 
     # 判断log文件中是否存在 Market Price is not matching
     def logsCheck(self):
-        with open('rolx_report.log', 'r') as f:
+        with open('logs/rex_report.log', 'r') as f:
             content = f.read()
         if 'Market Price is not matching' in content:
             self.logger.info('Market Price is NG')
         else:
             self.logger.info('Market Price is OK')
 
-    # "随机数生成ClOrdID"
     def gen_client_order_id(self):
+        # "随机数生成ClOrdID"
         self.execID += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 6)])
         return '2023' + str1 + str(t) + str(self.execID).zfill(8)
 
-    # Order Qty 随机生成
     def get_order_qty(self):
         # 随机生成Qty1-5
         orderQty = random.randint(1, 5)
         return orderQty
 
-    # New Ack Req
     def insert_order_request(self, row, account, order_num):
         msg = fix.Message()
         header = msg.getHeader()
@@ -189,14 +185,14 @@ class Application(fix.Application):
         msg.setField(fix.ClOrdID(self.gen_client_order_id()))
         msg.setField(fix.OrderQty(self.get_order_qty()))
         msg.setField(fix.OrdType("1"))
-        msg.setField(fix.Symbol(row["symbol"]))
+        msg.setField(fix.Symbol(row["Symbol"]))
         ClientID = msg.getField(11)
         msg.setField(fix.ClientID(ClientID))
 
         # 自定义Tag
-        msg.setField(8164, "ROL")
+        msg.setField(8164, "REX")
 
-        if order_num % 2 == 1:
+        if (order_num % 2) == 1:
             msg.setField(fix.Side("1"))
         else:
             msg.setField(fix.Side("2"))
@@ -208,38 +204,32 @@ class Application(fix.Application):
 
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
+    # def runTestCase(self, row):
+    #     self.insert_order_request(row)
 
-    # 加载用例文件
     def load_test_case(self, account):
         """Run"""
-        with open('../../testcases/full_stock_List.json', 'r') as f_json:
-            order_num = 0
+        with open('../../testcases/rex_1602.json', 'r') as f_json:
             case_data_list = json.load(f_json)
-            time.sleep(2)
+            time.sleep(1)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while order_num < 10:
+            order_num = 0
+            while order_num < 2:
                 order_num += 1
+                self.sideNum += 1
                 for row in case_data_list["testCase"]:
                     self.insert_order_request(row, account, order_num)
-                    time.sleep(0.0035)
-
-    # def gen_thread(self):
-    #     threads = []
-    #     for _ in range(5):
-    #         t = threading.Thread(target=self.load_test_case())
-    #         threads.append(t)
-    #     for t in threads:
-    #         t.start()
+                    time.sleep(0.04)
 
     def read_config(self, Sender, Target, Host, Post):
         config = configparser.ConfigParser()
-        config.read('rolx_full_stock_client.cfg')
+        config.read('rex_full_stock_client.cfg')
         config.set('SESSION', 'SenderCompID', Sender)
         config.set('SESSION', 'TargetCompID', Target)
         config.set('SESSION', 'SocketConnectHost', Host)
         config.set('SESSION', 'SocketConnectPort', Post)
 
-        with open('rolx_full_stock_client.cfg', 'w') as configfile:
+        with open('rex_full_stock_client.cfg', 'w') as configfile:
             config.write(configfile)
 
 
@@ -261,7 +251,7 @@ def main():
         port = args.Port
 
         # report
-        setup_logger('logfix', 'logs/rolx_report.log')
+        setup_logger('logfix', 'logs/rex_report.log')
         logger = logging.getLogger('logfix')
 
         cfg = Application(account, logger)
@@ -271,7 +261,7 @@ def main():
         cfg.Port = port
         cfg.read_config(sender, target, host, port)
 
-        settings = fix.SessionSettings("rolx_full_stock_client.cfg")
+        settings = fix.SessionSettings("rex_full_stock_client.cfg")
         application = Application(account, logger)
         storefactory = fix.FileStoreFactory(settings)
         logfactory = fix.FileLogFactory(settings)
