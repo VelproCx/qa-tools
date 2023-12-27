@@ -4,10 +4,12 @@ import json
 import warnings
 from datetime import datetime
 
+
 def post_main(url, headers, data=None):
     warnings.filterwarnings("ignore")
     response = requests.post(url=url, headers=headers, data=data, verify=False)
     return response
+
 
 def login_admin():
     url = 'https://adminui.sit.fsx.oddlotx.com//api/admin/auth/login'
@@ -87,7 +89,3 @@ def get_symbol_file(market):
         except (json.JSONDecodeError, Exception) as e:
             print(e)
     return response_json
-
-
-
-

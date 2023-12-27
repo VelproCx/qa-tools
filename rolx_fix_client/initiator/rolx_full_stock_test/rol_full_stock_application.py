@@ -234,13 +234,13 @@ class Application(fix.Application):
         # 读取并修改配置文件
         config = configparser.ConfigParser(allow_no_value=True)
         config.optionxform = str  # 保持键的大小写
-        config.read('rolx_full_stock_client.cfg')
+        config.read('rol_full_stock_client.cfg')
         config.set('SESSION', 'SenderCompID', sender)
         config.set('SESSION', 'TargetCompID', target)
         config.set('SESSION', 'SocketConnectHost', host)
         config.set('SESSION', 'SocketConnectPort', post)
 
-        with open('rolx_full_stock_client.cfg', 'w') as configfile:
+        with open('rol_full_stock_client.cfg', 'w') as configfile:
             config.write(configfile)
 
 
@@ -262,7 +262,7 @@ def main():
         port = args.port
 
         # report
-        setup_logger('logfix', 'logs/rolx_report.log')
+        setup_logger('logfix', 'logs/rol_report.log')
         logger = logging.getLogger('logfix')
 
         cfg = Application(account, logger)
@@ -272,7 +272,7 @@ def main():
         cfg.Port = port
         cfg.read_config(sender, target, host, port)
 
-        settings = fix.SessionSettings("rolx_full_stock_client.cfg")
+        settings = fix.SessionSettings("rol_full_stock_client.cfg")
         application = Application(account, logger)
         storeFactory = fix.FileStoreFactory(settings)
         logFactory = fix.FileLogFactory(settings)
