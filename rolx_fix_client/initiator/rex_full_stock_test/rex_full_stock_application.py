@@ -38,6 +38,7 @@ class Application(fix.Application):
 
         # 定义常量
         self.__SOH__ = chr(1)
+
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
         self.sessionID = sessionID
@@ -52,10 +53,11 @@ class Application(fix.Application):
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
+        self.logs_check()
         self.logger.info(
             f"Result : NewAck ={self.order_new}, Accepted = {self.order_accepted}, Rejected= {self.order_rejected}, "
             f"Expired= {self.order_expired}, Filled = {self.order_filled}, "
-            f"PartiallyFilled = {self.order_partially_filled}, Book_is_closed={self.Book_is_closed}")
+            f"PartiallyFilled = {self.order_partially_filled}, Book_is_closed={self.order_book_is_close}")
         print(f"Session ({sessionID.toString()}) logout !")
         return
 
@@ -73,6 +75,7 @@ class Application(fix.Application):
         # 7.1 New Order Single
         if msgType == "D":
             self.order_new += 1
+            self.logger.info(f"(Core) S << {msg}")
         return
 
     def fromAdmin(self, message, sessionID):
@@ -95,13 +98,12 @@ class Application(fix.Application):
         # 7.3 Execution Report – Order Rejected
         elif ordStatus == "8":
             text = message.getField(58)
-            self.logger.info(f"(recvMsg) Order Rej << {msg}, RejRes = {str(text)}")
+            self.logger.info(f"(recvMsg) Order Rej << {msg}")
             self.order_rejected += 1
             if text == "Book is CLOSED":
                 self.order_book_is_close += 1
             else:
                 self.not_book_is_close.append(msg)
-
 
         # 7.7 Execution Report – Trade
         elif ordStatus == "1" or ordStatus == "2":
@@ -125,18 +127,14 @@ class Application(fix.Application):
             # Fill Price Check
             if side == "1":
                 adjustLastPx = math.ceil(primaryLastPx * (1 + self.REX_PROP_BPS_BUY))
-                if adjustLastPx == lastPx:
-                    return True
-                else:
+                if adjustLastPx != lastPx:
                     self.logger.info(
                         f'Market Price is not matching, clOrdID：{clOrdID}, adjustLastPx：{str(adjustLastPx)},'
                         f'lastPx: {str(lastPx)}')
 
             elif side == "2":
                 adjustLastPx = math.floor(primaryLastPx * (1 - self.REX_PROP_BPS_SELL))
-                if adjustLastPx == lastPx:
-                    return True
-                else:
+                if adjustLastPx != lastPx:
                     self.logger.info(
                         f'Market Price is not matching, clOrdID：{clOrdID}, adjustLastPx：{str(adjustLastPx)},'
                         f'lastPx: {str(lastPx)}')
@@ -144,9 +142,8 @@ class Application(fix.Application):
         #  7.8 Execution Report – End of Day Expired
         elif ordStatus == "C":
             text = message.getField(58)
-            self.logger.info(f"(recvMsg) Order Expired << {msg}, ExpireRes = {str(text)}")
+            self.logger.info(f"(recvMsg) Order Expired << {msg}")
             self.order_expired += 1
-
         self.onMessage(message, sessionID)
         return
 
@@ -155,7 +152,7 @@ class Application(fix.Application):
         pass
 
     # 判断log文件中是否存在 Market Price is not matching
-    def logsCheck(self):
+    def logs_check(self):
         with open('logs/rex_report.log', 'r') as f:
             content = f.read()
         if 'Market Price is not matching' in content:
@@ -169,7 +166,7 @@ class Application(fix.Application):
         # 获取当前时间并且进行格式转换
         t = int(time.time())
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 6)])
-        return '2023' + str1 + str(t) + str(self.execID).zfill(8)
+        return '2024' + str1 + str(t) + str(self.execID).zfill(8)
 
     def get_order_qty(self):
         # 随机生成Qty1-5
@@ -202,8 +199,6 @@ class Application(fix.Application):
 
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
-    # def runTestCase(self, row):
-    #     self.insert_order_request(row)
 
     def load_test_case(self):
         """Run"""
@@ -221,13 +216,13 @@ class Application(fix.Application):
         # 读取并修改配置文件
         config = configparser.ConfigParser(allow_no_value=True)
         config.optionxform = str  # 保持键的大小写
-        config.read('rolx_full_stock_client.cfg')
+        config.read('rex_full_stock_client.cfg')
         config.set('SESSION', 'SenderCompID', sender)
         config.set('SESSION', 'TargetCompID', target)
         config.set('SESSION', 'SocketConnectHost', host)
         config.set('SESSION', 'SocketConnectPort', post)
 
-        with open('rolx_full_stock_client.cfg', 'w') as configfile:
+        with open('rex_full_stock_client.cfg', 'w') as configfile:
             config.write(configfile)
 
 
@@ -235,11 +230,11 @@ def main():
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
-        parser.add_argument('--account', default='RSIT_ACCOUNT_1', help='choose account to use for test')
-        parser.add_argument('--Sender', default='RSIT_ROLX_1', help='choose Sender to use for test')
-        parser.add_argument('--Target', default='FSX_SIT_ROLX', help='choose Target to use for test')
-        parser.add_argument('--Host', default='35.74.32.240', help='choose Host to use for test')
-        parser.add_argument('--Port', default='5001', help='choose Port to use for test')
+        parser.add_argument('-account', default='RSIT_ACCOUNT_1', help='choose account to use for test')
+        parser.add_argument('-sender', default='RSIT_ROLX_1', help='choose Sender to use for test')
+        parser.add_argument('-target', default='FSX_SIT_ROLX', help='choose Target to use for test')
+        parser.add_argument('-host', default='35.74.32.240', help='choose Host to use for test')
+        parser.add_argument('-port', default='5001', help='choose Port to use for test')
 
         args = parser.parse_args()
         account = args.account
