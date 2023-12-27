@@ -23,7 +23,7 @@ class Application(fix.Application):
         self.logger = logger
 
         # 定义变量
-        self.execID = 0
+        self.exec_id = 0
         self.REX_PROP_BPS_BUY = 0.0022
         self.REX_PROP_BPS_SELL = 0.0022
         self.order_new = 0
@@ -162,13 +162,13 @@ class Application(fix.Application):
 
     def gen_client_order_id(self):
         # "随机数生成ClOrdID"
-        self.execID += 1
+        self.exec_id += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
-        str1 = ''.join([str(i) for i in random.sample(range(0, 9), 6)])
-        return '2024' + str1 + str(t) + str(self.execID).zfill(8)
+        str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
+        return str(t) + str1 + str(self.exec_id).zfill(6)
 
-    def get_order_qty(self):
+    def gen_order_qty(self):
         # 随机生成Qty1-5
         orderQty = random.randint(1, 5)
         return orderQty
@@ -180,7 +180,7 @@ class Application(fix.Application):
         header.setField(fix.MsgType("D"))
         msg.setField(fix.Account(self.account))
         msg.setField(fix.ClOrdID(self.gen_client_order_id()))
-        msg.setField(fix.OrderQty(self.get_order_qty()))
+        msg.setField(fix.OrderQty(self.gen_order_qty()))
         msg.setField(fix.OrdType("1"))
         msg.setField(fix.Symbol(row["Symbol"]))
 

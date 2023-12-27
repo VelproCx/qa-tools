@@ -24,7 +24,7 @@ class Application(fix.Application):
         self.logger = logger
 
         # 定义变量
-        self.execID = 0
+        self.exec_id = 0
         self.order_new = 0
         self.order_expired = 0
         self.order_accepted = 0
@@ -110,11 +110,11 @@ class Application(fix.Application):
 
     def gen_client_order_id(self):
         # "随机数生成ClOrdID"
-        self.execID += 1
+        self.exec_id += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
-        return str(t) + str1 + str(self.execID).zfill(6)
+        return str(t) + str1 + str(self.exec_id).zfill(6)
 
     def insert_order_request(self, row):
         msg = fix.Message()

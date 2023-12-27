@@ -25,28 +25,28 @@ symbols = []
 
 
 class Application(fix.Application):
-    execID = 0
-    order_new = 0
-    order_expired = 0
-    order_accepted = 0
-    order_rejected = 0
-    order_partial_fill = 0
-    order_fill_indication = 0
-    order_num = 0
 
-    def __init__(self):
+    def __init__(self, logger, account, message_num, sleep):
         super().__init__()
+        self.logger = logger
+        self.account = account
+        self.message_num = message_num
+        self.sleep = sleep
+
         self.sessionID = None
-        self.account = None
-        self.Sender = None
-        self.Target = None
-        self.Host = None
-        self.Port = None
+        self.exec_id = 0
+        self.order_new = 0
+        self.order_expired = 0
+        self.order_accepted = 0
+        self.order_rejected = 0
+        self.order_partial_fill = 0
+        self.order_fill_indication = 0
+        self.order_num = 0
 
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
         self.sessionID = sessionID
-        print("onCreate : Session (%s)" % sessionID.toString())
+        print(f"onCreate : Session ({sessionID.toString()})")
         time.sleep(1)
         return
 
@@ -101,19 +101,19 @@ class Application(fix.Application):
         msg = message.toString().replace(__SOH__, "|")
         if ordStatus == "0":
             self.order_accepted += 1
-            logfix.info("(recvMsg) Order Accepted << {}".format(msg))
+            logfix.info(f"(recvMsg) Order Accepted << {msg}")
         elif ordStatus == "8":
             self.order_rejected += 1
-            logfix.info("(recvMsg) Order Rejected << {}".format(msg))
+            logfix.info(f"(recvMsg) Order Rejected << {msg}")
         elif ordStatus == "C":
             self.order_expired += 1
-            logfix.info("(recvMsg) Order Expired << {}".format(msg))
+            logfix.info(f"(recvMsg) Order Expired << {msg}")
         elif ordStatus == "1":
             self.order_partial_fill += 1
-            logfix.info("(recvMsg) Order Partially Filled Indication<< {}".format(msg))
+            logfix.info(f"(recvMsg) Order Partially Filled Indication<< {msg}")
         elif ordStatus == "2":
             self.order_fill_indication += 1
-            logfix.info("(recvMsg) Order Filled Indication<< {}".format(msg))
+            logfix.info(f"(recvMsg) Order Filled Indication<< {msg}")
         self.onMessage(message, sessionID)
         return
 
@@ -121,29 +121,29 @@ class Application(fix.Application):
         """Processing application message here"""
         pass
 
-    def getClOrdID(self):
+    def gen_client_order_id(self):
         # "随机数生成ClOrdID"
-        self.execID += 1
+        self.exec_id += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
         return str(t) + str1 + str(self.execID).zfill(6)
 
-    def getOrderQty(self):
+    def gen_order_qty(self):
         # 随机生成Qty1-5
         orderQty = random.randint(1, 5)
         return orderQty
 
-    def insert_order_request(self, row, account):
+    def insert_order_request(self, symbol):
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account(account))
-        msg.setField(fix.ClOrdID(self.getClOrdID()))
-        msg.setField(fix.OrderQty(self.getOrderQty()))
+        msg.setField(fix.Account(self.account))
+        msg.setField(fix.ClOrdID(self.gen_client_order_id()))
+        msg.setField(fix.OrderQty(self.gen_order_qty()))
         msg.setField(fix.OrdType("1"))
-        msg.setField(fix.Symbol(row["Symbol"]))
+        msg.setField(fix.Symbol(symbol))
 
         if (self.order_num % 2) == 0:
             msg.setField(fix.Side("2"))
@@ -161,41 +161,38 @@ class Application(fix.Application):
     def load_test_case(self):
         """Run"""
         num = 0
-        while num < int(message_num):
+        while num < int(self.message_num):
             num += 1
-            sleep_time = float(sleep) * 0.001
+            sleep_time = float(self.sleep) * 0.001
             time.sleep(sleep_time)
             symbol = symbols[num % len(symbols)]
             self.insert_order_request(symbol)
 
-    def read_config(self, Sender, Target, Host, Port):
+    def read_config(self, sender, target, host, port):
         # 读取并修改配置文件
         config = configparser.ConfigParser(allow_no_value=True)
         config.optionxform = str  # 保持键的大小写
-        config.read('rolx_performance_client.cfg')
-        config.set('SESSION', 'SenderCompID', Sender)
-        config.set('SESSION', 'TargetCompID', Target)
-        config.set('SESSION', 'SocketConnectHost', Host)
-        config.set('SESSION', 'SocketConnectPort', Port)
+        config.read('rex_performance_client.cfg')
+        config.set('SESSION', 'SenderCompID', sender)
+        config.set('SESSION', 'TargetCompID', target)
+        config.set('SESSION', 'SocketConnectHost', host)
+        config.set('SESSION', 'SocketConnectPort', port)
 
-        with open('rolx_performance_client.cfg', 'w') as configfile:
+        with open('rex_performance_client.cfg', 'w') as configfile:
             config.write(configfile)
 
 
 def main():
-    global account
-    global message_num
-    global sleep
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
-        parser.add_argument('--account', default='RSIT_ACCOUNT_7', help='choose account to use for test')
-        parser.add_argument('--Sender', default='RSIT_ROLX_7', help='choose Sender to use for test')
-        parser.add_argument('--Target', default='FSX_SIT_ROLX', help='choose Target to use for test')
-        parser.add_argument('--Host', default='54.250.107.1', help='choose Host to use for test')
-        parser.add_argument('--Port', default='5007', help='choose Port to use for test')
-        parser.add_argument('--m', help='choose num')
-        parser.add_argument('--s', help='choose num')
+        parser.add_argument('-account', default='RSIT_ACCOUNT_7', help='choose account to use for test')
+        parser.add_argument('-sender', default='RSIT_REX_7', help='choose Sender to use for test')
+        parser.add_argument('-target', default='FSX_SIT_REX', help='choose Target to use for test')
+        parser.add_argument('-host', default='54.250.107.1', help='choose Host to use for test')
+        parser.add_argument('-port', default='5007', help='choose Port to use for test')
+        parser.add_argument('-m', help='choose num')
+        parser.add_argument('-s', help='choose num')
 
         args = parser.parse_args()  # 解析参数
         account = args.account
@@ -213,10 +210,9 @@ def main():
         cfg.port = port
         cfg.read_config(sender, target, host, port)
 
-        global logfix
         # report
-        setup_logger('logfix', '{}_report.log'.format(account))
-        logfix = logging.getLogger('logfix')
+        setup_logger('logfix', f'{account}_report.log')
+        logger = logging.getLogger('logfix')
 
         with open('symbol.csv', 'r', newline='') as csvfile:
             csvreader = csv.reader(csvfile)
@@ -224,12 +220,12 @@ def main():
                 symbol = row[0]
                 symbols.append(symbol)
 
-        settings = fix.SessionSettings("rolx_performance_client.cfg")
-        application = Application()
+        settings = fix.SessionSettings("rex_performance_client.cfg")
+        application = Application(logger, account, message_num, sleep)
         application.account = account
-        storefactory = fix.FileStoreFactory(settings)
-        logfactory = fix.FileLogFactory(settings)
-        initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
+        storeFactory = fix.FileStoreFactory(settings)
+        logFactory = fix.FileLogFactory(settings)
+        initiator = fix.SocketInitiator(application, storeFactory, settings, logFactory)
 
         initiator.start()
         application.load_test_case()

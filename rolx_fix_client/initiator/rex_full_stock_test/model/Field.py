@@ -50,8 +50,8 @@ LeavesQty = 151
 CumQty = 14
 Currency = 15
 ExecID = 17
-ExecRefID = 19 
-ExecTransType=20
+ExecRefID = 19
+ExecTransType = 20
 OnBehalfOfSubID = 116
 OnBehalfOfCompID = 115
 OrigClOrdID = 41
@@ -81,4 +81,3 @@ RefSeqNum = 45
 RefMsgType = 372
 BusinessRejectRefID = 379
 BusinessRejectReason = 380
-

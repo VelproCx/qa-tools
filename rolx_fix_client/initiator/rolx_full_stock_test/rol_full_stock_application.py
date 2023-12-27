@@ -59,7 +59,7 @@ class Application(fix.Application):
         self.logger.info(
             f"Result : NewAck ={self.order_new}, Accepted = {self.order_accepted}, Rejected= {self.order_rejected}, "
             f"Expired= {self.order_expired}, Filled = {self.order_filled}, "
-            f"PartiallyFilled = {self.order_partially_filled}, Book_is_closed={self.Book_is_closed}")
+            f"PartiallyFilled = {self.order_partially_filled}, Book_is_closed={self.order_book_is_close}")
         print(f"Session ({sessionID.toString()}) logout !")
         return
 
@@ -77,6 +77,7 @@ class Application(fix.Application):
         # 7.1 New Order Single
         if msgType == "D":
             self.order_new += 1
+            self.logger.info(f"(Core) S << {msg}")
         return
 
     def fromAdmin(self, message, sessionID):
@@ -99,7 +100,7 @@ class Application(fix.Application):
         # 7.3 Execution Report – Order Rejected
         elif ordStatus == "8":
             text = message.getField(58)
-            self.logger.info(f"(recvMsg) Order Rej << {msg}, RejRes = {str(text)}")
+            self.logger.info(f"(recvMsg) Order Rej << {msg}")
             self.order_rejected += 1
             if text == "Book is CLOSED":
                 self.order_book_is_close += 1
@@ -130,17 +131,13 @@ class Application(fix.Application):
             # Fill Price Check
             if side == "1":
                 adjustLastPx = math.ceil(primaryAskPx * (1 + self.ROL_PROP_BPS_BUY))
-                if adjustLastPx == lastPx:
-                    return True
-                else:
+                if adjustLastPx != lastPx:
                     self.logger.info(
                         f'Market Price is not matching, clOrdID：{clOrdID}, adjustLastPx：{str(adjustLastPx)},'
                         f'lastPx: {str(lastPx)}')
             elif side == "2":
                 adjustLastPx = math.floor(primaryBidPx * (1 - self.ROL_PROP_BPS_SELL))
-                if adjustLastPx == lastPx:
-                    return True
-                else:
+                if adjustLastPx != lastPx:
                     self.logger.info(
                         f'Market Price is not matching, clOrdID：{clOrdID}, adjustLastPx：{str(adjustLastPx)},'
                         f'lastPx: {str(lastPx)}')
@@ -148,7 +145,7 @@ class Application(fix.Application):
         #  7.8 Execution Report – End of Day Expired
         elif ordStatus == "C":
             text = message.getField(58)
-            self.logger.info(f"(recvMsg) Order Expired << {msg}, ExpireRes = {str(text)}")
+            self.logger.info(f"(recvMsg) Order Expired << {msg}")
             self.order_expired += 1
         self.onMessage(message, sessionID)
         return
@@ -159,7 +156,7 @@ class Application(fix.Application):
 
     # 判断log文件中是否存在 Market Price is not matching
     def logs_check(self):
-        with open('rolx_report.log', 'r') as f:
+        with open('rol_report.log', 'r') as f:
             content = f.read()
         if 'Market Price is not matching' in content:
             self.logger.info('Market Price is NG')
@@ -168,11 +165,12 @@ class Application(fix.Application):
 
     # "随机数生成ClOrdID"
     def gen_client_order_id(self):
-        self.execID += 1
+        # "随机数生成ClOrdID"
+        self.exec_id += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
-        str1 = ''.join([str(i) for i in random.sample(range(0, 9), 6)])
-        return '2023' + str1 + str(t) + str(self.execID).zfill(8)
+        str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
+        return str(t) + str1 + str(self.exec_id).zfill(6)
 
     # Order Qty 随机生成
     def get_order_qty(self):
@@ -212,7 +210,7 @@ class Application(fix.Application):
     # 加载用例文件
     def load_test_case(self):
         """Run"""
-        with open('../../testcases/full_stock_List.json', 'r') as f_json:
+        with open('../../testcases/rol_full_stock_List.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
@@ -221,14 +219,6 @@ class Application(fix.Application):
                 for row in case_data_list["testCase"]:
                     self.insert_order_request(row)
                     time.sleep(0.0035)
-
-    # def gen_thread(self):
-    #     threads = []
-    #     for _ in range(5):
-    #         t = threading.Thread(target=self.load_test_case())
-    #         threads.append(t)
-    #     for t in threads:
-    #         t.start()
 
     def read_config(self, sender, target, host, post):
         # 读取并修改配置文件
