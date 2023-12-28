@@ -434,7 +434,7 @@ class Application(fix.Application):
         # 保存修改并关闭工作簿
         workbook.save(filename)
 
-    def get_client_order_id(self):
+    def gen_client_order_id(self):
         # "随机数生成ClOrdID"
         self.exec_id += 1
         # 获取当前时间并且进行格式转换
@@ -447,7 +447,7 @@ class Application(fix.Application):
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.ClOrdID(self.get_client_order_id()))
+        msg.setField(fix.ClOrdID(self.gen_client_order_id()))
         msg.setField(fix.OrderQty(row["OrderQty"]))
         msg.setField(fix.OrdType(row["OrdType"]))
         msg.setField(fix.Side(row["Side"]))
