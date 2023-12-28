@@ -220,16 +220,16 @@ def main():
         port = args.port
         time_of_running = args.tor
 
-        cfg = Application()
+        # report
+        setup_logger('logfix', '{}_report.log'.format(account))
+        logger = logging.getLogger('logfix')
+
+        cfg = Application(account, logger, time_of_running)
         cfg.Sender = sender
         cfg.Target = target
         cfg.Host = host
         cfg.Port = port
         cfg.read_config(sender, target, host, port)
-
-        # report
-        setup_logger('logfix', '{}_report.log'.format(account))
-        logger = logging.getLogger('logfix')
 
         with open('/app/data/qa-tools/edp_fix_client/initiator/full_of_smoke/symbol.csv', 'r', newline='') as csvfile:
             csvreader = csv.reader(csvfile)

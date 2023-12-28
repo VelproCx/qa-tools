@@ -206,18 +206,18 @@ def main():
         sleep = args.s
         ord_threads = args.t
 
-        cfg = Application()
-        cfg.sender = sender
-        cfg.target = target
-        cfg.host = host
-        cfg.port = port
-        cfg.read_config(sender, target, host, port)
-
         # report
         current_date = datetime.now().strftime("%Y-%m-%d")
         log_filename = f"edp_report_{current_date}.log"
         setup_logger('logfix', 'logs/' + log_filename)
         logger = logging.getLogger('logfix')
+
+        cfg = Application(account, logger, message_num, sleep)
+        cfg.sender = sender
+        cfg.target = target
+        cfg.host = host
+        cfg.port = port
+        cfg.read_config(sender, target, host, port)
 
         with open('symbol.csv', 'r', newline='') as csvfile:
             csvreader = csv.reader(csvfile)

@@ -210,16 +210,16 @@ def main():
         message_num = args.m
         sleep = args.s
 
-        cfg = Application()
+        # report
+        setup_logger('logfix', '{}_report.log'.format(account))
+        logger = logging.getLogger('logfix')
+
+        cfg = Application(account, logger, message_num, sleep)
         cfg.sender = sender
         cfg.target = target
         cfg.host = host
         cfg.port = port
         cfg.read_config(sender, target, host, port)
-
-        # report
-        setup_logger('logfix', '{}_report.log'.format(account))
-        logger = logging.getLogger('logfix')
 
         with open('symbol.csv', 'r', newline='') as csvfile:
             csvreader = csv.reader(csvfile)

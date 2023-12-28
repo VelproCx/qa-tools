@@ -227,19 +227,18 @@ def main():
         target = args.target
         host = args.host
         port = args.port
-
-        cfg = Application()
-        cfg.Sender = sender
-        cfg.Target = target
-        cfg.Host = host
-        cfg.Port = port
-        cfg.read_config(sender, target, host, port)
-
         # report
         current_date = datetime.now().strftime("%Y-%m-%d")
         log_filename = f"edp_report_{current_date}.log"
         setup_logger('logfix', 'logs/' + log_filename)
         logger = logging.getLogger('logfix')
+
+        cfg = Application(account, logger)
+        cfg.Sender = sender
+        cfg.Target = target
+        cfg.Host = host
+        cfg.Port = port
+        cfg.read_config(sender, target, host, port)
 
         settings = fix.SessionSettings("edp_hrt_client.cfg")
         application = Application(account, logger)

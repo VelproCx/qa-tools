@@ -576,16 +576,17 @@ def main():
         host = args.host
         port = args.port
 
-        cfg = Application()
+        # log
+        setup_logger('logfix', 'logs/edp_report.log')
+        logger = logging.getLogger('logfix')
+
+
+        cfg = Application(account, logger)
         cfg.sender = sender
         cfg.target = target
         cfg.host = host
         cfg.port = port
         cfg.read_config(sender, target, host, port)
-
-        # log
-        setup_logger('logfix', 'logs/edp_report.log')
-        logger = logging.getLogger('logfix')
 
         settings = fix.SessionSettings("edp_regression_client.cfg")
         application = Application(account, logger)

@@ -410,19 +410,18 @@ def main():
         target = data.get("target")
         host = data.get("ip")
         port = data.get("port")
-
-        cfg = Application()
-        cfg.Sender = sender
-        cfg.Target = target
-        cfg.Host = host
-        cfg.Port = port
-        cfg.read_config(sender, target, host, port)
-
         # report
         current_date = datetime.now().strftime("%Y-%m-%d")
         log_filename = f"edp_report_{current_date}.log"
         setup_logger('logfix', 'edp_fix_client/initiator/edp_smoke_test/logs/' + log_filename)
         logger = logging.getLogger('logfix')
+
+        cfg = Application(data, logger)
+        cfg.Sender = sender
+        cfg.Target = target
+        cfg.Host = host
+        cfg.Port = port
+        cfg.read_config(sender, target, host, port)
 
         settings = fix.SessionSettings("edp_fix_client/initiator/edp_smoke_test/edp_smoke_client.cfg")
         application = Application(data, logger)

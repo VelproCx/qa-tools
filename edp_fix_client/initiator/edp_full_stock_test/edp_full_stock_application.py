@@ -208,17 +208,16 @@ def main():
         host = args.Host
         port = args.Port
         out_time = args.ot
+        # report
+        setup_logger('logfix', f'{account}_report.log')
+        logger = logging.getLogger('logfix')
 
-        cfg = Application()
+        cfg = Application(account, logger)
         cfg.Sender = sender
         cfg.Target = target
         cfg.Host = host
         cfg.Port = port
         cfg.read_config(sender, target, host, port)
-
-        # report
-        setup_logger('logfix', f'{account}_report.log')
-        logger = logging.getLogger('logfix')
 
         settings = fix.SessionSettings("edp_full_stock_client.cfg")
         application = Application(account, logger)
