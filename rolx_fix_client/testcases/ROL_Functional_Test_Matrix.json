@@ -16,7 +16,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "2",
         "2",
@@ -39,7 +39,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "2",
         "2",
@@ -62,7 +62,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "2",
         "2",
@@ -86,7 +86,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "2",
         "2",
@@ -110,7 +110,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "2",
         "2",
@@ -133,7 +133,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "1",
         "C",
@@ -157,7 +157,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "1",
         "C",
@@ -182,7 +182,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "1",
         "2",
@@ -206,7 +206,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "1",
         "2",
@@ -229,7 +229,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "1"
       ]
@@ -250,7 +250,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "4"
       ]
     },
@@ -271,7 +271,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "1"
       ]
@@ -292,7 +292,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "4"
       ]
     },
@@ -312,7 +312,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "1",
         "C"
@@ -335,7 +335,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "1",
         "C"
@@ -357,7 +357,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "4"
       ]
@@ -378,7 +378,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "4"
       ]
@@ -399,7 +399,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "4"
       ]
@@ -420,7 +420,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "4"
       ]
@@ -442,7 +442,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "4"
       ]
@@ -464,7 +464,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "4"
       ]
@@ -486,7 +486,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "4"
       ]
@@ -508,7 +508,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "4"
       ]
@@ -529,7 +529,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "C"
       ]
@@ -550,7 +550,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "C"
       ]
@@ -572,7 +572,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "C"
       ]
@@ -594,7 +594,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "C"
       ]
@@ -615,7 +615,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "2"
       ]
@@ -636,7 +636,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "2"
       ]
@@ -658,7 +658,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "2"
       ]
@@ -680,7 +680,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "2"
       ]
@@ -702,7 +702,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
        "errorCode": "ERROR_10010013,No available instrument risk check data found"
@@ -724,7 +724,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010014,Price exceeds the high-low price range"
@@ -746,7 +746,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010014,Price exceeds the high-low price range"
@@ -768,7 +768,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010015,Tick-size is not matched with TOPIX100 tick"
@@ -790,7 +790,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010015,Tick-size is not matched with TOPIX100 tick"
@@ -812,7 +812,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010015,Tick-size is not matched with TOPIX100 tick"
@@ -834,7 +834,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010015,Tick-size is not matched with TOPIX100 tick"
@@ -856,7 +856,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010015,Tick-size is not matched with TOPIX100 tick"
@@ -878,7 +878,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010016,Tick-size is not matched with non-TOPIX100 tick"
@@ -900,7 +900,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010016,Tick-size is not matched with non-TOPIX100 tick"
@@ -922,7 +922,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010016,Tick-size is not matched with non-TOPIX100 tick"
@@ -943,7 +943,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
@@ -964,7 +964,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
@@ -985,7 +985,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
@@ -1006,7 +1006,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
@@ -1027,7 +1027,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
@@ -1048,7 +1048,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010018,Invalid quantity or lot_size"
@@ -1069,7 +1069,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010003,OrdType is not supported"
@@ -1090,7 +1090,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010012,TimeInForce is not supported"
@@ -1111,7 +1111,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010004,Side is not supported"
@@ -1132,7 +1132,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010009,Invalid account"
@@ -1153,7 +1153,7 @@
       "Rule80A": "S",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010025,Rule80A is not supported"
@@ -1174,7 +1174,7 @@
       "Rule80A": "P",
       "CashMargin": "2",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
        "errorCode": "ERROR_10010026,CashMargin is not supported"
@@ -1195,7 +1195,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "1",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
        "errorCode": "ERROR_10010027,MarginTransactionType is not supported"
@@ -1216,7 +1216,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode": "ERROR_10010028,CrossingPriceType is not supported"
@@ -1237,7 +1237,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "2",
         "2",
@@ -1260,7 +1260,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "8"
       ],
       "errorCode":"ERROR_20010031,Requested order does not exist"
@@ -1281,7 +1281,7 @@
       "Rule80A": "",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "C"
       ]
@@ -1302,7 +1302,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "C"
       ]
@@ -1323,7 +1323,7 @@
       "Rule80A": "P",
       "CashMargin": "",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "C"
       ]
@@ -1344,7 +1344,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "0",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "C"
       ]
@@ -1365,7 +1365,7 @@
       "Rule80A": "P",
       "CashMargin": "1",
       "MarginTransactionType": "",
-      "ordstatus": [
+      "ordStatus": [
         "0",
         "C"
       ]
