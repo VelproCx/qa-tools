@@ -390,34 +390,34 @@ class Application(fix.Application):
 
     def logs_check(self):
         response = ['ps: 若列表存在failed数据，请查看report.log文件']
-        self.writeResExcel('report/rol_report.xlsx', response, 2, 'M')
+        self.write_result_excel('report/rol_report.xlsx', response, 2, 'M')
         with open('logs/rol_report.log', 'r') as f:
             content = f.read()
         if 'Market Price is not matching' in content:
             self.logger.info('Market Price is NG')
             response = ['Market Price is NG']
-            self.writeResExcel('report/rol_report.xlsx', response, 5, 'M')
+            self.write_result_excel('report/rol_report.xlsx', response, 5, 'M')
         else:
             self.logger.info('Market Price is OK')
             response = ['Market Price is OK']
-            self.writeResExcel('report/rol_report.xlsx', response, 3, 'M')
+            self.write_result_excel('report/rol_report.xlsx', response, 3, 'M')
 
         if 'FixMsg Error' in content:
             self.logger.info('FixMsg is NG')
             response = ['FixMsg is NG']
-            self.writeResExcel('report/rol_report.xlsx', response, 6, 'M')
+            self.write_result_excel('report/rol_report.xlsx', response, 6, 'M')
         else:
             self.logger.info('FixMsg is OK')
             response = ['FixMsg is OK']
-            self.writeResExcel('report/rol_report.xlsx', response, 4, 'M')
+            self.write_result_excel('report/rol_report.xlsx', response, 4, 'M')
         if 'Order execType error' in content:
             self.logger.info("execType is NG")
             response = ['execType is NG']
-            self.writeResExcel('report/rol_report.xlsx', response, 7, "M")
+            self.write_result_excel('report/rol_report.xlsx', response, 7, "M")
         else:
             self.logger.info("execType is OK")
             response = ['execType is OK']
-            self.writeResExcel('report/rol_report.xlsx', response, 8, "M")
+            self.write_result_excel('report/rol_report.xlsx', response, 8, "M")
 
     def write_result_excel(self, filename, data, row, column):
         # 打开现有的 Excel 文件或创建新的 Workbook
@@ -543,7 +543,7 @@ class Application(fix.Application):
         # 读取并修改配置文件
         config = configparser.ConfigParser(allow_no_value=True)
         config.optionxform = str  # 保持键的大小写
-        config.read('edp_regression_client.cfg')
+        config.read('rol_regression_client.cfg')
         config.set('SESSION', 'SenderCompID', sender)
         config.set('SESSION', 'TargetCompID', target)
         config.set('SESSION', 'SocketConnectHost', host)
@@ -569,17 +569,16 @@ def main():
         target = args.target
         host = args.host
         port = args.port
+        # report
+        setup_logger('logfix', 'logs/rol_report.log')
+        logger = logging.getLogger('logfix')
 
-        cfg = Application()
+        cfg = Application(account, logger)
         cfg.sender = sender
         cfg.target = target
         cfg.host = host
         cfg.port = port
         cfg.read_config(sender, target, host, port)
-
-        # report
-        setup_logger('logfix', 'logs/rol_report.log')
-        logger = logging.getLogger('logfix')
 
         settings = fix.SessionSettings("rol_regression_client.cfg")
         application = Application(account, logger)
