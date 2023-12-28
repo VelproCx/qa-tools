@@ -38,6 +38,7 @@ class Application(fix.Application):
 
         # 定义常量
         self.__SOH__ = chr(1)
+        self.exec_id = 0
 
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
@@ -63,6 +64,7 @@ class Application(fix.Application):
 
     def toAdmin(self, message, sessionID):
         # "发送会话消息时候调用此方法"
+        self.logger.info("-------------------------------------------------------------------------------------------")
         msg = message.toString().replace(self.__SOH__, "|")
         self.logger.info(f"(Core) S >> {msg}")
         return
@@ -75,11 +77,12 @@ class Application(fix.Application):
         # 7.1 New Order Single
         if msgType == "D":
             self.order_new += 1
-            self.logger.info(f"(Core) S << {msg}")
+            self.logger.info(f"(Core) S >> {msg}")
         return
 
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
+        self.logger.info("-------------------------------------------------------------------------------------------")
         msg = message.toString().replace(self.__SOH__, "|")
         self.logger.info(f"(Core) R << {msg}")
         return
@@ -94,16 +97,6 @@ class Application(fix.Application):
         if ordStatus == "0":
             self.logger.info(f"(recvMsg) Order Accepted << {msg}, ordStatus = {str(ordStatus)}")
             self.order_accepted += 1
-
-        # 7.3 Execution Report – Order Rejected
-        elif ordStatus == "8":
-            text = message.getField(58)
-            self.logger.info(f"(recvMsg) Order Rej << {msg}")
-            self.order_rejected += 1
-            if text == "Book is CLOSED":
-                self.order_book_is_close += 1
-            else:
-                self.not_book_is_close.append(msg)
 
         # 7.7 Execution Report – Trade
         elif ordStatus == "1" or ordStatus == "2":
@@ -142,8 +135,19 @@ class Application(fix.Application):
         #  7.8 Execution Report – End of Day Expired
         elif ordStatus == "C":
             text = message.getField(58)
-            self.logger.info(f"(recvMsg) Order Expired << {msg}")
-            self.order_expired += 1
+            if "ERROR_20010050,Order expired due to TimeInForce(60s)" in text\
+                    or "ERROR_20010042,Order expired due to market close." in text:
+                self.logger.info(f"(recvMsg) Order Expired << {msg}")
+                self.order_expired += 1
+            else:
+                # 7.3 Execution Report – Order Rejected
+                self.logger.info(f"(recvMsg) Order Rej << {msg}")
+                self.order_rejected += 1
+                if text == "Book is CLOSED":
+                    self.order_book_is_close += 1
+                else:
+                    self.not_book_is_close.append(msg)
+
         self.onMessage(message, sessionID)
         return
 
@@ -182,7 +186,7 @@ class Application(fix.Application):
         msg.setField(fix.ClOrdID(self.gen_client_order_id()))
         msg.setField(fix.OrderQty(self.gen_order_qty()))
         msg.setField(fix.OrdType("1"))
-        msg.setField(fix.Symbol(row["Symbol"]))
+        msg.setField(fix.Symbol(row["symbol"]))
 
         # 自定义Tag
         msg.setField(8164, "REX")
@@ -231,17 +235,17 @@ def main():
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
         parser.add_argument('-account', default='RSIT_ACCOUNT_1', help='choose account to use for test')
-        parser.add_argument('-sender', default='RSIT_ROLX_1', help='choose Sender to use for test')
-        parser.add_argument('-target', default='FSX_SIT_ROLX', help='choose Target to use for test')
-        parser.add_argument('-host', default='35.74.32.240', help='choose Host to use for test')
-        parser.add_argument('-port', default='5001', help='choose Port to use for test')
+        parser.add_argument('-sender', default='RSIT_2', help='choose Sender to use for test')
+        parser.add_argument('-target', default='FSX_SIT_CGW_2', help='choose Target to use for test')
+        parser.add_argument('-host', default='10.4.65.1', help='choose Host to use for test')
+        parser.add_argument('-port', default='5002', help='choose Port to use for test')
 
         args = parser.parse_args()
         account = args.account
-        sender = args.Sender
-        target = args.Target
-        host = args.Host
-        port = args.Port
+        sender = args.sender
+        target = args.target
+        host = args.host
+        port = args.port
 
         # report
         setup_logger('logfix', 'logs/rex_report.log')

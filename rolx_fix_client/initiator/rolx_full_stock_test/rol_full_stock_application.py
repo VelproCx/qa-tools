@@ -39,7 +39,8 @@ class Application(fix.Application):
         self.not_book_is_close = []
 
         # 定义常量
-        self.self.__SOH__ = chr(1)
+        self.__SOH__ = chr(1)
+        self.exec_id = 0
 
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
@@ -77,7 +78,7 @@ class Application(fix.Application):
         # 7.1 New Order Single
         if msgType == "D":
             self.order_new += 1
-            self.logger.info(f"(Core) S << {msg}")
+            self.logger.info(f"(Core) S >> {msg}")
         return
 
     def fromAdmin(self, message, sessionID):
@@ -94,18 +95,10 @@ class Application(fix.Application):
 
         # 7.2 Execution Report – Order Accepted
         if ordStatus == "0":
+            self.logger.info(
+                "-------------------------------------------------------------------------------------------")
             self.logger.info(f"(recvMsg) Order Accepted << {msg}, ordStatus = {str(ordStatus)}")
             self.order_accepted += 1
-
-        # 7.3 Execution Report – Order Rejected
-        elif ordStatus == "8":
-            text = message.getField(58)
-            self.logger.info(f"(recvMsg) Order Rej << {msg}")
-            self.order_rejected += 1
-            if text == "Book is CLOSED":
-                self.order_book_is_close += 1
-            else:
-                self.not_book_is_close.append(msg)
 
         # 7.7 Execution Report – Trade
         elif ordStatus == "1" or ordStatus == "2":
@@ -142,11 +135,21 @@ class Application(fix.Application):
                         f'Market Price is not matching, clOrdID：{clOrdID}, adjustLastPx：{str(adjustLastPx)},'
                         f'lastPx: {str(lastPx)}')
 
-        #  7.8 Execution Report – End of Day Expired
-        elif ordStatus == "C":
-            text = message.getField(58)
-            self.logger.info(f"(recvMsg) Order Expired << {msg}")
-            self.order_expired += 1
+                #  7.8 Execution Report – End of Day Expired
+            elif ordStatus == "C":
+                text = message.getField(58)
+                if "ERROR_20010050,Order expired due to TimeInForce(60s)" in text \
+                            or "ERROR_20010042,Order expired due to market close." in text:
+                    self.logger.info(f"(recvMsg) Order Expired << {msg}")
+                    self.order_expired += 1
+                else:
+                    # 7.3 Execution Report – Order Rejected
+                    self.logger.info(f"(recvMsg) Order Rej << {msg}")
+                    self.order_rejected += 1
+                    if text == "Book is CLOSED":
+                        self.order_book_is_close += 1
+                    else:
+                        self.not_book_is_close.append(msg)
         self.onMessage(message, sessionID)
         return
 
@@ -210,7 +213,7 @@ class Application(fix.Application):
     # 加载用例文件
     def load_test_case(self):
         """Run"""
-        with open('../../testcases/rol_full_stock_List.json', 'r') as f_json:
+        with open('../../testcases/full_stock_List.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
@@ -224,13 +227,13 @@ class Application(fix.Application):
         # 读取并修改配置文件
         config = configparser.ConfigParser(allow_no_value=True)
         config.optionxform = str  # 保持键的大小写
-        config.read('rol_full_stock_client.cfg')
+        config.read('rolx_full_stock_client.cfg')
         config.set('SESSION', 'SenderCompID', sender)
         config.set('SESSION', 'TargetCompID', target)
         config.set('SESSION', 'SocketConnectHost', host)
         config.set('SESSION', 'SocketConnectPort', post)
 
-        with open('rol_full_stock_client.cfg', 'w') as configfile:
+        with open('rolx_full_stock_client.cfg', 'w') as configfile:
             config.write(configfile)
 
 
@@ -239,9 +242,9 @@ def main():
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
         parser.add_argument('-account', default='RSIT_ACCOUNT_1', help='choose account to use for test')
-        parser.add_argument('-sender', default='RSIT_ROLX_1', help='choose Sender to use for test')
-        parser.add_argument('-target', default='FSX_SIT_ROLX', help='choose Target to use for test')
-        parser.add_argument('-host', default='35.74.32.240', help='choose Host to use for test')
+        parser.add_argument('-sender', default='RSIT_1', help='choose Sender to use for test')
+        parser.add_argument('-target', default='FSX_SIT_CGW_1', help='choose Target to use for test')
+        parser.add_argument('-host', default='10.4.65.1', help='choose Host to use for test')
         parser.add_argument('-port', default='5001', help='choose Port to use for test')
 
         args = parser.parse_args()
@@ -262,7 +265,7 @@ def main():
         cfg.Port = port
         cfg.read_config(sender, target, host, port)
 
-        settings = fix.SessionSettings("rol_full_stock_client.cfg")
+        settings = fix.SessionSettings("rolx_full_stock_client.cfg")
         application = Application(account, logger)
         storeFactory = fix.FileStoreFactory(settings)
         logFactory = fix.FileLogFactory(settings)
