@@ -12,7 +12,9 @@ from model.logger import setup_logger
 import json
 import random
 import math
+import csv
 
+symbols = []
 
 class Application(fix.Application):
 
@@ -134,19 +136,18 @@ class Application(fix.Application):
 
         #  7.8 Execution Report – End of Day Expired
         elif ordStatus == "C":
+            self.logger.info(f"(recvMsg) Order Expired << {msg}")
+            self.order_expired += 1
+
+        # 7.3 Execution Report – Order Rejected
+        elif ordStatus == "8":
             text = message.getField(58)
-            if "ERROR_20010050,Order expired due to TimeInForce(60s)" in text\
-                    or "ERROR_20010042,Order expired due to market close." in text:
-                self.logger.info(f"(recvMsg) Order Expired << {msg}")
-                self.order_expired += 1
+            self.logger.info(f"(recvMsg) Order Rej << {msg}")
+            self.order_rejected += 1
+            if text == "Book is CLOSED":
+                self.order_book_is_close += 1
             else:
-                # 7.3 Execution Report – Order Rejected
-                self.logger.info(f"(recvMsg) Order Rej << {msg}")
-                self.order_rejected += 1
-                if text == "Book is CLOSED":
-                    self.order_book_is_close += 1
-                else:
-                    self.not_book_is_close.append(msg)
+                self.not_book_is_close.append(msg)
 
         self.onMessage(message, sessionID)
         return
@@ -177,7 +178,7 @@ class Application(fix.Application):
         orderQty = random.randint(1, 5)
         return orderQty
 
-    def insert_order_request(self, row):
+    def insert_order_request(self, symbol):
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
@@ -186,7 +187,7 @@ class Application(fix.Application):
         msg.setField(fix.ClOrdID(self.gen_client_order_id()))
         msg.setField(fix.OrderQty(self.gen_order_qty()))
         msg.setField(fix.OrdType("1"))
-        msg.setField(fix.Symbol(row["symbol"]))
+        msg.setField(fix.Symbol(symbol))
 
         # 自定义Tag
         msg.setField(8164, "REX")
@@ -206,27 +207,27 @@ class Application(fix.Application):
 
     def load_test_case(self):
         """Run"""
-        with open('../../testcases/rex_1602.json', 'r') as f_json:
-            case_data_list = json.load(f_json)
-            time.sleep(1)
-            # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while self.order_num < 2:
-                self.order_num += 1
-                for row in case_data_list["testCase"]:
-                    self.insert_order_request(row)
-                    time.sleep(0.04)
+        # 循环所有用例，并把每条用例放入runTestCase方法中，
+        while self.order_num < 2:
+            self.order_num += 1
+            for symbol in symbols:
+                self.insert_order_request(symbol)
+                time.sleep(0.04)
 
     def read_config(self, sender, target, host, post):
         # 读取并修改配置文件
         config = configparser.ConfigParser(allow_no_value=True)
         config.optionxform = str  # 保持键的大小写
-        config.read('rex_full_stock_client.cfg')
+        config.read(
+            '/app/data/qa-tools/rolx_fix_client/initiator/rex_full_stock_test/rex_full_stock_client.cfg')
         config.set('SESSION', 'SenderCompID', sender)
         config.set('SESSION', 'TargetCompID', target)
         config.set('SESSION', 'SocketConnectHost', host)
         config.set('SESSION', 'SocketConnectPort', post)
 
-        with open('rex_full_stock_client.cfg', 'w') as configfile:
+        with open(
+                '/app/data/qa-tools/rolx_fix_client/initiator/rex_full_stock_test/rex_full_stock_client.cfg', 'w'
+        ) as configfile:
             config.write(configfile)
 
 
@@ -235,10 +236,10 @@ def main():
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
         parser.add_argument('-account', default='RSIT_ACCOUNT_1', help='choose account to use for test')
-        parser.add_argument('-sender', default='RSIT_2', help='choose Sender to use for test')
-        parser.add_argument('-target', default='FSX_SIT_CGW_2', help='choose Target to use for test')
+        parser.add_argument('-sender', default='RSIT_1', help='choose Sender to use for test')
+        parser.add_argument('-target', default='FSX_SIT_CGW_1', help='choose Target to use for test')
         parser.add_argument('-host', default='10.4.65.1', help='choose Host to use for test')
-        parser.add_argument('-port', default='5002', help='choose Port to use for test')
+        parser.add_argument('-port', default='5001', help='choose Port to use for test')
 
         args = parser.parse_args()
         account = args.account
@@ -248,7 +249,7 @@ def main():
         port = args.port
 
         # report
-        setup_logger('logfix', 'logs/rex_report.log')
+        setup_logger('logfix', '/app/data/qa-tools/rolx_fix_client/initiator/rex_full_stock_test/logs/rex_report.log')
         logger = logging.getLogger('logfix')
 
         cfg = Application(account, logger)
@@ -258,7 +259,15 @@ def main():
         cfg.Port = port
         cfg.read_config(sender, target, host, port)
 
-        settings = fix.SessionSettings("rex_full_stock_client.cfg")
+        with open("/app/data/qa-tools/rolx_fix_client/initiator/rex_full_stock_test/symbol.csv", "r",
+                  newline="") as csvfile:
+            csvreader = csv.reader(csvfile)
+            for row in csvreader:
+                symbol = row[0]
+                symbols.append(symbol)
+
+        settings = fix.SessionSettings(
+            "/app/data/qa-tools/rolx_fix_client/initiator/rex_full_stock_test/rex_full_stock_client.cfg")
         application = Application(account, logger)
         storeFactory = fix.FileStoreFactory(settings)
         logFactory = fix.FileLogFactory(settings)
@@ -267,7 +276,7 @@ def main():
         initiator.start()
         application.load_test_case()
         # 执行完所有测试用例后等待时间
-        sleep_duration = timedelta(minutes=5)
+        sleep_duration = timedelta(minutes=50)
         end_time = datetime.now() + sleep_duration
         while datetime.now() < end_time:
             time.sleep(1)

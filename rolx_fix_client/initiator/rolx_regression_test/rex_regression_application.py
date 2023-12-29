@@ -32,10 +32,6 @@ __SOH__ = chr(1)
 
 from openpyxl import load_workbook
 
-# report
-setup_logger('logfix', 'logs/rex_report.log')
-logfix = logging.getLogger('logfix')
-
 
 class Application(fix.Application):  # 定义一个类并继承‘fix.Application’类，主要用于处理收到的消息和事件
     exec_id = 0
@@ -55,10 +51,28 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
     order_filled = 0
     order_partially_filled = 0
 
-    def __init__(self):
+    def __init__(self, account, logger):
         # 初始化sessionID = None
         super().__init__()
         self.sessionID = None
+        self.account = account
+        self.logger = logger
+
+        self.exec_id = 0
+        self.orders_dict = []
+        self.success = 0
+        self.fail = 0
+        self.total = self.success + self.fail
+        self.rex_prod_bps_buy = 0.0022
+        self.rol_prop_bps_sell = 0.0022
+        self.result = []
+        self.receive_results = []
+        self.order_new = 0
+        self.order_expired = 0
+        self.order_accepted = 0
+        self.order_rejected = 0
+        self.order_filled = 0
+        self.order_partially_filled = 0
 
     def onCreate(self, sessionID):
         # 服务器启动时候调用此方法创建
@@ -107,11 +121,11 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
 
     def toAdmin(self, message, sessionID):
         msg = message.toString().replace(__SOH__, "|")  # 特殊符号转化
-        logfix.info(f"(Core) S >> {msg}")
+        self.logger.info(f"(Core) S >> {msg}")
         return
 
     def toApp(self, message, sessionID):
-        logfix.info("-------------------------------------------------------------------------------------------------")
+        self.logger.info("-------------------------------------------------------------------------------------------------")
         msgType = message.getHeader().getField(35)
         msg = message.toString().replace(__SOH__, "|")
         # 7.1 New Order Single
@@ -125,10 +139,10 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
             if (clOrdID, orderQty, ordType,
                 side, symbol, transactTime,
                 ) != "":
-                logfix.info(f"(sendMsg) New Ack >> {msg}")
+                self.logger.info(f"(sendMsg) New Ack >> {msg}")
                 self.order_new += 1
             else:
-                logfix.info(f"(sendMsg) New Ack >> {msg}" + 'New Order Single FixMsg Error!')
+                self.logger.info(f"(sendMsg) New Ack >> {msg}" + 'New Order Single FixMsg Error!')
         # 7.4 Order Cancel Request
         elif msgType == "F":
             clOrdID = message.getField(11)
@@ -136,18 +150,18 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
             symbol = message.getField(55)
             transactTime = message.getField(60)
             if (clOrdID, side, symbol, transactTime) != "":
-                logfix.info(f"(sendMsg) Cancel Ack >> {msg}")
+                self.logger.info(f"(sendMsg) Cancel Ack >> {msg}")
             else:
-                logfix.info(f"(sendMsg) Cancel Ack >> {msg}" + 'Order Cancel Request FixMsg Error!')
+                self.logger.info(f"(sendMsg) Cancel Ack >> {msg}" + 'Order Cancel Request FixMsg Error!')
         return
 
     def fromAdmin(self, message, sessionID):
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info(f"(Core) R << {msg}")
+        self.logger.info(f"(Core) R << {msg}")
         return
 
     def fromApp(self, message, sessionID):
-        logfix.info("-------------------------------------------------------------------------------------------------")
+        self.logger.info("-------------------------------------------------------------------------------------------------")
         # "接收业务消息时调用此方法"
         msgType = message.getHeader().getField(35)
 
@@ -157,9 +171,9 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
             tradSesStatus = message.getField(340)
             msg = message.toString().replace(__SOH__, "|")
             if (tradingSessionID, tradSesMode, tradSesStatus) != '':
-                logfix.info(f"(recvMsg) Trading Session << {msg}")
+                self.logger.info(f"(recvMsg) Trading Session << {msg}")
             else:
-                logfix.info("(recvMsg) Trading Session Error")
+                self.logger.info("(recvMsg) Trading Session Error")
         # Business Message Reject
         elif msgType == 'j':
             refSeqNum = message.getField(45)
@@ -168,9 +182,9 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
             businessRejectRefID = message.getField(379)
             msg = message.toString().replace(__SOH__, "|")
             if (refSeqNum, text, refMsgType, businessRejectRefID) != '':
-                logfix.info(f"(recvMsg) Business Message << {msg}")
+                self.logger.info(f"(recvMsg) Business Message << {msg}")
             else:
-                logfix.info("(recvMsg) Business Message Error")
+                self.logger.info("(recvMsg) Business Message Error")
         else:
             clOrdID = message.getField(11)
             orderID = message.getField(37)
@@ -244,13 +258,13 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                             side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty,
                             cashMargin,
                             crossingPriceType, fsxTransactTime, marginTransactionType) != "":
-                        logfix.info(f"(recvMsg) Order Accepted << {msg}" + "ordStatus = " + str(ordStatus))
-                        logfix.info("result : Order Accepted ," + "ordStatus =" + ordStatus)
+                        self.logger.info(f"(recvMsg) Order Accepted << {msg}" + "ordStatus = " + str(ordStatus))
+                        self.logger.info("result : Order Accepted ," + "ordStatus =" + ordStatus)
                         self.order_accepted += 1
                     else:
-                        logfix.info(f"(recvMsg) Order Accepted << {msg}" + 'Order Accepted FixMsg Error!')
+                        self.logger.info(f"(recvMsg) Order Accepted << {msg}" + 'Order Accepted FixMsg Error!')
                     if execType != ordStatus:  # 如果不相等，记录错误日志
-                        logfix.info(
+                        self.logger.info(
                             f"(recvMsg) Order execType error,orderStatus = {ordStatus},execType = {execType}")
                 # 7.3 Execution Report – Order Rejected
                 elif ordStatus == "8":
@@ -267,12 +281,12 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                             side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
                             crossingPriceType,
                             fsxTransactTime, marginTransactionType, text, ordRejReason) != "":
-                        logfix.info(f"(recvMsg) Order Rej << {msg}" + "RejRes = " + str(text))
+                        self.logger.info(f"(recvMsg) Order Rej << {msg}" + "RejRes = " + str(text))
                         self.order_rejected += 1
                     else:
-                        logfix.info(f"(recvMsg) Order Rejected << {msg}" + 'Order Rejected FixMsg Error!')
+                        self.logger.info(f"(recvMsg) Order Rejected << {msg}" + 'Order Rejected FixMsg Error!')
                     if execType != ordStatus:
-                        logfix.info(
+                        self.logger.info(
                             f"(recvMsg) Order execType error,orderStatus = {ordStatus},execType = {execType}")
                 # 7.6 Execution Report – Order Canceled
                 elif ordStatus == "4":
@@ -284,11 +298,11 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                         side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
                         crossingPriceType,
                         fsxTransactTime, marginTransactionType, origClOrdID, execBroker) != "":
-                        logfix.info(f"(recvMsg) Order Canceled << {msg}" + "ordStatus = " + str(ordStatus))
+                        self.logger.info(f"(recvMsg) Order Canceled << {msg}" + "ordStatus = " + str(ordStatus))
                     else:
-                        logfix.info(f"(recvMsg) Order Canceled << {msg}" + 'Order Canceled FixMsg Error!')
+                        self.logger.info(f"(recvMsg) Order Canceled << {msg}" + 'Order Canceled FixMsg Error!')
                     if execType != ordStatus:
-                        logfix.info(
+                        self.logger.info(
                             f"(recvMsg) Order execType error,orderStatus = {ordStatus},execType = {execType}")
                 # 7.7 Execution Report – Trade
                 elif ordStatus == "1" or ordStatus == "2":  # 部分成交
@@ -313,21 +327,21 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                             crossingPriceType, fsxTransactTime, marginTransactionType, primaryLastPx,
                             routingDecisionTime,
                             propExecPrice, Propexec_id) != "":
-                        logfix.info(
+                        self.logger.info(
                             "(recvMsg) Order Filled << {}".format(msg) + 'Side: ' + str(
                                 side) + ',' + "Fill Price: " + str(
                                 lastPx) + ',' + "AdjustLastPx Of Buy: " + str(
                                 adjustLastPxBuy) + ',' + "AdjustLastPx Of Sell: " + str(
                                 adjustLastPxSell) + ',' + "Order Type:" + str(ordType))
-                        logfix.info("result : Order Filled ," + "ordStatus =" + ordStatus)
+                        self.logger.info("result : Order Filled ," + "ordStatus =" + ordStatus)
                         if ordStatus == "1":
                             self.order_partially_filled += 1
                         else:
                             self.order_filled += 1
                     else:
-                        logfix.info(f"(recvMsg) Order Filled << {msg}" + "Order Trade FixMsg Error!")
+                        self.logger.info(f"(recvMsg) Order Filled << {msg}" + "Order Trade FixMsg Error!")
                     if execType != ordStatus:
-                        logfix.info(
+                        self.logger.info(
                             f"(recvMsg) Order execType error,orderStatus = {ordStatus},execType = {execType}")
                         # Fill Price Check
                     if ordType == '1':  # 部分成交
@@ -337,8 +351,9 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                             if adjustLastPx == lastPx:
                                 return True
                             else:
-                                logfix.info(
-                                    'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol + ',' + 'adjustLastPx：' + str(
+                                self.logger.info(
+                                    'Market Price is not matching,' + 'clOrdID：' + clOrdID + ','
+                                    + 'symbol：' + symbol + ',' + 'adjustLastPx：' + str(
                                         adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
                         elif side == "2":
                             adjustLastPx = math.floor(primaryLastPx * (1 - self.rex_prod_bps_sell))
@@ -346,7 +361,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                             if adjustLastPx == lastPx:
                                 return True
                             else:
-                                logfix.info(
+                                self.logger.info(
                                     'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol + ',' + 'adjustLastPx：' + str(
                                         adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
                 #  7.8 Execution Report – End of Day Expired
@@ -359,13 +374,13 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                     if (avgPx, clOrdID, CumQty, exec_id, execTransType, orderID, orderQty, ordType, rule80A,
                         side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
                         crossingPriceType, fsxTransactTime, marginTransactionType, execBroker, origClOrdID, text) != "":
-                        logfix.info(f"(recvMsg) Order Expired << {msg}" + "ExpireRes = " + str(text))
-                        logfix.info("result : Order Expired ," + "ordStatus =" + ordStatus)
+                        self.logger.info(f"(recvMsg) Order Expired << {msg}" + "ExpireRes = " + str(text))
+                        self.logger.info("result : Order Expired ," + "ordStatus =" + ordStatus)
                         self.order_expired += 1
                     else:
-                        logfix.info(f"(recvMsg) Order Expired << {msg}" + "Order Expired FixMsg Error!")
+                        self.logger.info(f"(recvMsg) Order Expired << {msg}" + "Order Expired FixMsg Error!")
                     if execType != ordStatus:
-                        logfix.info(
+                        self.logger.info(
                             f"(recvMsg) Order execType error,orderStatus = {ordStatus},execType = {execType}")
             else:
                 origClOrdID = message.getField(41)
@@ -377,9 +392,9 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                 # 判断tag是否存在
                 if (clOrdID, orderID, transactTime, fsxTransactTime, origClOrdID, text,
                     cxlRejReason, cxlRejResponseTo) != "":
-                    logfix.info(f"(recvMsg) Order Canceled << {msg}" + "ordStatus = " + str(ordStatus))
+                    self.logger.info(f"(recvMsg) Order Canceled << {msg}" + "ordStatus = " + str(ordStatus))
                 else:
-                    logfix.info(f"(recvMsg) Order Canceled << {msg}" + 'Order Canceled FixMsg Error!')
+                    self.logger.info(f"(recvMsg) Order Canceled << {msg}" + 'Order Canceled FixMsg Error!')
 
             self.onMessage(message, sessionID)
         return
@@ -396,27 +411,27 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         with open('logs/rex_report.log', 'r') as f:
             content = f.read()
         if 'Market Price is not matching' in content:
-            logfix.info('Market Price is NG')
+            self.logger.info('Market Price is NG')
             response = ['Market Price is NG']
             self.writeResExcel('report/rex_report.xlsx', response, 5, 'M')
         else:
-            logfix.info('Market Price is OK')
+            self.logger.info('Market Price is OK')
             response = ['Market Price is OK']
             self.writeResExcel('report/rex_report.xlsx', response, 3, 'M')
         if 'FixMsg Error' in content:
-            logfix.info('FixMsg is NG')
+            self.logger.info('FixMsg is NG')
             response = ['FixMsg is NG']
             self.writeResExcel('report/rex_report.xlsx', response, 6, 'M')
         else:
-            logfix.info('FixMsg is OK')
+            self.logger.info('FixMsg is OK')
             response = ['FixMsg is OK']
             self.writeResExcel('report/rex_report.xlsx', response, 4, 'M')
         if 'Order execType error' in content:
-            logfix.info("execType is NG")
+            self.logger.info("execType is NG")
             response = ['execType is NG']
             self.writeResExcel('report/rex_report.xlsx', response, 7, "M")
         else:
-            logfix.info("execType is OK")
+            self.logger.info("execType is OK")
             response = ['execType is OK']
             self.writeResExcel('report/rex_report.xlsx', response, 8, "M")
 
@@ -560,15 +575,18 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
 
 
 def main():
-    global account
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
-        parser.add_argument('-account', default='RSIT_ROLX_1', help='choose account to use for test')
-        parser.add_argument('-sender', default='RSIT_ROLX_1', help='choose Sender to use for test')
-        parser.add_argument('-target', default='FSX_SIT_ROLX', help='choose Target to use for test')
-        parser.add_argument('-host', default='35.74.32.240', help='choose Host to use for test')
+        parser.add_argument('-account', default='RSIT_ACCOUNT_1', help='choose account to use for test')
+        parser.add_argument('-sender', default='RSIT_1', help='choose Sender to use for test')
+        parser.add_argument('-target', default='FSX_SIT_CGW_1', help='choose Target to use for test')
+        parser.add_argument('-host', default='10.4.65.1', help='choose Host to use for test')
         parser.add_argument('-port', default='5001', help='choose Port to use for test')
+
+        # report
+        setup_logger('logfix', 'logs/rex_report.log')
+        logger = logging.getLogger('logfix')
 
         args = parser.parse_args()  # 解析参数
         account = args.account
@@ -577,14 +595,14 @@ def main():
         host = args.host
         port = args.port
 
-        cfg = Application()
+        cfg = Application(account, logger)
         cfg.sender = sender
         cfg.target = target
         cfg.host = host
         cfg.port = port
         cfg.read_config(sender, target, host, port)
         settings = fix.SessionSettings("rex_regression_client.cfg")
-        application = Application()
+        application = Application(account, logger)
         storefactory = fix.FileStoreFactory(settings)
         logfactory = fix.FileLogFactory(settings)
         initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)

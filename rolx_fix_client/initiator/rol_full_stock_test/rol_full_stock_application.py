@@ -12,6 +12,7 @@ import json
 import random
 import math
 import sys
+import csv
 
 sys.path.append("method/")
 symbols = []
@@ -135,21 +136,20 @@ class Application(fix.Application):
                         f'Market Price is not matching, clOrdID：{clOrdID}, adjustLastPx：{str(adjustLastPx)},'
                         f'lastPx: {str(lastPx)}')
 
-                #  7.8 Execution Report – End of Day Expired
-            elif ordStatus == "C":
-                text = message.getField(58)
-                if "ERROR_20010050,Order expired due to TimeInForce(60s)" in text \
-                            or "ERROR_20010042,Order expired due to market close." in text:
-                    self.logger.info(f"(recvMsg) Order Expired << {msg}")
-                    self.order_expired += 1
-                else:
-                    # 7.3 Execution Report – Order Rejected
-                    self.logger.info(f"(recvMsg) Order Rej << {msg}")
-                    self.order_rejected += 1
-                    if text == "Book is CLOSED":
-                        self.order_book_is_close += 1
-                    else:
-                        self.not_book_is_close.append(msg)
+        #  7.8 Execution Report – End of Day Expired
+        elif ordStatus == "C":
+            self.logger.info(f"(recvMsg) Order Expired << {msg}")
+            self.order_expired += 1
+
+        # 7.3 Execution Report – Order Rejected
+        elif ordStatus == "8":
+            text = message.getField(58)
+            self.logger.info(f"(recvMsg) Order Rej << {msg}")
+            self.order_rejected += 1
+            if text == "Book is CLOSED":
+                self.order_book_is_close += 1
+            else:
+                self.not_book_is_close.append(msg)
         self.onMessage(message, sessionID)
         return
 
@@ -159,7 +159,7 @@ class Application(fix.Application):
 
     # 判断log文件中是否存在 Market Price is not matching
     def logs_check(self):
-        with open('rol_report.log', 'r') as f:
+        with open('/app/data/qa-tools/rolx_fix_client/initiator/rol_full_stock_test/logs/rol_report.log', 'r') as f:
             content = f.read()
         if 'Market Price is not matching' in content:
             self.logger.info('Market Price is NG')
@@ -182,7 +182,7 @@ class Application(fix.Application):
         return orderQty
 
     # New Ack Req
-    def insert_order_request(self, row):
+    def insert_order_request(self, symbol):
         msg = fix.Message()
         header = msg.getHeader()
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
@@ -192,7 +192,7 @@ class Application(fix.Application):
         msg.setField(fix.OrderQty(self.get_order_qty()))
         # msg.setField(fix.OrderQty(row['OrderQty']))
         msg.setField(fix.OrdType("1"))
-        msg.setField(fix.Symbol(row["symbol"]))
+        msg.setField(fix.Symbol(symbol))
 
         # 自定义Tag
         msg.setField(8164, "ROL")
@@ -213,27 +213,25 @@ class Application(fix.Application):
     # 加载用例文件
     def load_test_case(self):
         """Run"""
-        with open('../../testcases/full_stock_List.json', 'r') as f_json:
-            case_data_list = json.load(f_json)
-            time.sleep(2)
-            # 循环所有用例，并把每条用例放入runTestCase方法中，
-            while self.order_num < 10:
-                self.order_num += 1
-                for row in case_data_list["testCase"]:
-                    self.insert_order_request(row)
-                    time.sleep(0.0035)
+        # 循环所有用例，并把每条用例放入runTestCase方法中，
+        while self.order_num < 10:
+            self.order_num += 1
+            for symbol in symbols:
+                self.insert_order_request(symbol)
+                time.sleep(0.0035)
 
     def read_config(self, sender, target, host, post):
         # 读取并修改配置文件
         config = configparser.ConfigParser(allow_no_value=True)
         config.optionxform = str  # 保持键的大小写
-        config.read('rolx_full_stock_client.cfg')
+        config.read('/app/data/qa-tools/rolx_fix_client/initiator/rol_full_stock_test/rol_full_stock_client.cfg')
         config.set('SESSION', 'SenderCompID', sender)
         config.set('SESSION', 'TargetCompID', target)
         config.set('SESSION', 'SocketConnectHost', host)
         config.set('SESSION', 'SocketConnectPort', post)
 
-        with open('rolx_full_stock_client.cfg', 'w') as configfile:
+        with open('/app/data/qa-tools/rolx_fix_client/initiator/rol_full_stock_test/rol_full_stock_client.cfg', 'w'
+                  ) as configfile:
             config.write(configfile)
 
 
@@ -255,7 +253,7 @@ def main():
         port = args.port
 
         # report
-        setup_logger('logfix', 'logs/rol_report.log')
+        setup_logger('logfix', '/app/data/qa-tools/rolx_fix_client/initiator/rol_full_stock_test/logs/rol_report.log')
         logger = logging.getLogger('logfix')
 
         cfg = Application(account, logger)
@@ -265,7 +263,15 @@ def main():
         cfg.Port = port
         cfg.read_config(sender, target, host, port)
 
-        settings = fix.SessionSettings("rolx_full_stock_client.cfg")
+        with open("/app/data/qa-tools/rolx_fix_client/initiator/rol_full_stock_test/symbol.csv", "r", newline=""
+                  ) as csvfile:
+            csvreader = csv.reader(csvfile)
+            for row in csvreader:
+                symbol = row[0]
+                symbols.append(symbol)
+
+        settings = fix.SessionSettings("/app/data/qa-tools/rolx_fix_client/initiator/rol_full_stock_test/"
+                                       "rol_full_stock_client.cfg")
         application = Application(account, logger)
         storeFactory = fix.FileStoreFactory(settings)
         logFactory = fix.FileLogFactory(settings)
