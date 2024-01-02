@@ -19,13 +19,13 @@ logfix = logging.getLogger('logfix')
 
 
 class Application(fix.Application):
-    order_id = 0
-    exec_id = 0
-    orders_dict = []
-    lastest_order = {}
-    success = 0
-    fail = 0
-    total = 0
+    orderID = 0
+    execID = 0
+    ORDERS_DICT = []
+    LASTEST_ORDER = {}
+    Success = 0
+    Fail = 0
+    Total = 0
 
     def __init__(self):
         super().__init__()
@@ -34,58 +34,59 @@ class Application(fix.Application):
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
         self.sessionID = sessionID
-        print(f"onCreate : Session ({sessionID.toString()})")
+        print("onCreate : Session (%s)" % sessionID.toString())
         return
 
     def onLogon(self, sessionID):
         # "客户端登陆成功时候调用此方法"
         self.sessionID = sessionID
-        print(f"successful Logon to session '{sessionID.toString()}'.")
+        print("Successful Logon to session '%s'." % sessionID.toString())
         return
 
     def onLogout(self, sessionID):
         # "客户端断开连接时候调用此方法"
-        if self.total != self.success + self.fail:
-            Miss_Num = self.total - (self.success + self.fail)
-            logfix.info(f"Order Miss, Result : total = {self.total},success = {self.success},fail = {self.fail},MissOrderNum = {Miss_Num}")
+        if self.Total != self.Success + self.Fail:
+            Miss_Num = self.Total - (self.Success + self.Fail)
+            logfix.info("Order Miss, Result : Total = %d,Success = %d,Fail = %d,MissOrderNum = %d" % (
+                self.Total, self.Success, self.Fail, Miss_Num))
         else:
             logfix.info(
-                f"Order Not Miss, Result : total = {self.total},success = {self.success},fail = {self.fail}")
-        print(f"Session ({sessionID.toString()}) logout !")
+                "Order Not Miss, Result : Total = %d,Success = %d,Fail = %d" % (self.Total, self.Success, self.Fail))
+        print("Session (%s) logout !" % sessionID.toString())
         return
 
     def toAdmin(self, message, sessionID):
         # "发送会话消息时候调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info(f"(Core) S >> {msg}")
+        logfix.info("(Core) S >> %s" % msg)
         return
 
     def toApp(self, message, sessionID):
         # "发送业务消息时候调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info(f"(sendMsg) S >> {msg}")
+        logfix.info("(sendMsg) S >> %s" % msg)
         return
 
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info(f"(Core) R << {msg}")
+        logfix.info("(Core) R << %s" % msg)
         return
 
     def fromApp(self, message, sessionID):
         # "接收业务消息时调用此方法"
         # 使用quickFix框架getField方法提取clOrdId、ordStatus
-        self.orders_dict = message.getField(11)
+        self.ORDERS_DICT = message.getField(11)
         ordStatus = message.getField(39)
         msg = message.toString().replace(__SOH__, "|")
         if ordStatus == "2":
-            logfix.info(f"(recvMsg)R < < {msg}")
-            self.success = self.success + 1
-            logfix.info("Result : success," + "OrdStasus = " + ordStatus)
+            logfix.info("(recvMsg)R < < %s" % msg)
+            self.Success = self.Success + 1
+            logfix.info("Result : Success," + "OrdStasus = " + ordStatus)
         elif ordStatus == "8":
-            logfix.info(f"(recvMsg) R << {msg}")
-            self.fail = self.fail + 1
-            logfix.info("Result : fail ," + "ordStatus =" + ordStatus)
+            logfix.info("(recvMsg) R << %s" % msg)
+            self.Fail = self.Fail + 1
+            logfix.info("Result : Fail ," + "ordStatus =" + ordStatus)
 
         self.onMessage(message, sessionID)
         logfix.info("-------------------------------------------------------------------------------------------------")
@@ -97,11 +98,11 @@ class Application(fix.Application):
 
     def getClOrdID(self):
         # "随机数生成ClOrdID"
-        self.exec_id += 1
+        self.execID += 1
         # 获取当前时间并且进行格式转换
         t = int(time.time())
         str1 = ''.join([str(i) for i in random.sample(range(0, 9), 4)])
-        return str(t) + str1 + str(self.exec_id).zfill(6)
+        return str(t) + str1 + str(self.execID).zfill(6)
 
     def insert_order_request(self, row):
         logfix.info("Test Contexts：" + row["Comment"])
@@ -139,7 +140,7 @@ class Application(fix.Application):
         trstime.setString(datetime.utcnow().strftime("%Y%m%d-%H:%M:%S.%f"))
         msg.setField(trstime)
         fix.Session.sendToTarget(msg, self.sessionID)
-        self.total = self.total + 1
+        self.Total = self.Total + 1
         return msg
 
     def runTestCase(self, row):
@@ -152,7 +153,7 @@ class Application(fix.Application):
 
     def load_test_case(self):
         """Run"""
-        with open('../../../testcases/Rol_Trading_Hours_Test_Matrix.json', 'r') as f_json:
+        with open('../../testcases/Rol_Trading_Hours_Test_Matrix.json', 'r') as f_json:
             case_data_list = json.load(f_json)
             time.sleep(0.04)
             start_Time = datetime.now()
