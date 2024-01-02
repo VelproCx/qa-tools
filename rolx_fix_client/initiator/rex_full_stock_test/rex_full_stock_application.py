@@ -136,19 +136,18 @@ class Application(fix.Application):
 
         #  7.8 Execution Report – End of Day Expired
         elif ordStatus == "C":
+            self.logger.info(f"(recvMsg) Order Expired << {msg}")
+            self.order_expired += 1
+
+        # 7.3 Execution Report – Order Rejected
+        elif ordStatus == "8":
             text = message.getField(58)
-            if "ERROR_20010050,Order expired due to TimeInForce(60s)" in text\
-                    or "ERROR_20010042,Order expired due to market close." in text:
-                self.logger.info(f"(recvMsg) Order Expired << {msg}")
-                self.order_expired += 1
+            self.logger.info(f"(recvMsg) Order Rej << {msg}")
+            self.order_rejected += 1
+            if text == "Book is CLOSED":
+                self.order_book_is_close += 1
             else:
-                # 7.3 Execution Report – Order Rejected
-                self.logger.info(f"(recvMsg) Order Rej << {msg}")
-                self.order_rejected += 1
-                if text == "Book is CLOSED":
-                    self.order_book_is_close += 1
-                else:
-                    self.not_book_is_close.append(msg)
+                self.not_book_is_close.append(msg)
 
         self.onMessage(message, sessionID)
         return

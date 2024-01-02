@@ -560,10 +560,10 @@ def main():
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
-        parser.add_argument('-account', default='RSIT_ROLX_2', help='choose account to use for test')
+        parser.add_argument('-account', default='RSIT_ACCOUNT_2', help='choose account to use for test')
         parser.add_argument('-sender', default='RSIT_ROLX_2', help='choose Sender to use for test')
-        parser.add_argument('-target', default='FSX_SIT_ROLX', help='choose Target to use for test')
-        parser.add_argument('-host', default='35.74.32.240', help='choose Host to use for test')
+        parser.add_argument('-target', default='FSX_SIT_CGW_2', help='choose Target to use for test')
+        parser.add_argument('-host', default='10.4.65.1', help='choose Host to use for test')
         parser.add_argument('-port', default='5002', help='choose Port to use for test')
 
         args = parser.parse_args()  # 解析参数
