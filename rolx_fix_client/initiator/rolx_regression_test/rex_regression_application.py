@@ -13,10 +13,9 @@ from datetime import datetime, timedelta
 from model.logger import setup_logger
 import json
 import math
-# sys.path.append("../method")
 from importlib.machinery import SourceFileLoader
 import os
-import csv
+from openpyxl import load_workbook
 
 # 获取当前所在目录绝对路径
 current_path = os.path.abspath(os.path.dirname(__file__))
@@ -28,8 +27,6 @@ generation_path = os.path.join(Parent_path, "file_generation.py")
 data_comparison_path = os.path.join(Parent_path, "data_comparison.py")
 
 __SOH__ = chr(1)
-
-from openpyxl import load_workbook
 
 
 class Application(fix.Application):  # 定义一个类并继承‘fix.Application’类，主要用于处理收到的消息和事件
@@ -44,9 +41,6 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         self.exec_id = 0
         self.orders_dict = []
         self.ptf_cancel_list = []
-        self.success = 0
-        self.fail = 0
-        self.total = self.success + self.fail
         self.rex_prod_bps_buy = 0.0022
         self.rol_prop_bps_sell = 0.0022
         self.result = []
@@ -71,7 +65,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         return
 
     def onLogout(self, sessionID):
-        self.logsCheck()
+        self.logs_check()
         json_data = json.dumps(self.receive_results)
 
         module_name = "compare_field_values"
@@ -83,14 +77,14 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
             file.write(json_data)
         self.result = module1.compare_field_values('../../testcases/REX_Functional_Test_Matrix.json',
                                                    'logs/recv_data.json',
-                                                   'ordstatus')
+                                                   'ordStatus')
         print(f"Session ({sessionID.toString()}) logout !")
 
-        ordstatus_list = []
+        ordStatus_list = []
         errorCode_list = []
         # 循环receive_results并将value添加到列表里
         for i in self.receive_results:
-            ordstatus_list.append(str(i['ordstatus']))
+            ordStatus_list.append(str(i['ordStatus']))
             if 'errorCode' in i:
                 errorCode_list.append(str(i['errorCode']))
 
@@ -98,7 +92,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                 errorCode_list.append(" ")
 
         # report文件里写入字段
-        self.writeResExcel('report/rex_report.xlsx', ordstatus_list, 2, 'J')
+        self.writeResExcel('report/rex_report.xlsx', ordStatus_list, 2, 'J')
         self.writeResExcel('report/rex_report.xlsx', errorCode_list, 2, 'K')
         self.writeResExcel('report/rex_report.xlsx', self.result, 2, 'L')
         return
@@ -186,24 +180,24 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
             # 设置匹配的阈值
             threshold = 1
 
-            matches = difflib.get_close_matches(clOrdID, [item['clordId'] for item in self.receive_results], n=1,
+            matches = difflib.get_close_matches(clOrdID, [item['clOrdId'] for item in self.receive_results], n=1,
                                                 cutoff=threshold)
             if matches:
-                matched_clordId = matches[0]
-                # 拿到clordId去数组里循环比对
+                matched_clOrdId = matches[0]
+                # 拿到clOrdId去数组里循环比对
                 for item in self.receive_results:
-                    # 判断当前收到的消息体clordid是否在数组里
-                    if item['clordId'] == matched_clordId:
-                        # 更新该组数据的ordstatus
-                        item['ordstatus'].append(str(ordStatus))
+                    # 判断当前收到的消息体clOrdId是否在数组里
+                    if item['clOrdId'] == matched_clOrdId:
+                        # 更新该组数据的ordStatus
+                        item['ordStatus'].append(str(ordStatus))
             else:
                 if ordStatus != '8':
                     # 添加新的数据到数组中
-                    self.receive_results.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
+                    self.receive_results.append({'clOrdId': clOrdID, 'ordStatus': [ordStatus]})
 
                 else:
                     text = message.getField(58)
-                    self.receive_results.append({'clordId': clOrdID, 'ordstatus': [ordStatus], 'errorCode': text})
+                    self.receive_results.append({'clOrdId': clOrdID, 'ordStatus': [ordStatus], 'errorCode': text})
 
             if msgType != '9':
                 # 消息体共用tag
@@ -242,8 +236,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                             side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty,
                             cashMargin,
                             crossingPriceType, fsxTransactTime, marginTransactionType) != "":
-                        self.logger.info(f"(recvMsg) Order Accepted << {msg}" + "ordStatus = " + str(ordStatus))
-                        self.logger.info("result : Order Accepted ," + "ordStatus =" + ordStatus)
+                        self.logger.info(f"(recvMsg) Order Accepted << {msg}")
                         self.order_accepted += 1
                     else:
                         self.logger.info(f"(recvMsg) Order Accepted << {msg}" + 'Order Accepted FixMsg Error!')
@@ -265,7 +258,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                             side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
                             crossingPriceType,
                             fsxTransactTime, marginTransactionType, text, ordRejReason) != "":
-                        self.logger.info(f"(recvMsg) Order Rej << {msg}" + "RejRes = " + str(text))
+                        self.logger.info(f"(recvMsg) Order Rej << {msg}")
                         self.order_rejected += 1
                     else:
                         self.logger.info(f"(recvMsg) Order Rejected << {msg}" + 'Order Rejected FixMsg Error!')
@@ -282,7 +275,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                         side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
                         crossingPriceType,
                         fsxTransactTime, marginTransactionType, origClOrdID, execBroker) != "":
-                        self.logger.info(f"(recvMsg) Order Canceled << {msg}" + "ordStatus = " + str(ordStatus))
+                        self.logger.info(f"(recvMsg) Order Canceled << {msg}")
                     else:
                         self.logger.info(f"(recvMsg) Order Canceled << {msg}" + 'Order Canceled FixMsg Error!')
                     if execType != ordStatus:
@@ -296,7 +289,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                     primaryLastPx = float(message.getField(8031))
                     routingDecisionTime = message.getField(8051)  # 通用时间
                     propExecPrice = message.getField(8165)
-                    Propexec_id = message.getField(8166)
+                    PropExecId = message.getField(8166)
                     clOrdID = message.getField(11)
                     # 公式计算期望值 FillPrice
                     adjustLastPxBuy = math.ceil(primaryLastPx * (1 + self.rex_prod_bps_buy))
@@ -310,7 +303,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                             cashMargin,
                             crossingPriceType, fsxTransactTime, marginTransactionType, primaryLastPx,
                             routingDecisionTime,
-                            propExecPrice, Propexec_id) != "":
+                            propExecPrice, PropExecId) != "":
                         self.logger.info(
                             "(recvMsg) Order Filled << {}".format(msg) + 'Side: ' + str(
                                 side) + ',' + "Fill Price: " + str(
@@ -332,9 +325,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                         if side == "1":
                             adjustLastPx = math.ceil(primaryLastPx * (1 + self.rex_prod_bps_buy))
                             # 期望值与获取的fillPrice进行比对
-                            if adjustLastPx == lastPx:
-                                return True
-                            else:
+                            if adjustLastPx != lastPx:
                                 self.logger.info(
                                     'Market Price is not matching,' + 'clOrdID：' + clOrdID + ','
                                     + 'symbol：' + symbol + ',' + 'adjustLastPx：' + str(
@@ -342,9 +333,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                         elif side == "2":
                             adjustLastPx = math.floor(primaryLastPx * (1 - self.rex_prod_bps_sell))
                             # 期望值与获取的fillPrice进行比对
-                            if adjustLastPx == lastPx:
-                                return True
-                            else:
+                            if adjustLastPx != lastPx:
                                 self.logger.info(
                                     'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol
                                     + ',' + 'adjustLastPx：' + str(
@@ -390,7 +379,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         # 数据比对的方法
 
     # 在掉出登陆时调用logscheck方法，判断是否有这些错误打印，
-    def logsCheck(self):
+    def logs_check(self):
         response = ['ps:若列表存在failed数据，请查看report.log文件']
         self.writeResExcel(
             '/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/report/rex_report.xlsx',
@@ -400,35 +389,35 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         if 'Market Price is not matching' in content:
             self.logger.info('Market Price is NG')
             response = ['Market Price is NG']
-            self.writeResExcel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
-                               'report/rex_report.xlsx', response, 5, 'M')
+            self.write_result_excel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
+                                    'report/rex_report.xlsx', response, 5, 'M')
         else:
             self.logger.info('Market Price is OK')
             response = ['Market Price is OK']
-            self.writeResExcel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
-                               'report/rex_report.xlsx', response, 3, 'M')
+            self.write_result_excel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
+                                    'report/rex_report.xlsx', response, 3, 'M')
         if 'FixMsg Error' in content:
             self.logger.info('FixMsg is NG')
             response = ['FixMsg is NG']
-            self.writeResExcel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
-                               'report/rex_report.xlsx', response, 6, 'M')
+            self.write_result_excel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
+                                    'report/rex_report.xlsx', response, 6, 'M')
         else:
             self.logger.info('FixMsg is OK')
             response = ['FixMsg is OK']
-            self.writeResExcel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
-                               'report/rex_report.xlsx', response, 4, 'M')
+            self.write_result_excel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
+                                    'report/rex_report.xlsx', response, 4, 'M')
         if 'Order execType error' in content:
             self.logger.info("execType is NG")
             response = ['execType is NG']
-            self.writeResExcel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
-                               'report/rex_report.xlsx', response, 7, "M")
+            self.write_result_excel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
+                                    'report/rex_report.xlsx', response, 7, "M")
         else:
             self.logger.info("execType is OK")
             response = ['execType is OK']
-            self.writeResExcel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
-                               'report/rex_report.xlsx', response, 8, "M")
+            self.write_result_excel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
+                                    'report/rex_report.xlsx', response, 8, "M")
 
-    def writeResExcel(self, filename, data, row, column):
+    def write_result_excel(self, filename, data, row, column):
         # 打开现有的Excel文件或者创建新的Workbook
         workbook = load_workbook(filename)  # load_workbook指打开现有文件或新的对象
         #     指定要写入数据的工作表
@@ -443,7 +432,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         # 保持并关闭工作簿
         workbook.save(filename)
 
-    def getClOrdID(self):
+    def gen_client_order_id(self):
         # "随机数生成ClOrdID"
         self.exec_id += 1
         # 获取当前时间并且进行格式转换
@@ -458,14 +447,11 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))  # 消息类型字段（MsgType）设为NewOrderSingle（D）
         header.setField(fix.MsgType("D"))
         msg.setField(fix.Account(row["Account"]))
-        msg.setField(fix.ClOrdID(self.getClOrdID()))
+        msg.setField(fix.ClOrdID(self.gen_client_order_id()))
         msg.setField(fix.OrderQty(row["OrderQty"]))
         msg.setField(fix.OrdType(row["OrdType"]))
         msg.setField(fix.Side(row["Side"]))
         msg.setField(fix.Symbol(row["Symbol"]))
-        # msg.setField(fix.HandlInst('1'))  # 处理方式
-        ClientID = msg.getField(11)
-        msg.setField(fix.ClientID(ClientID))
         # 判断订单类型,限价单读取case中的price并且设置，市价单则不设置价格
         if row["OrdType"] == "2":
             msg.setField(fix.Price(row["Price"]))  # 如果值是2，表示是限价单，要设置价格
@@ -510,7 +496,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         header.setField(fix.BeginString("FIX.4.2"))
         header.setField(fix.MsgType("F"))
         msg.setField(fix.OrigClOrdID(clOrdId))
-        msg.setField(fix.ClOrdID(self.getClOrdID()))
+        msg.setField(fix.ClOrdID(self.gen_client_order_id()))
         msg.setField(fix.Symbol(row["Symbol"]))
         msg.setField(fix.Side(row["Side"]))
 
@@ -600,9 +586,9 @@ def main():
         settings = fix.SessionSettings(
             "/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/rex_regression_client.cfg")
         application = Application(account, logger)
-        storefactory = fix.FileStoreFactory(settings)
-        logfactory = fix.FileLogFactory(settings)
-        initiator = fix.SocketInitiator(application, storefactory, settings, logfactory)
+        storeFactory = fix.FileStoreFactory(settings)
+        logFactory = fix.FileLogFactory(settings)
+        initiator = fix.SocketInitiator(application, storeFactory, settings, logFactory)
 
         initiator.start()
         application.load_test_case()
