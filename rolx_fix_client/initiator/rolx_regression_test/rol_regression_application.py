@@ -82,9 +82,10 @@ class Application(fix.Application):
         # 将JSON数据写入文件
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.result = module1.compare_field_values('../../testcases/ROL_Functional_Test_Matrix.json',
-                                                   'logs/recv_data.json',
-                                                   'ordStatus')
+        self.result = module1.compare_field_values(
+            '/app/data/qa-tools/rolx_fix_client/testcases/ROL_Functional_Test_Matrix.json',
+            '/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/logs/recv_data.json',
+            'ordStatus')
         print(f"Session ({sessionID.toString()}) logout !")
 
         ordStatus_list = []
@@ -340,14 +341,16 @@ class Application(fix.Application):
                                 # 期望值与获取的fillPrice进行比对
                                 if adjustLastPx != lastPx:
                                     self.logger.info(
-                                        'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol + ',' + 'adjustLastPx：' + str(
+                                        'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：'
+                                        + symbol + ',' + 'adjustLastPx：' + str(
                                             adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
                             elif side == "2":
                                 adjustLastPx = math.floor(primaryAskPx * (1 - self.rol_prop_bps_sell))
                                 # 期望值与获取的fillPrice进行比对
                                 if adjustLastPx != lastPx:
                                     self.logger.info(
-                                        'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol + ',' + 'adjustLastPx：' + str(
+                                        'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：'
+                                        + symbol + ',' + 'adjustLastPx：' + str(
                                             adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
                     #  7.8 Execution Report – End of Day Expired
                     elif ordStatus == "C":
@@ -358,7 +361,8 @@ class Application(fix.Application):
                         # 判断tag是否存在
                         if (avgPx, clOrdID, CumQty, exec_id, execTransType, orderID, orderQty, ordType, rule80A,
                             side, symbol, timeInForce, transactTime, execBroker, execType, leavesQty, cashMargin,
-                            crossingPriceType, fsxTransactTime, marginTransactionType, execBroker, origClOrdID, text) != "":
+                            crossingPriceType, fsxTransactTime, marginTransactionType, execBroker, origClOrdID, text
+                            ) != "":
                             self.logger.info(f"(recvMsg) Order Expired << {msg}")
                             self.logger.info("result : Order Expired ," + "ordStatus =" + ordStatus)
                             self.order_expired += 1
@@ -519,8 +523,9 @@ class Application(fix.Application):
         generation = module1.generation
 
         """Run"""
-        with open('../../testcases/ROL_Functional_Test_Matrix.json', 'r') as f_json:
-            generation('../../testcases/ROL_Functional_Test_Matrix.json', 'report/rol_report.xlsx')
+        with open('/app/data/qa-tools/rolx_fix_client/testcases/ROL_Functional_Test_Matrix.json', 'r') as f_json:
+            generation('/app/data/qa-tools/rolx_fix_client/testcases/ROL_Functional_Test_Matrix.json',
+                       '/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/report/rol_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
 
@@ -552,7 +557,9 @@ class Application(fix.Application):
         config.set('SESSION', 'SocketConnectHost', host)
         config.set('SESSION', 'SocketConnectPort', port)
 
-        with open('rol_regression_client.cfg', 'w') as configfile:
+        with open(
+                '/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/rol_regression_client.cfg', 'w'
+        ) as configfile:
             config.write(configfile)
 
 
@@ -583,7 +590,8 @@ def main():
         cfg.port = port
         cfg.read_config(sender, target, host, port)
 
-        settings = fix.SessionSettings("rol_regression_client.cfg")
+        settings = fix.SessionSettings(
+            "/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/rol_regression_client.cfg")
         application = Application(account, logger)
         storeFactory = fix.FileStoreFactory(settings)
         logFactory = fix.FileLogFactory(settings)

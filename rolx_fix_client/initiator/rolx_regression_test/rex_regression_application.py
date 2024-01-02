@@ -6,7 +6,6 @@ import configparser
 import difflib
 import random
 import sys
-
 import quickfix as fix
 import time
 import logging
@@ -14,10 +13,10 @@ from datetime import datetime, timedelta
 from model.logger import setup_logger
 import json
 import math
-# import sys
 # sys.path.append("../method")
 from importlib.machinery import SourceFileLoader
 import os
+import csv
 
 # 获取当前所在目录绝对路径
 current_path = os.path.abspath(os.path.dirname(__file__))
@@ -34,22 +33,6 @@ from openpyxl import load_workbook
 
 
 class Application(fix.Application):  # 定义一个类并继承‘fix.Application’类，主要用于处理收到的消息和事件
-    exec_id = 0
-    orders_dict = []
-    ptf_cancel_list = []
-    success = 0
-    fail = 0
-    total = 0
-    rex_prod_bps_buy = 0.0022
-    rex_prod_bps_sell = 0.0022
-    result = []
-    receve_results = []
-    order_new = 0
-    order_expired = 0
-    order_accepted = 0
-    order_rejected = 0
-    order_filled = 0
-    order_partially_filled = 0
 
     def __init__(self, account, logger):
         # 初始化sessionID = None
@@ -60,6 +43,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
 
         self.exec_id = 0
         self.orders_dict = []
+        self.ptf_cancel_list = []
         self.success = 0
         self.fail = 0
         self.total = self.success + self.fail
@@ -88,7 +72,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
 
     def onLogout(self, sessionID):
         self.logsCheck()
-        json_data = json.dumps(self.receve_results)
+        json_data = json.dumps(self.receive_results)
 
         module_name = "compare_field_values"
         module_path = data_comparison_path
@@ -104,8 +88,8 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
 
         ordstatus_list = []
         errorCode_list = []
-        # 循环receve_results并将value添加到列表里
-        for i in self.receve_results:
+        # 循环receive_results并将value添加到列表里
+        for i in self.receive_results:
             ordstatus_list.append(str(i['ordstatus']))
             if 'errorCode' in i:
                 errorCode_list.append(str(i['errorCode']))
@@ -125,7 +109,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         return
 
     def toApp(self, message, sessionID):
-        self.logger.info("-------------------------------------------------------------------------------------------------")
+        self.logger.info("-------------------------------------------------------------------------------------------")
         msgType = message.getHeader().getField(35)
         msg = message.toString().replace(__SOH__, "|")
         # 7.1 New Order Single
@@ -161,7 +145,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         return
 
     def fromApp(self, message, sessionID):
-        self.logger.info("-------------------------------------------------------------------------------------------------")
+        self.logger.info("-------------------------------------------------------------------------------------------")
         # "接收业务消息时调用此方法"
         msgType = message.getHeader().getField(35)
 
@@ -202,12 +186,12 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
             # 设置匹配的阈值
             threshold = 1
 
-            matches = difflib.get_close_matches(clOrdID, [item['clordId'] for item in self.receve_results], n=1,
+            matches = difflib.get_close_matches(clOrdID, [item['clordId'] for item in self.receive_results], n=1,
                                                 cutoff=threshold)
             if matches:
                 matched_clordId = matches[0]
                 # 拿到clordId去数组里循环比对
-                for item in self.receve_results:
+                for item in self.receive_results:
                     # 判断当前收到的消息体clordid是否在数组里
                     if item['clordId'] == matched_clordId:
                         # 更新该组数据的ordstatus
@@ -215,11 +199,11 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
             else:
                 if ordStatus != '8':
                     # 添加新的数据到数组中
-                    self.receve_results.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
+                    self.receive_results.append({'clordId': clOrdID, 'ordstatus': [ordStatus]})
 
                 else:
                     text = message.getField(58)
-                    self.receve_results.append({'clordId': clOrdID, 'ordstatus': [ordStatus], 'errorCode': text})
+                    self.receive_results.append({'clordId': clOrdID, 'ordstatus': [ordStatus], 'errorCode': text})
 
             if msgType != '9':
                 # 消息体共用tag
@@ -362,7 +346,8 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                                 return True
                             else:
                                 self.logger.info(
-                                    'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol + ',' + 'adjustLastPx：' + str(
+                                    'Market Price is not matching,' + 'clOrdID：' + clOrdID + ',' + 'symbol：' + symbol
+                                    + ',' + 'adjustLastPx：' + str(
                                         adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
                 #  7.8 Execution Report – End of Day Expired
                 elif ordStatus == "C":  # 过期订单
@@ -407,33 +392,41 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
     # 在掉出登陆时调用logscheck方法，判断是否有这些错误打印，
     def logsCheck(self):
         response = ['ps:若列表存在failed数据，请查看report.log文件']
-        self.writeResExcel('report/rex_report.xlsx', response, 2, 'M')
-        with open('logs/rex_report.log', 'r') as f:
+        self.writeResExcel(
+            '/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/report/rex_report.xlsx',
+            response, 2, 'M')
+        with open('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/logs/rex_report.log', 'r') as f:
             content = f.read()
         if 'Market Price is not matching' in content:
             self.logger.info('Market Price is NG')
             response = ['Market Price is NG']
-            self.writeResExcel('report/rex_report.xlsx', response, 5, 'M')
+            self.writeResExcel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
+                               'report/rex_report.xlsx', response, 5, 'M')
         else:
             self.logger.info('Market Price is OK')
             response = ['Market Price is OK']
-            self.writeResExcel('report/rex_report.xlsx', response, 3, 'M')
+            self.writeResExcel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
+                               'report/rex_report.xlsx', response, 3, 'M')
         if 'FixMsg Error' in content:
             self.logger.info('FixMsg is NG')
             response = ['FixMsg is NG']
-            self.writeResExcel('report/rex_report.xlsx', response, 6, 'M')
+            self.writeResExcel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
+                               'report/rex_report.xlsx', response, 6, 'M')
         else:
             self.logger.info('FixMsg is OK')
             response = ['FixMsg is OK']
-            self.writeResExcel('report/rex_report.xlsx', response, 4, 'M')
+            self.writeResExcel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
+                               'report/rex_report.xlsx', response, 4, 'M')
         if 'Order execType error' in content:
             self.logger.info("execType is NG")
             response = ['execType is NG']
-            self.writeResExcel('report/rex_report.xlsx', response, 7, "M")
+            self.writeResExcel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
+                               'report/rex_report.xlsx', response, 7, "M")
         else:
             self.logger.info("execType is OK")
             response = ['execType is OK']
-            self.writeResExcel('report/rex_report.xlsx', response, 8, "M")
+            self.writeResExcel('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
+                               'report/rex_report.xlsx', response, 8, "M")
 
     def writeResExcel(self, filename, data, row, column):
         # 打开现有的Excel文件或者创建新的Workbook
@@ -543,9 +536,10 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
 
         generation = module1.generation
         """Run"""
-        with open('../../testcases/REX_Functional_Test_Matrix.json', 'r') as f_json:
+        with open('/app/data/qa-tools/rolx_fix_client/testcases/REX_Functional_Test_Matrix.json', 'r') as f_json:
             # 生成报告模版
-            generation('../../testcases/REX_Functional_Test_Matrix.json', 'report/rex_report.xlsx')
+            generation('/app/data/qa-tools/rolx_fix_client/testcases/REX_Functional_Test_Matrix.json',
+                       '/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/report/rex_report.xlsx')
             case_data_list = json.load(f_json)
             time.sleep(2)
             # 循环所有用例，并把每条用例放入runTestCase方法中，
@@ -564,13 +558,15 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         # 读取并修改配置文件
         config = configparser.ConfigParser(allow_no_value=True)
         config.optionxform = str  # 保持键的大小写
-        config.read('edp_regression_client.cfg')
+        config.read('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/rex_regression_client.cfg')
         config.set('SESSION', 'SenderCompID', sender)
         config.set('SESSION', 'TargetCompID', target)
         config.set('SESSION', 'SocketConnectHost', host)
         config.set('SESSION', 'SocketConnectPort', port)
 
-        with open('edp_regression_client.cfg', 'w') as configfile:
+        with open(
+                '/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/rex_regression_client.cfg', 'w'
+        ) as configfile:
             config.write(configfile)
 
 
@@ -585,7 +581,7 @@ def main():
         parser.add_argument('-port', default='5001', help='choose Port to use for test')
 
         # report
-        setup_logger('logfix', 'logs/rex_report.log')
+        setup_logger('logfix', '/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/logs/rex_report.log')
         logger = logging.getLogger('logfix')
 
         args = parser.parse_args()  # 解析参数
@@ -601,7 +597,8 @@ def main():
         cfg.host = host
         cfg.port = port
         cfg.read_config(sender, target, host, port)
-        settings = fix.SessionSettings("rex_regression_client.cfg")
+        settings = fix.SessionSettings(
+            "/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/rex_regression_client.cfg")
         application = Application(account, logger)
         storefactory = fix.FileStoreFactory(settings)
         logfactory = fix.FileLogFactory(settings)
