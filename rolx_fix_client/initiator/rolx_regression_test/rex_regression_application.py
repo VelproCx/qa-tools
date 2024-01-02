@@ -42,7 +42,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         self.orders_dict = []
         self.ptf_cancel_list = []
         self.rex_prod_bps_buy = 0.0022
-        self.rol_prop_bps_sell = 0.0022
+        self.rex_prod_bps_sell = 0.0022
         self.result = []
         self.receive_results = []
         self.order_new = 0
@@ -506,14 +506,6 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         fix.Session.sendToTarget(msg, self.sessionID)
         return msg
 
-    def runTestCase(self, row):
-        # 判断case是下单还是取消订单
-        action = row["ActionType"]
-        if action == 'NewAck':
-            self.insert_order_request(row)
-        elif action == 'CancelAck':
-            self.order_cancel_request(row)
-
     def load_test_case(self):
         module_name = "generation"
         module_path = generation_path
@@ -535,10 +527,15 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                     time.sleep(60)
                 if row["Symbol"] == '5076' and row["OrdType"] == "1" and row["Comment"] == "CancelAck":
                     time.sleep(120)
-                    self.runTestCase(row)
+                    self.order_cancel_request(row)
                 else:
-                    time.sleep(1)
-                    self.runTestCase(row)
+                    if row["ActionType"] == "NewAck":
+                        self.insert_order_request(row)
+                        time.sleep(1)
+                    elif row["ActionType"] == "CancelAck":
+                        self.order_cancel_request(row)
+                        time.sleep(1)
+
 
     def read_config(self, sender, target, host, port):
         # 读取并修改配置文件
