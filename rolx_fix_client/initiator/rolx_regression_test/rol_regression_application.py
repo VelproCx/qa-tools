@@ -44,9 +44,6 @@ class Application(fix.Application):
 
         self.exec_id = 0
         self.orders_dict = []
-        self.success = 0
-        self.fail = 0
-        self.total = self.success + self.fail
         self.rol_prop_bps_buy = 0.0022
         self.rol_prop_bps_sell = 0.0022
         self.result = []
