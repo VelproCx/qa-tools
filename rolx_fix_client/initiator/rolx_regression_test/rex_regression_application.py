@@ -75,7 +75,9 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         # 将JSON数据写入文件中
         with open('logs/recv_data.json', 'w') as file:
             file.write(json_data)
-        self.result = module1.compare_field_values('../../testcases/REX_Functional_Test_Matrix.json',
+        self.result = module1.compare_field_values('/app/data/qa-tools/rolx_fix_client/testcases/'
+                                                   'REX_Functional_Test_Matrix.json',
+                                                   '/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/'
                                                    'logs/recv_data.json',
                                                    'ordStatus')
         print(f"Session ({sessionID.toString()}) logout !")
@@ -92,9 +94,9 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                 errorCode_list.append(" ")
 
         # report文件里写入字段
-        self.writeResExcel('report/rex_report.xlsx', ordStatus_list, 2, 'J')
-        self.writeResExcel('report/rex_report.xlsx', errorCode_list, 2, 'K')
-        self.writeResExcel('report/rex_report.xlsx', self.result, 2, 'L')
+        self.write_result_excel('report/rex_report.xlsx', ordStatus_list, 2, 'J')
+        self.write_result_excel('report/rex_report.xlsx', errorCode_list, 2, 'K')
+        self.write_result_excel('report/rex_report.xlsx', self.result, 2, 'L')
         return
 
     def toAdmin(self, message, sessionID):
@@ -211,7 +213,6 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                 side = message.getField(54)
                 symbol = message.getField(55)
                 timeInForce = message.getField(59)
-                clientID = message.getField(109)
                 execType = message.getField(150)
                 leavesQty = message.getField(151)
                 cashMargin = message.getField(544)
@@ -233,7 +234,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                             avgPx, clOrdID, CumQty, exec_id, execTransType, lastPx, lastShares, orderID, orderQty,
                             ordType,
                             rule80A,
-                            side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty,
+                            side, symbol, timeInForce, transactTime, execBroker, execType, leavesQty,
                             cashMargin,
                             crossingPriceType, fsxTransactTime, marginTransactionType) != "":
                         self.logger.info(f"(recvMsg) Order Accepted << {msg}")
@@ -255,7 +256,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                             avgPx, clOrdID, CumQty, exec_id, execTransType, lastPx, lastShares, orderID, orderQty,
                             ordType,
                             rule80A,
-                            side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
+                            side, symbol, timeInForce, transactTime, execType, leavesQty, cashMargin,
                             crossingPriceType,
                             fsxTransactTime, marginTransactionType, text, ordRejReason) != "":
                         self.logger.info(f"(recvMsg) Order Rej << {msg}")
@@ -272,7 +273,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                     clOrdID = message.getField(11)
                     # 判断tag是否存在
                     if (avgPx, clOrdID, CumQty, exec_id, execTransType, orderID, orderQty, ordType, rule80A,
-                        side, symbol, timeInForce, transactTime, clientID, execType, leavesQty, cashMargin,
+                        side, symbol, timeInForce, transactTime, execType, leavesQty, cashMargin,
                         crossingPriceType,
                         fsxTransactTime, marginTransactionType, origClOrdID, execBroker) != "":
                         self.logger.info(f"(recvMsg) Order Canceled << {msg}")
@@ -299,7 +300,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                             avgPx, clOrdID, CumQty, exec_id, execTransType, lastPx, lastShares, orderID, orderQty,
                             ordType,
                             rule80A,
-                            side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty,
+                            side, symbol, timeInForce, transactTime, execBroker, execType, leavesQty,
                             cashMargin,
                             crossingPriceType, fsxTransactTime, marginTransactionType, primaryLastPx,
                             routingDecisionTime,
@@ -346,7 +347,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                     clOrdID = message.getField(11)
                     # 判断tag是否存在
                     if (avgPx, clOrdID, CumQty, exec_id, execTransType, orderID, orderQty, ordType, rule80A,
-                        side, symbol, timeInForce, transactTime, execBroker, clientID, execType, leavesQty, cashMargin,
+                        side, symbol, timeInForce, transactTime, execBroker, execType, leavesQty, cashMargin,
                         crossingPriceType, fsxTransactTime, marginTransactionType, execBroker, origClOrdID, text) != "":
                         self.logger.info(f"(recvMsg) Order Expired << {msg}" + "ExpireRes = " + str(text))
                         self.logger.info("result : Order Expired ," + "ordStatus =" + ordStatus)
@@ -381,7 +382,7 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
     # 在掉出登陆时调用logscheck方法，判断是否有这些错误打印，
     def logs_check(self):
         response = ['ps:若列表存在failed数据，请查看report.log文件']
-        self.writeResExcel(
+        self.write_result_excel(
             '/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/report/rex_report.xlsx',
             response, 2, 'M')
         with open('/app/data/qa-tools/rolx_fix_client/initiator/rolx_regression_test/logs/rex_report.log', 'r') as f:
@@ -446,7 +447,12 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
         header = msg.getHeader()  # 获取消息头
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))  # 消息类型字段（MsgType）设为NewOrderSingle（D）
         header.setField(fix.MsgType("D"))
-        msg.setField(fix.Account(row["Account"]))
+
+        if row["ScenarioName"] == "Account Check":
+            msg.setField(fix.Account(row["Account"]))
+        else:
+            msg.setField(fix.Account(self.account))
+
         msg.setField(fix.ClOrdID(self.gen_client_order_id()))
         msg.setField(fix.OrderQty(row["OrderQty"]))
         msg.setField(fix.OrdType(row["OrdType"]))
@@ -525,14 +531,14 @@ class Application(fix.Application):  # 定义一个类并继承‘fix.Applicatio
                 if row['Id'] == "1":
                     self.insert_order_request(row)
                     time.sleep(60)
-                if row["Symbol"] == '5076' and row["OrdType"] == "1" and row["Comment"] == "CancelAck":
-                    time.sleep(120)
-                    self.order_cancel_request(row)
-                else:
-                    if row["ActionType"] == "NewAck":
-                        self.insert_order_request(row)
-                        time.sleep(1)
-                    elif row["ActionType"] == "CancelAck":
+                elif row["ActionType"] == "NewAck":
+                    self.insert_order_request(row)
+                    time.sleep(1)
+                elif row["ActionType"] == "CancelAck":
+                    if row["Symbol"] == '5076' and row["OrdType"] == "1" and row["Comment"] == "CancelAck":
+                        time.sleep(120)
+                        self.order_cancel_request(row)
+                    else:
                         self.order_cancel_request(row)
                         time.sleep(1)
 
