@@ -18,6 +18,7 @@ def csv_to_json(csv_file, json_file):
     out = json.dumps([row for row in reader])
     jsonfile.write(out)
 
+
 # xlsx 转 csv
 def xlsx_to_csv(xlsx_file, sheet_index, start_cell, csv_file):
     df = pd.read_excel(xlsx_file, sheet_name=sheet_index, header=None, engine='openpyxl')
@@ -25,6 +26,7 @@ def xlsx_to_csv(xlsx_file, sheet_index, start_cell, csv_file):
     start_col = ord(start_cell[0].upper()) - 65
     df = df.iloc[start_row:, start_col:]
     df.to_csv(csv_file, index=False, header=False)
+
 
 # 文件内容比对
 def compare_json_files(file_a, file_b):
@@ -74,6 +76,7 @@ def compare_json_files(file_a, file_b):
             data_a)) + ',' + 'eod_order_list:' + str(len(data_b)))
     logsCheck()
 
+
 # 对保存对log文件进行检查
 def logsCheck():
     with open('logs/eod_check_report.log', 'r') as f:
@@ -100,5 +103,6 @@ def run():
 
     # 数据比对
     compare_json_files('Impacted_Order_List.json', 'Eod_Order_List.json')
+
 
 run()

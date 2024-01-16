@@ -17,12 +17,6 @@ import json
 
 __SOH__ = chr(1)
 
-# report
-current_date = datetime.now().strftime("%Y-%m-%d")
-log_filename = f"edp_report_{current_date}.log"
-setup_logger('logfix', 'logs/' + log_filename)
-logfix = logging.getLogger('logfix')
-
 symbols = []
 security_ids = []
 
@@ -31,9 +25,13 @@ class Application(fix.Application):
     order_id = 0
     exec_id = 0
 
-    def __init__(self):
+    def __init__(self, logger, account, message_num, sleep):
         super().__init__()
         self.sessionID = None
+        self.logger = logger
+        self.account = account
+        self.message_num = message_num
+        self.sleep = sleep
 
     def onCreate(self, sessionID):
         # "服务器启动时候调用此方法创建"
@@ -54,27 +52,27 @@ class Application(fix.Application):
     def toAdmin(self, message, sessionID):
         # "发送会话消息时候调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info(f"(Core) S >> {msg}")
+        self.logger.info(f"(Core) S >> {msg}")
         return
 
     def toApp(self, message, sessionID):
         # "发送业务消息时候调用此方法"
-        logfix.info("-------------------------------------------------------------------------------------------------")
+        self.logger.info("-------------------------------------------------------------------------------------------------")
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info(f"(sendMsg) New Ack >> {msg}")
+        self.logger.info(f"(sendMsg) New Ack >> {msg}")
         return
 
     def fromAdmin(self, message, sessionID):
         # "接收会话类型消息时调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info(f"(Core) R << {msg}")
+        self.logger.info(f"(Core) R << {msg}")
         return
 
     def fromApp(self, message, sessionID):
-        logfix.info("-------------------------------------------------------------------------------------------------")
+        self.logger.info("-------------------------------------------------------------------------------------------------")
         # "接收业务消息时调用此方法"
         msg = message.toString().replace(__SOH__, "|")
-        logfix.info(f"(Core) recvMsg << {msg}")
+        self.logger.info(f"(Core) recvMsg << {msg}")
         self.onMessage(message, sessionID)
         return
 
@@ -96,7 +94,7 @@ class Application(fix.Application):
         header.setField(fix.MsgType(fix.MsgType_NewOrderSingle))
         header.setField(fix.MsgType("D"))
         # msg.setField(fix.Account("RUAT_EDP_ACCOUNT_1"))
-        msg.setField(fix.Account(account))
+        msg.setField(fix.Account(self.account))
         msg.setField(fix.ClOrdID(self.getClOrdID()))
         msg.setField(fix.OrderQty(100))
         msg.setField(fix.OrdType("2"))
@@ -125,9 +123,9 @@ class Application(fix.Application):
     def load_test_case(self):
         """Run"""
         num = 0
-        while num < int(message_num):
+        while num < int(self.message_num):
             num += 1
-            sleep_time = float(sleep) * 0.001
+            sleep_time = float(self.sleep) * 0.001
             time.sleep(sleep_time)
             symbol = symbols[num % len(symbols)]
             price = num % len(symbols) + 1
@@ -138,13 +136,13 @@ class Application(fix.Application):
         # 读取并修改配置文件
         config = configparser.ConfigParser(allow_no_value=True)
         config.optionxform = str  # 保持键的大小写
-        config.read('edp_hrt_client.cfg')
+        config.read('/app/data/qa-tools/rolx_fix_client/initiator/rolx_hrt/rolx_hrt_client.cfg')
         config.set('SESSION', 'SenderCompID', sender)
         config.set('SESSION', 'TargetCompID', target)
         config.set('SESSION', 'SocketConnectHost', host)
         config.set('SESSION', 'SocketConnectPort', port)
 
-        with open('edp_hrt_client.cfg', 'w') as configfile:
+        with open('/app/data/qa-tools/rolx_fix_client/initiator/rolx_hrt/rolx_hrt_client.cfg', 'w') as configfile:
             config.write(configfile)
 
 
@@ -173,10 +171,9 @@ class LoadTestCaseThread(threading.Thread):
 
     def run(self):
         self.application.load_test_case()
+
+
 def main():
-    global account
-    global message_num
-    global sleep
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
@@ -186,10 +183,10 @@ def main():
         # parser.add_argument('-target', default='terminal_1', help='choose Target to use for test')
         # parser.add_argument('-host', default='192.168.0.20', help='choose Host to use for test')
         # parser.add_argument('-port', default='11113', help='choose Port to use for test')
-        parser.add_argument('--account', default='HRT_SIT_EDP_ACCOUNT_1', help='choose account to use for test')
-        parser.add_argument('--sender', default='HRT_SIT_EDP_D_1', help='choose Sender to use for test')
+        parser.add_argument('--account', default='HRT_SIT_ACCOUNT_1', help='choose account to use for test')
+        parser.add_argument('--sender', default='HRT_SIT_ROL_D_1', help='choose Sender to use for test')
         parser.add_argument('--target', default='s_t2', help='choose Target to use for test')
-        parser.add_argument('--host', default='10.4.128.117', help='choose Host to use for test')
+        parser.add_argument('--host', default='10.4.64.145', help='choose Host to use for test')
         parser.add_argument('--port', default='11131', help='choose Port to use for test')
         parser.add_argument('-m', help='Please enter the order quantity')
         parser.add_argument('-s', help='Please enter the delay')
@@ -205,14 +202,20 @@ def main():
         sleep = args.s
         ord_threads = args.t
 
-        cfg = Application()
+        # report
+        current_date = datetime.now().strftime("%Y-%m-%d")
+        log_filename = f"edp_report_{current_date}.log"
+        setup_logger('logfix', 'logs/' + log_filename)
+        logger = logging.getLogger('logfix')
+
+        cfg = Application(logger, account, message_num, sleep)
         cfg.sender = sender
         cfg.target = target
         cfg.host = host
         cfg.port = port
         cfg.read_config(sender, target, host, port)
 
-        with open('symbol.csv', 'r', newline='') as csvfile:
+        with open('/app/data/qa-tools/rolx_fix_client/initiator/rolx_hrt/symbol.csv', 'r', newline='') as csvfile:
             csvreader = csv.reader(csvfile)
             for row in csvreader:
                 symbol = row[0]
@@ -220,8 +223,8 @@ def main():
                 security_ids.append(securityID)
                 symbols.append(symbol)
 
-        settings = fix.SessionSettings("edp_hrt_client.cfg")
-        application = Application()
+        settings = fix.SessionSettings("/app/data/qa-tools/rolx_fix_client/initiator/rolx_hrt/rolx_hrt_client.cfg")
+        application = Application(logger, account, message_num, sleep)
         application.account = account
         store_factory = fix.FileStoreFactory(settings)
         log_factory = fix.FileLogFactory(settings)

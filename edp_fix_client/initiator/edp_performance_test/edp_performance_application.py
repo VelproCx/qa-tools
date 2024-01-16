@@ -193,13 +193,13 @@ def main():
     try:
         # 使用argparse的add_argument方法进行传参
         parser = argparse.ArgumentParser()  # 创建对象
-        parser.add_argument('--account', default='RSIT_EDP_ACCOUNT_1', help='choose account to use for test')
-        parser.add_argument('--sender', default='RSIT_EDP_1', help='choose Sender to use for test')
-        parser.add_argument('--target', default='FSX_SIT_EDP', help='choose Target to use for test')
-        parser.add_argument('--host', default='10.4.129.151', help='choose Host to use for test')
-        parser.add_argument('--port', default='30051', help='choose Port to use for test')
-        parser.add_argument('--m', help='choose num')
-        parser.add_argument('--s', help='choose num')
+        parser.add_argument('-account', default='RSIT_EDP_ACCOUNT_1', help='choose account to use for test')
+        parser.add_argument('-sender', default='RSIT_EDP_1', help='choose Sender to use for test')
+        parser.add_argument('-target', default='FSX_SIT_EDP', help='choose Target to use for test')
+        parser.add_argument('-host', default='10.4.129.151', help='choose Host to use for test')
+        parser.add_argument('-port', default='30051', help='choose Port to use for test')
+        parser.add_argument('-m', help='choose num')
+        parser.add_argument('-s', help='choose num')
 
         args = parser.parse_args()  # 解析参数
         account = args.account

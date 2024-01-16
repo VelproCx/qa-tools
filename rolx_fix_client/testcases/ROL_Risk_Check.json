@@ -1,440 +1,436 @@
-{
-  "testCase": [
-    {
-      "Id": "29",
-      "ScenarioName": "Symbol Check",
-      "Account": "RUAT_ACCOUNT_3",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "ROLX_Limit_NewAck",
-      "OrderQty": 5,
-      "OrdType": "2",
-      "Price": 369,
-      "Side": "2",
-      "Symbol": "9999",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "30",
-      "ScenarioName": "Price Limit Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Price=Low-limit-1",
-      "OrderQty": 5,
-      "OrdType": "2",
-      "Price": 58,
-      "Side": "2",
-      "Symbol": "1324",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "31",
-      "ScenarioName": "Price Limit Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Price=High-limit+1",
-      "OrderQty": 5,
-      "OrdType": "2",
-      "Price": 119,
-      "Side": "2",
-      "Symbol": "1324",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "32",
-      "ScenarioName": "Tick Size Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Price<1,000 Tick size ≠ 1",
-      "OrderQty": 5,
-      "OrdType": "2",
-      "Price": 371.5,
-      "Side": "2",
-      "Symbol": "4689",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "33",
-      "ScenarioName": "Tick Size Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Price<3,000 Tick side ≠ 1",
-      "OrderQty": 5,
-      "OrdType": "2",
-      "Price": 2105.5,
-      "Side": "2",
-      "Symbol": "7203",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "34",
-      "ScenarioName": "Tick Size Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Price<10,000 Tick side ≠ 1",
-      "OrderQty": 5,
-      "OrdType": "2",
-      "Price": 5000.5,
-      "Side": "2",
-      "Symbol": "9433",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "35",
-      "ScenarioName": "Tick Size Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Price<30,000 Tick side ≠ 5",
-      "OrderQty": 5,
-      "OrdType": "2",
-      "Price": 26001,
-      "Side": "2",
-      "Symbol": "6954",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "36",
-      "ScenarioName": "Tick Size Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Price<100,000 Tick side ≠ 10",
-      "OrderQty": 5,
-      "OrdType": "2",
-      "Price": 75001,
-      "Side": "2",
-      "Symbol": "9983",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "37",
-      "ScenarioName": "Tick Size Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Price<3,000 Tick side ≠ 1",
-      "OrderQty": 5,
-      "OrdType": "2",
-      "Price": 2500.5,
-      "Side": "2",
-      "Symbol": "1721",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "38",
-      "ScenarioName": "Tick Size Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Price<5,000  Tick side ≠ 5",
-      "OrderQty": 5,
-      "OrdType": "2",
-      "Price": 4000.5,
-      "Side": "2",
-      "Symbol": "2282",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "39",
-      "ScenarioName": "Tick Size Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Price<30,000 Tick side ≠ 10",
-      "OrderQty": 5,
-      "OrdType": "2",
-      "Price": 15001,
-      "Side": "2",
-      "Symbol": "1878",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "40",
-      "ScenarioName": "Quantity Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Quantity=0 ",
-      "OrderQty": 0,
-      "OrdType": "1",
-      "Side": "2",
-      "Symbol": "1324",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "41",
-      "ScenarioName": "Quantity Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Quantity=100(Round-lot) ",
-      "OrderQty": 100,
-      "OrdType": "1",
-      "Side": "2",
-      "Symbol": "1324",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "42",
-      "ScenarioName": "Quantity Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Quantity=101(Mixed-lot) ",
-      "OrderQty": 101,
-      "OrdType": "1",
-      "Side": "2",
-      "Symbol": "1324",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "43",
-      "ScenarioName": "Quantity Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Quantity=1(Lot size=1)",
-      "OrderQty": 1,
-      "OrdType": "1",
-      "Side": "2",
-      "Symbol": "8421",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "44",
-      "ScenarioName": "Quantity Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Quantity=10(Lot size=10)",
-      "OrderQty": 10,
-      "OrdType": "1",
-      "Side": "2",
-      "Symbol": "1322",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "45",
-      "ScenarioName": "Quantity Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Quantity=10(Lot size=10)",
-      "OrderQty": 1000,
-      "OrdType": "1",
-      "Side": "2",
-      "Symbol": "1773",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "46",
-      "ScenarioName": "Order Type Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Order Type is not Limit/Market (Limit/Market Acceptable)",
-      "OrderQty": 1,
-      "OrdType": "9",
-      "Side": "2",
-      "Symbol": "1324",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "47",
-      "ScenarioName": "TimeInForce Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "TimeInForce is not 0:Day",
-      "OrderQty": 1,
-      "OrdType": "1",
-      "Side": "2",
-      "Symbol": "1324",
-      "TimeInForce": "6",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "48",
-      "ScenarioName": "Order Side Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Order Side is not Buy/Sell (Buy/Sell Acceptable)",
-      "OrderQty": 1,
-      "OrdType": "1",
-      "Side": "5",
-      "Symbol": "1324",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "49",
-      "ScenarioName": "Account Check",
-      "Account": "RSIT_ACCOUNT_13",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Account is not the target test account",
-      "OrderQty": 1,
-      "OrdType": "1",
-      "Side": "1",
-      "Symbol": "1324",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "50",
-      "ScenarioName": "Rule80A Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "Rule80A is not Agency/Principal",
-      "OrderQty": 1,
-      "OrdType": "1",
-      "Side": "1",
-      "Symbol": "1324",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "S",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "51",
-      "ScenarioName": "CashMargin Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "CashMargin is not Cash (Cash Acceptable)",
-      "OrderQty": 1,
-      "OrdType": "1",
-      "Side": "1",
-      "Symbol": "1324",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "2",
-      "MarginTransactionType": "0"
-    },
-    {
-      "Id": "52",
-      "ScenarioName": "MarginTransactionType Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "MarginTransactionType is not 0-None",
-      "OrderQty": 1,
-      "OrdType": "1",
-      "Side": "1",
-      "Symbol": "1324",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROL",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "1"
-    },
-    {
-      "Id": "53",
-      "ScenarioName": "CrossingPriceType Check",
-      "Account": "RUAT_ACCOUNT_2",
-      "Market": "ROLX",
-      "ActionType": "NewAck",
-      "Comment": "CrossingPriceType is not ROL/REX",
-      "OrderQty": 1,
-      "OrdType": "1",
-      "Side": "1",
-      "Symbol": "1324",
-      "TimeInForce": "0",
-      "CrossingPriceType": "ROLX",
-      "Rule80A": "P",
-      "CashMargin": "1",
-      "MarginTransactionType": "0"
-    }
-  ]
-}
+[
+  {
+    "clOrdId": "17042653212046000001",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042653813102000002",
+    "ordStatus": [
+      "0",
+      "2"
+    ]
+  },
+  {
+    "clOrdId": "17042653828604000003",
+    "ordStatus": [
+      "0",
+      "2"
+    ]
+  },
+  {
+    "clOrdId": "17042653838726000004",
+    "ordStatus": [
+      "0",
+      "2"
+    ]
+  },
+  {
+    "clOrdId": "17042653841823000005",
+    "ordStatus": [
+      "0",
+      "2"
+    ]
+  },
+  {
+    "clOrdId": "17042653850417000006",
+    "ordStatus": [
+      "0",
+      "2"
+    ]
+  },
+  {
+    "clOrdId": "17042653860274000007",
+    "ordStatus": [
+      "0",
+      "2"
+    ]
+  },
+  {
+    "clOrdId": "17042653878165000008",
+    "ordStatus": [
+      "0",
+      "2"
+    ]
+  },
+  {
+    "clOrdId": "17042653881064000009",
+    "ordStatus": [
+      "0",
+      "2"
+    ]
+  },
+  {
+    "clOrdId": "17042653897658000010",
+    "ordStatus": [
+      "0",
+      "2"
+    ]
+  },
+  {
+    "clOrdId": "17042653932803000012",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010014,Price exceeds the high - low price range: price=1037, price_limit=[1109, 1709]"
+  },
+  {
+    "clOrdId": "17042653977854000013",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_20010031,Requested order does not exist: origClOrdId=17042653932803000012, symbol=5076"
+  },
+  {
+    "clOrdId": "17042653975264000014",
+    "ordStatus": [
+      "0",
+      "2"
+    ]
+  },
+  {
+    "clOrdId": "17042653986478000015",
+    "ordStatus": [
+      "0",
+      "2"
+    ]
+  },
+  {
+    "clOrdId": "17042653991035000016",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654013148000017",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_20010031,Requested order does not exist: origClOrdId=17042653991035000016, symbol=1311"
+  },
+  {
+    "clOrdId": "17042654017016000018",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654033126000019",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_20010031,Requested order does not exist: origClOrdId=17042654017016000018, symbol=1311"
+  },
+  {
+    "clOrdId": "17042654035312000020",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654056735000021",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_20010031,Requested order does not exist: origClOrdId=17042654035312000020, symbol=1311"
+  },
+  {
+    "clOrdId": "17042654056530000022",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654077850000023",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_20010031,Requested order does not exist: origClOrdId=17042654056530000022, symbol=1311"
+  },
+  {
+    "clOrdId": "17042654076475000024",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654086527000025",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654096270000026",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654106735000027",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654113041000028",
+    "ordStatus": [
+      "0",
+      "2"
+    ]
+  },
+  {
+    "clOrdId": "17042654125106000029",
+    "ordStatus": [
+      "0",
+      "2"
+    ]
+  },
+  {
+    "clOrdId": "17042654130687000030",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010014,Price exceeds the high - low price range: price=369, price_limit=[417.3, 577.3]"
+  },
+  {
+    "clOrdId": "17042654142037000031",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010014,Price exceeds the high - low price range: price=369, price_limit=[417.3, 577.3]"
+  },
+  {
+    "clOrdId": "17042654158432000032",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654163126000033",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654170876000034",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654181450000035",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010014,Price exceeds the high - low price range: price=371.5, price_limit=[417.3, 577.3]"
+  },
+  {
+    "clOrdId": "17042654192168000036",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_20010015,Tick-size is not matched with TOPIX100 tick: price=2105.5"
+  },
+  {
+    "clOrdId": "17042654205027000037",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_20010015,Tick-size is not matched with TOPIX100 tick: price=5000.5"
+  },
+  {
+    "clOrdId": "17042654214261000038",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010014,Price exceeds the high - low price range: price=26001, price_limit=[3500, 4900]"
+  },
+  {
+    "clOrdId": "17042654227584000039",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010014,Price exceeds the high - low price range: price=75001, price_limit=[28530, 42530]"
+  },
+  {
+    "clOrdId": "17042654237064000040",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654240314000041",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654250834000042",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654260826000043",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654270637000044",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654282784000045",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654290326000046",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654307516000047",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654312380000048",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654321802000049",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654336384000050",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654343105000051",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654350123000052",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654367413000053",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654377208000054",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654382851000055",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654398543000056",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010028,CrossingPriceType is not supported: crossingPriceType=ROLX"
+  },
+  {
+    "clOrdId": "17042654402680000057",
+    "ordStatus": [
+      "0",
+      "2"
+    ]
+  },
+  {
+    "clOrdId": "17042654421782000058",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_20010031,Requested order does not exist: origClOrdId=17042654402680000057, symbol=6758( expecting 6954)"
+  },
+  {
+    "clOrdId": "17042654424725000059",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654434523000060",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654444083000061",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654457042000062",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  },
+  {
+    "clOrdId": "17042654465320000063",
+    "ordStatus": [
+      "8"
+    ],
+    "errorCode": "ERROR_10010013,No available instrument risk check data found: instrumentDate=not_found,expectedDate=20240103"
+  }
+]
