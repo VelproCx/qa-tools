@@ -104,7 +104,7 @@ class Application(fix.Application):
         # 7.7 Execution Report – Trade
         elif ordStatus == "1" or ordStatus == "2":
             side = message.getField(54)
-            lastPx = message.getField(31)
+            lastPx = float(message.getField(31))
             clOrdID = message.getField(11)
             primaryBidPx = float(message.getField(8032))
             primaryAskPx = float(message.getField(8033))
@@ -263,7 +263,7 @@ def main():
         cfg.Port = port
         cfg.read_config(sender, target, host, port)
 
-        with open("/app/data/qa-tools/rolx_fix_client/initiator/rol_full_stock_test/symbol.csv", "r", newline=""
+        with open("/app/data/qa-tools/rolx_fix_client/initiator/rol_full_stock_test/tapd_1001242.csv", "r", newline=""
                   ) as csvfile:
             csvreader = csv.reader(csvfile)
             for row in csvreader:

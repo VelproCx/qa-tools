@@ -17,10 +17,7 @@
       "CashMargin": "1",
       "MarginTransactionType": "0",
       "ordStatus": [
-        "0",
-        "2",
-        "2",
-        "2"
+        "8"
       ]
     },
     {
@@ -41,8 +38,6 @@
       "MarginTransactionType": "0",
       "ordStatus": [
         "0",
-        "2",
-        "2",
         "2"
       ]
     },
@@ -64,8 +59,6 @@
       "MarginTransactionType": "0",
       "ordStatus": [
         "0",
-        "2",
-        "2",
         "2"
       ]
     },
@@ -88,8 +81,6 @@
       "MarginTransactionType": "0",
       "ordStatus": [
         "0",
-        "2",
-        "2",
         "2"
       ]
     },
@@ -112,8 +103,6 @@
       "MarginTransactionType": "0",
       "ordStatus": [
         "0",
-        "2",
-        "2",
         "2"
       ]
     },
@@ -136,9 +125,10 @@
       "ordStatus": [
         "0",
         "1",
-        "C",
         "1",
-        "1"
+        "1",
+        "1",
+        "2"
       ]
     },
     {
@@ -160,9 +150,10 @@
       "ordStatus": [
         "0",
         "1",
-        "C",
         "1",
-        "1"
+        "1",
+        "1",
+        "2"
       ]
     },
     {
@@ -185,7 +176,9 @@
       "ordStatus": [
         "0",
         "1",
-        "2",
+        "1",
+        "1",
+        "1",
         "2"
       ]
     },
@@ -209,7 +202,9 @@
       "ordStatus": [
         "0",
         "1",
-        "2",
+        "1",
+        "1",
+        "1",
         "2"
       ]
     },
@@ -358,8 +353,7 @@
       "CashMargin": "1",
       "MarginTransactionType": "0",
       "ordStatus": [
-        "0",
-        "4"
+        "0"
       ]
     },
     {
@@ -379,7 +373,6 @@
       "CashMargin": "1",
       "MarginTransactionType": "0",
       "ordStatus": [
-        "0",
         "4"
       ]
     },
@@ -400,8 +393,7 @@
       "CashMargin": "1",
       "MarginTransactionType": "0",
       "ordStatus": [
-        "0",
-        "4"
+        "0"
       ]
     },
     {
@@ -421,7 +413,6 @@
       "CashMargin": "1",
       "MarginTransactionType": "0",
       "ordStatus": [
-        "0",
         "4"
       ]
     },
@@ -443,8 +434,7 @@
       "CashMargin": "1",
       "MarginTransactionType": "0",
       "ordStatus": [
-        "0",
-        "4"
+        "0"
       ]
     },
     {
@@ -465,7 +455,6 @@
       "CashMargin": "1",
       "MarginTransactionType": "0",
       "ordStatus": [
-        "0",
         "4"
       ]
     },
@@ -487,8 +476,7 @@
       "CashMargin": "1",
       "MarginTransactionType": "0",
       "ordStatus": [
-        "0",
-        "4"
+        "0"
       ]
     },
     {
@@ -509,7 +497,6 @@
       "CashMargin": "1",
       "MarginTransactionType": "0",
       "ordStatus": [
-        "0",
         "4"
       ]
     },
@@ -1227,7 +1214,7 @@
       "Account": "RSIT_ACCOUNT_2",
       "Market": "ROLX",
       "ActionType": "NewAck",
-      "Comment": "New Order->Canceled",
+      "Comment": "New Order",
       "OrderQty": 5,
       "OrdType": "1",
       "Side": "1",
@@ -1250,7 +1237,7 @@
       "Account": "RSIT_ACCOUNT_2",
       "Market": "ROLX",
       "ActionType": "CancelAck",
-      "Comment": "New Order->Canceled",
+      "Comment": "New Order",
       "OrderQty": 5,
       "OrdType": "1",
       "Side": "1",

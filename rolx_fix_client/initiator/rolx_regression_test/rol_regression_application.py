@@ -14,7 +14,7 @@ from model.logger import setup_logger
 import json
 import math
 import random
-
+from model.runEmail import send_mail
 __SOH__ = chr(1)
 
 from openpyxl import load_workbook
@@ -101,7 +101,8 @@ class Application(fix.Application):
         self.write_result_excel('report/rol_report.xlsx', ordStatus_list, 2, 'J')
         self.write_result_excel('report/rol_report.xlsx', errorCode_list, 2, 'K')
         self.write_result_excel('report/rol_report.xlsx', self.result, 2, 'L')
-
+        print()
+        send_mail(['report/rol_report.xlsx', 'logs/rol_report.log'])
         return
 
     def toAdmin(self, message, sessionID):
@@ -183,9 +184,8 @@ class Application(fix.Application):
 
                 if ordStatus == '4':
                     symbol = message.getField(55)
-                    if symbol == '1311':
-                        new_clOrdID = int(clOrdID) + 1
-                        clOrdID = str(new_clOrdID)
+                    new_clOrdID = int(clOrdID) + 1
+                    clOrdID = str(new_clOrdID)
                 # 模糊匹配方法，判断收到fix消息体中的clOrdId是否在列表中，true则更新status，false则新增一条数据
                 # 设置匹配的阈值
                 threshold = 1
@@ -300,7 +300,7 @@ class Application(fix.Application):
                         primaryAskPx = float(message.getField(8033))
                         routingDecisionTime = message.getField(8051)
                         propExecPrice = message.getField(8165)
-                        propExec_id = message.getField(8166)
+                        propExecId = message.getField(8166)
                         clOrdID = message.getField(11)
                         # 公式计算期望值 FillPrice
                         adjustLastPxBuy = math.ceil(primaryAskPx * (1 + self.rol_prop_bps_buy))
@@ -314,7 +314,7 @@ class Application(fix.Application):
                                 side, symbol, timeInForce, transactTime, execBroker, execType, leavesQty,
                                 cashMargin,
                                 crossingPriceType, fsxTransactTime, marginTransactionType, primaryBidPx, primaryAskPx,
-                                routingDecisionTime, propExecPrice, propExec_id) != "":
+                                routingDecisionTime, propExecPrice, propExecId) != "":
                             self.logger.info(
                                 "(recvMsg) Order Filled << {}".format(msg) + 'Side: ' + str(
                                     side) + ',' + "Fill Price: " + str(
@@ -334,7 +334,7 @@ class Application(fix.Application):
                             # Fill Price Check
                         if ordType == '1':
                             if side == "1":
-                                adjustLastPx = math.ceil(primaryBidPx * (1 + self.rol_prop_bps_buy))
+                                adjustLastPx = math.ceil(primaryAskPx * (1 + self.rol_prop_bps_buy))
                                 # 期望值与获取的fillPrice进行比对
                                 if adjustLastPx != lastPx:
                                     self.logger.info(
@@ -342,7 +342,7 @@ class Application(fix.Application):
                                         + symbol + ',' + 'adjustLastPx：' + str(
                                             adjustLastPx) + ',' + 'lastPx:' + str(lastPx))
                             elif side == "2":
-                                adjustLastPx = math.floor(primaryAskPx * (1 - self.rol_prop_bps_sell))
+                                adjustLastPx = math.floor(primaryBidPx * (1 - self.rol_prop_bps_sell))
                                 # 期望值与获取的fillPrice进行比对
                                 if adjustLastPx != lastPx:
                                     self.logger.info(
@@ -457,9 +457,6 @@ class Application(fix.Application):
         msg.setField(fix.OrdType(row["OrdType"]))
         msg.setField(fix.Side(row["Side"]))
         msg.setField(fix.Symbol(row["Symbol"]))
-        # msg.setField(fix.HandInst('1'))
-        # ClientID = msg.getField(11)
-        # msg.setField(fix.ClientID(ClientID))
 
         # 判断account错误：
         if "not the target test account" in row["ScenarioName"]:
