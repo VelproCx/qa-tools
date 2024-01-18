@@ -9,12 +9,12 @@ import time
 import logging
 from datetime import datetime, timedelta
 from model.logger import setup_logger
-import json
 import random
 import math
 import csv
 
 symbols = []
+
 
 class Application(fix.Application):
 
