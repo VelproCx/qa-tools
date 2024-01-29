@@ -229,8 +229,8 @@ class Application(fix.Application):
                     cashMargin = message.getField(544)
                     crossingPriceType = message.getField(8164)
                     marginTransactionType = message.getField(8214)
-                    if symbol == '5076' or symbol == '1311' or symbol == '6954':
-                        self.orders_dict = message.getField(11)
+                    # if symbol == '5076' or symbol == '1311' or symbol == '6954':
+                    self.orders_dict = message.getField(11)
                     msg = message.toString().replace(__SOH__, "|")
                     # 7.2 Execution Report – Order Accepted
                     if ordStatus == "0":
